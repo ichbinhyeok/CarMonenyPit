@@ -2,26 +2,27 @@
 @import com.carmoneypit.engine.api.OutputModels.VerdictState
 
 @param VerdictResult result
+@param String verdictTitle
+@param String verdictExplanation
+@param String verdictAction
+@param String verdictCss
 
-<article id="verdict-card" class="fade-in">
+<article id="verdict-card" class="fade-in ${verdictCss}">
     <header>
         <hgroup>
-            <h1>Verdict: 
-                @if(result.verdictState() == VerdictState.STABLE)
-                    <span style="color: #2ed573">STABLE (Green)</span>
-                @elseif(result.verdictState() == VerdictState.BORDERLINE)
-                    <span style="color: #ffa502">BORDERLINE (Yellow)</span>
-                @else
-                    <span style="color: #ff4757">TIME BOMB (Red)</span>
-                @endif
-            </h1>
+            <h1>Verdict: <span>${verdictTitle}</span></h1>
             <p>Based on Regret Minimization Analysis</p>
         </hgroup>
     </header>
     
     <blockquote>
-        "${result.narrativeContext()}"
+        "${verdictExplanation}"
     </blockquote>
+
+    <div class="action-plan">
+        <strong>Recommended Action:</strong>
+        <p>${verdictAction}</p>
+    </div>
 
     <footer>
         <small>Money Pit State: <strong>${result.visualizationHint().moneyPitState()}</strong></small>

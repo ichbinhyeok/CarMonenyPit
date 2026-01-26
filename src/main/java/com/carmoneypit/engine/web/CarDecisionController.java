@@ -14,13 +14,20 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @Controller
 public class CarDecisionController {
 
-    private final DecisionEngine decisionEngine;
+    private static final Logger log = LoggerFactory.getLogger(CarDecisionController.class);
 
-    public CarDecisionController(DecisionEngine decisionEngine) {
+    private final DecisionEngine decisionEngine;
+    private final VerdictPresenter presenter;
+
+    public CarDecisionController(DecisionEngine decisionEngine, VerdictPresenter presenter) {
         this.decisionEngine = decisionEngine;
+        this.presenter = presenter;
     }
 
     @GetMapping("/")
@@ -37,9 +44,21 @@ public class CarDecisionController {
         EngineInput input = new EngineInput(vehicleType, mileage, repairQuoteUsd);
         VerdictResult result = decisionEngine.evaluate(input);
 
+        log.info("Analysis Result: State={}, RF={}, RM={}", result.verdictState(), result.visualizationHint().rfScore(),
+                result.visualizationHint().rmScore());
+        String title = presenter.getVerdictTitle(result.verdictState());
+        String expl = presenter.getLawyerExplanation(result.verdictState());
+        log.info("Presentation Data: Title='{}', Expl='{}'", title, expl);
+
         // Pass input back for sliders initialization
         model.addAttribute("input", input);
         model.addAttribute("result", result);
+
+        // Presentation Logic
+        model.addAttribute("verdictTitle", presenter.getVerdictTitle(result.verdictState()));
+        model.addAttribute("verdictExplanation", presenter.getLawyerExplanation(result.verdictState()));
+        model.addAttribute("verdictAction", presenter.getActionPlan(result.verdictState()));
+        model.addAttribute("verdictCss", presenter.getCssClass(result.verdictState()));
 
         // Initialize default controls for the view
         model.addAttribute("controls", new SimulationControls(
@@ -67,6 +86,12 @@ public class CarDecisionController {
         model.addAttribute("input", input);
         model.addAttribute("result", result);
         model.addAttribute("controls", controls);
+
+        // Presentation Logic
+        model.addAttribute("verdictTitle", presenter.getVerdictTitle(result.verdictState()));
+        model.addAttribute("verdictExplanation", presenter.getLawyerExplanation(result.verdictState()));
+        model.addAttribute("verdictAction", presenter.getActionPlan(result.verdictState()));
+        model.addAttribute("verdictCss", presenter.getCssClass(result.verdictState()));
 
         // HTMX fragment response: only render the card part
         // We can define a fragment inside result.jte or use a separate file.

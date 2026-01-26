@@ -8,6 +8,10 @@
 @param EngineInput input
 @param VerdictResult result
 @param SimulationControls controls
+@param String verdictTitle
+@param String verdictExplanation
+@param String verdictAction
+@param String verdictCss
 
 <!DOCTYPE html>
 <html lang="en">
@@ -24,6 +28,9 @@
         /* Simple fade in animation */
         .fade-in.htmx-added { opacity: 0; }
         .fade-in { opacity: 1; transition: opacity 0.5s ease-in; }
+        .verdict-terminate { border-left: 5px solid #ff4757; padding-left: 1rem; }
+        .verdict-sustain { border-left: 5px solid #2ed573; padding-left: 1rem; }
+        .verdict-probation { border-left: 5px solid #ffa502; padding-left: 1rem; }
     </style>
 </head>
 <body>
@@ -33,7 +40,7 @@
         <hr>
 
         <!-- Dynamic Verdict Section -->
-        @template.fragments.verdict_card(result = result)
+        @template.fragments.verdict_card(result = result, verdictTitle = verdictTitle, verdictExplanation = verdictExplanation, verdictAction = verdictAction, verdictCss = verdictCss)
 
         <!-- Simulation Lab -->
         <section class="sim-lab">

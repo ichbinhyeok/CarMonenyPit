@@ -21,56 +21,73 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(CarDecisionController.class)
 public class WebLayerTest {
 
-    @Autowired
-    private MockMvc mockMvc;
+        @Autowired
+        private MockMvc mockMvc;
 
-    @MockBean
-    private DecisionEngine decisionEngine;
+        @MockBean
+        private DecisionEngine decisionEngine;
 
-    @Test
-    public void testIndexPage() throws Exception {
-        mockMvc.perform(get("/"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("index"));
-    }
+        @MockBean
+        private VerdictPresenter verdictPresenter;
 
-    @Test
-    public void testAnalyze() throws Exception {
-        // Mock Engine Response
-        VerdictResult mockResult = new VerdictResult(
-                VerdictState.STABLE,
-                "Stable Narrative",
-                new VisualizationHint(100, 200, "SURFACE"));
-        given(decisionEngine.evaluate(any(EngineInput.class))).willReturn(mockResult);
+        @Test
+        public void testIndexPage() throws Exception {
+                mockMvc.perform(get("/"))
+                                .andExpect(status().isOk())
+                                .andExpect(view().name("index"));
+        }
 
-        mockMvc.perform(post("/analyze")
-                .param("vehicleType", "SEDAN")
-                .param("mileage", "50000")
-                .param("repairQuoteUsd", "500"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("result"))
-                .andExpect(model().attributeExists("result", "input", "controls"));
-    }
+        @Test
+        public void testAnalyze() throws Exception {
+                // Mock Engine Response
+                VerdictResult mockResult = new VerdictResult(
+                                VerdictState.STABLE,
+                                "Stable Narrative",
+                                new VisualizationHint(100, 200, "SURFACE"));
+                given(decisionEngine.evaluate(any(EngineInput.class))).willReturn(mockResult);
 
-    @Test
-    public void testSimulate() throws Exception {
-        // Mock Engine Response
-        VerdictResult mockResult = new VerdictResult(
-                VerdictState.TIME_BOMB,
-                "Time Bomb Narrative",
-                new VisualizationHint(300, 100, "DEEP_PIT"));
-        given(decisionEngine.simulate(any(EngineInput.class), any(SimulationControls.class))).willReturn(mockResult);
+                // Mock Presenter Response
+                given(verdictPresenter.getVerdictTitle(any())).willReturn("SUSTAIN");
+                given(verdictPresenter.getLawyerExplanation(any())).willReturn("Explanation");
+                given(verdictPresenter.getActionPlan(any())).willReturn("Action");
+                given(verdictPresenter.getCssClass(any())).willReturn("class-sustain");
 
-        mockMvc.perform(post("/simulate")
-                .param("vehicleType", "SEDAN")
-                .param("mileage", "50000")
-                .param("repairQuoteUsd", "500")
-                .param("failureSeverity", "ENGINE_TRANSMISSION")
-                .param("mobilityStatus", "DRIVABLE")
-                .param("hassleTolerance", "NEUTRAL"))
-                .andExpect(status().isOk())
-                // Should return fragment view name
-                .andExpect(view().name("fragments/verdict_card"))
-                .andExpect(model().attributeExists("result"));
-    }
+                mockMvc.perform(post("/analyze")
+                                .param("vehicleType", "SEDAN")
+                                .param("mileage", "50000")
+                                .param("repairQuoteUsd", "500"))
+                                .andExpect(status().isOk())
+                                .andExpect(view().name("result"))
+                                .andExpect(model().attributeExists("result", "input", "controls", "verdictTitle",
+                                                "verdictExplanation", "verdictAction"));
+        }
+
+        @Test
+        public void testSimulate() throws Exception {
+                // Mock Engine Response
+                VerdictResult mockResult = new VerdictResult(
+                                VerdictState.TIME_BOMB,
+                                "Time Bomb Narrative",
+                                new VisualizationHint(300, 100, "DEEP_PIT"));
+                given(decisionEngine.simulate(any(EngineInput.class), any(SimulationControls.class)))
+                                .willReturn(mockResult);
+
+                // Mock Presenter Response
+                given(verdictPresenter.getVerdictTitle(any())).willReturn("TERMINATE");
+                given(verdictPresenter.getLawyerExplanation(any())).willReturn("Term Explanation");
+                given(verdictPresenter.getActionPlan(any())).willReturn("Term Action");
+                given(verdictPresenter.getCssClass(any())).willReturn("class-terminate");
+
+                mockMvc.perform(post("/simulate")
+                                .param("vehicleType", "SEDAN")
+                                .param("mileage", "50000")
+                                .param("repairQuoteUsd", "500")
+                                .param("failureSeverity", "ENGINE_TRANSMISSION")
+                                .param("mobilityStatus", "DRIVABLE")
+                                .param("hassleTolerance", "NEUTRAL"))
+                                .andExpect(status().isOk())
+                                // Should return fragment view name
+                                .andExpect(view().name("fragments/verdict_card"))
+                                .andExpect(model().attributeExists("result", "verdictTitle"));
+        }
 }
