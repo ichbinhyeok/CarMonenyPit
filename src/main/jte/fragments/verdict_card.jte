@@ -10,76 +10,112 @@
 @param String leadDescription
 
 <div id="verdict-card" class="fade-in">
+    <style>
+        .verdict-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        @media (max-width: 768px) {
+            .verdict-grid {
+                grid-template-columns: 1fr;
+            }
+            .verdict-hero h1 {
+                font-size: 3.5rem !important;
+            }
+        }
+        .bleed-highlight {
+            background: #fff5f5;
+            padding: 2rem;
+            border-radius: 24px;
+            border: 2px solid #feb2b2;
+            margin-bottom: 1.5rem;
+            animation: pulse-border 2s infinite;
+        }
+        @keyframes pulse-border {
+            0% { border-color: #feb2b2; box-shadow: 0 0 0 0 rgba(254, 178, 178, 0.4); }
+            50% { border-color: #f56565; box-shadow: 0 0 20px 0 rgba(245, 101, 101, 0.2); }
+            100% { border-color: #feb2b2; box-shadow: 0 0 0 0 rgba(254, 178, 178, 0.4); }
+        }
+    </style>
+
     <!-- Main Verdict Hero -->
-    <div style="margin-bottom: 3.5rem;">
+    <div class="verdict-hero" style="margin-bottom: 3.5rem;">
         <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
-            <div style="width: 12px; height: 12px; border-radius: 50%; background: ${verdictCss.contains("liquidate") ? "var(--red-alert)" : (verdictCss.contains("sustain") ? "var(--green-safe)" : "var(--orange-warn)")}; shadow: 0 0 10px rgba(0,0,0,0.1);"></div>
-            <span style="text-transform: uppercase; font-size: 0.75rem; font-weight: 800; letter-spacing: 0.1em; color: var(--text-secondary); opacity: 0.7;">
-                Primary Computation Result
+            <div style="width: 14px; height: 14px; border-radius: 50%; background: ${verdictCss.contains("liquidate") ? "#ef4444" : (verdictCss.contains("sustain") ? "#10b981" : "#f59e0b")}; box-shadow: 0 0 15px rgba(0,0,0,0.1);"></div>
+            <span style="text-transform: uppercase; font-size: 0.8rem; font-weight: 800; letter-spacing: 0.1em; color: var(--text-secondary);">
+                System Diagnostic Verdict
             </span>
         </div>
         <h1 style="font-size: 5rem; font-weight: 800; letter-spacing: -0.05em; margin-bottom: 1.5rem; line-height: 0.9; color: #000;">
             ${verdictTitle}
         </h1>
-        <p style="font-size: 1.2rem; color: var(--text-main); font-weight: 500; max-width: 700px; line-height: 1.5;">
+        <p style="font-size: 1.25rem; color: var(--text-main); font-weight: 500; max-width: 750px; line-height: 1.5;">
             "${verdictExplanation}"
         </p>
     </div>
 
     <!-- Data Breakdown Grid -->
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin: 3rem 0;">
-        <div style="background: #fff; padding: 2rem; border-radius: 24px; border: 1px solid var(--border-subtle); box-shadow: 0 4px 12px rgba(0,0,0,0.01);">
-            <h3 style="font-size: 0.85rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1.5rem; color: var(--text-secondary);">
-                Actuarial Line Items
+    <div class="verdict-grid">
+        <!-- Left Column: Receipt -->
+        <div style="background: #fff; padding: 2.5rem; border-radius: 32px; border: 1px solid rgba(0,0,0,0.05); box-shadow: 0 4px 20px rgba(0,0,0,0.02);">
+            <h3 style="font-size: 0.9rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 2rem; color: var(--text-secondary);">
+                Actuarial Risk Mapping
             </h3>
             @template.fragments.smart_receipt(items = result.costBreakdown())
+        </div>
+
+        <!-- Right Column: Critical Actions & Bleed -->
+        <div style="display: flex; flex-direction: column;">
             
-            <!-- Asset Bleed Section -->
-            <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px dashed var(--border-subtle);">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-                    <div style="font-size: 0.8rem; font-weight: 800; color: var(--red-alert); text-transform: uppercase; letter-spacing: 0.05em;">
-                        Projected Asset Bleed (6mo)
+            <!-- Asset Bleed Highlight (MOVED & ENHANCED) -->
+            <div class="bleed-highlight">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+                    <div style="font-size: 0.85rem; font-weight: 800; color: #c53030; text-transform: uppercase; letter-spacing: 0.05em;">
+                        6-Month Asset Bleed
                     </div>
-                    <div style="font-size: 1.2rem; font-weight: 800; color: var(--red-alert);">
+                    <div style="font-size: 1.8rem; font-weight: 800; color: #e53e3e;">
                         -$${String.format("%,d", result.assetBleedAmount())}
                     </div>
                 </div>
-                <div style="font-size: 0.85rem; color: var(--text-secondary); font-weight: 500; line-height: 1.4;">
-                    Loss from inaction: Estimated depreciation + risk probability.
-                </div>
+                <p style="font-size: 0.9rem; color: #742a2a; font-weight: 600; line-height: 1.4; margin: 0;">
+                    Projected capital loss from depreciation and recurring failure nodes if no action taken.
+                </p>
             </div>
-        </div>
 
-        <div style="display: flex; flex-direction: column; gap: 1.5rem;">
             <!-- Recommended Action -->
-            <div style="background: #f8fafc; padding: 2rem; border-radius: 24px; border-left: 4px solid #000;">
-                <h4 style="font-size: 0.8rem; font-weight: 800; margin-bottom: 0.5rem; text-transform: uppercase; color: var(--text-secondary);">Executive Summary</h4>
-                <p style="font-size: 1.05rem; margin: 0; color: var(--text-main); font-weight: 600; line-height: 1.4;">${verdictAction}</p>
+            <div style="background: #fff; padding: 2rem; border-radius: 24px; border-left: 6px solid #000; box-shadow: 0 4px 15px rgba(0,0,0,0.02); margin-bottom: 1.5rem;">
+                <h4 style="font-size: 0.8rem; font-weight: 800; margin-bottom: 0.75rem; text-transform: uppercase; color: var(--text-secondary);">Strategic Directive</h4>
+                <p style="font-size: 1.1rem; margin: 0; color: var(--text-main); font-weight: 700; line-height: 1.4;">${verdictAction}</p>
             </div>
 
             <!-- Exit Ramp -->
-            <div style="background: var(--futurist-blue); padding: 2rem; border-radius: 24px; color: #fff; box-shadow: 0 10px 30px rgba(0, 102, 255, 0.2);">
-                <div style="font-size: 0.75rem; font-weight: 800; text-transform: uppercase; margin-bottom: 0.5rem; opacity: 0.8;">Actionable Response</div>
-                <h4 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 1rem; line-height: 1.2;">${leadLabel}</h4>
-                <p style="font-size: 0.9rem; margin-bottom: 1.5rem; opacity: 0.9; font-weight: 500;">${leadDescription}</p>
-                <a href="#" style="display: inline-flex; align-items: center; justify-content: center; background: #fff; color: var(--futurist-blue); padding: 0.8rem 1.5rem; border-radius: 14px; text-decoration: none; font-weight: 800; font-size: 0.95rem; transition: transform 0.2s;">
-                    PROCEED <span>→</span>
+            <div style="background: var(--futurist-blue); padding: 2.5rem; border-radius: 32px; color: #fff; box-shadow: 0 15px 40px rgba(0, 102, 255, 0.25); position: relative; overflow: hidden;">
+                <div style="position: absolute; top: -20px; right: -20px; width: 100px; height: 100px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
+                <div style="font-size: 0.8rem; font-weight: 800; text-transform: uppercase; margin-bottom: 0.75rem; opacity: 0.8; letter-spacing: 0.05em;">Conversion Gateway</div>
+                <h4 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 1.25rem; line-height: 1.1;">${leadLabel}</h4>
+                <p style="font-size: 1rem; margin-bottom: 2rem; opacity: 0.9; font-weight: 500; line-height: 1.4;">${leadDescription}</p>
+                <a href="#" style="display: inline-flex; align-items: center; justify-content: center; background: #fff; color: var(--futurist-blue); width: 100%; padding: 1.25rem; border-radius: 20px; text-decoration: none; font-weight: 800; font-size: 1.1rem; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                    INITIATE PROCESS <span>→</span>
                 </a>
             </div>
         </div>
     </div>
 
-    <footer style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid #f1f5f9; display: flex; justify-content: space-between; align-items: center;">
-        <div style="display: flex; gap: 2.5rem;">
+    <footer style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #e2e8f0; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1.5rem;">
+        <div style="display: flex; gap: 3rem;">
             <div>
-                <div style="font-size: 0.7rem; font-weight: 800; color: var(--text-secondary); text-transform: uppercase; margin-bottom: 0.25rem;">Analytics Confidence</div>
-                <div style="font-size: 0.9rem; font-weight: 700; color: var(--green-safe);">STATISTICALLY_HIGH</div>
+                <div style="font-size: 0.75rem; font-weight: 800; color: var(--text-secondary); text-transform: uppercase; margin-bottom: 0.4rem;">Scan Integrity</div>
+                <div style="font-size: 1rem; font-weight: 700; color: #10b981;">HIGH_PRECISION</div>
             </div>
             <div>
-                <div style="font-size: 0.7rem; font-weight: 800; color: var(--text-secondary); text-transform: uppercase; margin-bottom: 0.25rem;">Equity Index</div>
-                <div style="font-size: 0.9rem; font-weight: 700;">${result.visualizationHint().moneyPitState().replace("_", " ")}</div>
+                <div style="font-size: 0.75rem; font-weight: 800; color: var(--text-secondary); text-transform: uppercase; margin-bottom: 0.4rem;">Asset Liquidity</div>
+                <div style="font-size: 1rem; font-weight: 700;">${result.visualizationHint().moneyPitState().replace("_", " ")}</div>
             </div>
         </div>
-        <div style="font-size: 0.75rem; font-weight: 600; color: var(--text-secondary);">© 2026 CAR_PIT_QUANT_ENGINE</div>
+        <div style="font-size: 0.8rem; font-weight: 700; color: var(--text-secondary); opacity: 0.6;">
+            [ 2026_CAR_QUANT_ENGINE // HUD_MODE ]
+        </div>
     </footer>
 </div>
