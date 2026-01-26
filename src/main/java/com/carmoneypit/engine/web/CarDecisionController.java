@@ -40,10 +40,12 @@ public class CarDecisionController {
             @RequestParam("vehicleType") VehicleType vehicleType,
             @RequestParam("mileage") long mileage,
             @RequestParam("repairQuoteUsd") long repairQuoteUsd,
+            @RequestParam("currentValueUsd") long currentValueUsd,
             Model model) {
         model.addAttribute("vehicleType", vehicleType);
         model.addAttribute("mileage", mileage);
         model.addAttribute("repairQuoteUsd", repairQuoteUsd);
+        model.addAttribute("currentValueUsd", currentValueUsd);
         return "fragments/loading";
     }
 
@@ -52,8 +54,9 @@ public class CarDecisionController {
             @RequestParam("vehicleType") VehicleType vehicleType,
             @RequestParam("mileage") long mileage,
             @RequestParam("repairQuoteUsd") long repairQuoteUsd,
+            @RequestParam("currentValueUsd") long currentValueUsd,
             Model model) {
-        EngineInput input = new EngineInput(vehicleType, mileage, repairQuoteUsd);
+        EngineInput input = new EngineInput(vehicleType, mileage, repairQuoteUsd, currentValueUsd);
         VerdictResult result = decisionEngine.evaluate(input);
 
         log.info("Analysis Result: State={}, RF={}, RM={}", result.verdictState(), result.visualizationHint().rfScore(),
@@ -81,11 +84,12 @@ public class CarDecisionController {
             @RequestParam("vehicleType") VehicleType vehicleType,
             @RequestParam("mileage") long mileage,
             @RequestParam("repairQuoteUsd") long repairQuoteUsd,
+            @RequestParam("currentValueUsd") long currentValueUsd,
             @RequestParam("failureSeverity") FailureSeverity failureSeverity,
             @RequestParam("mobilityStatus") MobilityStatus mobilityStatus,
             @RequestParam("hassleTolerance") HassleTolerance hassleTolerance,
             Model model) {
-        EngineInput input = new EngineInput(vehicleType, mileage, repairQuoteUsd);
+        EngineInput input = new EngineInput(vehicleType, mileage, repairQuoteUsd, currentValueUsd);
         SimulationControls controls = new SimulationControls(failureSeverity, mobilityStatus, hassleTolerance);
 
         VerdictResult result = decisionEngine.simulate(input, controls);

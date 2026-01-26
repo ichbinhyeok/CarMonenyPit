@@ -118,6 +118,7 @@
                     <input type="hidden" name="vehicleType" value="${input.vehicleType()}">
                     <input type="hidden" name="mileage" value="${input.mileage()}">
                     <input type="hidden" name="repairQuoteUsd" value="${input.repairQuoteUsd()}">
+                    <input type="hidden" name="currentValueUsd" value="${input.currentValueUsd()}">
 
                     <div class="sim-grid">
                         <div class="sim-item">

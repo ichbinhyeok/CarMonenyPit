@@ -82,7 +82,7 @@
 
             .form-grid {
                 display: grid;
-                grid-template-columns: 1.2fr 1fr 1fr auto;
+                grid-template-columns: 1fr 1fr 1fr 1fr auto;
                 gap: 1.5rem;
                 align-items: flex-end;
             }
@@ -188,6 +188,11 @@
                     <div class="input-group">
                         <label>Current Usage (Miles)</label>
                         <input type="number" name="mileage" placeholder="120000" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Market Value ($)</label>
+                        <input type="number" name="currentValueUsd" placeholder="15000" required>
                     </div>
 
                     <div class="input-group">

@@ -56,9 +56,13 @@ public class DecisionEngine {
 
         // Calculate Cost of Inaction (Asset Bleed)
         long assetBleed = costOfInactionCalculator.calculateAssetBleed(input.vehicleType(), input.mileage(),
-                input.repairQuoteUsd());
+                input.repairQuoteUsd(), input.currentValueUsd());
 
-        VisualizationHint hint = new VisualizationHint(rfDetail.score(), rmDetail.score(), moneyPitState);
+        // Rounding Rule (100s) for display scores
+        double roundedRF = Math.round(rfDetail.score() / 100.0) * 100.0;
+        double roundedRM = Math.round(rmDetail.score() / 100.0) * 100.0;
+
+        VisualizationHint hint = new VisualizationHint(roundedRF, roundedRM, moneyPitState);
         return new VerdictResult(state, narrative, hint, breakdown, assetBleed);
     }
 

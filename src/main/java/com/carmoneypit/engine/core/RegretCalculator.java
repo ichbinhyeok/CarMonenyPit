@@ -3,6 +3,9 @@ package com.carmoneypit.engine.core;
 import com.carmoneypit.engine.api.FinancialLineItem;
 import com.carmoneypit.engine.api.InputModels.EngineInput;
 import com.carmoneypit.engine.api.InputModels.SimulationControls;
+import com.carmoneypit.engine.api.InputModels.FailureSeverity;
+import com.carmoneypit.engine.api.InputModels.MobilityStatus;
+import com.carmoneypit.engine.api.InputModels.HassleTolerance;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -14,22 +17,91 @@ public class RegretCalculator {
     public record RegretDetail(double score, List<FinancialLineItem> items) {
     }
 
+    // Major Repair Cost Constants for Future Risk
+    private static final double MAJOR_FAILURE_ENGINE = 4500.0;
+    private static final double MAJOR_FAILURE_SUSPENSION = 1800.0;
+    private static final double MAJOR_FAILURE_GENERAL = 800.0;
+
     public RegretDetail calculateRF(EngineInput input, SimulationControls controls) {
-        // Placeholder implementation - will be replaced with real logic
-        double score = input.repairQuoteUsd() * 1.5;
         List<FinancialLineItem> items = new ArrayList<>();
-        items.add(new FinancialLineItem("Repair Cost", (double) input.repairQuoteUsd(),
-                "The tangible cost of the repair."));
-        items.add(new FinancialLineItem("Future Risk", score - input.repairQuoteUsd(),
-                "Estimated future failure costs."));
-        return new RegretDetail(score, items);
+        double totalScore = 0;
+
+        // 1. Current Repair Cost
+        double repairCost = (double) input.repairQuoteUsd();
+        items.add(new FinancialLineItem("Repair Outlay", repairCost, "Immediate cash drain for the quoted service."));
+        totalScore += repairCost;
+
+        // 2. Future Failure Probability (Mileage Based)
+        double failureProb = 0.10; // Default
+        if (input.mileage() > 150000) {
+            failureProb = 0.60;
+        } else if (input.mileage() > 100000) {
+            failureProb = 0.35;
+        }
+
+        double majorCostBase = MAJOR_FAILURE_GENERAL;
+        if (controls != null) {
+            if (controls.failureSeverity() == FailureSeverity.ENGINE_TRANSMISSION)
+                majorCostBase = MAJOR_FAILURE_ENGINE;
+            else if (controls.failureSeverity() == FailureSeverity.SUSPENSION_BRAKES)
+                majorCostBase = MAJOR_FAILURE_SUSPENSION;
+        }
+
+        double riskRegret = failureProb * majorCostBase;
+        items.add(new FinancialLineItem("Probabilistic Risk", riskRegret,
+                String.format("%.0f%% chance of secondary system collapse.", failureProb * 100)));
+        totalScore += riskRegret;
+
+        // 3. Lost Exit Timing (Opportunity Cost of not selling now)
+        double timingCost = input.currentValueUsd() * 0.05; // 5% penalty for missing the current 'working condition'
+                                                            // sale window
+        items.add(new FinancialLineItem("Lost Sales Velocity", timingCost,
+                "Depreciation penalty for selling a repaired car vs selling now."));
+        totalScore += timingCost;
+
+        // 4. Pain Score (Time/Stress)
+        double painScore = (input.mileage() / 100.0) + (input.repairQuoteUsd() / 10.0);
+        items.add(new FinancialLineItem("Cognitive Friction", painScore,
+                "Actuarial weight for vehicle-related stress and downtime."));
+        totalScore += painScore;
+
+        return new RegretDetail(totalScore, items);
     }
 
     public RegretDetail calculateRM(EngineInput input, SimulationControls controls) {
-        // Placeholder implementation - will be replaced with real logic
-        double score = 3000.0;
         List<FinancialLineItem> items = new ArrayList<>();
-        items.add(new FinancialLineItem("Switching Cost", 3000.0, "Cost to replace the vehicle."));
-        return new RegretDetail(score, items);
+        double totalScore = 0;
+
+        // 1. Switching Friction (Hassle Tolerance)
+        double friction = 2500.0; // NEUTRAL
+        if (controls != null) {
+            if (controls.hassleTolerance() == HassleTolerance.HATE_SWITCHING)
+                friction = 5500.0;
+            else if (controls.hassleTolerance() == HassleTolerance.WANT_NEW_CAR)
+                friction = 800.0;
+        }
+        items.add(new FinancialLineItem("Acquisition Friction", friction,
+                "Cost of searching, negotiating, and registering a new vehicle."));
+        totalScore += friction;
+
+        // 2. Temporary Inconvenience (Mobility Based)
+        double mobilityRegret = 0;
+        if (controls != null && controls.mobilityStatus() == MobilityStatus.NEEDS_TOW) {
+            mobilityRegret = 1800.0; // High regret for switching when car is offline (bad leverage)
+            items.add(new FinancialLineItem("Offline Leverage Loss", mobilityRegret,
+                    "Reduced trade-in value and urgency penalty for non-runners."));
+        } else {
+            items.add(new FinancialLineItem("Market Leverage", 0.0,
+                    "Maintain leverage by switching while the asset is mobile."));
+        }
+        totalScore += mobilityRegret;
+
+        // 3. Premature Exit Anxiety
+        double anxiety = 400.0;
+        items.add(new FinancialLineItem("Sunk Cost Anxiety", anxiety,
+                "Psychological weight of leaving a familiar asset prematurely."));
+        totalScore += anxiety;
+
+        return new RegretDetail(totalScore, items);
     }
 }

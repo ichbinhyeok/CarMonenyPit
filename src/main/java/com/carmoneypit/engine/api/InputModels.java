@@ -4,7 +4,8 @@ public class InputModels {
     public record EngineInput(
             VehicleType vehicleType,
             long mileage,
-            long repairQuoteUsd) {
+            long repairQuoteUsd,
+            long currentValueUsd) {
     }
 
     public record SimulationControls(

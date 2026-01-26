@@ -3,13 +3,14 @@
 @param VehicleType vehicleType
 @param long mileage
 @param long repairQuoteUsd
+@param long currentValueUsd
 
 <div id="loading-screen" class="bento-card scan-stage" 
      hx-post="/analyze-final" 
      hx-trigger="load delay:2800ms" 
      hx-target="body" 
      hx-push-url="/analyze"
-     hx-vals='{"vehicleType": "${vehicleType}", "mileage": ${mileage}, "repairQuoteUsd": ${repairQuoteUsd}}'>
+     hx-vals='{"vehicleType": "${vehicleType}", "mileage": ${mileage}, "repairQuoteUsd": ${repairQuoteUsd}, "currentValueUsd": ${currentValueUsd}}'>
     
     <div class="scan-visual">
         <div class="pulse-ring"></div>
