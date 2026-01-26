@@ -1,0 +1,188 @@
+{
+    "failure_cascade_probability": {
+        "mileage_intervals": {
+            "0_50k": {
+                "engine_major": {
+                    "risk_level": "LOW",
+                    "base_prob": 0.01
+                },
+                "transmission_major": {
+                    "risk_level": "LOW",
+                    "base_prob": 0.01
+                },
+                "suspension_complex": {
+                    "risk_level": "LOW",
+                    "base_prob": 0.02
+                },
+                "electronics_system": {
+                    "risk_level": "LOW",
+                    "base_prob": 0.03
+                },
+                "cooling_system": {
+                    "risk_level": "LOW",
+                    "base_prob": 0.02
+                }
+            },
+            "50k_100k": {
+                "engine_major": {
+                    "risk_level": "LOW",
+                    "base_prob": 0.03
+                },
+                "transmission_major": {
+                    "risk_level": "MEDIUM",
+                    "base_prob": 0.04
+                },
+                "suspension_complex": {
+                    "risk_level": "MEDIUM",
+                    "base_prob": 0.08
+                },
+                "electronics_system": {
+                    "risk_level": "MEDIUM",
+                    "base_prob": 0.07
+                },
+                "cooling_system": {
+                    "risk_level": "MEDIUM",
+                    "base_prob": 0.06
+                }
+            },
+            "100k_150k": {
+                "engine_major": {
+                    "risk_level": "MEDIUM",
+                    "base_prob": 0.08
+                },
+                "transmission_major": {
+                    "risk_level": "MEDIUM",
+                    "base_prob": 0.09
+                },
+                "suspension_complex": {
+                    "risk_level": "HIGH",
+                    "base_prob": 0.18
+                },
+                "electronics_system": {
+                    "risk_level": "HIGH",
+                    "base_prob": 0.15
+                },
+                "cooling_system": {
+                    "risk_level": "HIGH",
+                    "base_prob": 0.14
+                }
+            },
+            "150k_plus": {
+                "engine_major": {
+                    "risk_level": "HIGH",
+                    "base_prob": 0.18
+                },
+                "transmission_major": {
+                    "risk_level": "HIGH",
+                    "base_prob": 0.22
+                },
+                "suspension_complex": {
+                    "risk_level": "CRITICAL",
+                    "base_prob": 0.35
+                },
+                "electronics_system": {
+                    "risk_level": "CRITICAL",
+                    "base_prob": 0.28
+                },
+                "cooling_system": {
+                    "risk_level": "CRITICAL",
+                    "base_prob": 0.25
+                }
+            }
+        },
+        "cascade_multiplier": 1.5
+    },
+    "conversion_rules": {
+        "standard_divisor": 10,
+        "description": "USD to Points conversion divisor. purely for scaling."
+    },
+    "major_repair_cost_range": {
+        "engine_major": {
+            "min_points": 80,
+            "max_points": 250
+        },
+        "transmission_major": {
+            "min_points": 70,
+            "max_points": 180
+        },
+        "suspension_complex": {
+            "min_points": 30,
+            "max_points": 90
+        },
+        "electronics_system": {
+            "min_points": 20,
+            "max_points": 120
+        },
+        "cooling_system": {
+            "min_points": 15,
+            "max_points": 60
+        }
+    },
+    "depreciation_multipliers": {
+        "post_major_repair": 1.25,
+        "high_mileage_entry": 1.15,
+        "repeat_failure_event": 1.40,
+        "accident_history": 1.50
+    },
+    "sellability_score": {
+        "condition_excellent": 0.95,
+        "condition_good": 0.82,
+        "condition_fair": 0.55,
+        "condition_poor": 0.25,
+        "condition_critical_failure": 0.05
+    },
+    "pain_index": {
+        "engine_major": {
+            "downtime_days_avg": 14,
+            "stress_score_coeff": 1.5
+        },
+        "transmission_major": {
+            "downtime_days_avg": 10,
+            "stress_score_coeff": 1.4
+        },
+        "suspension_complex": {
+            "downtime_days_avg": 4,
+            "stress_score_coeff": 1.1
+        },
+        "electronics_system": {
+            "downtime_days_avg": 7,
+            "stress_score_coeff": 1.3
+        },
+        "cooling_system": {
+            "downtime_days_avg": 3,
+            "stress_score_coeff": 1.0
+        }
+    },
+    "residual_value_ratio": {
+        "segment_economy": {
+            "under_80k": 0.65,
+            "80k_120k": 0.45,
+            "120k_plus": 0.20
+        },
+        "segment_standard": {
+            "under_80k": 0.60,
+            "80k_120k": 0.40,
+            "120k_plus": 0.15
+        },
+        "segment_luxury": {
+            "under_80k": 0.55,
+            "80k_120k": 0.35,
+            "120k_plus": 0.10
+        },
+        "segment_performance": {
+            "under_80k": 0.62,
+            "80k_120k": 0.42,
+            "120k_plus": 0.18
+        }
+    },
+    "brand_reputation_group_multiplier": {
+        "tier_1_high_reliability": 0.8,
+        "tier_2_avg_reliability": 1.0,
+        "tier_3_low_reliability": 1.3
+    },
+    "opportunity_cost_floor": {
+        "value_ratio": 0.05,
+        "loss_state_on_failure": "SCRAP_ONLY",
+        "exit_window": "CLOSING"
+    }
+}
