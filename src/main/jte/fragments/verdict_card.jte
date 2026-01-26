@@ -33,6 +33,21 @@
                 Actuarial Line Items
             </h3>
             @template.fragments.smart_receipt(items = result.costBreakdown())
+            
+            <!-- Asset Bleed Section -->
+            <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px dashed var(--border-subtle);">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                    <div style="font-size: 0.8rem; font-weight: 800; color: var(--red-alert); text-transform: uppercase; letter-spacing: 0.05em;">
+                        Projected Asset Bleed (6mo)
+                    </div>
+                    <div style="font-size: 1.2rem; font-weight: 800; color: var(--red-alert);">
+                        -$${String.format("%,d", result.assetBleedAmount())}
+                    </div>
+                </div>
+                <div style="font-size: 0.85rem; color: var(--text-secondary); font-weight: 500; line-height: 1.4;">
+                    Loss from inaction: Estimated depreciation + risk probability.
+                </div>
+            </div>
         </div>
 
         <div style="display: flex; flex-direction: column; gap: 1.5rem;">

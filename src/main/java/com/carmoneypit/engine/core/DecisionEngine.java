@@ -16,12 +16,14 @@ import java.util.List;
 public class DecisionEngine {
 
     private final RegretCalculator regretCalculator;
+    private final CostOfInactionCalculator costOfInactionCalculator;
 
     // Margin to prevent flickering verdicts (hysteresis-like thought process)
     private static final double SIGNIFICANCE_MARGIN = 50.0;
 
-    public DecisionEngine(RegretCalculator regretCalculator) {
+    public DecisionEngine(RegretCalculator regretCalculator, CostOfInactionCalculator costOfInactionCalculator) {
         this.regretCalculator = regretCalculator;
+        this.costOfInactionCalculator = costOfInactionCalculator;
     }
 
     /**
@@ -52,8 +54,12 @@ public class DecisionEngine {
         breakdown.addAll(rfDetail.items());
         breakdown.addAll(rmDetail.items());
 
+        // Calculate Cost of Inaction (Asset Bleed)
+        long assetBleed = costOfInactionCalculator.calculateAssetBleed(input.vehicleType(), input.mileage(),
+                input.repairQuoteUsd());
+
         VisualizationHint hint = new VisualizationHint(rfDetail.score(), rmDetail.score(), moneyPitState);
-        return new VerdictResult(state, narrative, hint, breakdown);
+        return new VerdictResult(state, narrative, hint, breakdown, assetBleed);
     }
 
     private VerdictState determineState(double rf, double rm) {

@@ -8,7 +8,8 @@ public class OutputModels {
             VerdictState verdictState,
             String narrativeContext, // Generated dynamic sentence
             VisualizationHint visualizationHint,
-            List<FinancialLineItem> costBreakdown) {
+            List<FinancialLineItem> costBreakdown,
+            long assetBleedAmount) {
     }
 
     public record VisualizationHint(
