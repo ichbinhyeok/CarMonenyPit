@@ -3,6 +3,7 @@
 @param String title = "Car Money Pit | Precision Actuarial Analysis"
 @param Content content
 @param Content extraStyles = null
+@param boolean noindex = false
 
 <!DOCTYPE html>
 <html lang="en">
@@ -10,6 +11,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>${title}</title>
+    @if(noindex)
+    <meta name="robots" content="noindex">
+    @endif
     <!-- 2026 Futurist Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

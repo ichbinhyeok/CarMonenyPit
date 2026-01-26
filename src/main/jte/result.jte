@@ -17,6 +17,7 @@
 
 @template.layout(
     title = "Analysis Engine | Future Verdict",
+    noindex = true,
     extraStyles = @`
         <style>
             .container {
@@ -59,8 +60,22 @@
                 gap: 4px;
             }
 
-            .pill { flex: 1; cursor: pointer; position: relative; }
-            .pill input { position: absolute; opacity: 0; }
+            .pill { 
+                flex: 1; 
+                cursor: pointer; 
+                position: relative; 
+                margin: 0; /* consistent resetting */
+            }
+            
+            /* Hide the actual radio button */
+            .pill input { 
+                position: absolute; 
+                opacity: 0; 
+                width: 0;
+                height: 0;
+                margin: 0;
+            }
+            
             .pill span {
                 display: block;
                 padding: 0.75rem;
@@ -70,8 +85,15 @@
                 border-radius: 12px;
                 transition: all 0.2s;
                 color: var(--text-secondary);
+                background: transparent;
             }
-            .pill input:checked + span { background: #fff; color: #000; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+            
+            /* Selected State */
+            .pill input:checked + span { 
+                background: #fff; 
+                color: #000; 
+                box-shadow: 0 4px 12px rgba(0,0,0,0.05); 
+            }
 
             @media (max-width: 1024px) {
                 .sim-grid { grid-template-columns: 1fr; }
@@ -125,13 +147,19 @@
                         <div class="sim-item">
                             <label>Switching Friction Threshold</label>
                             <div style="display: flex; align-items: center; gap: 1rem; padding: 0.5rem 0;">
-                                <span style="font-size: 0.75rem; font-weight: 700; color: var(--text-secondary);">Conservative</span>
+                                <span style="font-size: 0.75rem; font-weight: 700; color: var(--text-secondary); cursor: pointer;" 
+                                      onclick="document.querySelector('input[name=hassleToleranceSlider]').value=0; document.querySelector('input[name=hassleToleranceSlider]').dispatchEvent(new Event('input', {bubbles: true}));">
+                                    Conservative
+                                </span>
                                 <input type="range" name="hassleToleranceSlider" min="0" max="2" step="1" 
-                                       style="flex: 1; accent-color: var(--futurist-blue);"
+                                       style="flex: 1; accent-color: var(--futurist-blue); cursor: pointer;"
                                        value="${controls.hassleTolerance() == HassleTolerance.HATE_SWITCHING ? 0 : (controls.hassleTolerance() == HassleTolerance.NEUTRAL ? 1 : 2)}" 
                                        oninput="document.getElementById('hassleToleranceHidden').value = this.value == 0 ? 'HATE_SWITCHING' : (this.value == 1 ? 'NEUTRAL' : 'WANT_NEW_CAR'); this.dispatchEvent(new Event('change', {bubbles: true}));">
                                 <input type="hidden" id="hassleToleranceHidden" name="hassleTolerance" value="${controls.hassleTolerance()}">
-                                <span style="font-size: 0.75rem; font-weight: 700; color: var(--text-secondary);">Aggressive</span>
+                                <span style="font-size: 0.75rem; font-weight: 700; color: var(--text-secondary); cursor: pointer;"
+                                      onclick="document.querySelector('input[name=hassleToleranceSlider]').value=2; document.querySelector('input[name=hassleToleranceSlider]').dispatchEvent(new Event('input', {bubbles: true}));">
+                                    Aggressive
+                                </span>
                             </div>
                         </div>
                     </div>
