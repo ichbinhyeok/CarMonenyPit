@@ -8,6 +8,7 @@
      hx-post="/analyze-final" 
      hx-trigger="load delay:2800ms" 
      hx-target="body" 
+     hx-push-url="/analyze"
      hx-vals='{"vehicleType": "${vehicleType}", "mileage": ${mileage}, "repairQuoteUsd": ${repairQuoteUsd}}'>
     
     <div class="scan-visual">
