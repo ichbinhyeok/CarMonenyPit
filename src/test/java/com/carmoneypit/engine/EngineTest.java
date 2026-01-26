@@ -4,16 +4,11 @@ import com.carmoneypit.engine.api.InputModels.EngineInput;
 import com.carmoneypit.engine.api.InputModels.VehicleType;
 import com.carmoneypit.engine.api.OutputModels.VerdictResult;
 import com.carmoneypit.engine.api.OutputModels.VerdictState;
+import com.carmoneypit.engine.core.CostOfInactionCalculator;
 import com.carmoneypit.engine.core.DecisionEngine;
-import com.carmoneypit.engine.core.PointConverter;
 import com.carmoneypit.engine.core.RegretCalculator;
-import com.carmoneypit.engine.data.EngineDataProvider;
-import com.carmoneypit.engine.model.EngineDataModels.EngineData;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.io.File;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -23,14 +18,9 @@ public class EngineTest {
 
     @BeforeEach
     public void setup() {
-        // Real Data Loading (Integration style test)
-        ObjectMapper mapper = new ObjectMapper();
-        EngineDataProvider provider = new EngineDataProvider(mapper);
-        provider.loadData();
-
-        PointConverter converter = new PointConverter(provider);
-        RegretCalculator calculator = new RegretCalculator(provider, converter);
-        engine = new DecisionEngine(calculator);
+        RegretCalculator calculator = new RegretCalculator();
+        CostOfInactionCalculator costCalc = new CostOfInactionCalculator();
+        engine = new DecisionEngine(calculator, costCalc);
     }
 
     @Test
@@ -39,7 +29,8 @@ public class EngineTest {
         EngineInput input = new EngineInput(
                 VehicleType.SEDAN,
                 40000,
-                500 // $500 -> 50 points
+                500, // $500
+                15000 // currentValue
         );
 
         VerdictResult result = engine.evaluate(input);
@@ -55,7 +46,8 @@ public class EngineTest {
         EngineInput input = new EngineInput(
                 VehicleType.SEDAN,
                 160000,
-                3000 // $3000 -> 300 points
+                3000, // $3000
+                5000 // currentValue
         );
 
         VerdictResult result = engine.evaluate(input);

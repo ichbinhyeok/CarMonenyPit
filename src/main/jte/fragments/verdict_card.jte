@@ -8,6 +8,7 @@
 @param String verdictCss
 @param String leadLabel
 @param String leadDescription
+@param String leadUrl
 
 <div id="verdict-card" class="fade-in">
     <style>
@@ -96,9 +97,10 @@
                 <div style="font-size: 0.8rem; font-weight: 800; text-transform: uppercase; margin-bottom: 0.75rem; opacity: 0.8; letter-spacing: 0.05em;">Conversion Gateway</div>
                 <h4 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 1.25rem; line-height: 1.1;">${leadLabel}</h4>
                 <p style="font-size: 1rem; margin-bottom: 2rem; opacity: 0.9; font-weight: 500; line-height: 1.4;">${leadDescription}</p>
-                <button type="button" style="display: inline-flex; align-items: center; justify-content: center; background: #fff; color: var(--futurist-blue); width: 100%; padding: 1.25rem; border: none; border-radius: 20px; text-decoration: none; font-weight: 800; font-size: 1.1rem; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" onclick="alert('Proceeding to resolution gateway...')">
+                <a href="${leadUrl}" 
+                   style="display: inline-flex; align-items: center; justify-content: center; background: #fff; color: var(--futurist-blue); width: 100%; padding: 1.25rem; border: none; border-radius: 20px; text-decoration: none; font-weight: 800; font-size: 1.1rem; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
                     INITIATE PROCESS <span>→</span>
-                </button>
+                </a>
             </div>
         </div>
     </div>

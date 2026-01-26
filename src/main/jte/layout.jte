@@ -4,6 +4,8 @@
 @param Content content
 @param Content extraStyles = null
 @param boolean noindex = false
+@param String ogTitle = null
+@param String ogDescription = null
 
 <!DOCTYPE html>
 <html lang="en">
@@ -14,6 +16,14 @@
     @if(noindex)
     <meta name="robots" content="noindex">
     @endif
+    
+    @if(ogTitle != null)
+    <meta property="og:title" content="${ogTitle}">
+    @endif
+    @if(ogDescription != null)
+    <meta property="og:description" content="${ogDescription}">
+    @endif
+    <meta property="og:type" content="website">
     <!-- 2026 Futurist Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

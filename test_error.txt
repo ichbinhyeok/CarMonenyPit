@@ -1,0 +1,79 @@
+> Task :generateJte UP-TO-DATE
+> Task :compileJava UP-TO-DATE
+> Task :processResources UP-TO-DATE
+> Task :classes UP-TO-DATE
+
+> Task :compileTestJava FAILED
+C:\Development\Owner\CarMoneyPit\src\test\java\com\carmoneypit\engine\EngineTest.java:32: error: constructor RegretCalculator in class RegretCalculator cannot be applied to given types;
+        RegretCalculator calculator = new RegretCalculator(provider, converter);
+                                      ^
+  required: no arguments
+  found:    EngineDataProvider,PointConverter
+  reason: actual and formal argument lists differ in length
+C:\Development\Owner\CarMoneyPit\src\test\java\com\carmoneypit\engine\EngineTest.java:33: error: constructor DecisionEngine in class DecisionEngine cannot be applied to given types;
+        engine = new DecisionEngine(calculator);
+                 ^
+  required: RegretCalculator,CostOfInactionCalculator
+  found:    RegretCalculator
+  reason: actual and formal argument lists differ in length
+C:\Development\Owner\CarMoneyPit\src\test\java\com\carmoneypit\engine\EngineTest.java:39: error: constructor EngineInput in record EngineInput cannot be applied to given types;
+        EngineInput input = new EngineInput(
+                            ^
+  required: VehicleType,long,long,long
+  found:    VehicleType,int,int
+  reason: actual and formal argument lists differ in length
+C:\Development\Owner\CarMoneyPit\src\test\java\com\carmoneypit\engine\EngineTest.java:55: error: constructor EngineInput in record EngineInput cannot be applied to given types;
+        EngineInput input = new EngineInput(
+                            ^
+  required: VehicleType,long,long,long
+  found:    VehicleType,int,int
+  reason: actual and formal argument lists differ in length
+C:\Development\Owner\CarMoneyPit\src\test\java\com\carmoneypit\engine\web\WebLayerTest.java:27: warning: [removal] MockBean in org.springframework.boot.test.mock.mockito has been deprecated and marked for removal
+        @MockBean
+         ^
+C:\Development\Owner\CarMoneyPit\src\test\java\com\carmoneypit\engine\web\WebLayerTest.java:30: warning: [removal] MockBean in org.springframework.boot.test.mock.mockito has been deprecated and marked for removal
+        @MockBean
+         ^
+C:\Development\Owner\CarMoneyPit\src\test\java\com\carmoneypit\engine\web\WebLayerTest.java:43: error: constructor VerdictResult in record VerdictResult cannot be applied to given types;
+                VerdictResult mockResult = new VerdictResult(
+                                           ^
+  required: VerdictState,String,VisualizationHint,List<FinancialLineItem>,long
+  found:    VerdictState,String,VisualizationHint
+  reason: actual and formal argument lists differ in length
+C:\Development\Owner\CarMoneyPit\src\test\java\com\carmoneypit\engine\web\WebLayerTest.java:68: error: constructor VerdictResult in record VerdictResult cannot be applied to given types;
+                VerdictResult mockResult = new VerdictResult(
+                                           ^
+  required: VerdictState,String,VisualizationHint,List<FinancialLineItem>,long
+  found:    VerdictState,String,VisualizationHint
+  reason: actual and formal argument lists differ in length
+6 errors
+2 warnings
+
+[Incubating] Problems report is available at: file:///C:/Development/Owner/CarMoneyPit/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':compileTestJava'.
+> Compilation failed; see the compiler output below.
+  C:\Development\Owner\CarMoneyPit\src\test\java\com\carmoneypit\engine\EngineTest.java:32: error: constructor RegretCalculator in class RegretCalculator cannot be applied to given types;
+          RegretCalculator calculator = new RegretCalculator(provider, converter);
+                                        ^
+    required: no arguments
+    found:    EngineDataProvider,PointConverter
+    reason: actual and formal argument lists differ in length
+  6 errors
+  2 warnings
+
+* Try:
+> Check your code and dependencies to fix the compilation error(s)
+> Run with --scan to get full insights.
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.14.3/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD FAILED in 2s
+4 actionable tasks: 1 executed, 3 up-to-date

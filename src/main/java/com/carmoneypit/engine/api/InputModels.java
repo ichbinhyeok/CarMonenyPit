@@ -11,7 +11,8 @@ public class InputModels {
     public record SimulationControls(
             FailureSeverity failureSeverity,
             MobilityStatus mobilityStatus,
-            HassleTolerance hassleTolerance) {
+            HassleTolerance hassleTolerance,
+            RetentionHorizon retentionHorizon) {
     }
 
     public enum VehicleType {
@@ -33,5 +34,12 @@ public class InputModels {
         HATE_SWITCHING,
         NEUTRAL,
         WANT_NEW_CAR
+    }
+
+    public enum RetentionHorizon {
+        MONTHS_6,
+        YEARS_1,
+        YEARS_3,
+        YEARS_5
     }
 }

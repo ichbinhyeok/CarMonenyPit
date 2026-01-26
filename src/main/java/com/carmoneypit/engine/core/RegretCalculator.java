@@ -31,7 +31,7 @@ public class RegretCalculator {
         items.add(new FinancialLineItem("Repair Outlay", repairCost, "Immediate cash drain for the quoted service."));
         totalScore += repairCost;
 
-        // 2. Future Failure Probability (Mileage Based)
+        // 2. Future Failure Probability (Mileage Based + Severity Boost)
         double failureProb = 0.10; // Default
         if (input.mileage() > 150000) {
             failureProb = 0.60;
@@ -41,10 +41,14 @@ public class RegretCalculator {
 
         double majorCostBase = MAJOR_FAILURE_GENERAL;
         if (controls != null) {
-            if (controls.failureSeverity() == FailureSeverity.ENGINE_TRANSMISSION)
+            // [LOGIC FIX 3] Severity Boosts Probability, not just Cost
+            if (controls.failureSeverity() == FailureSeverity.ENGINE_TRANSMISSION) {
                 majorCostBase = MAJOR_FAILURE_ENGINE;
-            else if (controls.failureSeverity() == FailureSeverity.SUSPENSION_BRAKES)
+                failureProb *= 1.5; // "Engine failure implies systemic rot"
+                failureProb = Math.min(failureProb, 0.95); // Cap at 95%
+            } else if (controls.failureSeverity() == FailureSeverity.SUSPENSION_BRAKES) {
                 majorCostBase = MAJOR_FAILURE_SUSPENSION;
+            }
         }
 
         double riskRegret = failureProb * majorCostBase;
@@ -59,11 +63,49 @@ public class RegretCalculator {
                 "Depreciation penalty for selling a repaired car vs selling now."));
         totalScore += timingCost;
 
-        // 4. Pain Score (Time/Stress)
-        double painScore = (input.mileage() / 100.0) + (input.repairQuoteUsd() / 10.0);
+        // 4. Pain Score (Time/Stress + Tow Truck Rage)
+        // [LOGIC FIX 2] Mileage Pain Multiplier
+        double basePain = (input.repairQuoteUsd() / 10.0);
+        double mileagePain = (input.mileage() / 100.0);
+        if (input.mileage() > 100000) {
+            mileagePain *= 3.0; // "Old cars cause 3x anxiety"
+        }
+
+        double painScore = basePain + mileagePain;
+
+        // [LOGIC FIX 1] Tow Truck Paradox (Breakdown Rage)
+        if (controls != null && controls.mobilityStatus() == MobilityStatus.NEEDS_TOW) {
+            double rageCost = 2000.0;
+            painScore += rageCost;
+        }
+
         items.add(new FinancialLineItem("Cognitive Friction", painScore,
                 "Actuarial weight for vehicle-related stress and downtime."));
         totalScore += painScore;
+
+        // [LOGIC FIX 4] Retention Horizon Logic Trap
+        if (controls != null && controls.retentionHorizon() != null) {
+            // No matter the horizon, add a "trap" cost
+            double horizonCost = 0;
+            String horizonNote = "";
+            switch (controls.retentionHorizon()) {
+                case MONTHS_6:
+                    horizonCost = 1200.0; // Short term: "Too expensive for short utility"
+                    horizonNote = "Amortization penalty: Repair costs exceed 6-month utility value.";
+                    break;
+                case YEARS_1:
+                    horizonCost = 1800.0;
+                    horizonNote = "Depreciation acceleration during 1-year hold window.";
+                    break;
+                case YEARS_3:
+                case YEARS_5:
+                    horizonCost = 3500.0; // Long term: "Guaranteed failure cascade"
+                    horizonNote = "Long-term hold maximizes exposure to catastrophic failure nodes.";
+                    break;
+            }
+            items.add(new FinancialLineItem("Retention Exposure", horizonCost, horizonNote));
+            totalScore += horizonCost;
+        }
 
         return new RegretDetail(totalScore, items);
     }

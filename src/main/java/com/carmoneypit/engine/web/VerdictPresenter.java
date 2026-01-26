@@ -1,10 +1,51 @@
 package com.carmoneypit.engine.web;
 
 import com.carmoneypit.engine.api.OutputModels.VerdictState;
+import com.carmoneypit.engine.api.InputModels.EngineInput;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
+import java.util.Base64;
+import java.nio.charset.StandardCharsets;
 
 @Service
 public class VerdictPresenter {
+
+    private final ObjectMapper objectMapper;
+
+    public VerdictPresenter(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
+    }
+
+    public String encodeToken(EngineInput input) {
+        try {
+            String json = objectMapper.writeValueAsString(input);
+            return Base64.getUrlEncoder().withoutPadding().encodeToString(json.getBytes(StandardCharsets.UTF_8));
+        } catch (Exception e) {
+            throw new RuntimeException("Token encoding failed", e);
+        }
+    }
+
+    public EngineInput decodeToken(String token) {
+        try {
+            String json = new String(Base64.getUrlDecoder().decode(token), StandardCharsets.UTF_8);
+            return objectMapper.readValue(json, EngineInput.class);
+        } catch (Exception e) {
+            throw new RuntimeException("Token decoding failed", e);
+        }
+    }
+
+    public String getViralOgTitle(VerdictState state) {
+        switch (state) {
+            case TIME_BOMB:
+                return "My Car is a TIME BOMB | CarMoneyPit Diagnostic";
+            case STABLE:
+                return "My Car is STABLE | CarMoneyPit Diagnostic";
+            case BORDERLINE:
+                return "My Car is a MONEY PIT | CarMoneyPit Diagnostic";
+            default:
+                return "CarMoneyPit Diagnostic Result";
+        }
+    }
 
     public String getVerdictTitle(VerdictState state) {
         switch (state) {
@@ -79,6 +120,19 @@ public class VerdictPresenter {
                 return "Keep your cash flow stable. Break this down into 12 easy payments.";
             default:
                 return "Consult with a vehicle decision specialist.";
+        }
+    }
+
+    public String getLeadUrl(VerdictState state) {
+        switch (state) {
+            case TIME_BOMB:
+                return "mailto:acquisitions@carmoneypit.com?subject=Cash%20Offer%20Request";
+            case STABLE:
+                return "mailto:service@carmoneypit.com?subject=Service%20Appointment";
+            case BORDERLINE:
+                return "mailto:finance@carmoneypit.com?subject=Repair%20Loan%20Inquiry";
+            default:
+                return "mailto:support@carmoneypit.com";
         }
     }
 }

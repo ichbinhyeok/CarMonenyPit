@@ -12,6 +12,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.Collections;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -43,7 +45,9 @@ public class WebLayerTest {
                 VerdictResult mockResult = new VerdictResult(
                                 VerdictState.STABLE,
                                 "Stable Narrative",
-                                new VisualizationHint(100, 200, "SURFACE"));
+                                new VisualizationHint(100, 200, "SURFACE"),
+                                Collections.emptyList(),
+                                0L);
                 given(decisionEngine.evaluate(any(EngineInput.class))).willReturn(mockResult);
 
                 // Mock Presenter Response
@@ -51,11 +55,15 @@ public class WebLayerTest {
                 given(verdictPresenter.getLawyerExplanation(any())).willReturn("Explanation");
                 given(verdictPresenter.getActionPlan(any())).willReturn("Action");
                 given(verdictPresenter.getCssClass(any())).willReturn("class-sustain");
+                given(verdictPresenter.getLeadLabel(any())).willReturn("Lead Label");
+                given(verdictPresenter.getLeadDescription(any())).willReturn("Lead Desc");
+                given(verdictPresenter.getLeadUrl(any())).willReturn("http://example.com");
 
-                mockMvc.perform(post("/analyze")
+                mockMvc.perform(post("/analyze-final")
                                 .param("vehicleType", "SEDAN")
                                 .param("mileage", "50000")
-                                .param("repairQuoteUsd", "500"))
+                                .param("repairQuoteUsd", "500")
+                                .param("currentValueUsd", "10000"))
                                 .andExpect(status().isOk())
                                 .andExpect(view().name("result"))
                                 .andExpect(model().attributeExists("result", "input", "controls", "verdictTitle",
@@ -68,7 +76,9 @@ public class WebLayerTest {
                 VerdictResult mockResult = new VerdictResult(
                                 VerdictState.TIME_BOMB,
                                 "Time Bomb Narrative",
-                                new VisualizationHint(300, 100, "DEEP_PIT"));
+                                new VisualizationHint(300, 100, "DEEP_PIT"),
+                                Collections.emptyList(),
+                                0L);
                 given(decisionEngine.simulate(any(EngineInput.class), any(SimulationControls.class)))
                                 .willReturn(mockResult);
 
@@ -77,11 +87,15 @@ public class WebLayerTest {
                 given(verdictPresenter.getLawyerExplanation(any())).willReturn("Term Explanation");
                 given(verdictPresenter.getActionPlan(any())).willReturn("Term Action");
                 given(verdictPresenter.getCssClass(any())).willReturn("class-terminate");
+                given(verdictPresenter.getLeadLabel(any())).willReturn("Term Label");
+                given(verdictPresenter.getLeadDescription(any())).willReturn("Term Desc");
+                given(verdictPresenter.getLeadUrl(any())).willReturn("http://term-url.com");
 
                 mockMvc.perform(post("/simulate")
                                 .param("vehicleType", "SEDAN")
                                 .param("mileage", "50000")
                                 .param("repairQuoteUsd", "500")
+                                .param("currentValueUsd", "10000")
                                 .param("failureSeverity", "ENGINE_TRANSMISSION")
                                 .param("mobilityStatus", "DRIVABLE")
                                 .param("hassleTolerance", "NEUTRAL"))
