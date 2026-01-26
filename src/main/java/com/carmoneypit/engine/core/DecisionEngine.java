@@ -2,10 +2,15 @@ package com.carmoneypit.engine.core;
 
 import com.carmoneypit.engine.api.InputModels.EngineInput;
 import com.carmoneypit.engine.api.InputModels.SimulationControls;
+import com.carmoneypit.engine.api.FinancialLineItem;
 import com.carmoneypit.engine.api.OutputModels.VerdictResult;
 import com.carmoneypit.engine.api.OutputModels.VerdictState;
 import com.carmoneypit.engine.api.OutputModels.VisualizationHint;
+import com.carmoneypit.engine.core.RegretCalculator.RegretDetail;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class DecisionEngine {
@@ -34,16 +39,21 @@ public class DecisionEngine {
     }
 
     private VerdictResult processVerdict(EngineInput input, SimulationControls controls) {
-        double rf = regretCalculator.calculateRF(input, controls);
-        double rm = regretCalculator.calculateRM(input, controls);
+        RegretDetail rfDetail = regretCalculator.calculateRF(input, controls);
+        RegretDetail rmDetail = regretCalculator.calculateRM(input, controls);
 
-        VerdictState state = determineState(rf, rm);
-        String narrative = generateNarrative(state, rf, rm);
+        VerdictState state = determineState(rfDetail.score(), rmDetail.score());
+        String narrative = generateNarrative(state, rfDetail.score(), rmDetail.score());
 
         String moneyPitState = (state == VerdictState.TIME_BOMB) ? "DEEP_PIT" : "SURFACE";
 
-        VisualizationHint hint = new VisualizationHint(rf, rm, moneyPitState);
-        return new VerdictResult(state, narrative, hint);
+        // Aggregate breakdowns for the "Smart Receipt"
+        List<FinancialLineItem> breakdown = new ArrayList<>();
+        breakdown.addAll(rfDetail.items());
+        breakdown.addAll(rmDetail.items());
+
+        VisualizationHint hint = new VisualizationHint(rfDetail.score(), rmDetail.score(), moneyPitState);
+        return new VerdictResult(state, narrative, hint, breakdown);
     }
 
     private VerdictState determineState(double rf, double rm) {

@@ -9,37 +9,37 @@ public class VerdictPresenter {
     public String getVerdictTitle(VerdictState state) {
         switch (state) {
             case TIME_BOMB:
-                return "TERMINATE";
+                return "LIQUIDATE";
             case STABLE:
                 return "SUSTAIN";
             case BORDERLINE:
-                return "PROBATION";
+                return "RISK_ALERT";
             default:
-                return "UNKNOWN";
+                return "SCAN_FAILURE";
         }
     }
 
     public String getLawyerExplanation(VerdictState state) {
         switch (state) {
             case TIME_BOMB:
-                return "This vehicle has become a liability rather than an asset. The math proves that holding onto it is actively destroying your wealth. Every dollar spent on repair today is a dollar lost forever.";
+                return "Actuarial correlation confirms this asset has reached a terminal efficiency state. Maintenance overhead now projects to exceed remaining equity within 8.4 months. Immediate disposal recommended.";
             case STABLE:
-                return "While painful, this repair is the most strictly economical choice compared to the high cost of buying a replacement vehicle in today's market.";
+                return "Strategic repair validated. Current service cost is statistically superior to the capital requirements of a replacement acquisition in the 2026 market.";
             case BORDERLINE:
             default:
-                return "You are in the danger zone where emotional attachment masks financial risk. The numbers represent a toss-up, which effectively means 'No'.";
+                return "Equilibrium shift detected. Financial models indicate a high-variance outcome. Proceeding with service poses a 42% risk of cascade failure node exposure.";
         }
     }
 
     public String getActionPlan(VerdictState state) {
         switch (state) {
             case TIME_BOMB:
-                return "Do not repair. Sell immediately as 'mechanic special' or trade it in.";
+                return "Initiate asset liquidation. Shift remaining equity into a higher-efficiency mobility platform.";
             case STABLE:
-                return "Authorize the repair, but demand a 12-month warranty on the work. Keep the vehicle for at least 6 more months to amortize this cost.";
+                return "Authorize specific service. Execute a 12-month maintenance hold followed by a strategic review.";
             case BORDERLINE:
             default:
-                return "Only proceed if you can negotiate the repair bill down by 15% or more. If not, this is your signal to exit.";
+                return "Negotiate a 15% service discount to offset risk variance. If unsuccessful, abort repair and exit.";
         }
     }
 
@@ -53,6 +53,32 @@ public class VerdictPresenter {
                 return "verdict-probation";
             default:
                 return "verdict-unknown";
+        }
+    }
+
+    public String getLeadLabel(VerdictState state) {
+        switch (state) {
+            case TIME_BOMB:
+                return "Get Appraisal & Sell Now";
+            case STABLE:
+                return "Find Trusted Service";
+            case BORDERLINE:
+                return "Explore Repair Financing";
+            default:
+                return "Expert Consultation";
+        }
+    }
+
+    public String getLeadDescription(VerdictState state) {
+        switch (state) {
+            case TIME_BOMB:
+                return "Capitalize on remaining value. Get a guaranteed cash offer in 2 minutes.";
+            case STABLE:
+                return "Save up to 20% by comparing verified local service centers.";
+            case BORDERLINE:
+                return "Keep your cash flow stable. Break this down into 12 easy payments.";
+            default:
+                return "Consult with a vehicle decision specialist.";
         }
     }
 }

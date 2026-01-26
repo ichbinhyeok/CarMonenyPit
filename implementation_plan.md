@@ -1,55 +1,63 @@
-# 구현 계획 - 스마트 영수증 (설득력 강화)
+# CarMoneyPit 종합 구현 마스터 플랜 (Final)
 
-## 목표
-불투명한 "판정 결과"를 투명한 **"후회 비용 명세서(Accounting of Regret)"**로 변환하여, 사용자가 보이지 않는 리스크를 시각적으로 인지하고 의사결정을 내릴 수 있도록 돕습니다.
+## 1. 프로젝트 정체성 & 톤앤매너
+### Identity: "차량 의사결정 지원 도구 (Decision Support Engine)"
+*   **Core Philosophy:** "납득이 되어야 지갑을 연다 (Conviction First, Lead Second)"
 
-## 사용자 검토 필요
-> [!NOTE]
-> 이 기능은 정확한 회계 장부가 아니라, **"의사결정을 돕는 논리적 근거"**를 보여주는 것입니다.
-> 너무 구체적인 숫자로 오해를 사지 않도록, "~(약)" 표시와 "추정(Estimated)" 표현을 사용하여 EEAT 리스크를 관리합니다.
+### 톤앤매너: "Visual Authority (시각적 권위)"
+> **Q. 틱톡에 맞추면 유치해지지 않을까요?**
+> **A. 아니오.** 춤추는 틱톡이 아니라, **"빨간펜 선생님"** 같은 틱톡입니다.
+*   **Not Childish:** 귀여운 캐릭터, 말장난, 가벼운 말투 ❌
+*   **Visual Shock:** 고지서, 경고장, 빨간색 그래프, 굵은 폰트 ⭕
+*   **전략:** "유치한 게(Silly)" 아니라 **"직관적인(Direct)"** 것입니다.
+    *   금융 전문가들이 틱톡에서 차트 띄워놓고 "이 주식 지금 위험합니다"라고 할 때의 그 진지함과 직관성을 벤치마킹합니다.
 
-## 변경 제안
+---
 
-### 1. 데이터 모델 업데이트
-프론트엔드로 "영수증 항목"을 전달할 구조체 생성
+## 2. 사용자 경험 흐름 (User Flow v2)
 
-#### [NEW] `src/main/java/com/carmoneypit/engine/api/OutputModels/FinancialLineItem.java`
--   `String label`: 항목명 (예: "향후 변속기 고장 리스크", "스트레스 비용")
--   `String amount`: 금액 (예: "~$2,200", "+$500")
--   `String description`: 설명 (예: "이 주행거리 구간에서는 30% 확률로 발생")
--   `boolean isNegative`: 스타일링 힌트 (빨간색/회색 구분)
+### Phase 1. Minimal Input (입력)
+*   사용자 피로도 최소화를 위해 필수 데이터(차종, 주행거리, 견적)만 입력.
 
-#### [MODIFY] `src/main/java/com/carmoneypit/engine/api/OutputModels/VerdictResult.java`
--   `List<FinancialLineItem> costBreakdown` 필드 추가
+### Phase 1.5. Tension & Authority (권위 빌드업) **[NEW]**
+*   **Loading Screen:** 1.5초~2초간 "AI 분석 과정"을 텍스트로 중계.
+    *   *"Checking actuarial risk tables..."* (통계표 대조 중)
+    *   *"Calculating depreciation curve..."* (감가상각 계산 중)
+*   **효과:** "그냥 나온 숫자가 아니라, 정밀한 계산 결과구나"라는 **신뢰(Authority)** 형성.
 
-### 2. 로직 강화 (RegretCalculator)
-단순 점수 합산이 아니라, 계산 과정을 "항목화"하여 반환하도록 수정
+### Phase 2. Smart Receipt (핵심 납득 장치)
+*   **Iceberg Receipt (빙산 영수증):**
+    *   눈앞의 수리비($1,500) 밑에, 더 거대한 **잠재 리스크($2,200)**를 빨간색 블록으로 시각화.
+    *   설명 툴팁으로 "업계 통계(Industry Data)"를 언급하여 객관성 확보.
 
-#### [MODIFY] `src/main/java/com/carmoneypit/engine/core/RegretCalculator.java`
--   `calculateRF`와 `calculateRM`을 리팩토링하여 상세 내역(Line Items)을 수집
--   **핵심 로직:**
-    -   추상적인 "Points"를 "대략적인 달러 가치"로 환산하여 표시 (예: 1 Point = $10, 단순 스케일링)
-    -   리스크 레벨에 따른 "근거 텍스트" 생성 (예: CRITICAL 레벨이면 "연쇄 고장 위험 높음" 경고 추가)
+### Phase 3. Simulation Lab (능동적 납득)
+*   **Interactive Sliders:** "스트레스 내성" 등을 직접 조절하며 비용 변화를 체험.
+*   사용자가 스스로 "아, 내 성격상 이 차는 못 타겠네"라고 느끼게 유도.
 
-### 3. UI 구현 (JTE 템플릿)
-결과 화면에 "스마트 영수증" 카드 추가
+### Phase 4. Contextual Exit (리드 전환)
+*   판정 결과에 따른 **"다른 문 열어주기"**:
+    *   **🔴 Time Bomb:** "지금 파는 게 이득" -> **[내 차 팔기 (Cash Offer)]**
+    *   **🟡 Stable:** "고쳐서 타세요" -> **[정비소 예약 / 보증 연장]**
+    *   **🟠 Borderline:** "돈이 문제인가요?" -> **[수리비 대출 알아보기]**
 
-#### [MODIFY] `src/main/jte/result.jte`
--   **"수리 시나리오" vs "교체 시나리오"**를 나란히 비교하는 영수증 카드 추가
--   숨겨진 비용(Hidden Cost)을 시각적으로 강조하여 "왜 손해인지" 직관적으로 보여줌
+---
 
-### 4. 데이터 보강 (가볍게)
-#### [MODIFY] `engine_data.v1.json`
--   `risk_level`에 대한 `authoritative_text` 필드 추가
-    -   예: "High" -> "High Risk (Statistically 1 in 3 cars fail at this stage)"
-    -   데이터 자체를 정밀하게 바꾸는 게 아니라, **"설명력"**을 높이는 텍스트 추가
+## 3. 구현 로드맵 (Roadmap)
 
-## 검증 계획
+### Step 1. 납득 엔진 구현 (Smart Receipt)
+1.  **Backend:** `FinancialLineItem` 모델 생성 및 `VerdictResult` 수정.
+2.  **Logic:** `RegretCalculator`에서 "숨겨진 비용" 산출 및 "권위적 멘트" 생성 로직 추가.
+3.  **Frontend:** `result.jte`에 "빙산 영수증" 카드 구현.
 
-### 자동화 테스트
--   `RegretCalculatorTest`: `costBreakdown` 리스트가 정상적으로 생성되고, 합산 점수가 맞는지 검증
+### Step 2. UX 디테일 (Flow v2)
+1.  **Loading:** HTMX를 이용한 "순차적 로딩 애니메이션" 구현 (Phase 1.5).
+2.  **Simulation Lab:** 드롭다운을 슬라이더 UI로 교체.
 
-### 수동 검증
--   애플리케이션 실행 (`./gradlew bootRun`)
--   **고위험 시나리오 입력:** (예: 16만 마일 세단) -> "잠재적 고장 비용"이 높게 찍히는지 확인
--   **UI 확인:** 영수증 형태가 "회계 문서"보다는 **"의사결정 도우미"**처럼 친절하게 보이는지 확인
+### Step 3. 리드 연동 (Exit)
+1.  결과 페이지 하단에 판정 상태별(Red/Yellow/Orange) 다른 버튼 노출.
+
+---
+
+## ✅ 승인 요청
+가장 중요한 **"Step 1. 납득 엔진(Smart Receipt)"** 부터 구현을 시작하겠습니다.
+코드는 **진지하고 권위 있는 톤**을 유지하며 작성됩니다.

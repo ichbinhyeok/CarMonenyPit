@@ -1,10 +1,14 @@
 package com.carmoneypit.engine.api;
 
+import java.util.List;
+
 public class OutputModels {
+
     public record VerdictResult(
             VerdictState verdictState,
             String narrativeContext, // Generated dynamic sentence
-            VisualizationHint visualizationHint) {
+            VisualizationHint visualizationHint,
+            List<FinancialLineItem> costBreakdown) {
     }
 
     public record VisualizationHint(

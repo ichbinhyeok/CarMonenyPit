@@ -36,7 +36,19 @@ public class CarDecisionController {
     }
 
     @PostMapping("/analyze")
-    public String analyze(
+    public String analyzeLoading(
+            @RequestParam("vehicleType") VehicleType vehicleType,
+            @RequestParam("mileage") long mileage,
+            @RequestParam("repairQuoteUsd") long repairQuoteUsd,
+            Model model) {
+        model.addAttribute("vehicleType", vehicleType);
+        model.addAttribute("mileage", mileage);
+        model.addAttribute("repairQuoteUsd", repairQuoteUsd);
+        return "fragments/loading";
+    }
+
+    @PostMapping("/analyze-final")
+    public String analyzeFinal(
             @RequestParam("vehicleType") VehicleType vehicleType,
             @RequestParam("mileage") long mileage,
             @RequestParam("repairQuoteUsd") long repairQuoteUsd,
@@ -46,27 +58,22 @@ public class CarDecisionController {
 
         log.info("Analysis Result: State={}, RF={}, RM={}", result.verdictState(), result.visualizationHint().rfScore(),
                 result.visualizationHint().rmScore());
-        String title = presenter.getVerdictTitle(result.verdictState());
-        String expl = presenter.getLawyerExplanation(result.verdictState());
-        log.info("Presentation Data: Title='{}', Expl='{}'", title, expl);
 
-        // Pass input back for sliders initialization
         model.addAttribute("input", input);
         model.addAttribute("result", result);
-
-        // Presentation Logic
         model.addAttribute("verdictTitle", presenter.getVerdictTitle(result.verdictState()));
         model.addAttribute("verdictExplanation", presenter.getLawyerExplanation(result.verdictState()));
         model.addAttribute("verdictAction", presenter.getActionPlan(result.verdictState()));
         model.addAttribute("verdictCss", presenter.getCssClass(result.verdictState()));
+        model.addAttribute("leadLabel", presenter.getLeadLabel(result.verdictState()));
+        model.addAttribute("leadDescription", presenter.getLeadDescription(result.verdictState()));
 
-        // Initialize default controls for the view
         model.addAttribute("controls", new SimulationControls(
                 FailureSeverity.GENERAL_UNKNOWN,
                 MobilityStatus.DRIVABLE,
                 HassleTolerance.NEUTRAL));
 
-        return "result"; // Renders src/main/jte/result.jte
+        return "result";
     }
 
     @PostMapping("/simulate")
@@ -92,6 +99,8 @@ public class CarDecisionController {
         model.addAttribute("verdictExplanation", presenter.getLawyerExplanation(result.verdictState()));
         model.addAttribute("verdictAction", presenter.getActionPlan(result.verdictState()));
         model.addAttribute("verdictCss", presenter.getCssClass(result.verdictState()));
+        model.addAttribute("leadLabel", presenter.getLeadLabel(result.verdictState()));
+        model.addAttribute("leadDescription", presenter.getLeadDescription(result.verdictState()));
 
         // HTMX fragment response: only render the card part
         // We can define a fragment inside result.jte or use a separate file.

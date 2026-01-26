@@ -10,13 +10,21 @@ import com.carmoneypit.engine.model.EngineDataModels.RiskProbability;
 import com.carmoneypit.engine.model.EngineDataModels.CostRange;
 import org.springframework.stereotype.Component;
 
+import com.carmoneypit.engine.api.FinancialLineItem;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Component
 public class RegretCalculator {
 
     private final EngineDataProvider dataProvider;
     private final PointConverter pointConverter;
+
+    public record RegretDetail(double score, List<FinancialLineItem> items) {
+    }
 
     public RegretCalculator(EngineDataProvider dataProvider, PointConverter pointConverter) {
         this.dataProvider = dataProvider;
@@ -31,29 +39,55 @@ public class RegretCalculator {
      * Multiplier)
      * 3. Pain Index (Downtime * Stress)
      */
-    public double calculateRF(EngineInput input, SimulationControls controls) {
+    public RegretDetail calculateRF(EngineInput input, SimulationControls controls) {
         EngineData data = dataProvider.getData();
+        List<FinancialLineItem> items = new ArrayList<>();
+        int divisor = data.conversion_rules().standard_divisor();
 
         // 1. Current Repair Cost
         int repairPoints = pointConverter.convertUsdToPoints(input.repairQuoteUsd());
+        items.add(new FinancialLineItem(
+                "Immediate Repair Quote",
+                String.format("$%d", input.repairQuoteUsd()),
+                "The amount you were quoted by the mechanic today.",
+                true));
 
         // 2. Future Failure Risk
         double futureRiskPoints = calculateFutureRisk(input.mileage(), data);
-
-        // 3. Pain Index
-        double painPoints = calculatePainPoints(controls, data);
+        double perceivedRiskPoints = futureRiskPoints;
 
         // Simulation Modifiers (Phase 2)
         if (controls != null) {
-            // If severity is high (Engine/Trans), multipliers might apply to future risk
-            // perception
             if (controls
                     .failureSeverity() == com.carmoneypit.engine.api.InputModels.FailureSeverity.ENGINE_TRANSMISSION) {
-                futureRiskPoints *= 1.5; // Perceived risk increase
+                perceivedRiskPoints *= 1.5;
             }
         }
 
-        return repairPoints + futureRiskPoints + painPoints;
+        if (perceivedRiskPoints > 0) {
+            String riskDesc = "Estimated cost of imminent failures based on current mileage trends.";
+            if (perceivedRiskPoints > futureRiskPoints) {
+                riskDesc += " (Adjusted for high severity repair)";
+            }
+            items.add(new FinancialLineItem(
+                    "Future Failure Risk (Est.)",
+                    String.format("~$%.0f", perceivedRiskPoints * divisor),
+                    riskDesc,
+                    true));
+        }
+
+        // 3. Pain Index
+        double painPoints = calculatePainPoints(controls, data);
+        if (painPoints > 0) {
+            items.add(new FinancialLineItem(
+                    "Stress & Downtime Factor",
+                    String.format("+$%.0f", painPoints * divisor),
+                    "Hidden cost of being without a vehicle and the hassle of towing/rental.",
+                    true));
+        }
+
+        double totalScore = repairPoints + perceivedRiskPoints + painPoints;
+        return new RegretDetail(totalScore, items);
     }
 
     /**
@@ -63,36 +97,45 @@ public class RegretCalculator {
      * 2. Temporary Inconvenience
      * 3. Valid Exit Options (Sellability / Trade-in value proxy)
      */
-    public double calculateRM(EngineInput input, SimulationControls controls) {
+    public RegretDetail calculateRM(EngineInput input, SimulationControls controls) {
         EngineData data = dataProvider.getData();
+        List<FinancialLineItem> items = new ArrayList<>();
+        int divisor = data.conversion_rules().standard_divisor();
 
         // 1. Switching Friction Base
         double frictionPoints = 100.0; // Base "annoyance" points
+        String frictionLabel = "Replacement Hassle";
 
         if (controls != null) {
             if (controls.hassleTolerance() == HassleTolerance.HATE_SWITCHING) {
                 frictionPoints *= 2.0;
+                frictionLabel += " (High)";
             } else if (controls.hassleTolerance() == HassleTolerance.WANT_NEW_CAR) {
                 frictionPoints *= 0.5;
+                frictionLabel += " (Low)";
             }
         }
 
-        // 2. Sellability Factor (If hard to sell, RM increases because exit is painful)
-        // However, in "Regret" logic:
-        // If it's easy to sell (High liquidity), RM is LOW (Low regret to switch).
-        // If it's hard to sell (Low liquidity), RM is HIGH (High regret to
-        // switch/scrap).
+        items.add(new FinancialLineItem(
+                frictionLabel,
+                String.format("~$%.0f", frictionPoints * divisor),
+                "Psychological and logistical cost of acquiring a different vehicle.",
+                false));
+
+        // 2. Sellability Factor
         double sellabilityScore = getSellabilityScore(input.mileage(), data);
-        // Invert sellability: Score 1.0 (Good) -> Low Penalty. Score 0.1 (Bad) -> High
-        // Penalty.
         double liquidityPenalty = (1.0 - sellabilityScore) * 200;
 
-        // 3. Opportunity Cost Floor
-        // "Scrap Value" logic - if value is basically defined as scrap, RM is lower
-        // because you have nothing to lose?
-        // Actually, if you are at floor, you might as well switch.
+        if (liquidityPenalty > 0) {
+            items.add(new FinancialLineItem(
+                    "Exit Liquidity Penalty",
+                    String.format("+$%.0f", liquidityPenalty * divisor),
+                    "Loss incurred due to current vehicle's low market demand/scrap condition.",
+                    false));
+        }
 
-        return frictionPoints + liquidityPenalty;
+        double totalScore = frictionPoints + liquidityPenalty;
+        return new RegretDetail(totalScore, items);
     }
 
     private double calculateFutureRisk(long mileage, EngineData data) {
