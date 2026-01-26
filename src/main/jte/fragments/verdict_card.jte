@@ -15,7 +15,7 @@
                     <span style="color: #ff4757">TIME BOMB (Red)</span>
                 @endif
             </h1>
-            <p>基于 Regret Minimization Analysis</p>
+            <p>Based on Regret Minimization Analysis</p>
         </hgroup>
     </header>
     
