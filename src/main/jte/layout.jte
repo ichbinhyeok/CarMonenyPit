@@ -88,6 +88,18 @@
         ${content}
     </main>
 
-    @template.fragments.footer()
+    <footer style="margin-top: auto; padding: 2rem; background-color: #1a1a1a; color: #666; font-size: 0.9rem; border-top: 1px solid #333;">
+        <div style="max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+            <div>
+                &copy; 2026 CarMoneyPit. All rights reserved.
+            </div>
+            <div style="display: flex; gap: 1.5rem;">
+                <a href="/about" style="color: #888; text-decoration: none; transition: color 0.2s;">About</a>
+                <a href="/methodology" style="color: #888; text-decoration: none; transition: color 0.2s;">Methodology</a>
+                <a href="/privacy" style="color: #888; text-decoration: none; transition: color 0.2s;">Privacy</a>
+                <a href="/terms" style="color: #888; text-decoration: none; transition: color 0.2s;">Terms</a>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>

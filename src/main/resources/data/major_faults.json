@@ -1,0 +1,254 @@
+[
+    {
+        "model_id_ref": "ford_f150_13th",
+        "faults": [
+            {
+                "component": "Cam Phasers",
+                "symptoms": "Rattling noise on cold start, check engine light",
+                "repairCost": 3500,
+                "verdictImplication": "Critical: Verify if TSB 21-2119 has been performed. If not, deduct $3,500 from valuation."
+            },
+            {
+                "component": "10-Speed Transmission",
+                "symptoms": "Harsh shifting, skipping gears",
+                "repairCost": 4500,
+                "verdictImplication": "Moderate: Software updates may fix it, but hardware failure requires rebuild."
+            }
+        ]
+    },
+    {
+        "model_id_ref": "chevrolet_silverado_k2xx",
+        "faults": [
+            {
+                "component": "Torque Converter",
+                "symptoms": "Shuddering at highway speeds (The 'Chevy Shake')",
+                "repairCost": 1800,
+                "verdictImplication": "High Risk: If unchecked, destroys entire transmission ($5k)."
+            },
+            {
+                "component": "AFM Lifters",
+                "symptoms": "Ticking noise, misfire, bent pushrods",
+                "repairCost": 3000,
+                "verdictImplication": "Severe: Requires head removal. Avoid high mileage units without proof of repair."
+            }
+        ]
+    },
+    {
+        "model_id_ref": "ram_1500_ds",
+        "faults": [
+            {
+                "component": "Air Suspension",
+                "symptoms": "Sagging rear end, compressor running constantly",
+                "repairCost": 2200,
+                "verdictImplication": "Common: Plan for conversion to coil springs ($1,500) eventually."
+            },
+            {
+                "component": "Exhaust Manifold Bolts",
+                "symptoms": "Ticking noise on cold start (The 'Hemi Tick')",
+                "repairCost": 900,
+                "verdictImplication": "Annoyance: Often broken bolts. Inspect carefully before buying."
+            }
+        ]
+    },
+    {
+        "model_id_ref": "nissan_rogue_t32",
+        "faults": [
+            {
+                "component": "CVT Transmission",
+                "symptoms": "Loss of power, whining noise, 'juddering'",
+                "repairCost": 4500,
+                "verdictImplication": "Critical: The 'Jatco CVT' is a known weak point. High failure rate over 80k miles."
+            }
+        ]
+    },
+    {
+        "model_id_ref": "nissan_altima_l33",
+        "faults": [
+            {
+                "component": "CVT Transmission",
+                "symptoms": "Stalling, jerking, failure to accelerate",
+                "repairCost": 4200,
+                "verdictImplication": "Critical: Verify if CVT cooler was installed or warranty extended."
+            }
+        ]
+    },
+    {
+        "model_id_ref": "honda_crv_rm",
+        "faults": [
+            {
+                "component": "VTC Actuator",
+                "symptoms": "Grinding noise on cold start (1-2 seconds)",
+                "repairCost": 800,
+                "verdictImplication": "Moderate: Common on 2.4L engines. Annoying but manageable if fixed early."
+            },
+            {
+                "component": "Oil Dilution (1.5T)",
+                "symptoms": "Gasoline smell in oil, rising oil level",
+                "repairCost": 0,
+                "verdictImplication": "Watch: Mainly affects 2017+ 1.5L Turbo. Ensure software update is applied."
+            }
+        ]
+    },
+    {
+        "model_id_ref": "toyota_rav4_xa40",
+        "faults": [
+            {
+                "component": "Torque Converter",
+                "symptoms": "Shuddering between 20-50 mph",
+                "repairCost": 2500,
+                "verdictImplication": "Moderate: Software update might fix, otherwise costly torque converter replacement."
+            }
+        ]
+    },
+    {
+        "model_id_ref": "subaru_forester_sj",
+        "faults": [
+            {
+                "component": "CVT Transmission",
+                "symptoms": "Hesitation, jerking, stalling",
+                "repairCost": 6000,
+                "verdictImplication": "Critical: Subaru extended warranty to 100k miles. Verify coverage status."
+            },
+            {
+                "component": "Oil Consumption",
+                "symptoms": "Low oil light, extensive top-offs",
+                "repairCost": 5000,
+                "verdictImplication": "Severe: May require short block replacement. Check service history for consumption test."
+            }
+        ]
+    },
+    {
+        "model_id_ref": "subaru_outback_bs",
+        "faults": [
+            {
+                "component": "Head Gasket",
+                "symptoms": "Overheating, coolant loss, milky oil",
+                "repairCost": 2500,
+                "verdictImplication": "Classic issue still present. Check for coolant leaks externally."
+            }
+        ]
+    },
+    {
+        "model_id_ref": "ford_explorer_u502",
+        "faults": [
+            {
+                "component": "Internal Water Pump",
+                "symptoms": "Coolant in oil (milky oil), overheating",
+                "repairCost": 2000,
+                "verdictImplication": "Critical: Pump is inside the engine. If it fails, it can destroy the engine immediately."
+            },
+            {
+                "component": "PTU (Transfer Case)",
+                "symptoms": "Burning smell, fluid leak, grinding",
+                "repairCost": 1500,
+                "verdictImplication": "High: 'Lifetime' fluid cooks itself. Frequent fluid changes needed to prevent failure."
+            }
+        ]
+    },
+    {
+        "model_id_ref": "chevrolet_equinox_2nd",
+        "faults": [
+            {
+                "component": "Timing Chain / Oil Consumption",
+                "symptoms": "Rattling noise, low oil, engine stall",
+                "repairCost": 3000,
+                "verdictImplication": "Critical: 2.4L engine consumes oil, leading to timing chain stretch and engine blow-up."
+            }
+        ]
+    },
+    {
+        "model_id_ref": "jeep_grand_cherokee_wk2",
+        "faults": [
+            {
+                "component": "Air Suspension (Quadra-Lift)",
+                "symptoms": "Vehicle sinks overnight, service suspension message",
+                "repairCost": 2500,
+                "verdictImplication": "Common: Expensive to fix properly. Many convert to standard springs."
+            },
+            {
+                "component": "TIPM (Electrical)",
+                "symptoms": "Fuel pump relay failure, stalling, no-start",
+                "repairCost": 1100,
+                "verdictImplication": "Moderate: External relay partial fix exists, but TIPM replacement is proper fix."
+            }
+        ]
+    },
+    {
+        "model_id_ref": "hyundai_tucson_lm",
+        "faults": [
+            {
+                "component": "Theta II Engine Seizure",
+                "symptoms": "Knocking noise, sudden power loss",
+                "repairCost": 6500,
+                "verdictImplication": "Critical: Verify knock sensor update (KSDS). Free engine replacement possible if qualified."
+            }
+        ]
+    },
+    {
+        "model_id_ref": "kia_sportage_sl",
+        "faults": [
+            {
+                "component": "Theta II Engine Risk",
+                "symptoms": "Rod knock, metallic debris in oil",
+                "repairCost": 6000,
+                "verdictImplication": "Critical: Same as Hyundai. Lifetime warranty extension exists for some, but strict requirements."
+            }
+        ]
+    },
+    {
+        "model_id_ref": "jeep_wrangler_jk",
+        "faults": [
+            {
+                "component": "Death Wobble",
+                "symptoms": "Violent shaking of steering wheel after a bump",
+                "repairCost": 800,
+                "verdictImplication": "Famed Issue: Usually track bar or ball joints. Fixable but scary."
+            },
+            {
+                "component": "Oil Cooler Housing",
+                "symptoms": "Oil leak in valley of engine",
+                "repairCost": 900,
+                "verdictImplication": "Common: Plastic part cracks. Upgrade to aluminum aftermarket part recommended."
+            }
+        ]
+    },
+    {
+        "model_id_ref": "nissan_sentra_b17",
+        "faults": [
+            {
+                "component": "CVT Failure",
+                "symptoms": "RPM fluctuations, stalling, whining",
+                "repairCost": 3800,
+                "verdictImplication": "Critical: Avoid earlier years (2013-2015) if possible, or verify transmission replacement."
+            }
+        ]
+    },
+    {
+        "model_id_ref": "toyota_tacoma_3rd",
+        "faults": [
+            {
+                "component": "Transmission Gear Hunting",
+                "symptoms": "Constant shifting, delayed engagement",
+                "repairCost": 300,
+                "verdictImplication": "Annoyance: Mostly software/tuning issue. TSB updates available."
+            },
+            {
+                "component": "Frame Rust",
+                "symptoms": "Perforation on frame rails",
+                "repairCost": 15000,
+                "verdictImplication": "Critical: Inspect frame thoroughly. Toyota had a replacement program."
+            }
+        ]
+    },
+    {
+        "model_id_ref": "honda_civic_fc",
+        "faults": [
+            {
+                "component": "AC Condenser/Compressor",
+                "symptoms": "AC blows warm, leaking freon",
+                "repairCost": 1200,
+                "verdictImplication": "Common: Known defect with extended warranty on some parts (condenser), but compressor is pricey."
+            }
+        ]
+    }
+]

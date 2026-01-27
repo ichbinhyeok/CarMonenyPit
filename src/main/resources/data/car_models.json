@@ -1,0 +1,125 @@
+[
+    {
+        "brand": "TOYOTA",
+        "model": "Camry",
+        "generation": "XV50",
+        "startYear": 2012,
+        "endYear": 2017,
+        "data": {
+            "avgAnnualRepairCost": 388,
+            "reliabilityScore": 85,
+            "majorFaults": [
+                {
+                    "component": "Oxygen Sensor",
+                    "cost": 350,
+                    "probability": "Low",
+                    "description": "Check engine light due to sensor failure, causing poor fuel economy."
+                },
+                {
+                    "component": "Torque Converter",
+                    "cost": 1500,
+                    "probability": "Low",
+                    "description": "Shuddering during acceleration (software update often fixes this)."
+                }
+            ],
+            "actuarialVerdict": "RETENTION_BIASED",
+            "verdictSummary": "Actuarially sound retention. Low annual burn rate ($388) justifies long-term hold."
+        }
+    },
+    {
+        "brand": "BMW",
+        "model": "3 Series",
+        "generation": "F30",
+        "startYear": 2012,
+        "endYear": 2018,
+        "data": {
+            "avgAnnualRepairCost": 1250,
+            "reliabilityScore": 45,
+            "majorFaults": [
+                {
+                    "component": "Timing Chain (N20 Engine)",
+                    "cost": 3500,
+                    "probability": "High",
+                    "description": "Catastrophic engine failure risk if chain guides break. Preemptive replacement required."
+                },
+                {
+                    "component": "Oil Filter Housing Gasket",
+                    "cost": 800,
+                    "probability": "Very High",
+                    "description": "Routine failure causing significant oil leaks and potential belt ingestion."
+                }
+            ],
+            "actuarialVerdict": "LIABILITY_BIASED",
+            "verdictSummary": "High-risk asset. Annual maintenance exceeds $1,200. Timing chain liability makes retention nearly mathematically indefensible beyond 100k miles."
+        }
+    },
+    {
+        "brand": "NISSAN",
+        "model": "Altima",
+        "generation": "L33",
+        "startYear": 2013,
+        "endYear": 2018,
+        "data": {
+            "avgAnnualRepairCost": 550,
+            "reliabilityScore": 30,
+            "majorFaults": [
+                {
+                    "component": "CVT Transmission",
+                    "cost": 4500,
+                    "probability": "Critical",
+                    "description": "Known premature failure of JATCO CVT. 'Judder' is a terminal symptom."
+                }
+            ],
+            "actuarialVerdict": "LIABILITY_BIASED",
+            "verdictSummary": "Transmission liability asset. The CVT failure cost ($4,500) often exceeds the vehicle's residual value."
+        }
+    },
+    {
+        "brand": "HONDA",
+        "model": "Accord",
+        "generation": "CR",
+        "startYear": 2013,
+        "endYear": 2017,
+        "data": {
+            "avgAnnualRepairCost": 420,
+            "reliabilityScore": 82,
+            "majorFaults": [
+                {
+                    "component": "Starter Motor",
+                    "cost": 800,
+                    "probability": "Medium",
+                    "description": "Premature starter failure is common but not catastrophic."
+                }
+            ],
+            "actuarialVerdict": "RETENTION_BIASED",
+            "verdictSummary": "Strong hold candidate. Starter issues are annoying but financially insignificant compared to replacement cost."
+        }
+    },
+    {
+        "brand": "FORD",
+        "model": "F-150",
+        "generation": "13th Gen",
+        "startYear": 2015,
+        "endYear": 2020,
+        "data": {
+            "avgAnnualRepairCost": 750,
+            "reliabilityScore": 60,
+            "majorFaults": [
+                {
+                    "component": "Cam Phasers (3.5L EcoBoost)",
+                    "cost": 3500,
+                    "probability": "High",
+                    "description": "Rattling on cold start indicates expensive cam phaser failure."
+                },
+                {
+                    "component": "10R80 Transmission",
+                    "cost": 5000,
+                    "probability": "Medium",
+                    "description": "Hard shifting and erratic behavior reported in 10-speed models."
+                }
+            ],
+            "actuarialVerdict": "BORDERLINE",
+            "verdictSummary": "Conditional hold. Excellent utility, but EcoBoost Cam Phaser liability creates a $3,500 exposure."
+        }
+    }
+]
