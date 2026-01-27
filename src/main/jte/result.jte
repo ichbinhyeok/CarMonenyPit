@@ -26,7 +26,7 @@
     noindex = true,
     ogTitle = ogTitle,
     ogDescription = verdictExplanation,
-    extraStyles = @`
+    content = @`
         <style>
             .container {
                 max-width: 1100px;
@@ -34,6 +34,7 @@
                 display: grid;
                 grid-template-columns: repeat(12, 1fr);
                 gap: 1.5rem;
+                margin-bottom: 5rem;
                 animation: bentoEntrance 0.8s cubic-bezier(0.16, 1, 0.3, 1);
             }
 
@@ -57,7 +58,13 @@
             .verdict-risk_alert { border-top: 6px solid var(--orange-warn); }
 
             /* Sim Lab Grid */
-            .sim-grid { display: grid; grid-template-columns: 1fr 1fr 1.5fr; gap: 2rem; margin-top: 2rem; }
+            .sim-grid { 
+                display: grid !important; 
+                grid-template-columns: repeat(2, 1fr) !important; 
+                gap: 2rem; 
+                margin-top: 2rem; 
+            }
+            .sim-item { display: flex; flex-direction: column; min-width: 0; }
             .sim-item label { display: block; font-size: 0.75rem; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; margin-bottom: 1rem; letter-spacing: 0.05em; }
 
             .pill-group {
@@ -66,6 +73,8 @@
                 padding: 4px;
                 border-radius: 16px;
                 gap: 4px;
+                width: fit-content;
+                min-width: 100%;
             }
 
             .pill { 
@@ -76,27 +85,37 @@
             }
             
             .pill input { 
-                position: absolute; 
-                opacity: 0; 
-                width: 0; height: 0; margin: 0;
+                display: none !important;
             }
             
             .pill span {
                 display: block;
-                padding: 0.75rem;
+                padding: 0.7rem 1rem;
                 text-align: center;
-                font-size: 0.85rem;
+                font-size: 0.8rem;
                 font-weight: 700;
                 border-radius: 12px;
                 transition: all 0.2s;
-                color: var(--text-secondary);
-                background: transparent;
+                color: #64748b;
+                background: #f1f5f9;
+                border: 1px solid transparent;
             }
             
             .pill input:checked + span { 
-                background: #fff; 
-                color: #000; 
-                box-shadow: 0 4px 12px rgba(0,0,0,0.05); 
+                background: #000 !important; 
+                color: #fff !important; 
+                border-color: #000 !important;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important; 
+            }
+
+            .est-badge {
+                background: var(--futurist-blue);
+                color: #fff;
+                padding: 0.2rem 0.6rem;
+                border-radius: 6px;
+                font-size: 0.65rem;
+                font-weight: 800;
+                letter-spacing: 0.05em;
             }
 
             /* Modal Styles */
@@ -114,7 +133,7 @@
                 backdrop-filter: blur(4px);
             }
 
-            @media (max-width: 1024px) {
+            @media (max-width: 600px) {
                 .sim-grid { grid-template-columns: 1fr; }
             }
 
@@ -163,8 +182,7 @@
                 .sticky-bar { padding: 0.6rem 1rem; width: 95%; }
             }
         </style>
-    `,
-    content = @`
+
         @template.fragments.sticky_bar(result = result, verdictTitle = verdictTitle, verdictExplanation = verdictExplanation, verdictAction = verdictAction, verdictCss = verdictCss, leadLabel = leadLabel, leadDescription = leadDescription, leadUrl = leadUrl, isValueEstimated = isValueEstimated, oob = false)
 
         <main class="container">

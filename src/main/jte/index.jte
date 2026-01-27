@@ -82,7 +82,7 @@
 
             .form-grid {
                 display: grid;
-                grid-template-columns: 1fr 1fr 1fr 1fr auto;
+                grid-template-columns: 1.2fr 1fr 1.2fr auto;
                 gap: 1.5rem;
                 align-items: flex-end;
             }
@@ -155,10 +155,10 @@
             .info-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; }
             .info-body { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.4; }
 
-            @media (max-width: 1024px) {
+            @media (max-width: 640px) {
                 .form-grid { grid-template-columns: 1fr; }
                 .info-card { grid-column: span 12; }
-                h1 { font-size: 3rem; }
+                h1 { font-size: 2.5rem; }
             }
         </style>
     `,
@@ -190,8 +190,6 @@
                         <input type="number" name="mileage" placeholder="120000" required>
                     </div>
 
-
-
                     <div class="input-group">
                         <div style="display: flex; justify-content: space-between; align-items: center;">
                             <label>Requested Service ($)</label>
@@ -203,30 +201,30 @@
                         <input type="number" id="repairQuoteInput" name="repairQuoteUsd" placeholder="1500" required>
                         <input type="hidden" id="isQuoteMissing" name="isQuoteMissing" value="false">
                     </div>
-                    
-                    <script>
-                        function toggleQuoteInput(checkbox) {
-                            const input = document.getElementById('repairQuoteInput');
-                            const hidden = document.getElementById('isQuoteMissing');
-                            if (checkbox.checked) {
-                                input.value = '';
-                                input.disabled = true;
-                                input.required = false;
-                                input.placeholder = "Auto-Estimating...";
-                                hidden.value = "true";
-                            } else {
-                                input.disabled = false;
-                                input.required = true;
-                                input.placeholder = "1500";
-                                hidden.value = "false";
-                            }
-                        }
-                    </script>
 
                     <button type="submit" class="btn-futuristic">
                         Analyze Now <span>→</span>
                     </button>
                 </form>
+
+                <script>
+                    function toggleQuoteInput(checkbox) {
+                        const input = document.getElementById('repairQuoteInput');
+                        const hidden = document.getElementById('isQuoteMissing');
+                        if (checkbox.checked) {
+                            input.value = '';
+                            input.disabled = true;
+                            input.required = false;
+                            input.placeholder = "Auto-Estimating...";
+                            hidden.value = "true";
+                        } else {
+                            input.disabled = false;
+                            input.required = true;
+                            input.placeholder = "1500";
+                            hidden.value = "false";
+                        }
+                    }
+                </script>
             </article>
 
             <!-- Bento Secondary Cards -->

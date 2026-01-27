@@ -84,7 +84,7 @@
     
     @template.fragments.header()
 
-    <main style="flex: 1; display: flex; align-items: center; justify-content: center; padding: 2rem;">
+    <main style="flex: 1; padding: 2rem; width: 100%; max-width: 1400px; margin: 0 auto;">
         ${content}
     </main>
 
