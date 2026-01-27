@@ -7,7 +7,7 @@
 @param boolean isValueEstimated
 @param boolean isQuoteEstimated = false
 
-<div id="loading-screen" class="bento-card scan-stage" 
+<div id="loading-screen" class="card form-card scan-stage" 
      hx-post="/analyze-final" 
      hx-trigger="load delay:2800ms" 
      hx-target="body" 

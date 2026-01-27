@@ -2,6 +2,7 @@
 
 @template.layout(
     title = "Car Money Pit | Precision Actuarial Analysis",
+    centered = true,
     extraStyles = @`
         <style>
             .bento-grid {
