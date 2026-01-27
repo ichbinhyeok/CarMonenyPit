@@ -190,15 +190,38 @@
                         <input type="number" name="mileage" placeholder="120000" required>
                     </div>
 
-                    <div class="input-group">
-                        <label>Market Value ($)</label>
-                        <input type="number" name="currentValueUsd" placeholder="15000" required>
-                    </div>
+
 
                     <div class="input-group">
-                        <label>Requested Service ($)</label>
-                        <input type="number" name="repairQuoteUsd" placeholder="1500" required>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <label>Requested Service ($)</label>
+                            <label style="display: flex; align-items: center; gap: 4px; font-size: 0.7rem; cursor: pointer; text-transform: none; color: var(--text-secondary); font-weight: 600;">
+                                <input type="checkbox" id="noQuoteToggle" onchange="toggleQuoteInput(this)" style="width: auto; margin: 0; padding: 0;">
+                                No Quote
+                            </label>
+                        </div>
+                        <input type="number" id="repairQuoteInput" name="repairQuoteUsd" placeholder="1500" required>
+                        <input type="hidden" id="isQuoteMissing" name="isQuoteMissing" value="false">
                     </div>
+                    
+                    <script>
+                        function toggleQuoteInput(checkbox) {
+                            const input = document.getElementById('repairQuoteInput');
+                            const hidden = document.getElementById('isQuoteMissing');
+                            if (checkbox.checked) {
+                                input.value = '';
+                                input.disabled = true;
+                                input.required = false;
+                                input.placeholder = "Auto-Estimating...";
+                                hidden.value = "true";
+                            } else {
+                                input.disabled = false;
+                                input.required = true;
+                                input.placeholder = "1500";
+                                hidden.value = "false";
+                            }
+                        }
+                    </script>
 
                     <button type="submit" class="btn-futuristic">
                         Analyze Now <span>→</span>

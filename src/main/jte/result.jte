@@ -19,6 +19,7 @@
 @param String viewMode = "OWNER"
 @param String shareToken = null
 @param String ogTitle = null
+@param boolean isValueEstimated = false
 
 @template.layout(
     title = (ogTitle != null ? ogTitle : "Analysis Engine | Future Verdict"),
@@ -116,9 +117,56 @@
             @media (max-width: 1024px) {
                 .sim-grid { grid-template-columns: 1fr; }
             }
+
+            /* Sticky Bar Styles */
+            .sticky-bar {
+                position: fixed;
+                top: 20px;
+                left: 50%;
+                transform: translateX(-50%) translateY(-20px);
+                width: 90%;
+                max-width: 700px;
+                background: rgba(255, 255, 255, 0.95);
+                backdrop-filter: blur(12px);
+                -webkit-backdrop-filter: blur(12px);
+                border: 1px solid rgba(0,0,0,0.08);
+                border-radius: 100px;
+                padding: 0.75rem 1.5rem;
+                box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+                z-index: 9999;
+                transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+                opacity: 0;
+                pointer-events: none;
+            }
+            .sticky-bar.visible {
+                opacity: 1;
+                pointer-events: all;
+                transform: translateX(-50%) translateY(0);
+            }
+            .sticky-bar .sticky-content { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+            .sticky-bar .sticky-left { display: flex; align-items: center; gap: 1rem; }
+            .sticky-bar .status-dot { width: 10px; height: 10px; border-radius: 50%; }
+            .sticky-bar.verdict-liquidate .status-dot { background: #ef4444; box-shadow: 0 0 12px rgba(239, 68, 68, 0.6); }
+            .sticky-bar.verdict-sustain .status-dot { background: #10b981; box-shadow: 0 0 12px rgba(16, 185, 129, 0.6); }
+            .sticky-bar.verdict-risk_alert .status-dot { background: #f59e0b; box-shadow: 0 0 12px rgba(245, 158, 11, 0.6); }
+            
+            .sticky-bar .sticky-title { font-weight: 800; font-size: 1rem; letter-spacing: -0.02em; color: #1e293b; }
+            .sticky-bar .sticky-action-text { font-size: 0.85rem; color: var(--text-secondary); font-weight: 500; border-left: 1px solid #e2e8f0; padding-left: 1rem; }
+            
+            .sticky-bar .sticky-cta {
+                background: #0f172a; color: #fff; padding: 0.6rem 1.2rem; border-radius: 20px; text-decoration: none; font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; gap: 0.4rem; transition: transform 0.2s;
+            }
+            .sticky-bar .sticky-cta:hover { transform: scale(1.05); }
+
+            @media (max-width: 640px) {
+                .sticky-bar .sticky-action-text { display: none; }
+                .sticky-bar { padding: 0.6rem 1rem; width: 95%; }
+            }
         </style>
     `,
     content = @`
+        @template.fragments.sticky_bar(result = result, verdictTitle = verdictTitle, verdictExplanation = verdictExplanation, verdictAction = verdictAction, verdictCss = verdictCss, leadLabel = leadLabel, leadDescription = leadDescription, leadUrl = leadUrl, isValueEstimated = isValueEstimated, oob = false)
+
         <main class="container">
             <!-- Verdict Dashboard -->
             <section class="bento-card verdict-cell ${verdictCss}">
@@ -128,7 +176,7 @@
                     </div>
                 @endif
                 
-                @template.fragments.verdict_card(result = result, verdictTitle = verdictTitle, verdictExplanation = verdictExplanation, verdictAction = verdictAction, verdictCss = verdictCss, leadLabel = leadLabel, leadDescription = leadDescription, leadUrl = leadUrl)
+                @template.fragments.verdict_card(result = result, verdictTitle = verdictTitle, verdictExplanation = verdictExplanation, verdictAction = verdictAction, verdictCss = verdictCss, leadLabel = leadLabel, leadDescription = leadDescription, leadUrl = leadUrl, isValueEstimated = isValueEstimated)
                 
                 <!-- Viral & Explanation Actions -->
                 <div style="display: flex; gap: 1rem; margin-top: 2rem; justify-content: center;">
@@ -165,13 +213,28 @@
                         Manipulate variables to challenge the verdict.
                     </p>
                     
-                    <form hx-post="/simulate" hx-target="#verdict-card" hx-trigger="change" hx-swap="outerHTML">
+                    <form hx-post="/simulate" hx-target="#verdict-card" hx-trigger="change, submit" hx-swap="outerHTML" onsubmit="event.preventDefault(); return false;">
                         <input type="hidden" name="vehicleType" value="${input.vehicleType()}">
                         <input type="hidden" name="mileage" value="${input.mileage()}">
                         <input type="hidden" name="repairQuoteUsd" value="${input.repairQuoteUsd()}">
-                        <input type="hidden" name="currentValueUsd" value="${input.currentValueUsd()}">
+                        <input type="hidden" name="isValueEstimated" value="${isValueEstimated}" id="isEstInput">
 
                         <div class="sim-grid">
+                            <!-- Market Value Input (New) -->
+                            <div class="sim-item">
+                                <label style="display: flex; justify-content: space-between; align-items: center;">
+                                    Market Value
+                                    @if(isValueEstimated)
+                                        <span class="est-badge" style="background: #fbbf24; color: #fff; padding: 2px 6px; border-radius: 4px; font-size: 0.6rem; margin-left:8px;">ESTIMATED</span>
+                                    @endif
+                                </label>
+                                <div style="position: relative;">
+                                    <span style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-secondary); font-weight: 700;">$</span>
+                                    <input type="number" name="currentValueUsd" value="${input.currentValueUsd()}"
+                                           style="width: 100%; padding: 0.8rem 1rem 0.8rem 2.5rem; border-radius: 12px; border: 1px solid #e2e8f0; font-weight: 700; font-size: 1rem;"
+                                           oninput="document.getElementById('isEstInput').value = 'false';">
+                                </div>
+                            </div>
                             <!-- Retention Horizon (New) -->
                             <div class="sim-item">
                                 <label>Retention Plans</label>
@@ -260,6 +323,20 @@
                     alert('Link copied to clipboard! Share this diagnostic receipt.');
                 });
             }
+
+            // Scroll & HTMX Observer for Sticky Bar
+            function updateSticky() {
+                const nav = document.getElementById('sticky-verdict-bar');
+                if (nav) {
+                    if (window.scrollY > 300) {
+                        nav.classList.add('visible');
+                    } else {
+                        nav.classList.remove('visible');
+                    }
+                }
+            }
+            document.addEventListener('scroll', updateSticky);
+            document.body.addEventListener('htmx:afterSettle', updateSticky);
         </script>
     `
 )

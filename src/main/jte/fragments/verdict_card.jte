@@ -9,8 +9,10 @@
 @param String leadLabel
 @param String leadDescription
 @param String leadUrl
+@param boolean isValueEstimated = false
 
 <div id="verdict-card" class="fade-in">
+
     <style>
         .verdict-grid {
             display: grid;

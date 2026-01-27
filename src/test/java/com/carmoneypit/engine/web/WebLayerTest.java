@@ -6,6 +6,7 @@ import com.carmoneypit.engine.api.OutputModels.VerdictResult;
 import com.carmoneypit.engine.api.OutputModels.VerdictState;
 import com.carmoneypit.engine.api.OutputModels.VisualizationHint;
 import com.carmoneypit.engine.core.DecisionEngine;
+import com.carmoneypit.engine.core.ValuationService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -15,7 +16,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.Collections;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -31,6 +35,9 @@ public class WebLayerTest {
 
         @MockBean
         private VerdictPresenter verdictPresenter;
+
+        @MockBean
+        private ValuationService valuationService;
 
         @Test
         public void testIndexPage() throws Exception {
@@ -101,7 +108,41 @@ public class WebLayerTest {
                                 .param("hassleTolerance", "NEUTRAL"))
                                 .andExpect(status().isOk())
                                 // Should return fragment view name
-                                .andExpect(view().name("fragments/verdict_card"))
+                                .andExpect(view().name("fragments/simulation_response"))
                                 .andExpect(model().attributeExists("result", "verdictTitle"));
+        }
+
+        @Test
+        public void testAnalyze_NoValue_ShouldEstimate() throws Exception {
+                // Mock Engine Response
+                VerdictResult mockResult = new VerdictResult(
+                                VerdictState.STABLE,
+                                "Stable Narrative",
+                                new VisualizationHint(100, 200, "SURFACE"),
+                                Collections.emptyList(),
+                                0L);
+
+                // Mock Oracle
+                given(valuationService.estimateValue(any(), anyLong())).willReturn(12500L);
+                given(decisionEngine.evaluate(any(EngineInput.class))).willReturn(mockResult);
+
+                // Mock Presenter
+                given(verdictPresenter.getVerdictTitle(any())).willReturn("SUSTAIN");
+                given(verdictPresenter.getLawyerExplanation(any())).willReturn("Explanation");
+                given(verdictPresenter.getActionPlan(any())).willReturn("Action");
+                given(verdictPresenter.getCssClass(any())).willReturn("class-sustain");
+                given(verdictPresenter.getLeadLabel(any())).willReturn("Lead Label");
+                given(verdictPresenter.getLeadDescription(any())).willReturn("Lead Desc");
+                given(verdictPresenter.getLeadUrl(any())).willReturn("http://example.com");
+
+                mockMvc.perform(post("/analyze-final")
+                                .param("vehicleType", "SEDAN")
+                                .param("mileage", "50000")
+                                .param("repairQuoteUsd", "500"))
+                                .andDo(print())
+                                .andExpect(status().isOk())
+                                .andExpect(view().name("result"))
+                                .andExpect(model().attribute("currentValueUsd", 12500L))
+                                .andExpect(model().attribute("isValueEstimated", true));
         }
 }

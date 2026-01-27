@@ -8,6 +8,7 @@ import com.carmoneypit.engine.api.InputModels.MobilityStatus;
 import com.carmoneypit.engine.api.InputModels.HassleTolerance;
 import com.carmoneypit.engine.api.OutputModels.VerdictResult;
 import com.carmoneypit.engine.core.DecisionEngine;
+import com.carmoneypit.engine.core.ValuationService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,10 +25,13 @@ public class CarDecisionController {
 
     private final DecisionEngine decisionEngine;
     private final VerdictPresenter presenter;
+    private final ValuationService valuationService;
 
-    public CarDecisionController(DecisionEngine decisionEngine, VerdictPresenter presenter) {
+    public CarDecisionController(DecisionEngine decisionEngine, VerdictPresenter presenter,
+            ValuationService valuationService) {
         this.decisionEngine = decisionEngine;
         this.presenter = presenter;
+        this.valuationService = valuationService;
     }
 
     @GetMapping("/")
@@ -39,13 +43,26 @@ public class CarDecisionController {
     public String analyzeLoading(
             @RequestParam("vehicleType") VehicleType vehicleType,
             @RequestParam("mileage") long mileage,
-            @RequestParam("repairQuoteUsd") long repairQuoteUsd,
-            @RequestParam("currentValueUsd") long currentValueUsd,
+            @RequestParam(value = "repairQuoteUsd", required = false) Long repairQuoteUsd,
+            @RequestParam(value = "isQuoteMissing", defaultValue = "false") boolean isQuoteMissing,
+            @RequestParam(value = "currentValueUsd", required = false) Long currentValueUsd,
             Model model) {
+
+        long effectiveValue = (currentValueUsd != null && currentValueUsd > 0)
+                ? currentValueUsd
+                : valuationService.estimateValue(vehicleType, mileage);
+        boolean isEstimated = (currentValueUsd == null || currentValueUsd <= 0);
+
+        long effectiveRepairQuote = (repairQuoteUsd != null && repairQuoteUsd > 0)
+                ? repairQuoteUsd
+                : valuationService.estimateRepairCost(vehicleType, mileage);
+
         model.addAttribute("vehicleType", vehicleType);
         model.addAttribute("mileage", mileage);
-        model.addAttribute("repairQuoteUsd", repairQuoteUsd);
-        model.addAttribute("currentValueUsd", currentValueUsd);
+        model.addAttribute("repairQuoteUsd", effectiveRepairQuote);
+        model.addAttribute("currentValueUsd", effectiveValue);
+        model.addAttribute("isValueEstimated", isEstimated);
+        model.addAttribute("isQuoteEstimated", isQuoteMissing);
         return "fragments/loading";
     }
 
@@ -95,15 +112,28 @@ public class CarDecisionController {
     public String analyzeFinal(
             @RequestParam("vehicleType") VehicleType vehicleType,
             @RequestParam("mileage") long mileage,
-            @RequestParam("repairQuoteUsd") long repairQuoteUsd,
-            @RequestParam("currentValueUsd") long currentValueUsd,
+            @RequestParam(value = "repairQuoteUsd", required = false) Long repairQuoteUsd,
+            @RequestParam(value = "isQuoteMissing", defaultValue = "false") boolean isQuoteMissing,
+            @RequestParam(value = "currentValueUsd", required = false) Long currentValueUsd,
+            @RequestParam(value = "isValueEstimated", defaultValue = "false") boolean isValueEstimated,
+            @RequestParam(value = "isQuoteEstimated", defaultValue = "false") boolean isQuoteEstimated,
             Model model) {
-        EngineInput input = new EngineInput(vehicleType, mileage, repairQuoteUsd, currentValueUsd);
-        VerdictResult result = decisionEngine.evaluate(input);
-        String shareToken = presenter.encodeToken(input);
 
-        log.info("Analysis Result: State={}, RF={}, RM={}", result.verdictState(), result.visualizationHint().rfScore(),
-                result.visualizationHint().rmScore());
+        long effectiveValue = (currentValueUsd != null && currentValueUsd > 0)
+                ? currentValueUsd
+                : valuationService.estimateValue(vehicleType, mileage);
+        boolean finalIsEstimated = isValueEstimated || (currentValueUsd == null || currentValueUsd <= 0);
+
+        long effectiveRepairQuote = (repairQuoteUsd != null && repairQuoteUsd > 0)
+                ? repairQuoteUsd
+                : valuationService.estimateRepairCost(vehicleType, mileage);
+        boolean finalIsQuoteEstimated = isQuoteEstimated || isQuoteMissing
+                || (repairQuoteUsd == null || repairQuoteUsd <= 0);
+
+        EngineInput input = new EngineInput(vehicleType, mileage, effectiveRepairQuote, effectiveValue);
+        VerdictResult result = decisionEngine.evaluate(input);
+
+        // ... (rest of the method)
 
         model.addAttribute("input", input);
         model.addAttribute("result", result);
@@ -114,8 +144,17 @@ public class CarDecisionController {
         model.addAttribute("leadLabel", presenter.getLeadLabel(result.verdictState()));
         model.addAttribute("leadDescription", presenter.getLeadDescription(result.verdictState()));
         model.addAttribute("leadUrl", presenter.getLeadUrl(result.verdictState()));
+        model.addAttribute("isValueEstimated", finalIsEstimated);
+
+        // We'll pass quote estimated flag too if needed via model, not primarily used
+        // in result.jte yet but good to have
+        model.addAttribute("isQuoteEstimated", finalIsQuoteEstimated);
 
         model.addAttribute("viewMode", "OWNER");
+
+        // ...
+
+        String shareToken = presenter.encodeToken(input);
         model.addAttribute("shareToken", shareToken);
 
         model.addAttribute("controls", new SimulationControls(
@@ -137,6 +176,7 @@ public class CarDecisionController {
             @RequestParam("mobilityStatus") MobilityStatus mobilityStatus,
             @RequestParam("hassleTolerance") HassleTolerance hassleTolerance,
             @RequestParam(value = "retentionHorizon", required = false) com.carmoneypit.engine.api.InputModels.RetentionHorizon retentionHorizon,
+            @RequestParam(value = "isValueEstimated", defaultValue = "false") boolean isValueEstimated,
             Model model) {
         EngineInput input = new EngineInput(vehicleType, mileage, repairQuoteUsd, currentValueUsd);
         SimulationControls controls = new SimulationControls(failureSeverity, mobilityStatus, hassleTolerance,
@@ -147,6 +187,7 @@ public class CarDecisionController {
         model.addAttribute("input", input);
         model.addAttribute("result", result);
         model.addAttribute("controls", controls);
+        model.addAttribute("isValueEstimated", isValueEstimated);
 
         // Presentation Logic
         model.addAttribute("verdictTitle", presenter.getVerdictTitle(result.verdictState()));
@@ -163,6 +204,6 @@ public class CarDecisionController {
         // the card template.
         // Assuming result.jte includes the card, we'll try to use a dedicated template
         // for the card.
-        return "fragments/verdict_card";
+        return "simulation_response";
     }
 }

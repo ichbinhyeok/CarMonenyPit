@@ -4,13 +4,15 @@
 @param long mileage
 @param long repairQuoteUsd
 @param long currentValueUsd
+@param boolean isValueEstimated
+@param boolean isQuoteEstimated = false
 
 <div id="loading-screen" class="bento-card scan-stage" 
      hx-post="/analyze-final" 
      hx-trigger="load delay:2800ms" 
      hx-target="body" 
      hx-push-url="/analyze"
-     hx-vals='{"vehicleType": "${vehicleType}", "mileage": ${mileage}, "repairQuoteUsd": ${repairQuoteUsd}, "currentValueUsd": ${currentValueUsd}}'>
+     hx-vals='{"vehicleType": "${vehicleType}", "mileage": ${mileage}, "repairQuoteUsd": ${repairQuoteUsd}, "currentValueUsd": ${currentValueUsd}, "isValueEstimated": ${isValueEstimated}, "isQuoteEstimated": ${isQuoteEstimated}}'>
     
     <div class="scan-visual">
         <div class="pulse-ring"></div>
