@@ -2,6 +2,7 @@ package com.carmoneypit.engine.web;
 
 import com.carmoneypit.engine.api.OutputModels.VerdictState;
 import com.carmoneypit.engine.api.InputModels.EngineInput;
+import com.carmoneypit.engine.api.InputModels.SimulationControls;
 import com.carmoneypit.engine.core.ValuationService;
 import com.carmoneypit.engine.data.CarBrandData;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -131,42 +132,63 @@ public class VerdictPresenter {
         }
     }
 
-    public String getLeadLabel(VerdictState state) {
+    public String getLeadLabel(VerdictState state, EngineInput input, SimulationControls controls) {
+        boolean isWorrier = input.isQuoteEstimated() && (controls == null
+                || controls.mobilityStatus() == com.carmoneypit.engine.api.InputModels.MobilityStatus.DRIVABLE);
+        boolean isAccident = input.isQuoteEstimated() && (controls != null
+                && controls.mobilityStatus() == com.carmoneypit.engine.api.InputModels.MobilityStatus.NEEDS_TOW);
+        boolean hasQuote = !input.isQuoteEstimated();
+
         switch (state) {
             case TIME_BOMB:
                 return "Execute Exit Strategy";
             case STABLE:
+                if (hasQuote)
+                    return "Verify Quote Integrity";
+                if (isAccident)
+                    return "Request Rapid Appraisal";
                 return "Secure Protection Plan";
             case BORDERLINE:
             default:
-                return "Audit All Options";
+                if (hasQuote)
+                    return "Audit Repair Financing";
+                return "Explore Bid Options";
         }
     }
 
-    public String getLeadDescription(VerdictState state) {
+    public String getLeadDescription(VerdictState state, EngineInput input, SimulationControls controls) {
+        boolean isWorrier = input.isQuoteEstimated() && (controls == null
+                || controls.mobilityStatus() == com.carmoneypit.engine.api.InputModels.MobilityStatus.DRIVABLE);
+        boolean isAccident = input.isQuoteEstimated() && (controls != null
+                && controls.mobilityStatus() == com.carmoneypit.engine.api.InputModels.MobilityStatus.NEEDS_TOW);
+        boolean hasQuote = !input.isQuoteEstimated();
+
         switch (state) {
             case TIME_BOMB:
-                return "Your asset is hemorrhaging value. Convert it to cash within 48 hours before the next breakdown.";
+                return "Your asset is hemorrhaging value. Convert it to cash within 48 hours before the next total failure.";
             case STABLE:
+                if (hasQuote)
+                    return "Verify your current estimate against market fair-price indices to ensure you aren't overpaying.";
+                if (isAccident)
+                    return "Asset remains viable. Connect with a mobile appraiser to get a professional damage summary.";
                 return "Asset efficiency verified. Find a specialist to execute a multi-year reliability hold.";
             case BORDERLINE:
             default:
-                return "Neutral ground. Compare immediate buy-out offers versus high-yield repair financing.";
+                if (hasQuote)
+                    return "Compare immediate sell-out offers versus tiered financing plans for this specific repair.";
+                return "Asset is entering a high-variance window. Check local liquidation bids versus certified refurbishers.";
         }
     }
 
-    public String getLeadUrl(VerdictState state) {
-        // Updated to generic placeholders - we should replace these with real affiliate
-        // links later
+    public String getLeadUrl(VerdictState state, EngineInput input, SimulationControls controls) {
         switch (state) {
             case TIME_BOMB:
-                return "https://peddle.com"; // Example affiliate
+                return "https://peddle.com";
             case STABLE:
-                return "https://repairpal.com"; // Example affiliate
+                return "https://repairpal.com";
             case BORDERLINE:
-                return "#";
             default:
-                return "mailto:support@carmoneypit.com";
+                return "https://www.carvana.com/sell-my-car";
         }
     }
 }

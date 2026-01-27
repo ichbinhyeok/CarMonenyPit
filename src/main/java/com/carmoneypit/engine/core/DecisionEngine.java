@@ -63,7 +63,7 @@ public class DecisionEngine {
         double roundedRM = Math.round(rmDetail.score() / 100.0) * 100.0;
 
         VisualizationHint hint = new VisualizationHint(roundedRF, roundedRM, moneyPitState);
-        return new VerdictResult(state, narrative, hint, breakdown, assetBleed);
+        return new VerdictResult(state, narrative, hint, breakdown, assetBleed, rfDetail.score(), rmDetail.score());
     }
 
     private VerdictState determineState(double rf, double rm) {

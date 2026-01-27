@@ -6,7 +6,8 @@ public class InputModels {
             CarBrand brand,
             long mileage,
             long repairQuoteUsd,
-            long currentValueUsd) {
+            long currentValueUsd,
+            boolean isQuoteEstimated) {
     }
 
     public record SimulationControls(

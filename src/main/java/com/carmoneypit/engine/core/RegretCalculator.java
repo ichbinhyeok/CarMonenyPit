@@ -1,6 +1,7 @@
 package com.carmoneypit.engine.core;
 
 import com.carmoneypit.engine.api.FinancialLineItem;
+import com.carmoneypit.engine.api.ItemCategory;
 import com.carmoneypit.engine.api.InputModels.EngineInput;
 import com.carmoneypit.engine.api.InputModels.SimulationControls;
 import com.carmoneypit.engine.api.InputModels.FailureSeverity;
@@ -29,7 +30,7 @@ public class RegretCalculator {
         // 1. Current Repair Cost
         double repairCost = (double) input.repairQuoteUsd();
         items.add(new FinancialLineItem("Retained Asset Repair Outlay", repairCost,
-                "Immediate cash liquidity required for the current restoration."));
+                "Immediate cash liquidity required for the current restoration.", ItemCategory.STAY));
         totalScore += repairCost;
 
         // 2. Future Failure Probability (Mileage Based + Severity Boost)
@@ -54,14 +55,15 @@ public class RegretCalculator {
 
         double riskRegret = failureProb * majorCostBase;
         items.add(new FinancialLineItem("Hidden Secondary Failure Risk", riskRegret,
-                String.format("%.0f%% actuarial probability of adjacent system collapse.", failureProb * 100)));
+                String.format("%.0f%% actuarial probability of adjacent system collapse.", failureProb * 100),
+                ItemCategory.STAY));
         totalScore += riskRegret;
 
         // 3. Lost Exit Timing (Opportunity Cost of not selling now)
         double timingCost = input.currentValueUsd() * 0.05; // 5% penalty for missing the current 'working condition'
                                                             // sale window
         items.add(new FinancialLineItem("Opportunity Cost of Delay", timingCost,
-                "The economic cost of missing the optimal asset disposal window."));
+                "The economic cost of missing the optimal asset disposal window.", ItemCategory.STAY));
         totalScore += timingCost;
 
         // 4. Pain Score (Time/Stress + Tow Truck Rage)
@@ -81,7 +83,7 @@ public class RegretCalculator {
         }
 
         items.add(new FinancialLineItem("Operational Life Friction", painScore,
-                "Monetary valuation of unplanned downtime and quality of life impact."));
+                "Monetary valuation of unplanned downtime and quality of life impact.", ItemCategory.STAY));
         totalScore += painScore;
 
         // [LOGIC FIX 4] Retention Horizon Logic Trap
@@ -104,7 +106,8 @@ public class RegretCalculator {
                     horizonNote = "Guaranteed compounding liability over extended hold period.";
                     break;
             }
-            items.add(new FinancialLineItem("Retention Horizon Liability", horizonCost, horizonNote));
+            items.add(
+                    new FinancialLineItem("Retention Horizon Liability", horizonCost, horizonNote, ItemCategory.STAY));
             totalScore += horizonCost;
         }
 
@@ -124,7 +127,7 @@ public class RegretCalculator {
                 friction = 800.0;
         }
         items.add(new FinancialLineItem("Market Transaction Overhead", friction,
-                "Estimated loss from taxes, dealer margins, and acquisition labor."));
+                "Estimated loss from taxes, dealer margins, and acquisition labor.", ItemCategory.MOVE));
         totalScore += friction;
 
         // 2. Temporary Inconvenience (Mobility Based)
@@ -132,17 +135,17 @@ public class RegretCalculator {
         if (controls != null && controls.mobilityStatus() == MobilityStatus.NEEDS_TOW) {
             mobilityRegret = 1800.0;
             items.add(new FinancialLineItem("Asset Liquidity Penalty", mobilityRegret,
-                    "Immediate reduction in disposal value due to non-operational status."));
+                    "Immediate reduction in disposal value due to non-operational status.", ItemCategory.MOVE));
         } else {
             items.add(new FinancialLineItem("Disposal Leverage Benefit", 0.0,
-                    "Current operational status minimizes loss during asset liquidation."));
+                    "Current operational status minimizes loss during asset liquidation.", ItemCategory.MOVE));
         }
         totalScore += mobilityRegret;
 
         // 3. Premature Exit Anxiety
         double anxiety = 400.0;
         items.add(new FinancialLineItem("Sunk Cost Attachment Tax", anxiety,
-                "Irrational psychological resistance to terminating current ownership."));
+                "Irrational psychological resistance to terminating current ownership.", ItemCategory.MOVE));
         totalScore += anxiety;
 
         return new RegretDetail(totalScore, items);

@@ -6,10 +6,12 @@ public class OutputModels {
 
     public record VerdictResult(
             VerdictState verdictState,
-            String narrativeContext, // Generated dynamic sentence
+            String narrativeContext,
             VisualizationHint visualizationHint,
             List<FinancialLineItem> costBreakdown,
-            long assetBleedAmount) {
+            long assetBleedAmount,
+            double stayTotal,
+            double moveTotal) {
     }
 
     public record VisualizationHint(

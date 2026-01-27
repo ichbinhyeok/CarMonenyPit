@@ -1,4 +1,5 @@
 @import com.carmoneypit.engine.api.FinancialLineItem
+@import com.carmoneypit.engine.api.ItemCategory
 @import java.util.List
 @import java.util.ArrayList
 
@@ -10,15 +11,8 @@
     double stayTotal = 0;
     double moveTotal = 0;
     
-    // items contain both RF (Stay) and RM (Move) items
-    // Based on the order in DecisionEngine: RF items are first, then RM items.
-    // In current RegretCalculator:
-    // RF items: Immediate Repair Bill, Hidden Breakdown Risk, Depreciation Hit, Operational Life Friction, Retention Horizon Liability (TOTAL 5)
-    // RM items: Asset Acquisition Friction, Liquidity Leverage Loss (or Disposal Leverage Preserved), Psychological Retention Tax (TOTAL 3)
-    
     for (FinancialLineItem item : items) {
-        String label = item.label();
-        if (label.contains("Repair") || label.contains("Failure") || label.contains("Delay") || label.contains("Life") || label.contains("Horizon")) {
+        if (item.category() == ItemCategory.STAY) {
             stayItems.add(item);
             stayTotal += item.amount();
         } else {

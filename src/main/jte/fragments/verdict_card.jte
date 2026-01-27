@@ -28,18 +28,51 @@
                 font-size: 3.5rem !important;
             }
         }
-        .bleed-highlight {
+        .delta-container {
+            background: #000;
+            color: #fff;
+            padding: 2.5rem;
+            border-radius: 32px;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .delta-label {
+            font-size: 0.8rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            opacity: 0.7;
+        }
+        .delta-value {
+            font-size: 3rem;
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            color: #ef4444;
+        }
+        .bleed-gauge-container {
             background: #fff5f5;
             padding: 2rem;
             border-radius: 24px;
-            border: 2px solid #feb2b2;
+            border: 1px solid #feb2b2;
             margin-bottom: 1.5rem;
-            animation: pulse-border 2s infinite;
+            position: relative;
         }
-        @keyframes pulse-border {
-            0% { border-color: #feb2b2; box-shadow: 0 0 0 0 rgba(254, 178, 178, 0.4); }
-            50% { border-color: #f56565; box-shadow: 0 0 20px 0 rgba(245, 101, 101, 0.2); }
-            100% { border-color: #feb2b2; box-shadow: 0 0 0 0 rgba(254, 178, 178, 0.4); }
+        .bleed-gauge-bar {
+            height: 8px;
+            background: #fee2e2;
+            border-radius: 100px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+        .bleed-gauge-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ef4444, #b91c1c);
+            width: 85%; /* Dynamic later? */
+            border-radius: 100px;
         }
     </style>
 
@@ -54,9 +87,22 @@
         <h1 style="font-size: 5rem; font-weight: 800; letter-spacing: -0.05em; margin-bottom: 1.5rem; line-height: 0.9; color: #000;">
             ${verdictTitle}
         </h1>
-        <p style="font-size: 1.25rem; color: var(--text-main); font-weight: 500; max-width: 750px; line-height: 1.5;">
+        <p style="font-size: 1.25rem; color: var(--text-main); font-weight: 500; max-width: 750px; line-height: 1.5; margin-bottom: 3rem;">
             "${verdictExplanation}"
         </p>
+
+        @if(result.stayTotal() > result.moveTotal())
+            <div class="delta-container">
+                <div>
+                    <div class="delta-label">Financial Liability Gap</div>
+                    <div style="font-size: 1.1rem; font-weight: 700;">Cost of Inaction (1 Yr)</div>
+                </div>
+                <div class="delta-value">
+                    +$${String.format("%,.0f", result.stayTotal() - result.moveTotal())}
+                </div>
+                <div style="position: absolute; right: -10px; bottom: -10px; font-size: 8rem; font-weight: 900; opacity: 0.05; pointer-events: none;">LOSS</div>
+            </div>
+        @endif
     </div>
 
     <!-- Data Breakdown Grid -->
@@ -72,23 +118,19 @@
         <!-- Right Column: Critical Actions & Bleed -->
         <div style="display: flex; flex-direction: column;">
             
-            <!-- Asset Bleed Highlight (MOVED & ENHANCED) -->
-            <div class="bleed-highlight">
-                <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.75rem;">
-                    <div>
-                        <div style="font-size: 0.85rem; font-weight: 800; color: #c53030; text-transform: uppercase; letter-spacing: 0.05em;">
-                            6-Month Asset Bleed
-                        </div>
-                        <div style="display: inline-block; background: #feb2b2; color: #9b2c2c; font-size: 0.7rem; font-weight: 900; padding: 0.2rem 0.5rem; border-radius: 4px; margin-top: 0.4rem; text-transform: uppercase;">
-                            Market Velocity: Critical
-                        </div>
-                    </div>
-                    <div style="font-size: 1.8rem; font-weight: 800; color: #e53e3e;">
+            <!-- Visceral Asset Bleed Gauge -->
+            <div class="bleed-gauge-container">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div class="delta-label" style="color: #c53030; opacity: 1;">Asset Bleed Priority</div>
+                    <div style="font-size: 1.25rem; font-weight: 800; color: #ef4444;">
                         -$${String.format("%,d", result.assetBleedAmount())}
                     </div>
                 </div>
-                <p style="font-size: 0.9rem; color: #742a2a; font-weight: 600; line-height: 1.4; margin: 0;">
-                    Projected capital loss from depreciation and recurring failure nodes if no action taken.
+                <div class="bleed-gauge-bar">
+                    <div class="bleed-gauge-fill" style="width: ${Math.min(100, (result.assetBleedAmount() / 5000.0) * 100)}%;"></div>
+                </div>
+                <p style="font-size: 0.8rem; color: #742a2a; font-weight: 600; line-height: 1.4; margin: 0; opacity: 0.8;">
+                    Estimated capital melt over the next 180 days based on actuarial depreciation curves.
                 </p>
             </div>
 

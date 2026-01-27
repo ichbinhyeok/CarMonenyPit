@@ -81,6 +81,13 @@ public class CarDecisionController {
                         EngineInput input = presenter.decodeToken(token);
                         VerdictResult result = decisionEngine.evaluate(input);
 
+                        // Default simulation controls for a "shared" view
+                        SimulationControls sharedControls = new SimulationControls(
+                                        com.carmoneypit.engine.api.InputModels.FailureSeverity.GENERAL_UNKNOWN,
+                                        com.carmoneypit.engine.api.InputModels.MobilityStatus.DRIVABLE,
+                                        com.carmoneypit.engine.api.InputModels.HassleTolerance.NEUTRAL,
+                                        null);
+
                         model.addAttribute("input", input);
                         model.addAttribute("result", result);
                         model.addAttribute("verdictTitle", presenter.getVerdictTitle(result.verdictState()));
@@ -88,22 +95,19 @@ public class CarDecisionController {
                                         presenter.getLawyerExplanation(result.verdictState(), input));
                         model.addAttribute("verdictAction", presenter.getActionPlan(result.verdictState()));
                         model.addAttribute("verdictCss", presenter.getCssClass(result.verdictState()));
-                        model.addAttribute("leadLabel", presenter.getLeadLabel(result.verdictState()));
-                        model.addAttribute("leadDescription", presenter.getLeadDescription(result.verdictState()));
-                        model.addAttribute("leadUrl", presenter.getLeadUrl(result.verdictState()));
+                        model.addAttribute("leadLabel",
+                                        presenter.getLeadLabel(result.verdictState(), input, sharedControls));
+                        model.addAttribute("leadDescription",
+                                        presenter.getLeadDescription(result.verdictState(), input, sharedControls));
+                        model.addAttribute("leadUrl",
+                                        presenter.getLeadUrl(result.verdictState(), input, sharedControls));
 
                         // Shared View Mode
                         model.addAttribute("viewMode", "RECEIPT");
-                        model.addAttribute("shareToken", token); // Pass token for re-sharing? Or maybe just for meta
-                                                                 // tags
+                        model.addAttribute("shareToken", token);
                         model.addAttribute("ogTitle", presenter.getViralOgTitle(result.verdictState()));
 
-                        // Default controls for view only (though sliders hidden)
-                        model.addAttribute("controls", new SimulationControls(
-                                        FailureSeverity.GENERAL_UNKNOWN,
-                                        MobilityStatus.DRIVABLE,
-                                        HassleTolerance.NEUTRAL,
-                                        null)); // No retention horizon in basic view
+                        model.addAttribute("controls", sharedControls);
 
                         return "result";
                 } catch (Exception e) {
@@ -135,10 +139,15 @@ public class CarDecisionController {
                 boolean finalIsQuoteEstimated = isQuoteEstimated || isQuoteMissing
                                 || (repairQuoteUsd == null || repairQuoteUsd <= 0);
 
-                EngineInput input = new EngineInput(vehicleType, brand, mileage, effectiveRepairQuote, effectiveValue);
+                EngineInput input = new EngineInput(vehicleType, brand, mileage, effectiveRepairQuote, effectiveValue,
+                                finalIsQuoteEstimated);
                 VerdictResult result = decisionEngine.evaluate(input);
 
-                // ... (rest of the method)
+                SimulationControls defaultControls = new SimulationControls(
+                                FailureSeverity.GENERAL_UNKNOWN,
+                                MobilityStatus.DRIVABLE,
+                                HassleTolerance.NEUTRAL,
+                                null);
 
                 model.addAttribute("input", input);
                 model.addAttribute("result", result);
@@ -146,27 +155,19 @@ public class CarDecisionController {
                 model.addAttribute("verdictExplanation", presenter.getLawyerExplanation(result.verdictState(), input));
                 model.addAttribute("verdictAction", presenter.getActionPlan(result.verdictState()));
                 model.addAttribute("verdictCss", presenter.getCssClass(result.verdictState()));
-                model.addAttribute("leadLabel", presenter.getLeadLabel(result.verdictState()));
-                model.addAttribute("leadDescription", presenter.getLeadDescription(result.verdictState()));
-                model.addAttribute("leadUrl", presenter.getLeadUrl(result.verdictState()));
+                model.addAttribute("leadLabel", presenter.getLeadLabel(result.verdictState(), input, defaultControls));
+                model.addAttribute("leadDescription",
+                                presenter.getLeadDescription(result.verdictState(), input, defaultControls));
+                model.addAttribute("leadUrl", presenter.getLeadUrl(result.verdictState(), input, defaultControls));
                 model.addAttribute("isValueEstimated", finalIsEstimated);
-
-                // We'll pass quote estimated flag too if needed via model, not primarily used
-                // in result.jte yet but good to have
                 model.addAttribute("isQuoteEstimated", finalIsQuoteEstimated);
 
                 model.addAttribute("viewMode", "OWNER");
 
-                // ...
-
                 String shareToken = presenter.encodeToken(input);
                 model.addAttribute("shareToken", shareToken);
 
-                model.addAttribute("controls", new SimulationControls(
-                                FailureSeverity.GENERAL_UNKNOWN,
-                                MobilityStatus.DRIVABLE,
-                                HassleTolerance.NEUTRAL,
-                                null));
+                model.addAttribute("controls", defaultControls);
 
                 return "result";
         }
@@ -184,7 +185,8 @@ public class CarDecisionController {
                         @RequestParam(value = "retentionHorizon", required = false) com.carmoneypit.engine.api.InputModels.RetentionHorizon retentionHorizon,
                         @RequestParam(value = "isValueEstimated", defaultValue = "false") boolean isValueEstimated,
                         Model model) {
-                EngineInput input = new EngineInput(vehicleType, brand, mileage, repairQuoteUsd, currentValueUsd);
+                EngineInput input = new EngineInput(vehicleType, brand, mileage, repairQuoteUsd, currentValueUsd,
+                                false); // Simulation default to false
                 SimulationControls controls = new SimulationControls(failureSeverity, mobilityStatus, hassleTolerance,
                                 retentionHorizon);
 
@@ -200,16 +202,11 @@ public class CarDecisionController {
                 model.addAttribute("verdictExplanation", presenter.getLawyerExplanation(result.verdictState(), input));
                 model.addAttribute("verdictAction", presenter.getActionPlan(result.verdictState()));
                 model.addAttribute("verdictCss", presenter.getCssClass(result.verdictState()));
-                model.addAttribute("leadLabel", presenter.getLeadLabel(result.verdictState()));
-                model.addAttribute("leadDescription", presenter.getLeadDescription(result.verdictState()));
-                model.addAttribute("leadUrl", presenter.getLeadUrl(result.verdictState()));
+                model.addAttribute("leadLabel", presenter.getLeadLabel(result.verdictState(), input, controls));
+                model.addAttribute("leadDescription",
+                                presenter.getLeadDescription(result.verdictState(), input, controls));
+                model.addAttribute("leadUrl", presenter.getLeadUrl(result.verdictState(), input, controls));
 
-                // HTMX fragment response: only render the card part
-                // We can define a fragment inside result.jte or use a separate file.
-                // For simplicity with JTE, let's use a dedicated fragment file or just return
-                // the card template.
-                // Assuming result.jte includes the card, we'll try to use a dedicated template
-                // for the card.
                 return "simulation_response";
         }
 }
