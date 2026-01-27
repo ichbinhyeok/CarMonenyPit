@@ -2,9 +2,14 @@
 
 @template.layout(
     title = "Car Money Pit | Precision Actuarial Analysis",
-    centered = true,
     extraStyles = @`
         <style>
+            main {
+                display: flex !important;
+                flex-direction: column !important;
+                justify-content: center !important;
+                align-items: center !important;
+            }
             .bento-grid {
                 display: grid;
                 grid-template-columns: repeat(12, 1fr);

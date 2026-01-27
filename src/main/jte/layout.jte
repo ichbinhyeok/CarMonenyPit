@@ -3,7 +3,6 @@
 @param String title = "Car Money Pit | Precision Actuarial Analysis"
 @param Content content
 @param Content extraStyles = null
-@param boolean centered = false
 
 <!DOCTYPE html>
 <html lang="en">
@@ -82,7 +81,7 @@
     
     @template.fragments.header()
 
-    <main style="flex: 1; width: 100%; max-width: 1400px; margin: 0 auto; padding: 2rem; ${centered ? "display: flex; flex-direction: column; justify-content: center; align-items: center;" : ""}">
+    <main style="flex: 1; width: 100%; max-width: 1400px; margin: 0 auto; padding: 2rem;">
         ${content}
     </main>
 

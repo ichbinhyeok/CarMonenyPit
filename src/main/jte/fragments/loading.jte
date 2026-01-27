@@ -34,7 +34,7 @@
         text-align: center;
         width: 100%;
         max-width: 500px;
-        margin: 0 auto;
+        margin: auto;
         padding: 4rem 2rem !important;
         background: #fff;
     }
