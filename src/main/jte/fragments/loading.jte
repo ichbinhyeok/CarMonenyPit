@@ -1,6 +1,8 @@
 @import com.carmoneypit.engine.api.InputModels.VehicleType
+@import com.carmoneypit.engine.api.InputModels.CarBrand
 
 @param VehicleType vehicleType
+@param CarBrand brand
 @param long mileage
 @param long repairQuoteUsd
 @param long currentValueUsd
@@ -12,7 +14,7 @@
      hx-trigger="load delay:2800ms" 
      hx-target="body" 
      hx-push-url="/analyze"
-     hx-vals='{"vehicleType": "${vehicleType}", "mileage": ${mileage}, "repairQuoteUsd": ${repairQuoteUsd}, "currentValueUsd": ${currentValueUsd}, "isValueEstimated": ${isValueEstimated}, "isQuoteEstimated": ${isQuoteEstimated}}'>
+     hx-vals='{"vehicleType": "${vehicleType}", "brand": "${brand}", "mileage": ${mileage}, "repairQuoteUsd": ${repairQuoteUsd}, "currentValueUsd": ${currentValueUsd}, "isValueEstimated": ${isValueEstimated}, "isQuoteEstimated": ${isQuoteEstimated}}'>
     
     <div class="scan-visual">
         <div class="pulse-ring"></div>
@@ -23,7 +25,7 @@
     <h2 class="status-msg">Initiating Actuarial Scan</h2>
     
     <div class="log-output">
-        <div class="log-line" style="animation-delay: 0.2s;"><span>></span> Correlating ${vehicleType} segment risk tables...</div>
+        <div class="log-line" style="animation-delay: 0.2s;"><span>></span> Correlating ${brand} asset tables...</div>
         <div class="log-line" style="animation-delay: 1.0s;"><span>></span> Processing ${mileage}mi depreciation nodes...</div>
         <div class="log-line" style="animation-delay: 1.8s;"><span>></span> Evaluating cascade failure probability...</div>
     </div>

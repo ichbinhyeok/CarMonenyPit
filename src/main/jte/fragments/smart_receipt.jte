@@ -1,20 +1,45 @@
 @import com.carmoneypit.engine.api.FinancialLineItem
 @import java.util.List
+@import java.util.ArrayList
 
 @param List<FinancialLineItem> items
+
+!{
+    List<FinancialLineItem> stayItems = new ArrayList<>();
+    List<FinancialLineItem> moveItems = new ArrayList<>();
+    double stayTotal = 0;
+    double moveTotal = 0;
+    
+    // items contain both RF (Stay) and RM (Move) items
+    // Based on the order in DecisionEngine: RF items are first, then RM items.
+    // In current RegretCalculator:
+    // RF items: Immediate Repair Bill, Hidden Breakdown Risk, Depreciation Hit, Operational Life Friction, Retention Horizon Liability (TOTAL 5)
+    // RM items: Asset Acquisition Friction, Liquidity Leverage Loss (or Disposal Leverage Preserved), Psychological Retention Tax (TOTAL 3)
+    
+    for (FinancialLineItem item : items) {
+        String label = item.label();
+        if (label.contains("Repair") || label.contains("Failure") || label.contains("Delay") || label.contains("Life") || label.contains("Horizon")) {
+            stayItems.add(item);
+            stayTotal += item.amount();
+        } else {
+            moveItems.add(item);
+            moveTotal += item.amount();
+        }
+    }
+}
 
 <div class="receipt-container">
     <div class="receipt-paper">
         <div class="receipt-header">
             <div class="receipt-logo">2026_ACTUARIAL_HUD</div>
-            <div class="receipt-title">PREDICTIVE BILLING</div>
-            <div class="receipt-date">TRANS_ID: ${java.util.UUID.randomUUID().toString().substring(0, 8).toUpperCase()}</div>
+            <div class="receipt-title">DECISION AUDIT</div>
+            <div class="receipt-date">CORRELATION_ID: ${java.util.UUID.randomUUID().toString().substring(0, 8).toUpperCase()}</div>
         </div>
         
-        <div class="receipt-divider">--------------------------------</div>
-        
+        <!-- SECTION 1: STAY -->
+        <div class="receipt-divider">STAY_PATH_LIABILITY // [A]</div>
         <div class="receipt-items">
-            @for(FinancialLineItem item : items)
+            @for(FinancialLineItem item : stayItems)
                 <div class="receipt-item">
                     <div class="item-main">
                         <span class="item-label">${item.label().toUpperCase()}</span>
@@ -23,13 +48,41 @@
                     <div class="item-sub">>> ${item.description()}</div>
                 </div>
             @endfor
+            <div class="receipt-item total-row" style="border-top: 1px solid #000; padding-top: 0.5rem; margin-top: 0.5rem;">
+                <div class="item-main" style="color: #d91b1b;">
+                    <span class="item-label" style="font-weight: 900;">TOTAL RETENTION COST</span>
+                    <span class="item-amount" style="font-weight: 900;">$${String.format("%,.0f", stayTotal)}</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 2: MOVE -->
+        <div class="receipt-divider">EXIT_PATH_FRICTION // [B]</div>
+        <div class="receipt-items">
+            @for(FinancialLineItem item : moveItems)
+                <div class="receipt-item">
+                    <div class="item-main">
+                        <span class="item-label">${item.label().toUpperCase()}</span>
+                        <span class="item-amount">$${String.format("%,.0f", item.amount())}</span>
+                    </div>
+                    <div class="item-sub">>> ${item.description()}</div>
+                </div>
+            @endfor
+            <div class="receipt-item total-row" style="border-top: 1px solid #000; padding-top: 0.5rem; margin-top: 0.5rem;">
+                <div class="item-main" style="color: #1a1a1a;">
+                    <span class="item-label" style="font-weight: 900;">TOTAL SWITCHING FRICTION</span>
+                    <span class="item-amount" style="font-weight: 900;">$${String.format("%,.0f", moveTotal)}</span>
+                </div>
+            </div>
         </div>
         
-        <div class="receipt-divider">--------------------------------</div>
+        <div class="receipt-divider" style="opacity: 0.6;">--------------------------------</div>
         
         <div class="receipt-footer">
-            <div class="footer-msg">ACTUARIAL RISK DETECTED</div>
-            <div class="footer-warning">THIS IS NOT A QUOTE, IT IS A WARNING</div>
+            <div class="footer-msg">SUMMARY VERDICT</div>
+            <div class="footer-warning" style="font-size: 0.8rem; font-weight: 800; color: ${stayTotal > moveTotal ? "#d91b1b" : "#10b981"};">
+                ${stayTotal > moveTotal ? "RETENTION_LIABILITY_EXCEEDED" : "RETENTION_JUSTIFIED"}
+            </div>
             <div class="barcode">|| |||| ||| ||||| || ||| ||</div>
         </div>
     </div>

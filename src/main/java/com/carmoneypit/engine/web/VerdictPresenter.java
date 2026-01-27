@@ -2,18 +2,23 @@ package com.carmoneypit.engine.web;
 
 import com.carmoneypit.engine.api.OutputModels.VerdictState;
 import com.carmoneypit.engine.api.InputModels.EngineInput;
+import com.carmoneypit.engine.core.ValuationService;
+import com.carmoneypit.engine.data.CarBrandData;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
 import java.util.Base64;
 import java.nio.charset.StandardCharsets;
+import java.util.Optional;
 
 @Service
 public class VerdictPresenter {
 
     private final ObjectMapper objectMapper;
+    private final ValuationService valuationService;
 
-    public VerdictPresenter(ObjectMapper objectMapper) {
+    public VerdictPresenter(ObjectMapper objectMapper, ValuationService valuationService) {
         this.objectMapper = objectMapper;
+        this.valuationService = valuationService;
     }
 
     public String encodeToken(EngineInput input) {
@@ -60,16 +65,45 @@ public class VerdictPresenter {
         }
     }
 
-    public String getLawyerExplanation(VerdictState state) {
+    public String getLawyerExplanation(VerdictState state, EngineInput input) {
+        Optional<CarBrandData> brandData = (input != null) ? valuationService.getBrandData(input.brand())
+                : Optional.empty();
+        String brandName = (input != null && input.brand() != null) ? input.brand().name() : "Vehicle";
+
         switch (state) {
             case TIME_BOMB:
-                return "Actuarial correlation confirms this asset has reached a terminal efficiency state. Maintenance overhead now projects to exceed remaining equity within 8.4 months. Immediate disposal recommended.";
+                String brandRisk = "";
+                if (brandData.isPresent() && !brandData.get().majorIssues.isEmpty()) {
+                    brandRisk = String.format(
+                            " Statistical failure node for %s detected: %s issues peak at this mileage.",
+                            brandName, brandData.get().majorIssues.get(0).part);
+                }
+                return String.format(
+                        "DECISION_AUDIT: Your brain's natural 'Endowment Effect' is masking the reality. While it's difficult to let go, the actuarial data is absolute.%s Projected maintenance overhead exceeds asset core equity. Strategic liquidation is the only mathematical move.",
+                        brandRisk);
+
             case STABLE:
-                return "Strategic repair validated. Current service cost is statistically superior to the capital requirements of a replacement acquisition in the 2026 market.";
+                return String.format(
+                        "VALIDATED: Maintenance is an investment, not a loss. The %s platform remains statistically efficient for your current usage window. Authorizing repair preserves capital better than entering the high-friction replacement market.",
+                        brandName);
+
             case BORDERLINE:
             default:
-                return "Equilibrium shift detected. Financial models indicate a high-variance outcome. Proceeding with service poses a 42% risk of cascade failure node exposure.";
+                String issueWarning = "";
+                if (brandData.isPresent() && !brandData.get().majorIssues.isEmpty()) {
+                    issueWarning = String.format(" Known %s vulnerability: %s. ", brandName,
+                            brandData.get().majorIssues.get(0).part);
+                }
+                return String.format(
+                        "CAUTION: Correlation shift detected.%s Your asset is entering a high-variance risk window. If you proceed with repair, you are effectively gambling on secondary component longevity. Secure a 15%% discount on services or exit now.",
+                        issueWarning);
         }
+    }
+
+    // Overload for backward compatibility if needed, though we should update
+    // callers
+    public String getLawyerExplanation(VerdictState state) {
+        return getLawyerExplanation(state, null);
     }
 
     public String getActionPlan(VerdictState state) {
@@ -100,37 +134,37 @@ public class VerdictPresenter {
     public String getLeadLabel(VerdictState state) {
         switch (state) {
             case TIME_BOMB:
-                return "Get Appraisal & Sell Now";
+                return "Execute Exit Strategy";
             case STABLE:
-                return "Find Trusted Service";
+                return "Secure Protection Plan";
             case BORDERLINE:
-                return "Explore Repair Financing";
             default:
-                return "Expert Consultation";
+                return "Audit All Options";
         }
     }
 
     public String getLeadDescription(VerdictState state) {
         switch (state) {
             case TIME_BOMB:
-                return "Capitalize on remaining value. Get a guaranteed cash offer in 2 minutes.";
+                return "Your asset is hemorrhaging value. Convert it to cash within 48 hours before the next breakdown.";
             case STABLE:
-                return "Save up to 20% by comparing verified local service centers.";
+                return "Asset efficiency verified. Find a specialist to execute a multi-year reliability hold.";
             case BORDERLINE:
-                return "Keep your cash flow stable. Break this down into 12 easy payments.";
             default:
-                return "Consult with a vehicle decision specialist.";
+                return "Neutral ground. Compare immediate buy-out offers versus high-yield repair financing.";
         }
     }
 
     public String getLeadUrl(VerdictState state) {
+        // Updated to generic placeholders - we should replace these with real affiliate
+        // links later
         switch (state) {
             case TIME_BOMB:
-                return "mailto:acquisitions@carmoneypit.com?subject=Cash%20Offer%20Request";
+                return "https://peddle.com"; // Example affiliate
             case STABLE:
-                return "mailto:service@carmoneypit.com?subject=Service%20Appointment";
+                return "https://repairpal.com"; // Example affiliate
             case BORDERLINE:
-                return "mailto:finance@carmoneypit.com?subject=Repair%20Loan%20Inquiry";
+                return "#";
             default:
                 return "mailto:support@carmoneypit.com";
         }

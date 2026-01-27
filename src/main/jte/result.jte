@@ -57,24 +57,25 @@
             .verdict-sustain { border-top: 6px solid var(--green-safe); }
             .verdict-risk_alert { border-top: 6px solid var(--orange-warn); }
 
-            /* Sim Lab Grid */
-            .sim-grid { 
-                display: grid !important; 
-                grid-template-columns: repeat(2, 1fr) !important; 
-                gap: 2rem; 
+            /* Sim Lab Layout */
+            .sim-grid-revamped { 
+                display: grid; 
+                grid-template-columns: repeat(3, 1fr); 
+                gap: 2.5rem; 
                 margin-top: 2rem; 
             }
+            .sim-column { display: flex; flex-direction: column; gap: 1.5rem; }
+            
             .sim-item { display: flex; flex-direction: column; min-width: 0; }
-            .sim-item label { display: block; font-size: 0.75rem; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; margin-bottom: 1rem; letter-spacing: 0.05em; }
+            .sim-item label { display: block; font-size: 0.75rem; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; margin-bottom: 0.75rem; letter-spacing: 0.05em; }
 
             .pill-group {
                 display: flex;
                 background: #f1f5f9;
                 padding: 4px;
-                border-radius: 16px;
+                border-radius: 12px;
                 gap: 4px;
-                width: fit-content;
-                min-width: 100%;
+                width: 100%;
             }
 
             .pill { 
@@ -84,28 +85,83 @@
                 margin: 0; 
             }
             
-            .pill input { 
-                display: none !important;
-            }
+            .pill input { display: none !important; }
             
             .pill span {
                 display: block;
-                padding: 0.7rem 1rem;
+                padding: 0.6rem 0.5rem;
                 text-align: center;
-                font-size: 0.8rem;
+                font-size: 0.75rem;
                 font-weight: 700;
-                border-radius: 12px;
+                border-radius: 8px;
                 transition: all 0.2s;
                 color: #64748b;
-                background: #f1f5f9;
+                background: transparent;
                 border: 1px solid transparent;
             }
             
             .pill input:checked + span { 
-                background: #000 !important; 
-                color: #fff !important; 
-                border-color: #000 !important;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important; 
+                background: #fff !important; 
+                color: #0f172a !important; 
+                box-shadow: 0 2px 8px rgba(0,0,0,0.05) !important; 
+                border-color: rgba(0,0,0,0.05);
+            }
+
+            /* Vertical Pills for Severity */
+            .vertical-pills { display: flex; flex-direction: column; gap: 0.5rem; }
+            .pill-row { cursor: pointer; display: block; }
+            .pill-row input { display: none; }
+            .pill-text {
+                display: block;
+                padding: 0.8rem 1rem;
+                background: #f8fafc;
+                border: 1px solid #e2e8f0;
+                border-radius: 12px;
+                font-size: 0.85rem;
+                font-weight: 600;
+                color: #475569;
+                transition: all 0.2s;
+            }
+            .pill-row input:checked + .pill-text {
+                background: #eff6ff;
+                border-color: var(--futurist-blue);
+                color: var(--futurist-blue);
+                box-shadow: 0 0 0 1px var(--futurist-blue);
+            }
+
+            /* Slider Styling */
+            .slider-container { position: relative; padding: 0 0.5rem; }
+            input[type=range] {
+                -webkit-appearance: none;
+                width: 100%;
+                background: transparent;
+            }
+            input[type=range]::-webkit-slider-thumb {
+                -webkit-appearance: none;
+                height: 24px;
+                width: 24px;
+                border-radius: 50%;
+                background: #0f172a;
+                cursor: pointer;
+                margin-top: -10px;
+                box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            }
+            input[type=range]::-webkit-slider-runnable-track {
+                width: 100%;
+                height: 4px;
+                cursor: pointer;
+                background: #e2e8f0;
+                border-radius: 2px;
+            }
+            .slider-labels {
+                display: flex;
+                justify-content: space-between;
+                margin-top: 0.75rem;
+                font-size: 0.7rem;
+                font-weight: 700;
+                color: var(--text-secondary);
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
             }
 
             .est-badge {
@@ -133,8 +189,8 @@
                 backdrop-filter: blur(4px);
             }
 
-            @media (max-width: 600px) {
-                .sim-grid { grid-template-columns: 1fr; }
+            @media (max-width: 900px) {
+                .sim-grid-revamped { grid-template-columns: 1fr; gap: 2rem; }
             }
 
             /* Sticky Bar Styles */
@@ -228,7 +284,7 @@
                     <!-- Owner Mode: Interactive Lab -->
                     <h3 style="font-size: 1.25rem; font-weight: 800; letter-spacing: -0.02em;">Stress-Test Simulation</h3>
                     <p style="color: var(--text-secondary); font-size: 0.95rem; margin-top: 0.5rem; font-weight: 500;">
-                        Manipulate variables to challenge the verdict.
+                        Adjust variables to see if the verdict holds up under pressure.
                     </p>
                     
                     <form hx-post="/simulate" hx-target="#verdict-card" hx-trigger="change, submit" hx-swap="outerHTML" onsubmit="event.preventDefault(); return false;">
@@ -237,80 +293,101 @@
                         <input type="hidden" name="repairQuoteUsd" value="${input.repairQuoteUsd()}">
                         <input type="hidden" name="isValueEstimated" value="${isValueEstimated}" id="isEstInput">
 
-                        <div class="sim-grid">
-                            <!-- Market Value Input (New) -->
-                            <div class="sim-item">
-                                <label style="display: flex; justify-content: space-between; align-items: center;">
-                                    Market Value
-                                    @if(isValueEstimated)
-                                        <span class="est-badge" style="background: #fbbf24; color: #fff; padding: 2px 6px; border-radius: 4px; font-size: 0.6rem; margin-left:8px;">ESTIMATED</span>
-                                    @endif
-                                </label>
-                                <div style="position: relative;">
-                                    <span style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-secondary); font-weight: 700;">$</span>
-                                    <input type="number" name="currentValueUsd" value="${input.currentValueUsd()}"
-                                           style="width: 100%; padding: 0.8rem 1rem 0.8rem 2.5rem; border-radius: 12px; border: 1px solid #e2e8f0; font-weight: 700; font-size: 1rem;"
-                                           oninput="document.getElementById('isEstInput').value = 'false';">
-                                </div>
-                            </div>
-                            <!-- Retention Horizon (New) -->
-                            <div class="sim-item">
-                                <label>Retention Plans</label>
-                                <div class="pill-group">
-                                    <label class="pill">
-                                        <input type="radio" name="retentionHorizon" value="MONTHS_6">
-                                        <span>6 Mo</span>
-                                    </label>
-                                    <label class="pill">
-                                        <input type="radio" name="retentionHorizon" value="YEARS_1">
-                                        <span>1 Yr</span>
-                                    </label>
-                                    <label class="pill">
-                                        <input type="radio" name="retentionHorizon" value="YEARS_3">
-                                        <span>3 Yrs</span>
-                                    </label>
-                                </div>
-                            </div>
-
-                            <div class="sim-item">
-                                <label>Severity</label>
-                                <div class="pill-group">
-                                    @for(FailureSeverity val : FailureSeverity.values())
-                                        <label class="pill">
-                                            <input type="radio" name="failureSeverity" value="${val}" checked="${val == controls.failureSeverity()}">
-                                            <span>${val == FailureSeverity.ENGINE_TRANSMISSION ? "Critical" : (val == FailureSeverity.SUSPENSION_BRAKES ? "Moderate" : "General")}</span>
-                                        </label>
-                                    @endfor
-                                </div>
-                            </div>
+                        <div class="sim-grid-revamped">
                             
-                            <div class="sim-item">
-                                <label>Mobility</label>
-                                <div class="pill-group">
-                                    @for(MobilityStatus val : MobilityStatus.values())
-                                        <label class="pill">
-                                            <input type="radio" name="mobilityStatus" value="${val}" checked="${val == controls.mobilityStatus()}">
-                                            <span>${val == MobilityStatus.NEEDS_TOW ? "Offline" : "Operational"}</span>
-                                        </label>
-                                    @endfor
+                            <!-- Column 1: Asset Reality -->
+                            <div class="sim-column">
+                                <h4 style="color:var(--text-secondary); text-transform:uppercase; font-size: 0.75rem; letter-spacing:0.1em; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.5rem;">Asset Reality</h4>
+                                
+                                <div class="sim-item">
+                                    <label style="display: flex; justify-content: space-between; align-items: center;">
+                                        Market Value
+                                        @if(isValueEstimated)
+                                            <span class="est-badge" style="background: #fbbf24; color: #fff; padding: 2px 6px; border-radius: 4px; font-size: 0.6rem; margin-left:8px;">ESTIMATED</span>
+                                        @endif
+                                    </label>
+                                    <div style="position: relative;">
+                                        <span style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-secondary); font-weight: 700;">$</span>
+                                        <input type="number" name="currentValueUsd" value="${input.currentValueUsd()}"
+                                               style="width: 100%; padding: 0.8rem 1rem 0.8rem 2.5rem; border-radius: 12px; border: 1px solid #e2e8f0; font-weight: 700; font-size: 1rem;"
+                                               oninput="document.getElementById('isEstInput').value = 'false';">
+                                    </div>
+                                </div>
+
+                                <div class="sim-item">
+                                    <label>Current Mobility</label>
+                                    <div class="pill-group">
+                                        @for(MobilityStatus val : MobilityStatus.values())
+                                            <label class="pill">
+                                                <input type="radio" name="mobilityStatus" value="${val}" checked="${val == controls.mobilityStatus()}">
+                                                <span>${val == MobilityStatus.NEEDS_TOW ? "Offline / Tow" : "Drivable"}</span>
+                                            </label>
+                                        @endfor
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <!-- Hassle Tolerance Slider -->
-                        <div style="margin-top: 2rem;">
-                             <label style="display: block; font-size: 0.75rem; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; margin-bottom: 1rem;">Tolerance Threshold</label>
-                             <div style="display: flex; align-items: center; gap: 1rem;">
-                                <span style="font-size: 0.75rem; font-weight: 700; color: var(--text-secondary);">Conservative</span>
-                                <input type="range" name="hassleToleranceSlider" min="0" max="2" step="1" 
-                                       style="flex: 1; accent-color: var(--futurist-blue); cursor: pointer;"
-                                       value="${controls.hassleTolerance() == HassleTolerance.HATE_SWITCHING ? 0 : (controls.hassleTolerance() == HassleTolerance.NEUTRAL ? 1 : 2)}" 
-                                       oninput="document.getElementById('hassleToleranceHidden').value = this.value == 0 ? 'HATE_SWITCHING' : (this.value == 1 ? 'NEUTRAL' : 'WANT_NEW_CAR'); this.dispatchEvent(new Event('change', {bubbles: true}));">
-                                <input type="hidden" id="hassleToleranceHidden" name="hassleTolerance" value="${controls.hassleTolerance()}">
-                                <span style="font-size: 0.75rem; font-weight: 700; color: var(--text-secondary);">Aggressive</span>
+                            <!-- Column 2: Diagnosis -->
+                            <div class="sim-column">
+                                <h4 style="color:var(--text-secondary); text-transform:uppercase; font-size: 0.75rem; letter-spacing:0.1em; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.5rem;">Diagnosis</h4>
+                                
+                                <div class="sim-item">
+                                    <label>Failure Severity</label>
+                                    <div class="vertical-pills">
+                                         @for(FailureSeverity val : FailureSeverity.values())
+                                            <label class="pill-row">
+                                                <input type="radio" name="failureSeverity" value="${val}" checked="${val == controls.failureSeverity()}">
+                                                <span class="pill-text">${val == FailureSeverity.ENGINE_TRANSMISSION ? "Critical (Engine/Trans)" : (val == FailureSeverity.SUSPENSION_BRAKES ? "Major (Suspension/Brakes)" : "General Wear")}</span>
+                                            </label>
+                                        @endfor
+                                    </div>
+                                </div>
                             </div>
+
+                            <!-- Column 3: Strategy & Willingness -->
+                            <div class="sim-column">
+                                <h4 style="color:var(--text-secondary); text-transform:uppercase; font-size: 0.75rem; letter-spacing:0.1em; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.5rem;">Strategy</h4>
+
+                                <div class="sim-item">
+                                    <label>Target Retention</label>
+                                    <div class="pill-group">
+                                        <label class="pill"><input type="radio" name="retentionHorizon" value="MONTHS_6" checked="${controls.retentionHorizon() == RetentionHorizon.MONTHS_6}"><span>6 Mo</span></label>
+                                        <label class="pill"><input type="radio" name="retentionHorizon" value="YEARS_1" checked="${controls.retentionHorizon() == RetentionHorizon.YEARS_1}"><span>1 Yr</span></label>
+                                        <label class="pill"><input type="radio" name="retentionHorizon" value="YEARS_3" checked="${controls.retentionHorizon() == RetentionHorizon.YEARS_3}"><span>3+ Yrs</span></label>
+                                    </div>
+                                </div>
+
+                                <div class="sim-item" style="margin-top: 1.5rem;">
+                                    <label>Willingness to Walk Away</label>
+                                    <div class="slider-container">
+                                        <input type="range" min="0" max="2" step="1"
+                                            value="${controls.hassleTolerance() == HassleTolerance.HATE_SWITCHING ? 0 : (controls.hassleTolerance() == HassleTolerance.WANT_NEW_CAR ? 2 : 1)}"
+                                            oninput="updateTolerance(this.value)">
+                                        <div class="slider-labels">
+                                            <span>Low</span>
+                                            <span>Neutral</span>
+                                            <span>High</span>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" name="hassleTolerance" id="hassleToleranceInput" value="${controls.hassleTolerance()}">
+                                </div>
+                            </div>
+
                         </div>
                     </form>
+                    
+                    <script>
+                        function updateTolerance(val) {
+                            const input = document.getElementById('hassleToleranceInput');
+                            if (val == 0) input.value = 'HATE_SWITCHING';
+                            else if (val == 1) input.value = 'NEUTRAL';
+                            else input.value = 'WANT_NEW_CAR';
+                            
+                            // Dispatch event for HTMX
+                            const event = new Event('change', { bubbles: true });
+                            input.dispatchEvent(event);
+                        }
+                    </script>
                 @endif
             </section>
         </main>

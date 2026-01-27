@@ -3,6 +3,7 @@ package com.carmoneypit.engine.api;
 public class InputModels {
     public record EngineInput(
             VehicleType vehicleType,
+            CarBrand brand,
             long mileage,
             long repairQuoteUsd,
             long currentValueUsd) {
@@ -13,6 +14,13 @@ public class InputModels {
             MobilityStatus mobilityStatus,
             HassleTolerance hassleTolerance,
             RetentionHorizon retentionHorizon) {
+    }
+
+    public enum CarBrand {
+        TOYOTA, HONDA, LEXUS,
+        BMW, MERCEDES, AUDI, VOLKSWAGEN, PORSCHE, LAND_ROVER,
+        FORD, CHEVROLET, RAM, JEEP, TESLA,
+        HYUNDAI, KIA, NISSAN, SUBARU
     }
 
     public enum VehicleType {

@@ -1,0 +1,428 @@
+{
+    "TOYOTA": {
+        "name": "Toyota",
+        "segment": "KEEPER",
+        "reliability_score": 9.5,
+        "maintenance_cost_yearly": 490,
+        "depreciation_curve": "FLAT",
+        "death_mileage": 300000,
+        "verdict_bias": "FIX",
+        "market_perception": "The cockroach of cars. It just won't die.",
+        "major_issues": [
+            {
+                "mileage": 150000,
+                "part": "Alternator",
+                "cost": 450,
+                "risk_msg": "Standard wear item. Replace and run for another 100k miles."
+            },
+            {
+                "mileage": 200000,
+                "part": "Catalytic Converter",
+                "cost": 1200,
+                "risk_msg": "Expensive, but the only major expense you'll likely face."
+            }
+        ]
+    },
+    "HONDA": {
+        "name": "Honda",
+        "segment": "KEEPER",
+        "reliability_score": 9.0,
+        "maintenance_cost_yearly": 580,
+        "depreciation_curve": "FLAT",
+        "death_mileage": 250000,
+        "verdict_bias": "FIX",
+        "market_perception": "Civic duty. Reliable, strictly utilitarian.",
+        "major_issues": [
+            {
+                "mileage": 120000,
+                "part": "CVT Transmission (If Applicable)",
+                "cost": 3500,
+                "risk_msg": "The weak link. If it slips, sell immediately."
+            },
+            {
+                "mileage": 100000,
+                "part": "AC Compressor",
+                "cost": 900,
+                "risk_msg": "Known weak point. Annoying but not fatal."
+            }
+        ]
+    },
+    "LEXUS": {
+        "name": "Lexus",
+        "segment": "KEEPER",
+        "reliability_score": 9.8,
+        "maintenance_cost_yearly": 650,
+        "depreciation_curve": "FLAT",
+        "death_mileage": 300000,
+        "verdict_bias": "FIX",
+        "market_perception": "A Toyota in a tuxedo. Infinite life glitch.",
+        "major_issues": [
+            {
+                "mileage": 150000,
+                "part": "Air Suspension (LS/GX models)",
+                "cost": 2500,
+                "risk_msg": "The only thing that breaks. Swap to coils and keep driving."
+            }
+        ]
+    },
+    "BMW": {
+        "name": "BMW",
+        "segment": "LEASER",
+        "reliability_score": 5.0,
+        "maintenance_cost_yearly": 1390,
+        "depreciation_curve": "CLIFF",
+        "death_mileage": 140000,
+        "verdict_bias": "SELL",
+        "market_perception": "The Ultimate Driving Machine... until the warranty expires.",
+        "major_issues": [
+            {
+                "mileage": 70000,
+                "part": "Water Pump & Thermostat",
+                "cost": 1500,
+                "risk_msg": "Plastic impellers fail. It's not if, it's when. Overheat risk."
+            },
+            {
+                "mileage": 90000,
+                "part": "Oil Filter Housing Gasket",
+                "cost": 1200,
+                "risk_msg": "Leaks oil onto belt -> Belt snaps -> Engines ingests belt -> Game Over."
+            },
+            {
+                "mileage": 110000,
+                "part": "Rod Bearings (M Models)",
+                "cost": 3500,
+                "risk_msg": "The ticking time bomb. Spin a bearing, lose the engine."
+            }
+        ]
+    },
+    "MERCEDES": {
+        "name": "Mercedes-Benz",
+        "segment": "LEASER",
+        "reliability_score": 4.5,
+        "maintenance_cost_yearly": 1300,
+        "depreciation_curve": "CLIFF",
+        "death_mileage": 130000,
+        "verdict_bias": "SELL",
+        "market_perception": "Luxury you lease, not own.",
+        "major_issues": [
+            {
+                "mileage": 80000,
+                "part": "AirMatic Suspension",
+                "cost": 4000,
+                "risk_msg": "Struts will collapse. Your car will look slammed, your wallet will be slammed."
+            },
+            {
+                "mileage": 100000,
+                "part": "Rear Main Seal",
+                "cost": 1800,
+                "risk_msg": "Cheap part, massive labor charge."
+            }
+        ]
+    },
+    "AUDI": {
+        "name": "Audi",
+        "segment": "LEASER",
+        "reliability_score": 4.8,
+        "maintenance_cost_yearly": 1400,
+        "depreciation_curve": "CLIFF",
+        "death_mileage": 135000,
+        "verdict_bias": "SELL",
+        "market_perception": "Beautiful interiors, fragile hearts.",
+        "major_issues": [
+            {
+                "mileage": 90000,
+                "part": "Timing Chain Tensioner",
+                "cost": 3200,
+                "risk_msg": "Interference engine. If this skips, the pistons kiss the valves goodbye."
+            },
+            {
+                "mileage": 80000,
+                "part": "Turbo Failure",
+                "cost": 2800,
+                "risk_msg": "Expected consumable at this mileage."
+            }
+        ]
+    },
+    "VOLKSWAGEN": {
+        "name": "Volkswagen",
+        "segment": "RISKY",
+        "reliability_score": 5.5,
+        "maintenance_cost_yearly": 1000,
+        "depreciation_curve": "STEEP",
+        "death_mileage": 160000,
+        "verdict_bias": "SELL",
+        "market_perception": "Check Engine Light is a standard feature.",
+        "major_issues": [
+            {
+                "mileage": 100000,
+                "part": "DSG Transmission / Mechatronic",
+                "cost": 2500,
+                "risk_msg": "Complex gearbox. Computer failure is common and pricey."
+            },
+            {
+                "mileage": 80000,
+                "part": "Water Pump",
+                "cost": 1000,
+                "risk_msg": "Plastic housing cracks. Very common VW trait."
+            }
+        ]
+    },
+    "FORD": {
+        "name": "Ford",
+        "segment": "WORKHORSE",
+        "reliability_score": 6.5,
+        "maintenance_cost_yearly": 1100,
+        "depreciation_curve": "NORMAL",
+        "death_mileage": 200000,
+        "verdict_bias": "FIX",
+        "market_perception": "Built Ford Tough? Mostly. Trucks hold value, cars don't.",
+        "major_issues": [
+            {
+                "mileage": 120000,
+                "part": "Cam Phasers (EcoBoost)",
+                "cost": 2800,
+                "risk_msg": "The infamous rattle. Requires substantial engine teardown."
+            },
+            {
+                "mileage": 100000,
+                "part": "10-Speed Transmission",
+                "cost": 4500,
+                "risk_msg": "Jerky shifting, potential drum failure."
+            }
+        ]
+    },
+    "CHEVROLET": {
+        "name": "Chevrolet",
+        "segment": "WORKHORSE",
+        "reliability_score": 6.0,
+        "maintenance_cost_yearly": 950,
+        "depreciation_curve": "NORMAL",
+        "death_mileage": 200000,
+        "verdict_bias": "FIX",
+        "market_perception": "Like a Rock... that sometimes cracks.",
+        "major_issues": [
+            {
+                "mileage": 110000,
+                "part": "AFM Lifter Failure",
+                "cost": 3000,
+                "risk_msg": "Cylinder deactivation system kills lifters. Camshaft damage follows."
+            },
+            {
+                "mileage": 130000,
+                "part": "Transmission (Torque Converter)",
+                "cost": 3500,
+                "risk_msg": "The 'Chevy Shake'. Requires rebuild."
+            }
+        ]
+    },
+    "RAM": {
+        "name": "Ram",
+        "segment": "RISKY",
+        "reliability_score": 5.5,
+        "maintenance_cost_yearly": 1000,
+        "depreciation_curve": "NORMAL",
+        "death_mileage": 180000,
+        "verdict_bias": "SELL",
+        "market_perception": "Hemi power, Fiat reliability.",
+        "major_issues": [
+            {
+                "mileage": 100000,
+                "part": "Hemi Tick (Manifold Bolts)",
+                "cost": 800,
+                "risk_msg": "Annoying ticking sound. Bolts snap inside the head."
+            },
+            {
+                "mileage": 120000,
+                "part": "Lifter/Cam Failure",
+                "cost": 3500,
+                "risk_msg": "If the tick isn't the manifold, it's the cam. Big money."
+            }
+        ]
+    },
+    "JEEP": {
+        "name": "Jeep",
+        "segment": "CULT",
+        "reliability_score": 4.0,
+        "maintenance_cost_yearly": 910,
+        "depreciation_curve": "FLAT",
+        "death_mileage": 180000,
+        "verdict_bias": "SELL",
+        "market_perception": "It's a Jeep thing, you wouldn't understand (the repair bills).",
+        "major_issues": [
+            {
+                "mileage": 90000,
+                "part": "Death Wobble (Suspension)",
+                "cost": 1200,
+                "risk_msg": "Terrifying shaking at highway speeds. Requires full front-end rebuild."
+            },
+            {
+                "mileage": 110000,
+                "part": "Oil Cooler Housing",
+                "cost": 900,
+                "risk_msg": "Plastic part sits in the V of the engine. Leaks oil everywhere."
+            }
+        ]
+    },
+    "SUBARU": {
+        "name": "Subaru",
+        "segment": "CULT",
+        "reliability_score": 7.0,
+        "maintenance_cost_yearly": 850,
+        "depreciation_curve": "FLAT",
+        "death_mileage": 220000,
+        "verdict_bias": "FIX",
+        "market_perception": "Love. It's what makes a Subaru... need head gaskets.",
+        "major_issues": [
+            {
+                "mileage": 120000,
+                "part": "Head Gaskets",
+                "cost": 2000,
+                "risk_msg": "The classic Subaru tax. Almost guaranteed around this mileage."
+            },
+            {
+                "mileage": 110000,
+                "part": "CVT Transmission",
+                "cost": 6000,
+                "risk_msg": "If the chain slips, you replace the whole unit. Value killer."
+            }
+        ]
+    },
+    "HYUNDAI": {
+        "name": "Hyundai",
+        "segment": "RISKY",
+        "reliability_score": 6.5,
+        "maintenance_cost_yearly": 700,
+        "depreciation_curve": "STEEP",
+        "death_mileage": 160000,
+        "verdict_bias": "SELL",
+        "market_perception": "10-year warranty is there for a reason.",
+        "major_issues": [
+            {
+                "mileage": 100000,
+                "part": "Theta II Engine Seizure",
+                "cost": 5000,
+                "risk_msg": "Manufacturing defect. Engine may seize without warning."
+            },
+            {
+                "mileage": 0,
+                "part": "Theft Risk (Kia Boyz)",
+                "cost": 0,
+                "risk_msg": "Your insurance premium might be higher than the car payment."
+            }
+        ]
+    },
+    "KIA": {
+        "name": "Kia",
+        "segment": "RISKY",
+        "reliability_score": 6.5,
+        "maintenance_cost_yearly": 700,
+        "depreciation_curve": "STEEP",
+        "death_mileage": 160000,
+        "verdict_bias": "SELL",
+        "market_perception": "Killing It Alright (KIA).",
+        "major_issues": [
+            {
+                "mileage": 100000,
+                "part": "Theta II Engine Seizure",
+                "cost": 5000,
+                "risk_msg": "Rod knock is essentially a standard feature on older models."
+            },
+            {
+                "mileage": 0,
+                "part": "Theft Risk (Kia Boyz)",
+                "cost": 0,
+                "risk_msg": "Uninsurable in some cities due to theft vulnerability."
+            }
+        ]
+    },
+    "NISSAN": {
+        "name": "Nissan",
+        "segment": "RISKY",
+        "reliability_score": 5.0,
+        "maintenance_cost_yearly": 750,
+        "depreciation_curve": "STEEP",
+        "death_mileage": 150000,
+        "verdict_bias": "SELL",
+        "market_perception": "Big Altima Energy. Transmission is made of glass.",
+        "major_issues": [
+            {
+                "mileage": 80000,
+                "part": "CVT Transmission Failure",
+                "cost": 4000,
+                "risk_msg": "Jatco CVTs are notorious. Once it whines, it's done."
+            }
+        ]
+    },
+    "TESLA": {
+        "name": "Tesla",
+        "segment": "TECH",
+        "reliability_score": 5.0,
+        "maintenance_cost_yearly": 400,
+        "depreciation_curve": "CLIFF",
+        "death_mileage": 200000,
+        "verdict_bias": "SELL",
+        "market_perception": "A computer on wheels. Hope the warranty covers the screen.",
+        "major_issues": [
+            {
+                "mileage": 120000,
+                "part": "HV Battery Degradation",
+                "cost": 12000,
+                "risk_msg": "The car is totaled if the battery fails out of warranty."
+            },
+            {
+                "mileage": 50000,
+                "part": "Control Arm Suspension",
+                "cost": 1200,
+                "risk_msg": "Heavy car eats suspension bushings for breakfast."
+            }
+        ]
+    },
+    "LAND_ROVER": {
+        "name": "Land Rover",
+        "segment": "LEASER",
+        "reliability_score": 2.0,
+        "maintenance_cost_yearly": 1900,
+        "depreciation_curve": "CLIFF",
+        "death_mileage": 100000,
+        "verdict_bias": "SELL",
+        "market_perception": "If there's no oil under it, there's no oil in it.",
+        "major_issues": [
+            {
+                "mileage": 70000,
+                "part": "Timing Chain Guide",
+                "cost": 5000,
+                "risk_msg": "Engine out service. Costs more than a used Corolla."
+            },
+            {
+                "mileage": 60000,
+                "part": "Air Suspension Failure",
+                "cost": 3500,
+                "risk_msg": "Guaranteed to fail. You will be riding on bump stops."
+            }
+        ]
+    },
+    "PORSCHE": {
+        "name": "Porsche",
+        "segment": "PERFORMANCE",
+        "reliability_score": 8.0,
+        "maintenance_cost_yearly": 1700,
+        "depreciation_curve": "FLAT",
+        "death_mileage": 200000,
+        "verdict_bias": "FIX",
+        "market_perception": "Expensive entry, but holds value like gold.",
+        "major_issues": [
+            {
+                "mileage": 100000,
+                "part": "PDK Transmission Service",
+                "cost": 1500,
+                "risk_msg": "Not a failure, but maintenance you cannot skip."
+            },
+            {
+                "mileage": 80000,
+                "part": "Coolant Pipes (Older Models)",
+                "cost": 2000,
+                "risk_msg": "Plastic pipes glue unglures. Dump coolant everywhere."
+            }
+        ]
+    }
+}

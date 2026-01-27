@@ -74,9 +74,14 @@
             
             <!-- Asset Bleed Highlight (MOVED & ENHANCED) -->
             <div class="bleed-highlight">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
-                    <div style="font-size: 0.85rem; font-weight: 800; color: #c53030; text-transform: uppercase; letter-spacing: 0.05em;">
-                        6-Month Asset Bleed
+                <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.75rem;">
+                    <div>
+                        <div style="font-size: 0.85rem; font-weight: 800; color: #c53030; text-transform: uppercase; letter-spacing: 0.05em;">
+                            6-Month Asset Bleed
+                        </div>
+                        <div style="display: inline-block; background: #feb2b2; color: #9b2c2c; font-size: 0.7rem; font-weight: 900; padding: 0.2rem 0.5rem; border-radius: 4px; margin-top: 0.4rem; text-transform: uppercase;">
+                            Market Velocity: Critical
+                        </div>
                     </div>
                     <div style="font-size: 1.8rem; font-weight: 800; color: #e53e3e;">
                         -$${String.format("%,d", result.assetBleedAmount())}
@@ -93,15 +98,17 @@
                 <p style="font-size: 1.1rem; margin: 0; color: var(--text-main); font-weight: 700; line-height: 1.4;">${verdictAction}</p>
             </div>
 
-            <!-- Exit Ramp -->
-            <div style="background: var(--futurist-blue); padding: 2.5rem; border-radius: 32px; color: #fff; box-shadow: 0 15px 40px rgba(0, 102, 255, 0.25); position: relative; overflow: hidden;">
-                <div style="position: absolute; top: -20px; right: -20px; width: 100px; height: 100px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
-                <div style="font-size: 0.8rem; font-weight: 800; text-transform: uppercase; margin-bottom: 0.75rem; opacity: 0.8; letter-spacing: 0.05em;">Conversion Gateway</div>
+            <!-- Exit Ramp / Protection Plan -->
+            <div style="background: ${verdictCss.contains("terminate") ? "#000" : "var(--futurist-blue)"}; padding: 2.5rem; border-radius: 32px; color: #fff; box-shadow: 0 15px 40px ${verdictCss.contains("terminate") ? "rgba(0,0,0,0.3)" : "rgba(0, 102, 255, 0.25)"}; position: relative; overflow: hidden;">
+                <div style="position: absolute; top: -20px; right: -20px; width: 120px; height: 120px; background: rgba(255,255,255,0.05); border-radius: 50%;"></div>
+                <div style="font-size: 0.8rem; font-weight: 800; text-transform: uppercase; margin-bottom: 0.75rem; opacity: 0.8; letter-spacing: 0.05em;">
+                    ${verdictCss.contains("terminate") ? "Liquidate Asset" : "Preserve Asset"}
+                </div>
                 <h4 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 1.25rem; line-height: 1.1;">${leadLabel}</h4>
                 <p style="font-size: 1rem; margin-bottom: 2rem; opacity: 0.9; font-weight: 500; line-height: 1.4;">${leadDescription}</p>
                 <a href="${leadUrl}" 
-                   style="display: inline-flex; align-items: center; justify-content: center; background: #fff; color: var(--futurist-blue); width: 100%; padding: 1.25rem; border: none; border-radius: 20px; text-decoration: none; font-weight: 800; font-size: 1.1rem; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
-                    INITIATE PROCESS <span>→</span>
+                   style="display: inline-flex; align-items: center; justify-content: center; background: #fff; color: ${verdictCss.contains("terminate") ? "#000" : "var(--futurist-blue)"}; width: 100%; padding: 1.25rem; border: none; border-radius: 20px; text-decoration: none; font-weight: 800; font-size: 1.1rem; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                    ${verdictCss.contains("terminate") ? "EXECUTE EXIT STRATEGY" : "ACTIVATE PROTECTION"} <span>→</span>
                 </a>
             </div>
         </div>

@@ -28,7 +28,8 @@ public class RegretCalculator {
 
         // 1. Current Repair Cost
         double repairCost = (double) input.repairQuoteUsd();
-        items.add(new FinancialLineItem("Repair Outlay", repairCost, "Immediate cash drain for the quoted service."));
+        items.add(new FinancialLineItem("Retained Asset Repair Outlay", repairCost,
+                "Immediate cash liquidity required for the current restoration."));
         totalScore += repairCost;
 
         // 2. Future Failure Probability (Mileage Based + Severity Boost)
@@ -52,15 +53,15 @@ public class RegretCalculator {
         }
 
         double riskRegret = failureProb * majorCostBase;
-        items.add(new FinancialLineItem("Probabilistic Risk", riskRegret,
-                String.format("%.0f%% chance of secondary system collapse.", failureProb * 100)));
+        items.add(new FinancialLineItem("Hidden Secondary Failure Risk", riskRegret,
+                String.format("%.0f%% actuarial probability of adjacent system collapse.", failureProb * 100)));
         totalScore += riskRegret;
 
         // 3. Lost Exit Timing (Opportunity Cost of not selling now)
         double timingCost = input.currentValueUsd() * 0.05; // 5% penalty for missing the current 'working condition'
                                                             // sale window
-        items.add(new FinancialLineItem("Lost Sales Velocity", timingCost,
-                "Depreciation penalty for selling a repaired car vs selling now."));
+        items.add(new FinancialLineItem("Opportunity Cost of Delay", timingCost,
+                "The economic cost of missing the optimal asset disposal window."));
         totalScore += timingCost;
 
         // 4. Pain Score (Time/Stress + Tow Truck Rage)
@@ -79,8 +80,8 @@ public class RegretCalculator {
             painScore += rageCost;
         }
 
-        items.add(new FinancialLineItem("Cognitive Friction", painScore,
-                "Actuarial weight for vehicle-related stress and downtime."));
+        items.add(new FinancialLineItem("Operational Life Friction", painScore,
+                "Monetary valuation of unplanned downtime and quality of life impact."));
         totalScore += painScore;
 
         // [LOGIC FIX 4] Retention Horizon Logic Trap
@@ -91,19 +92,19 @@ public class RegretCalculator {
             switch (controls.retentionHorizon()) {
                 case MONTHS_6:
                     horizonCost = 1200.0; // Short term: "Too expensive for short utility"
-                    horizonNote = "Amortization penalty: Repair costs exceed 6-month utility value.";
+                    horizonNote = "Low utility-to-cost ratio for short-term retention.";
                     break;
                 case YEARS_1:
                     horizonCost = 1800.0;
-                    horizonNote = "Depreciation acceleration during 1-year hold window.";
+                    horizonNote = "Accelerated asset value erosion over 12-month window.";
                     break;
                 case YEARS_3:
                 case YEARS_5:
                     horizonCost = 3500.0; // Long term: "Guaranteed failure cascade"
-                    horizonNote = "Long-term hold maximizes exposure to catastrophic failure nodes.";
+                    horizonNote = "Guaranteed compounding liability over extended hold period.";
                     break;
             }
-            items.add(new FinancialLineItem("Retention Exposure", horizonCost, horizonNote));
+            items.add(new FinancialLineItem("Retention Horizon Liability", horizonCost, horizonNote));
             totalScore += horizonCost;
         }
 
@@ -122,26 +123,26 @@ public class RegretCalculator {
             else if (controls.hassleTolerance() == HassleTolerance.WANT_NEW_CAR)
                 friction = 800.0;
         }
-        items.add(new FinancialLineItem("Acquisition Friction", friction,
-                "Cost of searching, negotiating, and registering a new vehicle."));
+        items.add(new FinancialLineItem("Market Transaction Overhead", friction,
+                "Estimated loss from taxes, dealer margins, and acquisition labor."));
         totalScore += friction;
 
         // 2. Temporary Inconvenience (Mobility Based)
         double mobilityRegret = 0;
         if (controls != null && controls.mobilityStatus() == MobilityStatus.NEEDS_TOW) {
-            mobilityRegret = 1800.0; // High regret for switching when car is offline (bad leverage)
-            items.add(new FinancialLineItem("Offline Leverage Loss", mobilityRegret,
-                    "Reduced trade-in value and urgency penalty for non-runners."));
+            mobilityRegret = 1800.0;
+            items.add(new FinancialLineItem("Asset Liquidity Penalty", mobilityRegret,
+                    "Immediate reduction in disposal value due to non-operational status."));
         } else {
-            items.add(new FinancialLineItem("Market Leverage", 0.0,
-                    "Maintain leverage by switching while the asset is mobile."));
+            items.add(new FinancialLineItem("Disposal Leverage Benefit", 0.0,
+                    "Current operational status minimizes loss during asset liquidation."));
         }
         totalScore += mobilityRegret;
 
         // 3. Premature Exit Anxiety
         double anxiety = 400.0;
-        items.add(new FinancialLineItem("Sunk Cost Anxiety", anxiety,
-                "Psychological weight of leaving a familiar asset prematurely."));
+        items.add(new FinancialLineItem("Sunk Cost Attachment Tax", anxiety,
+                "Irrational psychological resistance to terminating current ownership."));
         totalScore += anxiety;
 
         return new RegretDetail(totalScore, items);

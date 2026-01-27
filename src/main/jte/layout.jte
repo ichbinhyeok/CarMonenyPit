@@ -3,6 +3,9 @@
 @param String title = "Car Money Pit | Precision Actuarial Analysis"
 @param Content content
 @param Content extraStyles = null
+@param boolean noindex = false
+@param String ogTitle = null
+@param String ogDescription = null
 
 <!DOCTYPE html>
 <html lang="en">

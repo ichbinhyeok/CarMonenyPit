@@ -28,6 +28,7 @@ public class EngineTest {
         // 40k miles, $500 repair -> Should be STABLE
         EngineInput input = new EngineInput(
                 VehicleType.SEDAN,
+                com.carmoneypit.engine.api.InputModels.CarBrand.TOYOTA,
                 40000,
                 500, // $500
                 15000 // currentValue
@@ -45,6 +46,7 @@ public class EngineTest {
         // High future risk + high cost
         EngineInput input = new EngineInput(
                 VehicleType.SEDAN,
+                com.carmoneypit.engine.api.InputModels.CarBrand.TOYOTA,
                 160000,
                 3000, // $3000
                 5000 // currentValue
