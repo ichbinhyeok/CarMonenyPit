@@ -454,5 +454,45 @@
         "generation": "RU",
         "start_year": 2017,
         "end_year": 2023
+    },
+    {
+        "id": "chevrolet_tahoe_4th",
+        "brand": "CHEVROLET",
+        "model": "Tahoe",
+        "generation": "4th Gen (K2UC)",
+        "start_year": 2015,
+        "end_year": 2020
+    },
+    {
+        "id": "toyota_sienna_xl30",
+        "brand": "TOYOTA",
+        "model": "Sienna",
+        "generation": "3rd Gen",
+        "start_year": 2011,
+        "end_year": 2020
+    },
+    {
+        "id": "nissan_sentra_b17_pit",
+        "brand": "NISSAN",
+        "model": "Sentra",
+        "generation": "B17",
+        "start_year": 2013,
+        "end_year": 2019
+    },
+    {
+        "id": "jeep_grand_cherokee_wk2_pit",
+        "brand": "JEEP",
+        "model": "Grand Cherokee",
+        "generation": "WK2",
+        "start_year": 2011,
+        "end_year": 2021
+    },
+    {
+        "id": "volkswagen_jetta_mk6",
+        "brand": "VOLKSWAGEN",
+        "model": "Jetta",
+        "generation": "MK6",
+        "start_year": 2011,
+        "end_year": 2018
     }
 ]

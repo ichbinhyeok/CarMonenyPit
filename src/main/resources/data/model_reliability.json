@@ -1679,5 +1679,128 @@
                 "est_cost": 800
             }
         ]
+    },
+    {
+        "model_id": "chevrolet_tahoe_4th",
+        "score": 55,
+        "lifespan_miles": 220000,
+        "best_years": [
+            2019,
+            2020
+        ],
+        "worst_years": [
+            2015,
+            2016
+        ],
+        "common_trouble_spots": [
+            "Lifter Failure",
+            "Transmission Shudder",
+            "Magnetic Ride"
+        ],
+        "critical_milestones": [
+            {
+                "mileage": 100000,
+                "description": "AFM/DFM Lifter Check",
+                "est_cost": 3500
+            }
+        ]
+    },
+    {
+        "model_id": "toyota_sienna_xl30",
+        "score": 82,
+        "lifespan_miles": 300000,
+        "best_years": [
+            2015,
+            2016
+        ],
+        "worst_years": [
+            2011
+        ],
+        "common_trouble_spots": [
+            "Sliding Door Cables",
+            "Transmission Flare"
+        ],
+        "critical_milestones": [
+            {
+                "mileage": 120000,
+                "description": "Spark Plugs",
+                "est_cost": 650
+            }
+        ]
+    },
+    {
+        "model_id": "nissan_sentra_b17_pit",
+        "score": 35,
+        "lifespan_miles": 140000,
+        "best_years": [
+            2019
+        ],
+        "worst_years": [
+            2013,
+            2014,
+            2015
+        ],
+        "common_trouble_spots": [
+            "CVT Failure",
+            "Paint Peeling"
+        ],
+        "critical_milestones": [
+            {
+                "mileage": 80000,
+                "description": "CVT Replacement Risk",
+                "est_cost": 4200
+            }
+        ]
+    },
+    {
+        "model_id": "jeep_grand_cherokee_wk2_pit",
+        "score": 48,
+        "lifespan_miles": 175000,
+        "best_years": [
+            2019,
+            2020
+        ],
+        "worst_years": [
+            2011,
+            2012,
+            2014
+        ],
+        "common_trouble_spots": [
+            "Air Suspension",
+            "Oil Cooler Leak",
+            "TIPM"
+        ],
+        "critical_milestones": [
+            {
+                "mileage": 100000,
+                "description": "Oil Filter Housing Leak",
+                "est_cost": 1200
+            }
+        ]
+    },
+    {
+        "model_id": "volkswagen_jetta_mk6",
+        "score": 52,
+        "lifespan_miles": 180000,
+        "best_years": [
+            2017,
+            2018
+        ],
+        "worst_years": [
+            2011,
+            2012
+        ],
+        "common_trouble_spots": [
+            "Timing Chain Tensioner",
+            "DSG Mechatronics",
+            "Water Pump"
+        ],
+        "critical_milestones": [
+            {
+                "mileage": 90000,
+                "description": "Timing Chain Tensioner Update",
+                "est_cost": 1800
+            }
+        ]
     }
 ]

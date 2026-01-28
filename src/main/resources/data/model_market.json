@@ -397,5 +397,40 @@
         "depreciation_rate": 0.14,
         "avg_annual_repair_cost": 900,
         "depreciation_outlook": "Moderate"
+    },
+    {
+        "model_id": "chevrolet_tahoe_4th",
+        "jan_2026_avg_price": 32000,
+        "depreciation_rate": 0.12,
+        "avg_annual_repair_cost": 950,
+        "depreciation_outlook": "Moderate"
+    },
+    {
+        "model_id": "toyota_sienna_xl30",
+        "jan_2026_avg_price": 18500,
+        "depreciation_rate": 0.08,
+        "avg_annual_repair_cost": 550,
+        "depreciation_outlook": "Low"
+    },
+    {
+        "model_id": "nissan_sentra_b17_pit",
+        "jan_2026_avg_price": 9500,
+        "depreciation_rate": 0.18,
+        "avg_annual_repair_cost": 600,
+        "depreciation_outlook": "High"
+    },
+    {
+        "model_id": "jeep_grand_cherokee_wk2_pit",
+        "jan_2026_avg_price": 17500,
+        "depreciation_rate": 0.14,
+        "avg_annual_repair_cost": 900,
+        "depreciation_outlook": "Moderate"
+    },
+    {
+        "model_id": "volkswagen_jetta_mk6",
+        "jan_2026_avg_price": 10500,
+        "depreciation_rate": 0.15,
+        "avg_annual_repair_cost": 750,
+        "depreciation_outlook": "High"
     }
 ]

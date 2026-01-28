@@ -733,5 +733,60 @@
                 "verdictImplication": "Dangerous: Transmission wiring harness recall. Verify VIN."
             }
         ]
+    },
+    {
+        "model_id_ref": "chevrolet_tahoe_4th",
+        "faults": [
+            {
+                "component": "AFM Lifter Collapse",
+                "symptoms": "Ticking noise, misfire, 'Service Stabilitrak'",
+                "repairCost": 4200,
+                "verdictImplication": "Severe: High failure rate on early L83 engines. Requires partial engine teardown."
+            }
+        ]
+    },
+    {
+        "model_id_ref": "toyota_sienna_xl30",
+        "faults": [
+            {
+                "component": "Power Sliding Door Failure",
+                "symptoms": "Door won't open or close automatically",
+                "repairCost": 1600,
+                "verdictImplication": "Moderate: Common convenience failure. Cable and motor assembly replacement."
+            }
+        ]
+    },
+    {
+        "model_id_ref": "nissan_sentra_b17_pit",
+        "faults": [
+            {
+                "component": "CVT Transmission Failure",
+                "symptoms": "Whining, juddering, loss of power",
+                "repairCost": 4500,
+                "verdictImplication": "Critical: Cost often exceeds 50% of vehicle market value. SELL RECOMMENDED."
+            }
+        ]
+    },
+    {
+        "model_id_ref": "jeep_grand_cherokee_wk2_pit",
+        "faults": [
+            {
+                "component": "Quadra-Lift Air Suspension Failure",
+                "symptoms": "Vehicle sagging, bumpy ride, compressor running constantly",
+                "repairCost": 3200,
+                "verdictImplication": "High Risk: Expensive Nitro-charged system. Consider coil spring conversion."
+            }
+        ]
+    },
+    {
+        "model_id_ref": "volkswagen_jetta_mk6",
+        "faults": [
+            {
+                "component": "Timing Chain Tensioner Failure",
+                "symptoms": "Rattle on start, engine won't turn over (Valve jump)",
+                "repairCost": 5500,
+                "verdictImplication": "Severe: Can result in complete engine destruction if it skips a tooth."
+            }
+        ]
     }
 ]

@@ -31,37 +31,24 @@ public class MarketPulseService {
         double priceChange = -3 + rand.nextDouble() * 6; // -3% to +3%
         int searchVolume = 500 + rand.nextInt(300); // 500-800 searches
         int avgDaysToSell = 25 + rand.nextInt(15); // 25-40 days
-
-        return String.format("""
-                <div style="background: linear-gradient(135deg, #EFF6FF 0%%, #DBEAFE 100%%);
-                            padding: 1.5rem; border-radius: 16px; border-left: 4px solid #3B82F6;
-                            margin: 2rem 0;">
-                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
-                        <span style="font-size: 1.2rem;">📊</span>
-                        <strong style="font-size: 1rem; color: #1E40AF;">
-                            Market Snapshot: Weeks %d-%d, 2026
-                        </strong>
-                    </div>
-                    <ul style="margin: 0; padding-left: 1.5rem; font-size: 0.9rem; color: #1E3A8A; line-height: 1.6;">
-                        <li><strong>%s %s</strong> values %s <strong>%.1f%%</strong> in the past 14 days</li>
-                        <li><strong>%,d owners</strong> searched "%s %s repair cost" this period</li>
-                        <li>Vehicles with this issue sell in <strong>%d days</strong> on average</li>
-                        <li>Repair quotes for %s range <strong>$%,.0f - $%,.0f</strong> regionally</li>
-                    </ul>
-                </div>
-                """,
-                biweekNumber * 2 - 1, // Start week
-                biweekNumber * 2, // End week
-                car.brand(), car.model(),
-                priceChange > 0 ? "increased" : "decreased",
-                Math.abs(priceChange),
-                searchVolume,
-                car.brand(), car.model(),
-                avgDaysToSell,
-                fault.component(),
-                fault.repairCost() * 0.85, // Lower bound
-                fault.repairCost() * 1.15 // Upper bound
-        );
+        return "<div style=\"background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%); " +
+                "padding: 1.5rem; border-radius: 16px; border-left: 4px solid #3B82F6; margin: 2rem 0;\">" +
+                "<div style=\"display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;\">" +
+                "<span style=\"font-size: 1.2rem;\">📊</span>" +
+                "<strong style=\"font-size: 1rem; color: #1E40AF;\">Market Snapshot: Weeks " + (biweekNumber * 2 - 1)
+                + "-" + (biweekNumber * 2) + ", 2026</strong>" +
+                "</div>" +
+                "<ul style=\"margin: 0; padding-left: 1.5rem; font-size: 0.9rem; color: #1E3A8A; line-height: 1.6;\">" +
+                "<li><strong>" + car.brand() + " " + car.model() + "</strong> values "
+                + (priceChange > 0 ? "increased" : "decreased") + " <strong>"
+                + String.format("%.1f%%", Math.abs(priceChange)) + "</strong> in the past 14 days</li>" +
+                "<li><strong>" + String.format("%,d", searchVolume) + " owners</strong> searched \"" + car.brand() + " "
+                + car.model() + " repair cost\" this period</li>" +
+                "<li>Vehicles with this issue sell in <strong>" + avgDaysToSell + " days</strong> on average</li>" +
+                "<li>Repair quotes for " + fault.component() + " range <strong>$"
+                + String.format("%,.0f", fault.repairCost() * 0.85) + " - $"
+                + String.format("%,.0f", fault.repairCost() * 1.15) + "</strong> regionally</li>" +
+                "</ul></div>";
     }
 
     /**

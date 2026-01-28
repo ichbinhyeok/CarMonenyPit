@@ -33,9 +33,9 @@ public class PSeoController {
 
   @GetMapping("/verdict/{brand}/{model}/{faultSlug}")
   public String showVerdict(
-      @PathVariable String brand,
-      @PathVariable String model,
-      @PathVariable String faultSlug,
+      @PathVariable("brand") String brand,
+      @PathVariable("model") String model,
+      @PathVariable("faultSlug") String faultSlug,
       Model modelMap) {
 
     logger.info("Request for {} / {} / {}", brand, model, faultSlug);
@@ -85,27 +85,19 @@ public class PSeoController {
     // 5. Generate SEO Assets
     String schemaJson = generateSchema(car, fault, profile, brand, model, faultSlug);
 
-    // Enhanced Meta Description with social proof
     // Enhanced Meta Description with social proof (Truthful & SEO Safe)
-    String metaDescription = String.format(
-        "Is a $%,.0f %s repair worth it on your %s %s? We analyzed this against %d+ market data points including depreciation curves and repair statistics to give you a clear financial verdict. Free calculator included.",
-        fault.repairCost(),
-        fault.component(),
-        car.brand(),
-        car.model(),
-        50000 // Truthful claim: refers to the total dataset size (market data rows) the
-              // system uses
-    );
+    String metaDescription = "Is a $" + String.format("%,.0f", fault.repairCost()) + " " + fault.component() +
+        " repair worth it on your " + car.brand() + " " + car.model()
+        + "? We analyzed this against 50,000+ market data points " +
+        "including depreciation curves and repair statistics to give you a clear financial verdict. Free calculator included.";
 
-    String canonicalUrl = String.format("https://automoneypit.com/verdict/%s/%s/%s",
-        brand, model, faultSlug);
+    String canonicalUrl = "https://automoneypit.com/verdict/" + brand + "/" + model + "/" + faultSlug;
 
     // Pre-fill CTA URL for main page
-    String ctaUrl = String.format(
-        "/?brand=%s&model=%s&repairQuoteUsd=%.0f&pSEO=true",
-        car.brand().replace(" ", "+"),
-        car.model().replace(" ", "+"),
-        fault.repairCost());
+    String ctaUrl = "/?brand=" + car.brand().replace(" ", "+") +
+        "&model=" + car.model().replace(" ", "+") +
+        "&repairQuoteUsd=" + String.format("%.0f", fault.repairCost()) +
+        "&pSEO=true";
 
     // Related faults for internal linking
     List<Fault> relatedFaults = faultsOpt.get().faults().stream()
@@ -119,19 +111,10 @@ public class PSeoController {
     boolean isSell = repairCost > (marketValue * 0.5);
     String verdictText = isSell ? "VERDICT: SELL" : "VERDICT: CAUTION";
 
-    // Format:
-    // [Brand Model]
-    // Repair: $X,XXX
-    // Value: $XX,XXX
-    // [Verdict]
-    String ogText = String.format("%s %s%%0ARepair: $%,.0f%%0AValue: $%,d%%0A%%0A%s",
-        car.brand(), car.model(),
-        repairCost,
-        marketValue,
-        verdictText)
-        .replace(" ", "%20");
+    String ogText = car.brand() + " " + car.model() + "%0ARepair: $" + String.format("%,.0f", repairCost) +
+        "%0AValue: $" + String.format("%,d", marketValue) + "%0A%0A" + verdictText;
 
-    String ogImage = "https://placehold.co/1200x630/1e293b/ffffff?text=" + ogText + "&font=oswald";
+    String ogImage = "https://placehold.co/1200x630/1e293b/ffffff?text=" + ogText.replace(" ", "%20") + "&font=oswald";
 
     // 7. Breadcrumbs (Clickable)
     List<Breadcrumb> breadcrumbs = List.of(
@@ -176,7 +159,7 @@ public class PSeoController {
   }
 
   @GetMapping("/models/{brandSlug}")
-  public String listModels(@PathVariable String brandSlug, Model modelMap) {
+  public String listModels(@PathVariable("brandSlug") String brandSlug, Model modelMap) {
     List<CarModel> models = dataService.getModelsByBrand(brandSlug);
 
     if (models.isEmpty()) {
@@ -197,7 +180,8 @@ public class PSeoController {
   }
 
   @GetMapping("/models/{brandSlug}/{modelSlug}")
-  public String listFaults(@PathVariable String brandSlug, @PathVariable String modelSlug, Model modelMap) {
+  public String listFaults(@PathVariable("brandSlug") String brandSlug, @PathVariable("modelSlug") String modelSlug,
+      Model modelMap) {
     Optional<CarModel> carOpt = dataService.findCarBySlug(brandSlug, modelSlug);
     if (carOpt.isEmpty()) {
       return "redirect:/models/" + brandSlug;
@@ -241,132 +225,115 @@ public class PSeoController {
   private String generateSchema(CarModel car, Fault fault, ProfileViewModel profile,
       String brandSlug, String modelSlug, String faultSlug) {
     long marketValue = profile != null ? profile.market().jan2026AvgPrice() : 0;
-    // sellPercentage removed
     int switchingCost = 2500 + (Math.abs(car.id().hashCode()) % 1000);
 
-    return """
-        {
-          "@context": "https://schema.org",
-          "@graph": [
-            {
-              "@type": "Product",
-              "name": "%s %s (%s)",
-              "description": "Actuarial analysis of %s reliability and value.",
-              "brand": {
-                "@type": "Brand",
-                "name": "%s"
-              },
-              "offers": {
-                "@type": "Offer",
-                "price": "%d",
-                "priceCurrency": "USD",
-                "availability": "https://schema.org/InStock"
-              }
-            },
-            {
-              "@type": "FAQPage",
-              "mainEntity": [{
-                "@type": "Question",
-                "name": "How much does it cost to fix %s on a %s %s?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "The average repair cost for the %s in a %s %s is $%s."
-                }
-              }, {
-                "@type": "Question",
-                "name": "Is it worth fixing the %s on my %s %s?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "%s"
-                }
-              }]
-            },
-            {
-              "@type": "HowTo",
-              "name": "How to Decide if %s Repair is Worth It on Your %s %s",
-              "description": "Step-by-step guide to make the right decision about your vehicle repair.",
-              "step": [
-                {
-                  "@type": "HowToStep",
-                  "position": 1,
-                  "name": "Calculate Repair-to-Value Ratio",
-                  "text": "Divide the $%s repair cost by your vehicle's current market value. If the ratio exceeds 50%%, it's typically not worth repairing."
-                },
-                {
-                  "@type": "HowToStep",
-                  "position": 2,
-                  "name": "Check peer behavior data",
-                  "text": "Our market analysis suggests that for repairs exceeding 50% of vehicle value, financially-optimized owners typically choose to sell."
-                },
-                {
-                  "@type": "HowToStep",
-                  "position": 3,
-                  "name": "Factor in replacement costs",
-                  "text": "Replacing your vehicle will incur approximately $%d in taxes, fees, registration, and other switching costs."
-                },
-                {
-                  "@type": "HowToStep",
-                  "position": 4,
-                  "name": "Run a financial analysis",
-                  "text": "Use our free calculator to input your specific mileage, vehicle value, and repair quote for a personalized verdict."
-                }
-              ]
-            },
-            {
-              "@type": "BreadcrumbList",
-              "itemListElement": [
-                {
-                  "@type": "ListItem",
-                  "position": 1,
-                  "name": "Models",
-                  "item": "https://automoneypit.com/models"
-                },
-                {
-                  "@type": "ListItem",
-                  "position": 2,
-                  "name": "%s",
-                  "item": "https://automoneypit.com/models/%s"
-                },
-                {
-                  "@type": "ListItem",
-                  "position": 3,
-                  "name": "%s",
-                  "item": "https://automoneypit.com/models/%s/%s"
-                },
-                {
-                  "@type": "ListItem",
-                  "position": 4,
-                  "name": "%s Analysis",
-                  "item": "https://automoneypit.com/verdict/%s/%s/%s"
-                }
-              ]
-            }
-          ]
-        }
-        """
-        .formatted(
-            // Product params
-            car.brand(), car.model(), car.generation(),
-            car.model(),
-            car.brand(),
-            marketValue,
-
-            // FAQ params
-            fault.component(), car.brand(), car.model(),
-            fault.component(), car.brand(), car.model(), String.format("%,.0f", fault.repairCost()),
-            fault.component(), car.brand(), car.model(),
-            fault.verdictImplication().replace("\"", "\\\""),
-
-            // HowTo params
-            fault.component(), car.brand(), car.model(),
-            String.format("%,.0f", fault.repairCost()),
-            // sellPercentage removed (replaced with static text)
-            switchingCost,
-
-            // BreadcrumbList params
-            car.brand(), brandSlug,
-            car.model(), brandSlug, modelSlug,
-            fault.component(), brandSlug, modelSlug, faultSlug);
+    return "{" +
+        "\"@context\": \"https://schema.org\"," +
+        "\"@graph\": [" +
+        "{" +
+        "\"@type\": \"Product\"," +
+        "\"name\": \"" + car.brand() + " " + car.model() + " (" + car.generation() + ")\"," +
+        "\"description\": \"Actuarial analysis of " + car.model() + " reliability and value.\"," +
+        "\"brand\": {" +
+        "\"@type\": \"Brand\"," +
+        "\"name\": \"" + car.brand() + "\"" +
+        "}," +
+        "\"offers\": {" +
+        "\"@type\": \"Offer\"," +
+        "\"price\": \"" + marketValue + "\"," +
+        "\"priceCurrency\": \"USD\"," +
+        "\"availability\": \"https://schema.org/InStock\"" +
+        "}" +
+        "}," +
+        "{" +
+        "\"@type\": \"FAQPage\"," +
+        "\"mainEntity\": [{" +
+        "\"@type\": \"Question\"," +
+        "\"name\": \"How much does it cost to fix " + fault.component() + " on a " + car.brand() + " " + car.model()
+        + "?\"," +
+        "\"acceptedAnswer\": {" +
+        "\"@type\": \"Answer\"," +
+        "\"text\": \"The average repair cost for the " + fault.component() + " in a " + car.brand() + " " + car.model()
+        + " is $" + String.format("%,.0f", fault.repairCost()) + ".\"" +
+        "}" +
+        "}, {" +
+        "\"@type\": \"Question\"," +
+        "\"name\": \"Is it worth fixing the " + fault.component() + " on my " + car.brand() + " " + car.model() + "?\","
+        +
+        "\"acceptedAnswer\": {" +
+        "\"@type\": \"Answer\"," +
+        "\"text\": \"" + fault.verdictImplication().replace("\"", "\\\"") + "\"" +
+        "}" +
+        "}]" +
+        "}," +
+        "{" +
+        "\"@type\": \"HowTo\"," +
+        "\"name\": \"How to Decide if " + fault.component() + " Repair is Worth It on Your " + car.brand() + " "
+        + car.model() + "\"," +
+        "\"description\": \"Step-by-step guide to make the right decision about your vehicle repair.\"," +
+        "\"step\": [" +
+        "{" +
+        "\"@type\": \"HowToStep\"," +
+        "\"position\": 1," +
+        "\"name\": \"Calculate Repair-to-Value Ratio\"," +
+        "\"text\": \"Divide the $" + String.format("%,.0f", fault.repairCost())
+        + " repair cost by your vehicle's current market value. If the ratio exceeds 50%, it's typically not worth repairing.\""
+        +
+        "}," +
+        "{" +
+        "\"@type\": \"HowToStep\"," +
+        "\"position\": 2," +
+        "\"name\": \"Check peer behavior data\"," +
+        "\"text\": \"Our market analysis suggests that for repairs exceeding 50% of vehicle value, financially-optimized owners typically choose to sell.\""
+        +
+        "}," +
+        "{" +
+        "\"@type\": \"HowToStep\"," +
+        "\"position\": 3," +
+        "\"name\": \"Factor in replacement costs\"," +
+        "\"text\": \"Replacing your vehicle will incur approximately $" + switchingCost
+        + " in taxes, fees, registration, and other switching costs.\"" +
+        "}," +
+        "{" +
+        "\"@type\": \"HowToStep\"," +
+        "\"position\": 4," +
+        "\"name\": \"Run a financial analysis\"," +
+        "\"text\": \"Use our free calculator to input your specific mileage, vehicle value, and repair quote for a personalized verdict.\""
+        +
+        "}" +
+        "]" +
+        "}," +
+        "{" +
+        "\"@type\": \"BreadcrumbList\"," +
+        "\"itemListElement\": [" +
+        "{" +
+        "\"@type\": \"ListItem\"," +
+        "\"position\": 1," +
+        "\"name\": \"Models\"," +
+        "\"item\": \"https://automoneypit.com/models\"" +
+        "}," +
+        "{" +
+        "\"@type\": \"ListItem\"," +
+        "\"position\": 2," +
+        "\"name\": \"" + car.brand() + "\"," +
+        "\"item\": \"https://automoneypit.com/models/" + brandSlug + "\"" +
+        "}," +
+        "{" +
+        "\"@type\": \"ListItem\"," +
+        "\"position\": 3," +
+        "\"name\": \"" + car.model() + "\"," +
+        "\"item\": \"https://automoneypit.com/models/" + brandSlug + "/" + modelSlug + "\"" +
+        "}," +
+        "{" +
+        "\"@type\": \"ListItem\"," +
+        "\"position\": 4," +
+        "\"name\": \"" + fault.component() + " Analysis\"," +
+        "\"item\": \"https://automoneypit.com/verdict/" + brandSlug + "/" + modelSlug + "/" + faultSlug + "\"" +
+        "}" +
+        "]" +
+        "}" +
+        "]" +
+        "}";
   }
 
   // --- View Model (for template) ---

@@ -15,6 +15,10 @@ java {
     }
 }
 
+tasks.withType(JavaCompile) {
+    options.compilerArgs << '-parameters'
+}
+
 jar {
     enabled = false
 }
