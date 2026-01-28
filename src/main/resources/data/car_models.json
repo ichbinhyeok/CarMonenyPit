@@ -1,498 +1,602 @@
-[
+﻿[
     {
-        "id": "ford_f150_13th",
-        "brand": "FORD",
-        "model": "F-150",
-        "generation": "13th Gen",
-        "start_year": 2015,
-        "end_year": 2020
+        "id":  "ford_f150_13th",
+        "brand":  "FORD",
+        "model":  "F-150",
+        "generation":  "13th Gen",
+        "start_year":  2015,
+        "end_year":  2020
     },
     {
-        "id": "chevrolet_silverado_k2xx",
-        "brand": "CHEVROLET",
-        "model": "Silverado 1500",
-        "generation": "K2XX",
-        "start_year": 2014,
-        "end_year": 2019
+        "id":  "chevrolet_silverado_k2xx",
+        "brand":  "CHEVROLET",
+        "model":  "Silverado 1500",
+        "generation":  "K2XX",
+        "start_year":  2014,
+        "end_year":  2019
     },
     {
-        "id": "ram_1500_ds",
-        "brand": "RAM",
-        "model": "1500",
-        "generation": "DS",
-        "start_year": 2009,
-        "end_year": 2018
+        "id":  "ram_1500_ds",
+        "brand":  "RAM",
+        "model":  "1500",
+        "generation":  "DS",
+        "start_year":  2009,
+        "end_year":  2018
     },
     {
-        "id": "toyota_camry_xv50",
-        "brand": "TOYOTA",
-        "model": "Camry",
-        "generation": "XV50",
-        "start_year": 2012,
-        "end_year": 2017
+        "id":  "toyota_camry_xv50",
+        "brand":  "TOYOTA",
+        "model":  "Camry",
+        "generation":  "XV50",
+        "start_year":  2012,
+        "end_year":  2017
     },
     {
-        "id": "honda_accord_cr",
-        "brand": "HONDA",
-        "model": "Accord",
-        "generation": "CR",
-        "start_year": 2013,
-        "end_year": 2017
+        "id":  "honda_accord_cr",
+        "brand":  "HONDA",
+        "model":  "Accord",
+        "generation":  "CR",
+        "start_year":  2013,
+        "end_year":  2017
     },
     {
-        "id": "nissan_altima_l33",
-        "brand": "NISSAN",
-        "model": "Altima",
-        "generation": "L33",
-        "start_year": 2013,
-        "end_year": 2018
+        "id":  "nissan_altima_l33",
+        "brand":  "NISSAN",
+        "model":  "Altima",
+        "generation":  "L33",
+        "start_year":  2013,
+        "end_year":  2018
     },
     {
-        "id": "nissan_rogue_t32",
-        "brand": "NISSAN",
-        "model": "Rogue",
-        "generation": "T32",
-        "start_year": 2014,
-        "end_year": 2020
+        "id":  "nissan_rogue_t32",
+        "brand":  "NISSAN",
+        "model":  "Rogue",
+        "generation":  "T32",
+        "start_year":  2014,
+        "end_year":  2020
     },
     {
-        "id": "honda_civic_fc",
-        "brand": "HONDA",
-        "model": "Civic",
-        "generation": "FC",
-        "start_year": 2016,
-        "end_year": 2021
+        "id":  "honda_civic_fc",
+        "brand":  "HONDA",
+        "model":  "Civic",
+        "generation":  "FC",
+        "start_year":  2016,
+        "end_year":  2021
     },
     {
-        "id": "toyota_corolla_e170",
-        "brand": "TOYOTA",
-        "model": "Corolla",
-        "generation": "E170",
-        "start_year": 2014,
-        "end_year": 2019
+        "id":  "toyota_corolla_e170",
+        "brand":  "TOYOTA",
+        "model":  "Corolla",
+        "generation":  "E170",
+        "start_year":  2014,
+        "end_year":  2019
     },
     {
-        "id": "honda_crv_rm",
-        "brand": "HONDA",
-        "model": "CR-V",
-        "generation": "RM",
-        "start_year": 2012,
-        "end_year": 2016
+        "id":  "honda_crv_rm",
+        "brand":  "HONDA",
+        "model":  "CR-V",
+        "generation":  "RM",
+        "start_year":  2012,
+        "end_year":  2016
     },
     {
-        "id": "toyota_rav4_xa40",
-        "brand": "TOYOTA",
-        "model": "RAV4",
-        "generation": "XA40",
-        "start_year": 2013,
-        "end_year": 2018
+        "id":  "toyota_rav4_xa40",
+        "brand":  "TOYOTA",
+        "model":  "RAV4",
+        "generation":  "XA40",
+        "start_year":  2013,
+        "end_year":  2018
     },
     {
-        "id": "toyota_tacoma_n300",
-        "brand": "TOYOTA",
-        "model": "Tacoma",
-        "generation": "N300",
-        "start_year": 2016,
-        "end_year": 2023
+        "id":  "toyota_tacoma_n300",
+        "brand":  "TOYOTA",
+        "model":  "Tacoma",
+        "generation":  "N300",
+        "start_year":  2016,
+        "end_year":  2023
     },
     {
-        "id": "toyota_highlander_xu50",
-        "brand": "TOYOTA",
-        "model": "Highlander",
-        "generation": "XU50",
-        "start_year": 2014,
-        "end_year": 2019
+        "id":  "toyota_highlander_xu50",
+        "brand":  "TOYOTA",
+        "model":  "Highlander",
+        "generation":  "XU50",
+        "start_year":  2014,
+        "end_year":  2019
     },
     {
-        "id": "jeep_wrangler_jk",
-        "brand": "JEEP",
-        "model": "Wrangler",
-        "generation": "JK",
-        "start_year": 2007,
-        "end_year": 2018
+        "id":  "jeep_wrangler_jk",
+        "brand":  "JEEP",
+        "model":  "Wrangler",
+        "generation":  "JK",
+        "start_year":  2007,
+        "end_year":  2018
     },
     {
-        "id": "jeep_grand_cherokee_wk2",
-        "brand": "JEEP",
-        "model": "Grand Cherokee",
-        "generation": "WK2",
-        "start_year": 2011,
-        "end_year": 2021
+        "id":  "jeep_grand_cherokee_wk2",
+        "brand":  "JEEP",
+        "model":  "Grand Cherokee",
+        "generation":  "WK2",
+        "start_year":  2011,
+        "end_year":  2021
     },
     {
-        "id": "ford_escape_c520",
-        "brand": "FORD",
-        "model": "Escape",
-        "generation": "C520",
-        "start_year": 2013,
-        "end_year": 2019
+        "id":  "ford_escape_c520",
+        "brand":  "FORD",
+        "model":  "Escape",
+        "generation":  "C520",
+        "start_year":  2013,
+        "end_year":  2019
     },
     {
-        "id": "ford_explorer_u502",
-        "brand": "FORD",
-        "model": "Explorer",
-        "generation": "U502",
-        "start_year": 2011,
-        "end_year": 2019
+        "id":  "ford_explorer_u502",
+        "brand":  "FORD",
+        "model":  "Explorer",
+        "generation":  "U502",
+        "start_year":  2011,
+        "end_year":  2019
     },
     {
-        "id": "chevrolet_equinox_3rd",
-        "brand": "CHEVROLET",
-        "model": "Equinox",
-        "generation": "3rd Gen",
-        "start_year": 2018,
-        "end_year": 2023
+        "id":  "chevrolet_equinox_3rd",
+        "brand":  "CHEVROLET",
+        "model":  "Equinox",
+        "generation":  "3rd Gen",
+        "start_year":  2018,
+        "end_year":  2023
     },
     {
-        "id": "gmc_sierra_k2xx",
-        "brand": "GMC",
-        "model": "Sierra 1500",
-        "generation": "K2XX",
-        "start_year": 2014,
-        "end_year": 2019
+        "id":  "gmc_sierra_k2xx",
+        "brand":  "GMC",
+        "model":  "Sierra 1500",
+        "generation":  "K2XX",
+        "start_year":  2014,
+        "end_year":  2019
     },
     {
-        "id": "toyota_4runner_n280",
-        "brand": "TOYOTA",
-        "model": "4Runner",
-        "generation": "N280",
-        "start_year": 2010,
-        "end_year": 2023
+        "id":  "toyota_4runner_n280",
+        "brand":  "TOYOTA",
+        "model":  "4Runner",
+        "generation":  "N280",
+        "start_year":  2010,
+        "end_year":  2023
     },
     {
-        "id": "honda_pilot_yf3",
-        "brand": "HONDA",
-        "model": "Pilot",
-        "generation": "YF3",
-        "start_year": 2009,
-        "end_year": 2015
+        "id":  "honda_pilot_yf3",
+        "brand":  "HONDA",
+        "model":  "Pilot",
+        "generation":  "YF3",
+        "start_year":  2009,
+        "end_year":  2015
     },
     {
-        "id": "mazda_cx5_ke",
-        "brand": "MAZDA",
-        "model": "CX-5",
-        "generation": "KE",
-        "start_year": 2013,
-        "end_year": 2016
+        "id":  "mazda_cx5_ke",
+        "brand":  "MAZDA",
+        "model":  "CX-5",
+        "generation":  "KE",
+        "start_year":  2013,
+        "end_year":  2016
     },
     {
-        "id": "subaru_outback_bs",
-        "brand": "SUBARU",
-        "model": "Outback",
-        "generation": "BS",
-        "start_year": 2015,
-        "end_year": 2019
+        "id":  "subaru_outback_bs",
+        "brand":  "SUBARU",
+        "model":  "Outback",
+        "generation":  "BS",
+        "start_year":  2015,
+        "end_year":  2019
     },
     {
-        "id": "subaru_forester_sj",
-        "brand": "SUBARU",
-        "model": "Forester",
-        "generation": "SJ",
-        "start_year": 2014,
-        "end_year": 2018
+        "id":  "subaru_forester_sj",
+        "brand":  "SUBARU",
+        "model":  "Forester",
+        "generation":  "SJ",
+        "start_year":  2014,
+        "end_year":  2018
     },
     {
-        "id": "hyundai_elantra_ad",
-        "brand": "HYUNDAI",
-        "model": "Elantra",
-        "generation": "AD",
-        "start_year": 2017,
-        "end_year": 2020
+        "id":  "hyundai_elantra_ad",
+        "brand":  "HYUNDAI",
+        "model":  "Elantra",
+        "generation":  "AD",
+        "start_year":  2017,
+        "end_year":  2020
     },
     {
-        "id": "hyundai_tucson_tl",
-        "brand": "HYUNDAI",
-        "model": "Tucson",
-        "generation": "TL",
-        "start_year": 2016,
-        "end_year": 2020
+        "id":  "hyundai_tucson_tl",
+        "brand":  "HYUNDAI",
+        "model":  "Tucson",
+        "generation":  "TL",
+        "start_year":  2016,
+        "end_year":  2020
     },
     {
-        "id": "hyundai_santa_fe_dm",
-        "brand": "HYUNDAI",
-        "model": "Santa Fe",
-        "generation": "DM",
-        "start_year": 2013,
-        "end_year": 2018
+        "id":  "hyundai_santa_fe_dm",
+        "brand":  "HYUNDAI",
+        "model":  "Santa Fe",
+        "generation":  "DM",
+        "start_year":  2013,
+        "end_year":  2018
     },
     {
-        "id": "kia_sportage_ql",
-        "brand": "KIA",
-        "model": "Sportage",
-        "generation": "QL",
-        "start_year": 2017,
-        "end_year": 2022
+        "id":  "kia_sportage_ql",
+        "brand":  "KIA",
+        "model":  "Sportage",
+        "generation":  "QL",
+        "start_year":  2017,
+        "end_year":  2022
     },
     {
-        "id": "kia_sorento_um",
-        "brand": "KIA",
-        "model": "Sorento",
-        "generation": "UM",
-        "start_year": 2016,
-        "end_year": 2020
+        "id":  "kia_sorento_um",
+        "brand":  "KIA",
+        "model":  "Sorento",
+        "generation":  "UM",
+        "start_year":  2016,
+        "end_year":  2020
     },
     {
-        "id": "mazda3_bm",
-        "brand": "MAZDA",
-        "model": "Mazda3",
-        "generation": "BM",
-        "start_year": 2014,
-        "end_year": 2018
+        "id":  "mazda3_bm",
+        "brand":  "MAZDA",
+        "model":  "Mazda3",
+        "generation":  "BM",
+        "start_year":  2014,
+        "end_year":  2018
     },
     {
-        "id": "volkswagen_jetta_a6",
-        "brand": "VOLKSWAGEN",
-        "model": "Jetta",
-        "generation": "A6",
-        "start_year": 2011,
-        "end_year": 2018
+        "id":  "volkswagen_jetta_a6",
+        "brand":  "VOLKSWAGEN",
+        "model":  "Jetta",
+        "generation":  "A6",
+        "start_year":  2011,
+        "end_year":  2018
     },
     {
-        "id": "volkswagen_tiguan_5n",
-        "brand": "VOLKSWAGEN",
-        "model": "Tiguan",
-        "generation": "5N",
-        "start_year": 2009,
-        "end_year": 2017
+        "id":  "volkswagen_tiguan_5n",
+        "brand":  "VOLKSWAGEN",
+        "model":  "Tiguan",
+        "generation":  "5N",
+        "start_year":  2009,
+        "end_year":  2017
     },
     {
-        "id": "nissan_sentra_b17",
-        "brand": "NISSAN",
-        "model": "Sentra",
-        "generation": "B17",
-        "start_year": 2013,
-        "end_year": 2019
+        "id":  "nissan_sentra_b17",
+        "brand":  "NISSAN",
+        "model":  "Sentra",
+        "generation":  "B17",
+        "start_year":  2013,
+        "end_year":  2019
     },
     {
-        "id": "nissan_pathfinder_r52",
-        "brand": "NISSAN",
-        "model": "Pathfinder",
-        "generation": "R52",
-        "start_year": 2013,
-        "end_year": 2020
+        "id":  "nissan_pathfinder_r52",
+        "brand":  "NISSAN",
+        "model":  "Pathfinder",
+        "generation":  "R52",
+        "start_year":  2013,
+        "end_year":  2020
     },
     {
-        "id": "chevrolet_malibu_9th",
-        "brand": "CHEVROLET",
-        "model": "Malibu",
-        "generation": "9th Gen",
-        "start_year": 2016,
-        "end_year": 2022
+        "id":  "chevrolet_malibu_9th",
+        "brand":  "CHEVROLET",
+        "model":  "Malibu",
+        "generation":  "9th Gen",
+        "start_year":  2016,
+        "end_year":  2022
     },
     {
-        "id": "ford_edge_cd4",
-        "brand": "FORD",
-        "model": "Edge",
-        "generation": "CD4",
-        "start_year": 2015,
-        "end_year": 2023
+        "id":  "ford_edge_cd4",
+        "brand":  "FORD",
+        "model":  "Edge",
+        "generation":  "CD4",
+        "start_year":  2015,
+        "end_year":  2023
     },
     {
-        "id": "jeep_cherokee_kl",
-        "brand": "JEEP",
-        "model": "Cherokee",
-        "generation": "KL",
-        "start_year": 2014,
-        "end_year": 2023
+        "id":  "jeep_cherokee_kl",
+        "brand":  "JEEP",
+        "model":  "Cherokee",
+        "generation":  "KL",
+        "start_year":  2014,
+        "end_year":  2023
     },
     {
-        "id": "dodge_charger_ld",
-        "brand": "DODGE",
-        "model": "Charger",
-        "generation": "LD",
-        "start_year": 2011,
-        "end_year": 2023
+        "id":  "dodge_charger_ld",
+        "brand":  "DODGE",
+        "model":  "Charger",
+        "generation":  "LD",
+        "start_year":  2011,
+        "end_year":  2023
     },
     {
-        "id": "dodge_durango_wd",
-        "brand": "DODGE",
-        "model": "Durango",
-        "generation": "WD",
-        "start_year": 2011,
-        "end_year": 2023
+        "id":  "dodge_durango_wd",
+        "brand":  "DODGE",
+        "model":  "Durango",
+        "generation":  "WD",
+        "start_year":  2011,
+        "end_year":  2023
     },
     {
-        "id": "subaru_crosstrek_xv",
-        "brand": "SUBARU",
-        "model": "Crosstrek",
-        "generation": "XV",
-        "start_year": 2013,
-        "end_year": 2017
+        "id":  "subaru_crosstrek_xv",
+        "brand":  "SUBARU",
+        "model":  "Crosstrek",
+        "generation":  "XV",
+        "start_year":  2013,
+        "end_year":  2017
     },
     {
-        "id": "tesla_model_3",
-        "brand": "TESLA",
-        "model": "Model 3",
-        "generation": "Gen 1",
-        "start_year": 2017,
-        "end_year": 2023
+        "id":  "tesla_model_3",
+        "brand":  "TESLA",
+        "model":  "Model 3",
+        "generation":  "Gen 1",
+        "start_year":  2017,
+        "end_year":  2023
     },
     {
-        "id": "tesla_model_y",
-        "brand": "TESLA",
-        "model": "Model Y",
-        "generation": "Gen 1",
-        "start_year": 2020,
-        "end_year": 2023
+        "id":  "tesla_model_y",
+        "brand":  "TESLA",
+        "model":  "Model Y",
+        "generation":  "Gen 1",
+        "start_year":  2020,
+        "end_year":  2023
     },
     {
-        "id": "lexus_rx_al20",
-        "brand": "LEXUS",
-        "model": "RX",
-        "generation": "AL20",
-        "start_year": 2016,
-        "end_year": 2022
+        "id":  "lexus_rx_al20",
+        "brand":  "LEXUS",
+        "model":  "RX",
+        "generation":  "AL20",
+        "start_year":  2016,
+        "end_year":  2022
     },
     {
-        "id": "bmw_3series_f30",
-        "brand": "BMW",
-        "model": "3 Series",
-        "generation": "F30",
-        "start_year": 2012,
-        "end_year": 2018
+        "id":  "bmw_3series_f30",
+        "brand":  "BMW",
+        "model":  "3 Series",
+        "generation":  "F30",
+        "start_year":  2012,
+        "end_year":  2018
     },
     {
-        "id": "mercedes_c_class_w205",
-        "brand": "MERCEDES-BENZ",
-        "model": "C-Class",
-        "generation": "W205",
-        "start_year": 2015,
-        "end_year": 2021
+        "id":  "mercedes_c_class_w205",
+        "brand":  "MERCEDES-BENZ",
+        "model":  "C-Class",
+        "generation":  "W205",
+        "start_year":  2015,
+        "end_year":  2021
     },
     {
-        "id": "audi_a4_b9",
-        "brand": "AUDI",
-        "model": "A4",
-        "generation": "B9",
-        "start_year": 2017,
-        "end_year": 2023
+        "id":  "audi_a4_b9",
+        "brand":  "AUDI",
+        "model":  "A4",
+        "generation":  "B9",
+        "start_year":  2017,
+        "end_year":  2023
     },
     {
-        "id": "cadillac_escalade_k2",
-        "brand": "CADILLAC",
-        "model": "Escalade",
-        "generation": "K2",
-        "start_year": 2015,
-        "end_year": 2020
+        "id":  "cadillac_escalade_k2",
+        "brand":  "CADILLAC",
+        "model":  "Escalade",
+        "generation":  "K2",
+        "start_year":  2015,
+        "end_year":  2020
     },
     {
-        "id": "lincoln_navigator_u554",
-        "brand": "LINCOLN",
-        "model": "Navigator",
-        "generation": "U554",
-        "start_year": 2018,
-        "end_year": 2023
+        "id":  "lincoln_navigator_u554",
+        "brand":  "LINCOLN",
+        "model":  "Navigator",
+        "generation":  "U554",
+        "start_year":  2018,
+        "end_year":  2023
     },
     {
-        "id": "acura_mdx_yd3",
-        "brand": "ACURA",
-        "model": "MDX",
-        "generation": "YD3",
-        "start_year": 2014,
-        "end_year": 2020
+        "id":  "acura_mdx_yd3",
+        "brand":  "ACURA",
+        "model":  "MDX",
+        "generation":  "YD3",
+        "start_year":  2014,
+        "end_year":  2020
     },
     {
-        "id": "ford_mustang_s550",
-        "brand": "FORD",
-        "model": "Mustang",
-        "generation": "S550",
-        "start_year": 2015,
-        "end_year": 2023
+        "id":  "ford_mustang_s550",
+        "brand":  "FORD",
+        "model":  "Mustang",
+        "generation":  "S550",
+        "start_year":  2015,
+        "end_year":  2023
     },
     {
-        "id": "ford_f250_alumiduty",
-        "brand": "FORD",
-        "model": "F-250 Super Duty",
-        "generation": "Alumiduty",
-        "start_year": 2017,
-        "end_year": 2022
+        "id":  "ford_f250_alumiduty",
+        "brand":  "FORD",
+        "model":  "F-250 Super Duty",
+        "generation":  "Alumiduty",
+        "start_year":  2017,
+        "end_year":  2022
     },
     {
-        "id": "ram_2500_4th_gen",
-        "brand": "RAM",
-        "model": "2500",
-        "generation": "4th Gen (Cummins)",
-        "start_year": 2013,
-        "end_year": 2018
+        "id":  "ram_2500_4th_gen",
+        "brand":  "RAM",
+        "model":  "2500",
+        "generation":  "4th Gen (Cummins)",
+        "start_year":  2013,
+        "end_year":  2018
     },
     {
-        "id": "land_rover_range_rover_sport_l494",
-        "brand": "LAND ROVER",
-        "model": "Range Rover Sport",
-        "generation": "L494",
-        "start_year": 2014,
-        "end_year": 2022
+        "id":  "land_rover_range_rover_sport_l494",
+        "brand":  "LAND ROVER",
+        "model":  "Range Rover Sport",
+        "generation":  "L494",
+        "start_year":  2014,
+        "end_year":  2022
     },
     {
-        "id": "bmw_x5_f15",
-        "brand": "BMW",
-        "model": "X5",
-        "generation": "F15",
-        "start_year": 2014,
-        "end_year": 2018
+        "id":  "bmw_x5_f15",
+        "brand":  "BMW",
+        "model":  "X5",
+        "generation":  "F15",
+        "start_year":  2014,
+        "end_year":  2018
     },
     {
-        "id": "audi_q7_4m",
-        "brand": "AUDI",
-        "model": "Q7",
-        "generation": "4M",
-        "start_year": 2017,
-        "end_year": 2023
+        "id":  "audi_q7_4m",
+        "brand":  "AUDI",
+        "model":  "Q7",
+        "generation":  "4M",
+        "start_year":  2017,
+        "end_year":  2023
     },
     {
-        "id": "honda_odyssey_rl6",
-        "brand": "HONDA",
-        "model": "Odyssey",
-        "generation": "RL6",
-        "start_year": 2018,
-        "end_year": 2024
+        "id":  "honda_odyssey_rl6",
+        "brand":  "HONDA",
+        "model":  "Odyssey",
+        "generation":  "RL6",
+        "start_year":  2018,
+        "end_year":  2024
     },
     {
-        "id": "chrysler_pacifica_ru",
-        "brand": "CHRYSLER",
-        "model": "Pacifica",
-        "generation": "RU",
-        "start_year": 2017,
-        "end_year": 2023
+        "id":  "chrysler_pacifica_ru",
+        "brand":  "CHRYSLER",
+        "model":  "Pacifica",
+        "generation":  "RU",
+        "start_year":  2017,
+        "end_year":  2023
     },
     {
-        "id": "chevrolet_tahoe_4th",
-        "brand": "CHEVROLET",
-        "model": "Tahoe",
-        "generation": "4th Gen (K2UC)",
-        "start_year": 2015,
-        "end_year": 2020
+        "id":  "chevrolet_tahoe_4th",
+        "brand":  "CHEVROLET",
+        "model":  "Tahoe",
+        "generation":  "4th Gen (K2UC)",
+        "start_year":  2015,
+        "end_year":  2020
     },
     {
-        "id": "toyota_sienna_xl30",
-        "brand": "TOYOTA",
-        "model": "Sienna",
-        "generation": "3rd Gen",
-        "start_year": 2011,
-        "end_year": 2020
+        "id":  "toyota_sienna_xl30",
+        "brand":  "TOYOTA",
+        "model":  "Sienna",
+        "generation":  "3rd Gen",
+        "start_year":  2011,
+        "end_year":  2020
     },
     {
-        "id": "nissan_sentra_b17_pit",
-        "brand": "NISSAN",
-        "model": "Sentra",
-        "generation": "B17",
-        "start_year": 2013,
-        "end_year": 2019
+        "id":  "nissan_sentra_b17_pit",
+        "brand":  "NISSAN",
+        "model":  "Sentra",
+        "generation":  "B17",
+        "start_year":  2013,
+        "end_year":  2019
     },
     {
-        "id": "jeep_grand_cherokee_wk2_pit",
-        "brand": "JEEP",
-        "model": "Grand Cherokee",
-        "generation": "WK2",
-        "start_year": 2011,
-        "end_year": 2021
+        "id":  "jeep_grand_cherokee_wk2_pit",
+        "brand":  "JEEP",
+        "model":  "Grand Cherokee",
+        "generation":  "WK2",
+        "start_year":  2011,
+        "end_year":  2021
     },
     {
-        "id": "volkswagen_jetta_mk6",
-        "brand": "VOLKSWAGEN",
-        "model": "Jetta",
-        "generation": "MK6",
-        "start_year": 2011,
-        "end_year": 2018
+        "id":  "volkswagen_jetta_mk6",
+        "brand":  "VOLKSWAGEN",
+        "model":  "Jetta",
+        "generation":  "MK6",
+        "start_year":  2011,
+        "end_year":  2018
+    },
+    {
+        "id":  "bmw_x3_g01",
+        "end_year":  2024,
+        "generation":  "G01",
+        "start_year":  2018,
+        "model":  "X3",
+        "brand":  "BMW"
+    },
+    {
+        "id":  "audi_q5_fy",
+        "end_year":  2024,
+        "generation":  "FY",
+        "start_year":  2018,
+        "model":  "Q5",
+        "brand":  "AUDI"
+    },
+    {
+        "id":  "mercedes_glc_x253",
+        "end_year":  2022,
+        "generation":  "X253",
+        "start_year":  2016,
+        "model":  "GLC",
+        "brand":  "MERCEDES-BENZ"
+    },
+    {
+        "id":  "volvo_xc90_spa",
+        "end_year":  2023,
+        "generation":  "SPA",
+        "start_year":  2016,
+        "model":  "XC90",
+        "brand":  "VOLVO"
+    },
+    {
+        "id":  "hyundai_sonata_lf",
+        "end_year":  2019,
+        "generation":  "LF",
+        "start_year":  2015,
+        "model":  "Sonata",
+        "brand":  "HYUNDAI"
+    },
+    {
+        "id":  "kia_optima_jf",
+        "end_year":  2020,
+        "generation":  "JF",
+        "start_year":  2016,
+        "model":  "Optima",
+        "brand":  "KIA"
+    },
+    {
+        "id":  "ford_fusion_2nd",
+        "end_year":  2020,
+        "generation":  "2nd Gen",
+        "start_year":  2013,
+        "model":  "Fusion",
+        "brand":  "FORD"
+    },
+    {
+        "id":  "toyota_tundra_2nd",
+        "end_year":  2021,
+        "generation":  "2nd Gen",
+        "start_year":  2007,
+        "model":  "Tundra",
+        "brand":  "TOYOTA"
+    },
+    {
+        "id":  "nissan_frontier_d40",
+        "end_year":  2021,
+        "generation":  "D40",
+        "start_year":  2005,
+        "model":  "Frontier",
+        "brand":  "NISSAN"
+    },
+    {
+        "id":  "chevrolet_traverse_2nd",
+        "end_year":  2023,
+        "generation":  "2nd Gen",
+        "start_year":  2018,
+        "model":  "Traverse",
+        "brand":  "CHEVROLET"
+    },
+    {
+        "id":  "dodge_challenger_la",
+        "end_year":  2023,
+        "generation":  "LA",
+        "start_year":  2015,
+        "model":  "Challenger",
+        "brand":  "DODGE"
+    },
+    {
+        "id":  "jeep_compass_mp",
+        "end_year":  2024,
+        "generation":  "MP",
+        "start_year":  2017,
+        "model":  "Compass",
+        "brand":  "JEEP"
+    },
+    {
+        "id":  "lexus_es_xz10",
+        "end_year":  2024,
+        "generation":  "XZ10",
+        "start_year":  2019,
+        "model":  "ES",
+        "brand":  "LEXUS"
     }
 ]
