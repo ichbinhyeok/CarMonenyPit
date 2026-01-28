@@ -1,6 +1,7 @@
 @import com.carmoneypit.engine.service.CarDataService.CarModel
 @import com.carmoneypit.engine.service.CarDataService.Fault
 @import com.carmoneypit.engine.web.PSeoController.ProfileViewModel
+@import com.carmoneypit.engine.web.PSeoController.Breadcrumb
 @import java.util.List
 @param CarModel car
 @param Fault fault
@@ -11,14 +12,31 @@
 @param String ctaUrl
 @param List<Fault> relatedFaults
 @param String marketPulse
+@param List<Breadcrumb> breadcrumbs
+@param String ogImage = null
 
 @template.layout(
     title = car.brand() + " " + car.model() + " " + fault.component() + " Repair ($" + String.format("%,.0f", fault.repairCost()) + "): Fix or Sell? [2026 Data]",
     description = metaDescription,
     canonical = canonicalUrl,
     schemaJson = schemaJson,
+    ogImage = ogImage,
     content = @`
     <div class="pseo-container" style="max-width: 900px; margin: 0 auto; padding: 4rem 1rem;">
+        
+        <!-- Breadcrumbs (SEO + UX) -->
+        <nav style="margin-bottom: 2rem; font-size: 0.85rem; color: #666; font-weight: 500;">
+            @for(int i = 0; i < breadcrumbs.size(); i++)
+                @if(i > 0) <span style="margin: 0 0.5rem; opacity: 0.5;">/</span> @endif
+                @if(breadcrumbs.get(i).url().equals("#"))
+                    <span style="color: #333; font-weight: 700;">${breadcrumbs.get(i).label()}</span>
+                @else
+                    <a href="${breadcrumbs.get(i).url()}" style="color: #666; text-decoration: none; transition: color 0.2s; border-bottom: 1px solid transparent;">
+                        ${breadcrumbs.get(i).label()}
+                    </a>
+                @endif
+            @endfor
+        </nav>
         
         <!-- 1. The Hook (Hero) -->
         <header style="text-align: center; margin-bottom: 5rem;">

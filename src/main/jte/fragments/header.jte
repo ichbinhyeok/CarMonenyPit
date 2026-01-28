@@ -1,4 +1,27 @@
 <header class="main-header">
+    <div class="live-ticker-bar">
+        <div class="live-label">
+            <span class="live-dot"></span>
+            LIVE SYSTEM ACTIVITY
+        </div>
+        <div class="ticker-track">
+            <div class="ticker-content">
+                <span>⚡ Analyzing: Ford F-150 (Texas)</span>
+                <span>⚡ Analyzing: Honda Accord (California)</span>
+                <span>✓ Verdict Generated: Jeep Wrangler (Florida) - $4,200 Bleed</span>
+                <span>⚡ Analyzing: Toyota Camry (New York)</span>
+                <span>✓ Verdict Generated: Chevrolet Silverado (Ohio) - SOLD</span>
+                <span>⚡ Analyzing: BMW 3-Series (Georgia)</span>
+                <!-- Duplicate for seamless loop -->
+                 <span>⚡ Analyzing: Ford F-150 (Texas)</span>
+                <span>⚡ Analyzing: Honda Accord (California)</span>
+                <span>✓ Verdict Generated: Jeep Wrangler (Florida) - $4,200 Bleed</span>
+                <span>⚡ Analyzing: Toyota Camry (New York)</span>
+                <span>✓ Verdict Generated: Chevrolet Silverado (Ohio) - SOLD</span>
+                <span>⚡ Analyzing: BMW 3-Series (Georgia)</span>
+            </div>
+        </div>
+    </div>
     <div class="header-content">
         <a href="/" class="logo">
             <span class="logo-icon">PIT</span>
@@ -16,23 +39,90 @@
 <style>
     .main-header {
         width: 100%;
-        padding: 1.5rem 2rem;
         position: fixed;
         top: 0;
         left: 0;
         z-index: 100;
-        background: rgba(252, 252, 253, 0.8);
+        background: rgba(252, 252, 253, 0.9);
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
         border-bottom: 1px solid var(--border-subtle);
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Live Ticker Styles */
+    .live-ticker-bar {
+        background: #000;
+        color: #fff;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+        font-size: 0.7rem;
+        font-weight: 700;
+        position: relative;
+    }
+
+    .live-label {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0 1rem;
+        height: 100%;
+        background: #000;
+        z-index: 10;
+        box-shadow: 5px 0 10px rgba(0,0,0,0.5);
+        white-space: nowrap;
+    }
+
+    .live-dot {
+        width: 6px;
+        height: 6px;
+        background: #10B981;
+        border-radius: 50%;
+        animation: pulse 2s infinite;
+    }
+
+    .ticker-track {
+        flex: 1;
+        overflow: hidden;
+        display: flex;
+        mask-image: linear-gradient(to right, transparent, black 20px, black 95%, transparent);
+        -webkit-mask-image: linear-gradient(to right, transparent, black 20px, black 95%, transparent);
+    }
+
+    .ticker-content {
+        display: flex;
+        gap: 4rem;
+        padding-left: 2rem;
+        white-space: nowrap;
+        animation: ticker 40s linear infinite;
+    }
+
+    .ticker-content span {
+        opacity: 0.9;
+    }
+
+    @keyframes ticker {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
+    }
+
+    @keyframes pulse {
+        0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+        70% { box-shadow: 0 0 0 4px rgba(16, 185, 129, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
     }
 
     .header-content {
+        width: 100%;
         max-width: 1400px;
         margin: 0 auto;
         display: flex;
         justify-content: space-between;
         align-items: center;
+        padding: 1rem 2rem; /* Reduced padding since we added the top bar */
     }
 
     .logo {
@@ -85,7 +175,8 @@
     }
 
     @media (max-width: 768px) {
-        .main-header { padding: 1rem; }
+        .header-content { padding: 0.8rem 1rem; }
         .logo-text { font-size: 1.1rem; }
+        .live-ticker-bar { display: flex; } /* Ensure it shows on mobile too */
     }
 </style>

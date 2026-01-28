@@ -114,6 +114,20 @@ public class PSeoController {
         .limit(3)
         .toList();
 
+    // 6. Generate Social Assets
+    String ogImage = String.format(
+        "https://placehold.co/1200x630/b91c1c/ffffff?text=WARNING:%%20%s%%20%s%%0AAsset%%20Bleed%%20Detected&font=roboto",
+        car.brand().replace(" ", "%20"),
+        car.model().replace(" ", "%20"));
+
+    // 7. Breadcrumbs (Clickable)
+    List<Breadcrumb> breadcrumbs = List.of(
+        new Breadcrumb("Home", "/"),
+        new Breadcrumb("Models", "/models"),
+        new Breadcrumb(car.brand(), "/models/" + brand),
+        new Breadcrumb(car.model(), "/models/" + brand + "/" + model),
+        new Breadcrumb(faultSlug, "#"));
+
     modelMap.addAttribute("car", car);
     modelMap.addAttribute("fault", fault);
     modelMap.addAttribute("details", profile);
@@ -123,6 +137,8 @@ public class PSeoController {
     modelMap.addAttribute("ctaUrl", ctaUrl);
     modelMap.addAttribute("relatedFaults", relatedFaults);
     modelMap.addAttribute("marketPulse", marketPulseService.generateBiweeklyInsight(car, fault));
+    modelMap.addAttribute("ogImage", ogImage);
+    modelMap.addAttribute("breadcrumbs", breadcrumbs);
 
     return "pseo_landing";
   }
@@ -136,9 +152,14 @@ public class PSeoController {
         .toList();
 
     modelMap.addAttribute("title", "Car Brands");
-    modelMap.addAttribute("breadcrumbs", List.of("Models"));
+    modelMap.addAttribute("breadcrumbs", List.of("Models")); // Keep simple for directory for now
     modelMap.addAttribute("items", brands);
     return "pages/directory_list";
+  }
+
+  // --- View Helpers ---
+
+  public record Breadcrumb(String label, String url) {
   }
 
   @GetMapping("/models/{brandSlug}")

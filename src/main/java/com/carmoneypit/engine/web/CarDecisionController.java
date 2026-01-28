@@ -58,21 +58,6 @@ public class CarDecisionController {
                 return "fragments/model_options";
         }
 
-        @GetMapping("/about")
-        public String about() {
-                return "about";
-        }
-
-        @GetMapping("/privacy")
-        public String privacy() {
-                return "privacy";
-        }
-
-        @GetMapping("/terms")
-        public String terms() {
-                return "terms";
-        }
-
         @GetMapping("/contact")
         public String contact() {
                 return "contact";
