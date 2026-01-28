@@ -1,0 +1,352 @@
+[
+    {
+        "model_id": "ford_f150_13th",
+        "jan_2026_avg_price": 24500,
+        "depreciation_rate": 0.09,
+        "avg_annual_repair_cost": 750,
+        "depreciation_outlook": "Moderate"
+    },
+    {
+        "model_id": "chevrolet_silverado_k2xx",
+        "jan_2026_avg_price": 22100,
+        "depreciation_rate": 0.10,
+        "avg_annual_repair_cost": 700,
+        "depreciation_outlook": "Moderate"
+    },
+    {
+        "model_id": "ram_1500_ds",
+        "jan_2026_avg_price": 19500,
+        "depreciation_rate": 0.12,
+        "avg_annual_repair_cost": 800,
+        "depreciation_outlook": "High"
+    },
+    {
+        "model_id": "toyota_camry_xv50",
+        "jan_2026_avg_price": 13500,
+        "depreciation_rate": 0.10,
+        "avg_annual_repair_cost": 388,
+        "depreciation_outlook": "Very Low (Holds Value)"
+    },
+    {
+        "model_id": "honda_accord_cr",
+        "jan_2026_avg_price": 14200,
+        "depreciation_rate": 0.11,
+        "avg_annual_repair_cost": 420,
+        "depreciation_outlook": "Low"
+    },
+    {
+        "model_id": "nissan_altima_l33",
+        "jan_2026_avg_price": 9800,
+        "depreciation_rate": 0.18,
+        "avg_annual_repair_cost": 550,
+        "depreciation_outlook": "High (Crash Risk)"
+    },
+    {
+        "model_id": "nissan_rogue_t32",
+        "jan_2026_avg_price": 11500,
+        "depreciation_rate": 0.17,
+        "avg_annual_repair_cost": 500,
+        "depreciation_outlook": "High"
+    },
+    {
+        "model_id": "honda_civic_fc",
+        "jan_2026_avg_price": 16500,
+        "depreciation_rate": 0.09,
+        "avg_annual_repair_cost": 380,
+        "depreciation_outlook": "Low"
+    },
+    {
+        "model_id": "toyota_corolla_e170",
+        "jan_2026_avg_price": 12800,
+        "depreciation_rate": 0.08,
+        "avg_annual_repair_cost": 350,
+        "depreciation_outlook": "Very Low"
+    },
+    {
+        "model_id": "honda_crv_rm",
+        "jan_2026_avg_price": 14500,
+        "depreciation_rate": 0.09,
+        "avg_annual_repair_cost": 450,
+        "depreciation_outlook": "Low"
+    },
+    {
+        "model_id": "toyota_rav4_xa40",
+        "jan_2026_avg_price": 16200,
+        "depreciation_rate": 0.08,
+        "avg_annual_repair_cost": 400,
+        "depreciation_outlook": "Very Low"
+    },
+    {
+        "model_id": "toyota_tacoma_n300",
+        "jan_2026_avg_price": 28500,
+        "depreciation_rate": 0.07,
+        "avg_annual_repair_cost": 550,
+        "depreciation_outlook": "Very Low (Best Resale)"
+    },
+    {
+        "model_id": "toyota_highlander_xu50",
+        "jan_2026_avg_price": 22500,
+        "depreciation_rate": 0.09,
+        "avg_annual_repair_cost": 480,
+        "depreciation_outlook": "Low"
+    },
+    {
+        "model_id": "jeep_wrangler_jk",
+        "jan_2026_avg_price": 23000,
+        "depreciation_rate": 0.08,
+        "avg_annual_repair_cost": 650,
+        "depreciation_outlook": "Very Low (Cult Following)"
+    },
+    {
+        "model_id": "jeep_grand_cherokee_wk2",
+        "jan_2026_avg_price": 18500,
+        "depreciation_rate": 0.12,
+        "avg_annual_repair_cost": 700,
+        "depreciation_outlook": "Moderate"
+    },
+    {
+        "model_id": "ford_escape_c520",
+        "jan_2026_avg_price": 11200,
+        "depreciation_rate": 0.14,
+        "avg_annual_repair_cost": 600,
+        "depreciation_outlook": "High"
+    },
+    {
+        "model_id": "ford_explorer_u502",
+        "jan_2026_avg_price": 15800,
+        "depreciation_rate": 0.13,
+        "avg_annual_repair_cost": 650,
+        "depreciation_outlook": "Moderate"
+    },
+    {
+        "model_id": "chevrolet_equinox_3rd",
+        "jan_2026_avg_price": 18500,
+        "depreciation_rate": 0.12,
+        "avg_annual_repair_cost": 520,
+        "depreciation_outlook": "Moderate"
+    },
+    {
+        "model_id": "gmc_sierra_k2xx",
+        "jan_2026_avg_price": 23500,
+        "depreciation_rate": 0.10,
+        "avg_annual_repair_cost": 720,
+        "depreciation_outlook": "Moderate"
+    },
+    {
+        "model_id": "toyota_4runner_n280",
+        "jan_2026_avg_price": 32000,
+        "depreciation_rate": 0.06,
+        "avg_annual_repair_cost": 550,
+        "depreciation_outlook": "Very Low (Legendary)"
+    },
+    {
+        "model_id": "honda_pilot_yf3",
+        "jan_2026_avg_price": 13500,
+        "depreciation_rate": 0.11,
+        "avg_annual_repair_cost": 500,
+        "depreciation_outlook": "Low"
+    },
+    {
+        "model_id": "mazda_cx5_ke",
+        "jan_2026_avg_price": 13800,
+        "depreciation_rate": 0.11,
+        "avg_annual_repair_cost": 420,
+        "depreciation_outlook": "Low"
+    },
+    {
+        "model_id": "subaru_outback_bs",
+        "jan_2026_avg_price": 17500,
+        "depreciation_rate": 0.10,
+        "avg_annual_repair_cost": 550,
+        "depreciation_outlook": "Low"
+    },
+    {
+        "model_id": "subaru_forester_sj",
+        "jan_2026_avg_price": 15200,
+        "depreciation_rate": 0.11,
+        "avg_annual_repair_cost": 520,
+        "depreciation_outlook": "Low"
+    },
+    {
+        "model_id": "hyundai_elantra_ad",
+        "jan_2026_avg_price": 11500,
+        "depreciation_rate": 0.14,
+        "avg_annual_repair_cost": 480,
+        "depreciation_outlook": "Moderate"
+    },
+    {
+        "model_id": "hyundai_tucson_tl",
+        "jan_2026_avg_price": 14200,
+        "depreciation_rate": 0.13,
+        "avg_annual_repair_cost": 520,
+        "depreciation_outlook": "Moderate"
+    },
+    {
+        "model_id": "hyundai_santa_fe_dm",
+        "jan_2026_avg_price": 13500,
+        "depreciation_rate": 0.13,
+        "avg_annual_repair_cost": 550,
+        "depreciation_outlook": "Moderate"
+    },
+    {
+        "model_id": "kia_sportage_ql",
+        "jan_2026_avg_price": 16200,
+        "depreciation_rate": 0.12,
+        "avg_annual_repair_cost": 500,
+        "depreciation_outlook": "Moderate"
+    },
+    {
+        "model_id": "kia_sorento_um",
+        "jan_2026_avg_price": 17500,
+        "depreciation_rate": 0.12,
+        "avg_annual_repair_cost": 550,
+        "depreciation_outlook": "Moderate"
+    },
+    {
+        "model_id": "mazda3_bm",
+        "jan_2026_avg_price": 12500,
+        "depreciation_rate": 0.12,
+        "avg_annual_repair_cost": 400,
+        "depreciation_outlook": "Low"
+    },
+    {
+        "model_id": "volkswagen_jetta_a6",
+        "jan_2026_avg_price": 9500,
+        "depreciation_rate": 0.15,
+        "avg_annual_repair_cost": 650,
+        "depreciation_outlook": "High"
+    },
+    {
+        "model_id": "volkswagen_tiguan_5n",
+        "jan_2026_avg_price": 10200,
+        "depreciation_rate": 0.16,
+        "avg_annual_repair_cost": 700,
+        "depreciation_outlook": "High"
+    },
+    {
+        "model_id": "nissan_sentra_b17",
+        "jan_2026_avg_price": 8500,
+        "depreciation_rate": 0.17,
+        "avg_annual_repair_cost": 520,
+        "depreciation_outlook": "High"
+    },
+    {
+        "model_id": "nissan_pathfinder_r52",
+        "jan_2026_avg_price": 12500,
+        "depreciation_rate": 0.16,
+        "avg_annual_repair_cost": 650,
+        "depreciation_outlook": "High"
+    },
+    {
+        "model_id": "chevrolet_malibu_9th",
+        "jan_2026_avg_price": 13200,
+        "depreciation_rate": 0.14,
+        "avg_annual_repair_cost": 550,
+        "depreciation_outlook": "Moderate"
+    },
+    {
+        "model_id": "ford_edge_cd4",
+        "jan_2026_avg_price": 17500,
+        "depreciation_rate": 0.13,
+        "avg_annual_repair_cost": 620,
+        "depreciation_outlook": "Moderate"
+    },
+    {
+        "model_id": "jeep_cherokee_kl",
+        "jan_2026_avg_price": 13500,
+        "depreciation_rate": 0.15,
+        "avg_annual_repair_cost": 680,
+        "depreciation_outlook": "High"
+    },
+    {
+        "model_id": "dodge_charger_ld",
+        "jan_2026_avg_price": 18500,
+        "depreciation_rate": 0.13,
+        "avg_annual_repair_cost": 650,
+        "depreciation_outlook": "Moderate"
+    },
+    {
+        "model_id": "dodge_durango_wd",
+        "jan_2026_avg_price": 19500,
+        "depreciation_rate": 0.13,
+        "avg_annual_repair_cost": 700,
+        "depreciation_outlook": "Moderate"
+    },
+    {
+        "model_id": "subaru_crosstrek_xv",
+        "jan_2026_avg_price": 14500,
+        "depreciation_rate": 0.10,
+        "avg_annual_repair_cost": 500,
+        "depreciation_outlook": "Low"
+    },
+    {
+        "model_id": "tesla_model_3",
+        "jan_2026_avg_price": 28500,
+        "depreciation_rate": 0.15,
+        "avg_annual_repair_cost": 450,
+        "depreciation_outlook": "High (EV Market Volatility)"
+    },
+    {
+        "model_id": "tesla_model_y",
+        "jan_2026_avg_price": 35000,
+        "depreciation_rate": 0.14,
+        "avg_annual_repair_cost": 480,
+        "depreciation_outlook": "Moderate"
+    },
+    {
+        "model_id": "lexus_rx_al20",
+        "jan_2026_avg_price": 28500,
+        "depreciation_rate": 0.09,
+        "avg_annual_repair_cost": 520,
+        "depreciation_outlook": "Very Low"
+    },
+    {
+        "model_id": "bmw_3series_f30",
+        "jan_2026_avg_price": 16500,
+        "depreciation_rate": 0.16,
+        "avg_annual_repair_cost": 850,
+        "depreciation_outlook": "High"
+    },
+    {
+        "model_id": "mercedes_c_class_w205",
+        "jan_2026_avg_price": 22500,
+        "depreciation_rate": 0.15,
+        "avg_annual_repair_cost": 900,
+        "depreciation_outlook": "High"
+    },
+    {
+        "model_id": "audi_a4_b9",
+        "jan_2026_avg_price": 24500,
+        "depreciation_rate": 0.14,
+        "avg_annual_repair_cost": 850,
+        "depreciation_outlook": "Moderate"
+    },
+    {
+        "model_id": "cadillac_escalade_k2",
+        "jan_2026_avg_price": 38500,
+        "depreciation_rate": 0.14,
+        "avg_annual_repair_cost": 950,
+        "depreciation_outlook": "Moderate"
+    },
+    {
+        "model_id": "lincoln_navigator_u554",
+        "jan_2026_avg_price": 48500,
+        "depreciation_rate": 0.13,
+        "avg_annual_repair_cost": 900,
+        "depreciation_outlook": "Moderate"
+    },
+    {
+        "model_id": "acura_mdx_yd3",
+        "jan_2026_avg_price": 19500,
+        "depreciation_rate": 0.11,
+        "avg_annual_repair_cost": 580,
+        "depreciation_outlook": "Low"
+    },
+    {
+        "model_id": "ford_mustang_s550",
+        "jan_2026_avg_price": 22500,
+        "depreciation_rate": 0.12,
+        "avg_annual_repair_cost": 650,
+        "depreciation_outlook": "Moderate"
+    }
+]

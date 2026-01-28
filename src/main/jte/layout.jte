@@ -1,6 +1,9 @@
 @import gg.jte.Content
 
 @param String title = "Car Money Pit | Precision Actuarial Analysis"
+@param String description = null
+@param String canonical = null
+@param String schemaJson = null
 @param Content content
 @param Content extraStyles = null
 @param boolean noindex = false
@@ -13,6 +16,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>${title}</title>
+    @if(description != null)
+    <meta name="description" content="${description}">
+    @endif
+    @if(canonical != null)
+    <link rel="canonical" href="${canonical}">
+    @endif
+    @if(schemaJson != null)
+    <script type="application/ld+json">
+        $unsafe{schemaJson}
+    </script>
+    @endif
     @if(noindex)
     <meta name="robots" content="noindex">
     @endif

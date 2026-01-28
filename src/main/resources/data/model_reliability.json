@@ -1,0 +1,1478 @@
+[
+    {
+        "model_id": "ford_f150_13th",
+        "score": 60,
+        "lifespan_miles": 250000,
+        "best_years": [
+            2018,
+            2019,
+            2020
+        ],
+        "worst_years": [
+            2015,
+            2016
+        ],
+        "common_trouble_spots": [
+            "Cam Phasers (3.5L EcoBoost)",
+            "10-Speed Transmission",
+            "Frozen Door Latches"
+        ],
+        "critical_milestones": [
+            {
+                "mileage": 100000,
+                "description": "Spark Plugs & Coolant Flush",
+                "est_cost": 450
+            },
+            {
+                "mileage": 120000,
+                "description": "Transmission Fluid Change (Critical)",
+                "est_cost": 300
+            },
+            {
+                "mileage": 150000,
+                "description": "Timing Chain Tensioners (EcoBoost)",
+                "est_cost": 3000
+            }
+        ]
+    },
+    {
+        "model_id": "chevrolet_silverado_k2xx",
+        "score": 55,
+        "lifespan_miles": 220000,
+        "best_years": [
+            2018,
+            2019
+        ],
+        "worst_years": [
+            2014,
+            2015,
+            2016
+        ],
+        "common_trouble_spots": [
+            "A/C Condenser Failure",
+            "Torque Converter Shudder",
+            "AFM Lifter Collapse"
+        ],
+        "critical_milestones": [
+            {
+                "mileage": 100000,
+                "description": "Spark Plugs",
+                "est_cost": 350
+            },
+            {
+                "mileage": 150000,
+                "description": "Transmission Rebuild Risk (6L80)",
+                "est_cost": 4500
+            }
+        ]
+    },
+    {
+        "model_id": "ram_1500_ds",
+        "score": 50,
+        "lifespan_miles": 200000,
+        "best_years": [
+            2017,
+            2018
+        ],
+        "worst_years": [
+            2013,
+            2014,
+            2015
+        ],
+        "common_trouble_spots": [
+            "Exhaust Manifold Bolts (Hemi Tick)",
+            "Air Suspension Failure",
+            "TIPM Electrical"
+        ],
+        "critical_milestones": [
+            {
+                "mileage": 80000,
+                "description": "Exhaust Manifold Bolts Check",
+                "est_cost": 900
+            },
+            {
+                "mileage": 100000,
+                "description": "Air Suspension Conversion (if equipped)",
+                "est_cost": 1500
+            }
+        ]
+    },
+    {
+        "model_id": "toyota_camry_xv50",
+        "score": 85,
+        "lifespan_miles": 300000,
+        "best_years": [
+            2015,
+            2016,
+            2017
+        ],
+        "worst_years": [
+            2012,
+            2014
+        ],
+        "common_trouble_spots": [
+            "Torque Converter Shudder (Early Years)",
+            "Moldy A/C Smell"
+        ],
+        "critical_milestones": [
+            {
+                "mileage": 100000,
+                "description": "Spark Plugs & Coolant",
+                "est_cost": 400
+            },
+            {
+                "mileage": 150000,
+                "description": "Water Pump & Drive Belt",
+                "est_cost": 600
+            }
+        ]
+    },
+    {
+        "model_id": "honda_accord_cr",
+        "score": 82,
+        "lifespan_miles": 250000,
+        "best_years": [
+            2015,
+            2016,
+            2017
+        ],
+        "worst_years": [
+            2013,
+            2014
+        ],
+        "common_trouble_spots": [
+            "Starter Failure",
+            "Oil Consumption (V6 VCM)",
+            "CVT Judder (Early)"
+        ],
+        "critical_milestones": [
+            {
+                "mileage": 100000,
+                "description": "Timing Belt (V6 Only)",
+                "est_cost": 1200
+            },
+            {
+                "mileage": 100000,
+                "description": "Spark Plugs (I4)",
+                "est_cost": 250
+            }
+        ]
+    },
+    {
+        "model_id": "nissan_altima_l33",
+        "score": 30,
+        "lifespan_miles": 150000,
+        "best_years": [
+            2018
+        ],
+        "worst_years": [
+            2013,
+            2014,
+            2015
+        ],
+        "common_trouble_spots": [
+            "CVT Transmission Failure",
+            "Door Handle Breaking",
+            "Hood Latch Failure"
+        ],
+        "critical_milestones": [
+            {
+                "mileage": 60000,
+                "description": "CVT Fluid Service (Mandatory)",
+                "est_cost": 250
+            },
+            {
+                "mileage": 120000,
+                "description": "CVT Replacement Risk Zone",
+                "est_cost": 4200
+            }
+        ]
+    },
+    {
+        "model_id": "nissan_rogue_t32",
+        "score": 40,
+        "lifespan_miles": 160000,
+        "best_years": [
+            2019,
+            2020
+        ],
+        "worst_years": [
+            2014,
+            2015,
+            2016
+        ],
+        "common_trouble_spots": [
+            "CVT Transmission Failure",
+            "Sunroof Drainage Leaks",
+            "A/C Blowing Warm"
+        ],
+        "critical_milestones": [
+            {
+                "mileage": 60000,
+                "description": "CVT Fluid Exchange",
+                "est_cost": 300
+            },
+            {
+                "mileage": 100000,
+                "description": "CVT Replacement Risk Zone",
+                "est_cost": 4500
+            }
+        ]
+    },
+    {
+        "model_id": "honda_civic_fc",
+        "score": 78,
+        "lifespan_miles": 250000,
+        "best_years": [
+            2019,
+            2020,
+            2021
+        ],
+        "worst_years": [
+            2016,
+            2017
+        ],
+        "common_trouble_spots": [
+            "A/C Condenser Leaks (Extended Warranty)",
+            "Oil Dilution (1.5T)",
+            "Infotainment Glitches"
+        ],
+        "critical_milestones": [
+            {
+                "mileage": 100000,
+                "description": "Spark Plugs & CVT Fluid",
+                "est_cost": 400
+            }
+        ]
+    },
+    {
+        "model_id": "toyota_corolla_e170",
+        "score": 88,
+        "lifespan_miles": 300000,
+        "best_years": [
+            2017,
+            2018,
+            2019
+        ],
+        "worst_years": [
+            2014
+        ],
+        "common_trouble_spots": [
+            "CVT Whine (Rare)",
+            "Radio Glitches"
+        ],
+        "critical_milestones": [
+            {
+                "mileage": 120000,
+                "description": "Water Pump & Serpentine Belt",
+                "est_cost": 500
+            }
+        ]
+    },
+    {
+        "model_id": "honda_crv_rm",
+        "score": 75,
+        "lifespan_miles": 250000,
+        "best_years": [
+            2015,
+            2016
+        ],
+        "worst_years": [
+            2012,
+            2014
+        ],
+        "common_trouble_spots": [
+            "VTC Actuator Grind",
+            "TPMS Glitches",
+            "Vibration at Idle"
+        ],
+        "critical_milestones": [
+            {
+                "mileage": 100000,
+                "description": "Serpentine Belt & Tensioner",
+                "est_cost": 350
+            },
+            {
+                "mileage": 120000,
+                "description": "Starter Motor Failure Risk",
+                "est_cost": 600
+            }
+        ]
+    },
+    {
+        "model_id": "toyota_rav4_xa40",
+        "score": 80,
+        "lifespan_miles": 250000,
+        "best_years": [
+            2016,
+            2017,
+            2018
+        ],
+        "worst_years": [
+            2013,
+            2014
+        ],
+        "common_trouble_spots": [
+            "Torque Converter Shudder",
+            "Sunroof Rattle"
+        ],
+        "critical_milestones": [
+            {
+                "mileage": 100000,
+                "description": "Spark Plugs & Coolant",
+                "est_cost": 400
+            }
+        ]
+    },
+    {
+        "model_id": "toyota_tacoma_n300",
+        "score": 75,
+        "lifespan_miles": 300000,
+        "best_years": [
+            2020,
+            2021,
+            2022
+        ],
+        "worst_years": [
+            2016,
+            2017
+        ],
+        "common_trouble_spots": [
+            "Transmission Shift Flare",
+            "Frame Rust (Early)",
+            "Clutch Chatter (Manual)"
+        ],
+        "critical_milestones": [
+            {
+                "mileage": 100000,
+                "description": "Transmission Fluid Change",
+                "est_cost": 350
+            },
+            {
+                "mileage": 150000,
+                "description": "Clutch Replacement (Manual)",
+                "est_cost": 1800
+            }
+        ]
+    },
+    {
+        "model_id": "toyota_highlander_xu50",
+        "score": 82,
+        "lifespan_miles": 250000,
+        "best_years": [
+            2017,
+            2018,
+            2019
+        ],
+        "worst_years": [
+            2014,
+            2015
+        ],
+        "common_trouble_spots": [
+            "Water Pump Leak",
+            "Sunroof Wind Noise"
+        ],
+        "critical_milestones": [
+            {
+                "mileage": 100000,
+                "description": "Spark Plugs & Coolant",
+                "est_cost": 450
+            },
+            {
+                "mileage": 120000,
+                "description": "Water Pump Replacement",
+                "est_cost": 800
+            }
+        ]
+    },
+    {
+        "model_id": "jeep_wrangler_jk",
+        "score": 45,
+        "lifespan_miles": 200000,
+        "best_years": [
+            2015,
+            2016,
+            2017
+        ],
+        "worst_years": [
+            2007,
+            2008,
+            2012
+        ],
+        "common_trouble_spots": [
+            "Death Wobble",
+            "TIPM Failure",
+            "Soft Top Leaks"
+        ],
+        "critical_milestones": [
+            {
+                "mileage": 80000,
+                "description": "Ball Joint Replacement",
+                "est_cost": 600
+            },
+            {
+                "mileage": 100000,
+                "description": "Transmission Service",
+                "est_cost": 400
+            }
+        ]
+    },
+    {
+        "model_id": "jeep_grand_cherokee_wk2",
+        "score": 52,
+        "lifespan_miles": 200000,
+        "best_years": [
+            2018,
+            2019,
+            2020
+        ],
+        "worst_years": [
+            2011,
+            2012,
+            2014
+        ],
+        "common_trouble_spots": [
+            "ZF 8-Speed Shudder",
+            "Sunroof Leaks",
+            "Electrical Gremlins"
+        ],
+        "critical_milestones": [
+            {
+                "mileage": 100000,
+                "description": "Transmission Fluid Change",
+                "est_cost": 350
+            },
+            {
+                "mileage": 120000,
+                "description": "Air Suspension Repair",
+                "est_cost": 1200
+            }
+        ]
+    },
+    {
+        "model_id": "ford_escape_c520",
+        "score": 55,
+        "lifespan_miles": 180000,
+        "best_years": [
+            2017,
+            2018,
+            2019
+        ],
+        "worst_years": [
+            2013,
+            2014
+        ],
+        "common_trouble_spots": [
+            "Coolant Intrusion (1.6L EcoBoost)",
+            "PTU Failure",
+            "Transmission Shudder"
+        ],
+        "critical_milestones": [
+            {
+                "mileage": 60000,
+                "description": "PTU Fluid Change",
+                "est_cost": 200
+            },
+            {
+                "mileage": 100000,
+                "description": "Coolant System Inspection",
+                "est_cost": 150
+            }
+        ]
+    },
+    {
+        "model_id": "ford_explorer_u502",
+        "score": 50,
+        "lifespan_miles": 200000,
+        "best_years": [
+            2017,
+            2018,
+            2019
+        ],
+        "worst_years": [
+            2011,
+            2012,
+            2013
+        ],
+        "common_trouble_spots": [
+            "Water Pump Failure",
+            "Transmission Shudder",
+            "A/C Evaporator Leak"
+        ],
+        "critical_milestones": [
+            {
+                "mileage": 80000,
+                "description": "Water Pump Replacement",
+                "est_cost": 900
+            },
+            {
+                "mileage": 100000,
+                "description": "Transmission Service",
+                "est_cost": 400
+            }
+        ]
+    },
+    {
+        "model_id": "chevrolet_equinox_3rd",
+        "score": 65,
+        "lifespan_miles": 200000,
+        "best_years": [
+            2020,
+            2021,
+            2022
+        ],
+        "worst_years": [
+            2018
+        ],
+        "common_trouble_spots": [
+            "Turbo Failure (1.5T)",
+            "Fuel Injector Issues",
+            "Infotainment Glitches"
+        ],
+        "critical_milestones": [
+            {
+                "mileage": 100000,
+                "description": "Spark Plugs & Transmission Fluid",
+                "est_cost": 450
+            }
+        ]
+    },
+    {
+        "model_id": "gmc_sierra_k2xx",
+        "score": 55,
+        "lifespan_miles": 220000,
+        "best_years": [
+            2018,
+            2019
+        ],
+        "worst_years": [
+            2014,
+            2015
+        ],
+        "common_trouble_spots": [
+            "AFM Lifter Collapse",
+            "A/C Condenser",
+            "Transmission Shudder"
+        ],
+        "critical_milestones": [
+            {
+                "mileage": 100000,
+                "description": "Spark Plugs",
+                "est_cost": 350
+            },
+            {
+                "mileage": 150000,
+                "description": "Transmission Rebuild Risk",
+                "est_cost": 4500
+            }
+        ]
+    },
+    {
+        "model_id": "toyota_4runner_n280",
+        "score": 85,
+        "lifespan_miles": 300000,
+        "best_years": [
+            2015,
+            2016,
+            2017,
+            2018
+        ],
+        "worst_years": [
+            2010,
+            2011
+        ],
+        "common_trouble_spots": [
+            "Exhaust Manifold Leak",
+            "Secondary Air Injection",
+            "Dash Rattle"
+        ],
+        "critical_milestones": [
+            {
+                "mileage": 100000,
+                "description": "Spark Plugs & Coolant",
+                "est_cost": 450
+            },
+            {
+                "mileage": 120000,
+                "description": "Transmission Fluid Change",
+                "est_cost": 300
+            }
+        ]
+    },
+    {
+        "model_id": "honda_pilot_yf3",
+        "score": 70,
+        "lifespan_miles": 220000,
+        "best_years": [
+            2013,
+            2014,
+            2015
+        ],
+        "worst_years": [
+            2009,
+            2010
+        ],
+        "common_trouble_spots": [
+            "VCM Oil Consumption",
+            "Transmission Judder",
+            "Timing Belt"
+        ],
+        "critical_milestones": [
+            {
+                "mileage": 105000,
+                "description": "Timing Belt Replacement",
+                "est_cost": 1200
+            },
+            {
+                "mileage": 100000,
+                "description": "Spark Plugs",
+                "est_cost": 350
+            }
+        ]
+    },
+    {
+        "model_id": "mazda_cx5_ke",
+        "score": 78,
+        "lifespan_miles": 220000,
+        "best_years": [
+            2015,
+            2016
+        ],
+        "worst_years": [
+            2013
+        ],
+        "common_trouble_spots": [
+            "Daytime Running Light Failure",
+            "Infotainment Freeze",
+            "Brake Booster Recall"
+        ],
+        "critical_milestones": [
+            {
+                "mileage": 100000,
+                "description": "Spark Plugs & Transmission Fluid",
+                "est_cost": 400
+            }
+        ]
+    },
+    {
+        "model_id": "subaru_outback_bs",
+        "score": 72,
+        "lifespan_miles": 200000,
+        "best_years": [
+            2017,
+            2018,
+            2019
+        ],
+        "worst_years": [
+            2015
+        ],
+        "common_trouble_spots": [
+            "CVT Shudder",
+            "Head Gasket (Early)",
+            "Oil Consumption"
+        ],
+        "critical_milestones": [
+            {
+                "mileage": 60000,
+                "description": "CVT Fluid Change",
+                "est_cost": 350
+            },
+            {
+                "mileage": 100000,
+                "description": "Spark Plugs",
+                "est_cost": 300
+            }
+        ]
+    },
+    {
+        "model_id": "subaru_forester_sj",
+        "score": 70,
+        "lifespan_miles": 200000,
+        "best_years": [
+            2016,
+            2017,
+            2018
+        ],
+        "worst_years": [
+            2014
+        ],
+        "common_trouble_spots": [
+            "CVT Judder",
+            "Oil Consumption",
+            "Windshield Cracking"
+        ],
+        "critical_milestones": [
+            {
+                "mileage": 60000,
+                "description": "CVT Fluid Service",
+                "est_cost": 350
+            },
+            {
+                "mileage": 100000,
+                "description": "Spark Plugs",
+                "est_cost": 300
+            }
+        ]
+    },
+    {
+        "model_id": "hyundai_elantra_ad",
+        "score": 68,
+        "lifespan_miles": 180000,
+        "best_years": [
+            2019,
+            2020
+        ],
+        "worst_years": [
+            2017
+        ],
+        "common_trouble_spots": [
+            "Engine Failure (Nu 2.0)",
+            "Dual Clutch Shudder",
+            "Infotainment Issues"
+        ],
+        "critical_milestones": [
+            {
+                "mileage": 60000,
+                "description": "Dual Clutch Service",
+                "est_cost": 400
+            },
+            {
+                "mileage": 100000,
+                "description": "Spark Plugs",
+                "est_cost": 250
+            }
+        ]
+    },
+    {
+        "model_id": "hyundai_tucson_tl",
+        "score": 65,
+        "lifespan_miles": 180000,
+        "best_years": [
+            2019,
+            2020
+        ],
+        "worst_years": [
+            2016,
+            2017
+        ],
+        "common_trouble_spots": [
+            "Engine Failure (Theta II)",
+            "Dual Clutch Issues",
+            "Panoramic Sunroof Leak"
+        ],
+        "critical_milestones": [
+            {
+                "mileage": 60000,
+                "description": "Transmission Service",
+                "est_cost": 350
+            },
+            {
+                "mileage": 100000,
+                "description": "Spark Plugs",
+                "est_cost": 300
+            }
+        ]
+    },
+    {
+        "model_id": "hyundai_santa_fe_dm",
+        "score": 62,
+        "lifespan_miles": 180000,
+        "best_years": [
+            2016,
+            2017,
+            2018
+        ],
+        "worst_years": [
+            2013,
+            2014
+        ],
+        "common_trouble_spots": [
+            "Engine Failure (Theta II)",
+            "Transmission Shudder",
+            "Brake Issues"
+        ],
+        "critical_milestones": [
+            {
+                "mileage": 100000,
+                "description": "Spark Plugs & Transmission Fluid",
+                "est_cost": 400
+            }
+        ]
+    },
+    {
+        "model_id": "kia_sportage_ql",
+        "score": 66,
+        "lifespan_miles": 180000,
+        "best_years": [
+            2020,
+            2021,
+            2022
+        ],
+        "worst_years": [
+            2017,
+            2018
+        ],
+        "common_trouble_spots": [
+            "Engine Failure (Theta II)",
+            "Turbo Issues",
+            "Infotainment Glitches"
+        ],
+        "critical_milestones": [
+            {
+                "mileage": 100000,
+                "description": "Spark Plugs & Transmission Service",
+                "est_cost": 400
+            }
+        ]
+    },
+    {
+        "model_id": "kia_sorento_um",
+        "score": 64,
+        "lifespan_miles": 180000,
+        "best_years": [
+            2019,
+            2020
+        ],
+        "worst_years": [
+            2016,
+            2017
+        ],
+        "common_trouble_spots": [
+            "Engine Failure (Theta II)",
+            "Transmission Shudder",
+            "Electrical Issues"
+        ],
+        "critical_milestones": [
+            {
+                "mileage": 100000,
+                "description": "Spark Plugs & Transmission Fluid",
+                "est_cost": 450
+            }
+        ]
+    },
+    {
+        "model_id": "mazda3_bm",
+        "score": 76,
+        "lifespan_miles": 200000,
+        "best_years": [
+            2016,
+            2017,
+            2018
+        ],
+        "worst_years": [
+            2014
+        ],
+        "common_trouble_spots": [
+            "Infotainment Freeze",
+            "Clutch Issues (Manual)",
+            "Rust (Northern Climates)"
+        ],
+        "critical_milestones": [
+            {
+                "mileage": 100000,
+                "description": "Spark Plugs & Transmission Fluid",
+                "est_cost": 350
+            }
+        ]
+    },
+    {
+        "model_id": "volkswagen_jetta_a6",
+        "score": 58,
+        "lifespan_miles": 180000,
+        "best_years": [
+            2016,
+            2017,
+            2018
+        ],
+        "worst_years": [
+            2011,
+            2012
+        ],
+        "common_trouble_spots": [
+            "DSG Mechatronic Failure",
+            "Timing Chain Tensioner",
+            "Water Pump Leak"
+        ],
+        "critical_milestones": [
+            {
+                "mileage": 40000,
+                "description": "DSG Service",
+                "est_cost": 450
+            },
+            {
+                "mileage": 100000,
+                "description": "Timing Chain Inspection",
+                "est_cost": 800
+            }
+        ]
+    },
+    {
+        "model_id": "volkswagen_tiguan_5n",
+        "score": 55,
+        "lifespan_miles": 170000,
+        "best_years": [
+            2015,
+            2016,
+            2017
+        ],
+        "worst_years": [
+            2009,
+            2010,
+            2011
+        ],
+        "common_trouble_spots": [
+            "Timing Chain Tensioner",
+            "Water Pump Failure",
+            "Carbon Buildup (TSI)"
+        ],
+        "critical_milestones": [
+            {
+                "mileage": 80000,
+                "description": "Timing Chain Tensioner Replacement",
+                "est_cost": 1500
+            },
+            {
+                "mileage": 100000,
+                "description": "Carbon Cleaning",
+                "est_cost": 600
+            }
+        ]
+    },
+    {
+        "model_id": "nissan_sentra_b17",
+        "score": 48,
+        "lifespan_miles": 160000,
+        "best_years": [
+            2018,
+            2019
+        ],
+        "worst_years": [
+            2013,
+            2014,
+            2015
+        ],
+        "common_trouble_spots": [
+            "CVT Failure",
+            "Brake Master Cylinder",
+            "Airbag Sensor Issues"
+        ],
+        "critical_milestones": [
+            {
+                "mileage": 60000,
+                "description": "CVT Fluid Service",
+                "est_cost": 250
+            },
+            {
+                "mileage": 100000,
+                "description": "CVT Replacement Risk",
+                "est_cost": 4000
+            }
+        ]
+    },
+    {
+        "model_id": "nissan_pathfinder_r52",
+        "score": 42,
+        "lifespan_miles": 160000,
+        "best_years": [
+            2018,
+            2019,
+            2020
+        ],
+        "worst_years": [
+            2013,
+            2014
+        ],
+        "common_trouble_spots": [
+            "CVT Failure",
+            "Radiator Leak",
+            "Transmission Cooler"
+        ],
+        "critical_milestones": [
+            {
+                "mileage": 60000,
+                "description": "CVT Fluid Exchange",
+                "est_cost": 350
+            },
+            {
+                "mileage": 100000,
+                "description": "CVT Replacement Risk",
+                "est_cost": 5000
+            }
+        ]
+    },
+    {
+        "model_id": "chevrolet_malibu_9th",
+        "score": 60,
+        "lifespan_miles": 180000,
+        "best_years": [
+            2019,
+            2020,
+            2021
+        ],
+        "worst_years": [
+            2016,
+            2017
+        ],
+        "common_trouble_spots": [
+            "Transmission Shudder",
+            "Engine Stalling",
+            "Infotainment Issues"
+        ],
+        "critical_milestones": [
+            {
+                "mileage": 100000,
+                "description": "Spark Plugs & Transmission Fluid",
+                "est_cost": 400
+            }
+        ]
+    },
+    {
+        "model_id": "ford_edge_cd4",
+        "score": 58,
+        "lifespan_miles": 180000,
+        "best_years": [
+            2019,
+            2020,
+            2021
+        ],
+        "worst_years": [
+            2015,
+            2016
+        ],
+        "common_trouble_spots": [
+            "PTU Failure",
+            "Water Pump Leak",
+            "Transmission Shudder"
+        ],
+        "critical_milestones": [
+            {
+                "mileage": 60000,
+                "description": "PTU Fluid Change",
+                "est_cost": 200
+            },
+            {
+                "mileage": 100000,
+                "description": "Water Pump Replacement",
+                "est_cost": 800
+            }
+        ]
+    },
+    {
+        "model_id": "jeep_cherokee_kl",
+        "score": 48,
+        "lifespan_miles": 170000,
+        "best_years": [
+            2019,
+            2020,
+            2021
+        ],
+        "worst_years": [
+            2014,
+            2015
+        ],
+        "common_trouble_spots": [
+            "9-Speed Transmission Issues",
+            "Electrical Problems",
+            "Engine Stalling"
+        ],
+        "critical_milestones": [
+            {
+                "mileage": 100000,
+                "description": "Transmission Service",
+                "est_cost": 400
+            }
+        ]
+    },
+    {
+        "model_id": "dodge_charger_ld",
+        "score": 62,
+        "lifespan_miles": 200000,
+        "best_years": [
+            2018,
+            2019,
+            2020
+        ],
+        "worst_years": [
+            2011,
+            2012
+        ],
+        "common_trouble_spots": [
+            "Transmission Issues",
+            "Electrical Gremlins",
+            "Suspension Wear"
+        ],
+        "critical_milestones": [
+            {
+                "mileage": 100000,
+                "description": "Transmission Fluid Change",
+                "est_cost": 350
+            },
+            {
+                "mileage": 120000,
+                "description": "Suspension Refresh",
+                "est_cost": 800
+            }
+        ]
+    },
+    {
+        "model_id": "dodge_durango_wd",
+        "score": 58,
+        "lifespan_miles": 190000,
+        "best_years": [
+            2018,
+            2019,
+            2020
+        ],
+        "worst_years": [
+            2011,
+            2012,
+            2013
+        ],
+        "common_trouble_spots": [
+            "TIPM Failure",
+            "Transmission Shudder",
+            "A/C Issues"
+        ],
+        "critical_milestones": [
+            {
+                "mileage": 100000,
+                "description": "Transmission Service",
+                "est_cost": 400
+            }
+        ]
+    },
+    {
+        "model_id": "subaru_crosstrek_xv",
+        "score": 72,
+        "lifespan_miles": 200000,
+        "best_years": [
+            2016,
+            2017
+        ],
+        "worst_years": [
+            2013,
+            2014
+        ],
+        "common_trouble_spots": [
+            "CVT Shudder",
+            "Oil Consumption",
+            "Windshield Cracking"
+        ],
+        "critical_milestones": [
+            {
+                "mileage": 60000,
+                "description": "CVT Fluid Service",
+                "est_cost": 350
+            },
+            {
+                "mileage": 100000,
+                "description": "Spark Plugs",
+                "est_cost": 300
+            }
+        ]
+    },
+    {
+        "model_id": "tesla_model_3",
+        "score": 75,
+        "lifespan_miles": 300000,
+        "best_years": [
+            2021,
+            2022,
+            2023
+        ],
+        "worst_years": [
+            2017,
+            2018
+        ],
+        "common_trouble_spots": [
+            "Door Handle Failure",
+            "Screen Yellowing",
+            "Suspension Noise"
+        ],
+        "critical_milestones": [
+            {
+                "mileage": 100000,
+                "description": "Brake Fluid Flush",
+                "est_cost": 150
+            },
+            {
+                "mileage": 150000,
+                "description": "Battery Coolant Service",
+                "est_cost": 450
+            }
+        ]
+    },
+    {
+        "model_id": "tesla_model_y",
+        "score": 78,
+        "lifespan_miles": 300000,
+        "best_years": [
+            2022,
+            2023
+        ],
+        "worst_years": [
+            2020
+        ],
+        "common_trouble_spots": [
+            "Heat Pump Failure",
+            "Suspension Creaking",
+            "Paint Quality"
+        ],
+        "critical_milestones": [
+            {
+                "mileage": 100000,
+                "description": "Brake Fluid Flush",
+                "est_cost": 150
+            },
+            {
+                "mileage": 150000,
+                "description": "Battery Coolant Service",
+                "est_cost": 450
+            }
+        ]
+    },
+    {
+        "model_id": "lexus_rx_al20",
+        "score": 88,
+        "lifespan_miles": 250000,
+        "best_years": [
+            2018,
+            2019,
+            2020
+        ],
+        "worst_years": [
+            2016
+        ],
+        "common_trouble_spots": [
+            "Infotainment Lag",
+            "Brake Actuator (Hybrid)",
+            "Minor Oil Leaks"
+        ],
+        "critical_milestones": [
+            {
+                "mileage": 100000,
+                "description": "Spark Plugs & Coolant",
+                "est_cost": 500
+            },
+            {
+                "mileage": 120000,
+                "description": "Transmission Fluid Change",
+                "est_cost": 400
+            }
+        ]
+    },
+    {
+        "model_id": "bmw_3series_f30",
+        "score": 58,
+        "lifespan_miles": 180000,
+        "best_years": [
+            2016,
+            2017,
+            2018
+        ],
+        "worst_years": [
+            2012,
+            2013
+        ],
+        "common_trouble_spots": [
+            "Timing Chain Failure",
+            "Oil Leaks",
+            "Coolant System"
+        ],
+        "critical_milestones": [
+            {
+                "mileage": 60000,
+                "description": "Oil Change & Inspection",
+                "est_cost": 200
+            },
+            {
+                "mileage": 100000,
+                "description": "Timing Chain Inspection",
+                "est_cost": 1500
+            }
+        ]
+    },
+    {
+        "model_id": "mercedes_c_class_w205",
+        "score": 62,
+        "lifespan_miles": 180000,
+        "best_years": [
+            2018,
+            2019,
+            2020
+        ],
+        "worst_years": [
+            2015,
+            2016
+        ],
+        "common_trouble_spots": [
+            "Balance Shaft Failure",
+            "Transmission Issues",
+            "Electrical Gremlins"
+        ],
+        "critical_milestones": [
+            {
+                "mileage": 60000,
+                "description": "Transmission Service",
+                "est_cost": 500
+            },
+            {
+                "mileage": 100000,
+                "description": "Balance Shaft Inspection",
+                "est_cost": 2000
+            }
+        ]
+    },
+    {
+        "model_id": "audi_a4_b9",
+        "score": 60,
+        "lifespan_miles": 180000,
+        "best_years": [
+            2019,
+            2020,
+            2021
+        ],
+        "worst_years": [
+            2017
+        ],
+        "common_trouble_spots": [
+            "Oil Consumption",
+            "Water Pump Failure",
+            "Infotainment Issues"
+        ],
+        "critical_milestones": [
+            {
+                "mileage": 60000,
+                "description": "DSG Service",
+                "est_cost": 500
+            },
+            {
+                "mileage": 100000,
+                "description": "Water Pump Replacement",
+                "est_cost": 1200
+            }
+        ]
+    },
+    {
+        "model_id": "cadillac_escalade_k2",
+        "score": 55,
+        "lifespan_miles": 200000,
+        "best_years": [
+            2018,
+            2019,
+            2020
+        ],
+        "worst_years": [
+            2015
+        ],
+        "common_trouble_spots": [
+            "AFM Lifter Collapse",
+            "Transmission Shudder",
+            "Air Suspension"
+        ],
+        "critical_milestones": [
+            {
+                "mileage": 100000,
+                "description": "Spark Plugs & Transmission Fluid",
+                "est_cost": 500
+            },
+            {
+                "mileage": 120000,
+                "description": "Air Suspension Repair",
+                "est_cost": 2000
+            }
+        ]
+    },
+    {
+        "model_id": "lincoln_navigator_u554",
+        "score": 60,
+        "lifespan_miles": 200000,
+        "best_years": [
+            2020,
+            2021,
+            2022
+        ],
+        "worst_years": [
+            2018
+        ],
+        "common_trouble_spots": [
+            "Turbo Failure (3.5L EcoBoost)",
+            "Air Suspension",
+            "Infotainment Glitches"
+        ],
+        "critical_milestones": [
+            {
+                "mileage": 100000,
+                "description": "Spark Plugs & Transmission Service",
+                "est_cost": 600
+            },
+            {
+                "mileage": 120000,
+                "description": "Turbo Inspection",
+                "est_cost": 1500
+            }
+        ]
+    },
+    {
+        "model_id": "acura_mdx_yd3",
+        "score": 78,
+        "lifespan_miles": 220000,
+        "best_years": [
+            2017,
+            2018,
+            2019
+        ],
+        "worst_years": [
+            2014,
+            2015
+        ],
+        "common_trouble_spots": [
+            "Transmission Judder",
+            "VCM Oil Consumption",
+            "Infotainment Issues"
+        ],
+        "critical_milestones": [
+            {
+                "mileage": 100000,
+                "description": "Transmission Fluid Change",
+                "est_cost": 400
+            },
+            {
+                "mileage": 105000,
+                "description": "Timing Belt Replacement",
+                "est_cost": 1200
+            }
+        ]
+    },
+    {
+        "model_id": "ford_mustang_s550",
+        "score": 68,
+        "lifespan_miles": 200000,
+        "best_years": [
+            2018,
+            2019,
+            2020
+        ],
+        "worst_years": [
+            2015,
+            2016
+        ],
+        "common_trouble_spots": [
+            "MT-82 Transmission (Manual)",
+            "Differential Whine",
+            "Sync 3 Issues"
+        ],
+        "critical_milestones": [
+            {
+                "mileage": 60000,
+                "description": "Differential Fluid Change",
+                "est_cost": 200
+            },
+            {
+                "mileage": 100000,
+                "description": "Spark Plugs & Transmission Service",
+                "est_cost": 450
+            }
+        ]
+    }
+]

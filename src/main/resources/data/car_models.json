@@ -1,125 +1,402 @@
 [
     {
-        "brand": "TOYOTA",
-        "model": "Camry",
-        "generation": "XV50",
-        "startYear": 2012,
-        "endYear": 2017,
-        "data": {
-            "avgAnnualRepairCost": 388,
-            "reliabilityScore": 85,
-            "majorFaults": [
-                {
-                    "component": "Oxygen Sensor",
-                    "cost": 350,
-                    "probability": "Low",
-                    "description": "Check engine light due to sensor failure, causing poor fuel economy."
-                },
-                {
-                    "component": "Torque Converter",
-                    "cost": 1500,
-                    "probability": "Low",
-                    "description": "Shuddering during acceleration (software update often fixes this)."
-                }
-            ],
-            "actuarialVerdict": "RETENTION_BIASED",
-            "verdictSummary": "Actuarially sound retention. Low annual burn rate ($388) justifies long-term hold."
-        }
-    },
-    {
-        "brand": "BMW",
-        "model": "3 Series",
-        "generation": "F30",
-        "startYear": 2012,
-        "endYear": 2018,
-        "data": {
-            "avgAnnualRepairCost": 1250,
-            "reliabilityScore": 45,
-            "majorFaults": [
-                {
-                    "component": "Timing Chain (N20 Engine)",
-                    "cost": 3500,
-                    "probability": "High",
-                    "description": "Catastrophic engine failure risk if chain guides break. Preemptive replacement required."
-                },
-                {
-                    "component": "Oil Filter Housing Gasket",
-                    "cost": 800,
-                    "probability": "Very High",
-                    "description": "Routine failure causing significant oil leaks and potential belt ingestion."
-                }
-            ],
-            "actuarialVerdict": "LIABILITY_BIASED",
-            "verdictSummary": "High-risk asset. Annual maintenance exceeds $1,200. Timing chain liability makes retention nearly mathematically indefensible beyond 100k miles."
-        }
-    },
-    {
-        "brand": "NISSAN",
-        "model": "Altima",
-        "generation": "L33",
-        "startYear": 2013,
-        "endYear": 2018,
-        "data": {
-            "avgAnnualRepairCost": 550,
-            "reliabilityScore": 30,
-            "majorFaults": [
-                {
-                    "component": "CVT Transmission",
-                    "cost": 4500,
-                    "probability": "Critical",
-                    "description": "Known premature failure of JATCO CVT. 'Judder' is a terminal symptom."
-                }
-            ],
-            "actuarialVerdict": "LIABILITY_BIASED",
-            "verdictSummary": "Transmission liability asset. The CVT failure cost ($4,500) often exceeds the vehicle's residual value."
-        }
-    },
-    {
-        "brand": "HONDA",
-        "model": "Accord",
-        "generation": "CR",
-        "startYear": 2013,
-        "endYear": 2017,
-        "data": {
-            "avgAnnualRepairCost": 420,
-            "reliabilityScore": 82,
-            "majorFaults": [
-                {
-                    "component": "Starter Motor",
-                    "cost": 800,
-                    "probability": "Medium",
-                    "description": "Premature starter failure is common but not catastrophic."
-                }
-            ],
-            "actuarialVerdict": "RETENTION_BIASED",
-            "verdictSummary": "Strong hold candidate. Starter issues are annoying but financially insignificant compared to replacement cost."
-        }
-    },
-    {
+        "id": "ford_f150_13th",
         "brand": "FORD",
         "model": "F-150",
         "generation": "13th Gen",
-        "startYear": 2015,
-        "endYear": 2020,
-        "data": {
-            "avgAnnualRepairCost": 750,
-            "reliabilityScore": 60,
-            "majorFaults": [
-                {
-                    "component": "Cam Phasers (3.5L EcoBoost)",
-                    "cost": 3500,
-                    "probability": "High",
-                    "description": "Rattling on cold start indicates expensive cam phaser failure."
-                },
-                {
-                    "component": "10R80 Transmission",
-                    "cost": 5000,
-                    "probability": "Medium",
-                    "description": "Hard shifting and erratic behavior reported in 10-speed models."
-                }
-            ],
-            "actuarialVerdict": "BORDERLINE",
-            "verdictSummary": "Conditional hold. Excellent utility, but EcoBoost Cam Phaser liability creates a $3,500 exposure."
-        }
+        "start_year": 2015,
+        "end_year": 2020
+    },
+    {
+        "id": "chevrolet_silverado_k2xx",
+        "brand": "CHEVROLET",
+        "model": "Silverado 1500",
+        "generation": "K2XX",
+        "start_year": 2014,
+        "end_year": 2019
+    },
+    {
+        "id": "ram_1500_ds",
+        "brand": "RAM",
+        "model": "1500",
+        "generation": "DS",
+        "start_year": 2009,
+        "end_year": 2018
+    },
+    {
+        "id": "toyota_camry_xv50",
+        "brand": "TOYOTA",
+        "model": "Camry",
+        "generation": "XV50",
+        "start_year": 2012,
+        "end_year": 2017
+    },
+    {
+        "id": "honda_accord_cr",
+        "brand": "HONDA",
+        "model": "Accord",
+        "generation": "CR",
+        "start_year": 2013,
+        "end_year": 2017
+    },
+    {
+        "id": "nissan_altima_l33",
+        "brand": "NISSAN",
+        "model": "Altima",
+        "generation": "L33",
+        "start_year": 2013,
+        "end_year": 2018
+    },
+    {
+        "id": "nissan_rogue_t32",
+        "brand": "NISSAN",
+        "model": "Rogue",
+        "generation": "T32",
+        "start_year": 2014,
+        "end_year": 2020
+    },
+    {
+        "id": "honda_civic_fc",
+        "brand": "HONDA",
+        "model": "Civic",
+        "generation": "FC",
+        "start_year": 2016,
+        "end_year": 2021
+    },
+    {
+        "id": "toyota_corolla_e170",
+        "brand": "TOYOTA",
+        "model": "Corolla",
+        "generation": "E170",
+        "start_year": 2014,
+        "end_year": 2019
+    },
+    {
+        "id": "honda_crv_rm",
+        "brand": "HONDA",
+        "model": "CR-V",
+        "generation": "RM",
+        "start_year": 2012,
+        "end_year": 2016
+    },
+    {
+        "id": "toyota_rav4_xa40",
+        "brand": "TOYOTA",
+        "model": "RAV4",
+        "generation": "XA40",
+        "start_year": 2013,
+        "end_year": 2018
+    },
+    {
+        "id": "toyota_tacoma_n300",
+        "brand": "TOYOTA",
+        "model": "Tacoma",
+        "generation": "N300",
+        "start_year": 2016,
+        "end_year": 2023
+    },
+    {
+        "id": "toyota_highlander_xu50",
+        "brand": "TOYOTA",
+        "model": "Highlander",
+        "generation": "XU50",
+        "start_year": 2014,
+        "end_year": 2019
+    },
+    {
+        "id": "jeep_wrangler_jk",
+        "brand": "JEEP",
+        "model": "Wrangler",
+        "generation": "JK",
+        "start_year": 2007,
+        "end_year": 2018
+    },
+    {
+        "id": "jeep_grand_cherokee_wk2",
+        "brand": "JEEP",
+        "model": "Grand Cherokee",
+        "generation": "WK2",
+        "start_year": 2011,
+        "end_year": 2021
+    },
+    {
+        "id": "ford_escape_c520",
+        "brand": "FORD",
+        "model": "Escape",
+        "generation": "C520",
+        "start_year": 2013,
+        "end_year": 2019
+    },
+    {
+        "id": "ford_explorer_u502",
+        "brand": "FORD",
+        "model": "Explorer",
+        "generation": "U502",
+        "start_year": 2011,
+        "end_year": 2019
+    },
+    {
+        "id": "chevrolet_equinox_3rd",
+        "brand": "CHEVROLET",
+        "model": "Equinox",
+        "generation": "3rd Gen",
+        "start_year": 2018,
+        "end_year": 2023
+    },
+    {
+        "id": "gmc_sierra_k2xx",
+        "brand": "GMC",
+        "model": "Sierra 1500",
+        "generation": "K2XX",
+        "start_year": 2014,
+        "end_year": 2019
+    },
+    {
+        "id": "toyota_4runner_n280",
+        "brand": "TOYOTA",
+        "model": "4Runner",
+        "generation": "N280",
+        "start_year": 2010,
+        "end_year": 2023
+    },
+    {
+        "id": "honda_pilot_yf3",
+        "brand": "HONDA",
+        "model": "Pilot",
+        "generation": "YF3",
+        "start_year": 2009,
+        "end_year": 2015
+    },
+    {
+        "id": "mazda_cx5_ke",
+        "brand": "MAZDA",
+        "model": "CX-5",
+        "generation": "KE",
+        "start_year": 2013,
+        "end_year": 2016
+    },
+    {
+        "id": "subaru_outback_bs",
+        "brand": "SUBARU",
+        "model": "Outback",
+        "generation": "BS",
+        "start_year": 2015,
+        "end_year": 2019
+    },
+    {
+        "id": "subaru_forester_sj",
+        "brand": "SUBARU",
+        "model": "Forester",
+        "generation": "SJ",
+        "start_year": 2014,
+        "end_year": 2018
+    },
+    {
+        "id": "hyundai_elantra_ad",
+        "brand": "HYUNDAI",
+        "model": "Elantra",
+        "generation": "AD",
+        "start_year": 2017,
+        "end_year": 2020
+    },
+    {
+        "id": "hyundai_tucson_tl",
+        "brand": "HYUNDAI",
+        "model": "Tucson",
+        "generation": "TL",
+        "start_year": 2016,
+        "end_year": 2020
+    },
+    {
+        "id": "hyundai_santa_fe_dm",
+        "brand": "HYUNDAI",
+        "model": "Santa Fe",
+        "generation": "DM",
+        "start_year": 2013,
+        "end_year": 2018
+    },
+    {
+        "id": "kia_sportage_ql",
+        "brand": "KIA",
+        "model": "Sportage",
+        "generation": "QL",
+        "start_year": 2017,
+        "end_year": 2022
+    },
+    {
+        "id": "kia_sorento_um",
+        "brand": "KIA",
+        "model": "Sorento",
+        "generation": "UM",
+        "start_year": 2016,
+        "end_year": 2020
+    },
+    {
+        "id": "mazda3_bm",
+        "brand": "MAZDA",
+        "model": "Mazda3",
+        "generation": "BM",
+        "start_year": 2014,
+        "end_year": 2018
+    },
+    {
+        "id": "volkswagen_jetta_a6",
+        "brand": "VOLKSWAGEN",
+        "model": "Jetta",
+        "generation": "A6",
+        "start_year": 2011,
+        "end_year": 2018
+    },
+    {
+        "id": "volkswagen_tiguan_5n",
+        "brand": "VOLKSWAGEN",
+        "model": "Tiguan",
+        "generation": "5N",
+        "start_year": 2009,
+        "end_year": 2017
+    },
+    {
+        "id": "nissan_sentra_b17",
+        "brand": "NISSAN",
+        "model": "Sentra",
+        "generation": "B17",
+        "start_year": 2013,
+        "end_year": 2019
+    },
+    {
+        "id": "nissan_pathfinder_r52",
+        "brand": "NISSAN",
+        "model": "Pathfinder",
+        "generation": "R52",
+        "start_year": 2013,
+        "end_year": 2020
+    },
+    {
+        "id": "chevrolet_malibu_9th",
+        "brand": "CHEVROLET",
+        "model": "Malibu",
+        "generation": "9th Gen",
+        "start_year": 2016,
+        "end_year": 2022
+    },
+    {
+        "id": "ford_edge_cd4",
+        "brand": "FORD",
+        "model": "Edge",
+        "generation": "CD4",
+        "start_year": 2015,
+        "end_year": 2023
+    },
+    {
+        "id": "jeep_cherokee_kl",
+        "brand": "JEEP",
+        "model": "Cherokee",
+        "generation": "KL",
+        "start_year": 2014,
+        "end_year": 2023
+    },
+    {
+        "id": "dodge_charger_ld",
+        "brand": "DODGE",
+        "model": "Charger",
+        "generation": "LD",
+        "start_year": 2011,
+        "end_year": 2023
+    },
+    {
+        "id": "dodge_durango_wd",
+        "brand": "DODGE",
+        "model": "Durango",
+        "generation": "WD",
+        "start_year": 2011,
+        "end_year": 2023
+    },
+    {
+        "id": "subaru_crosstrek_xv",
+        "brand": "SUBARU",
+        "model": "Crosstrek",
+        "generation": "XV",
+        "start_year": 2013,
+        "end_year": 2017
+    },
+    {
+        "id": "tesla_model_3",
+        "brand": "TESLA",
+        "model": "Model 3",
+        "generation": "Gen 1",
+        "start_year": 2017,
+        "end_year": 2023
+    },
+    {
+        "id": "tesla_model_y",
+        "brand": "TESLA",
+        "model": "Model Y",
+        "generation": "Gen 1",
+        "start_year": 2020,
+        "end_year": 2023
+    },
+    {
+        "id": "lexus_rx_al20",
+        "brand": "LEXUS",
+        "model": "RX",
+        "generation": "AL20",
+        "start_year": 2016,
+        "end_year": 2022
+    },
+    {
+        "id": "bmw_3series_f30",
+        "brand": "BMW",
+        "model": "3 Series",
+        "generation": "F30",
+        "start_year": 2012,
+        "end_year": 2018
+    },
+    {
+        "id": "mercedes_c_class_w205",
+        "brand": "MERCEDES-BENZ",
+        "model": "C-Class",
+        "generation": "W205",
+        "start_year": 2015,
+        "end_year": 2021
+    },
+    {
+        "id": "audi_a4_b9",
+        "brand": "AUDI",
+        "model": "A4",
+        "generation": "B9",
+        "start_year": 2017,
+        "end_year": 2023
+    },
+    {
+        "id": "cadillac_escalade_k2",
+        "brand": "CADILLAC",
+        "model": "Escalade",
+        "generation": "K2",
+        "start_year": 2015,
+        "end_year": 2020
+    },
+    {
+        "id": "lincoln_navigator_u554",
+        "brand": "LINCOLN",
+        "model": "Navigator",
+        "generation": "U554",
+        "start_year": 2018,
+        "end_year": 2023
+    },
+    {
+        "id": "acura_mdx_yd3",
+        "brand": "ACURA",
+        "model": "MDX",
+        "generation": "YD3",
+        "start_year": 2014,
+        "end_year": 2020
+    },
+    {
+        "id": "ford_mustang_s550",
+        "brand": "FORD",
+        "model": "Mustang",
+        "generation": "S550",
+        "start_year": 2015,
+        "end_year": 2023
     }
 ]

@@ -1,106 +1,99 @@
 package com.carmoneypit.engine.web;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.carmoneypit.engine.service.CarDataService;
+import com.carmoneypit.engine.service.CarDataService.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import jakarta.annotation.PostConstruct;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
+import java.util.List;
+import java.util.Optional;
+
+/**
+ * Controller responsible for handling pSEO page requests.
+ * Follows Single Responsibility Principle (SRP) - only handles HTTP requests
+ * and view rendering.
+ * All data access is delegated to CarDataService.
+ */
 @Controller
 public class PSeoController {
 
-  private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(PSeoController.class);
-  private final ObjectMapper objectMapper = new ObjectMapper();
-  private List<CarModelStats> carModels;
-  private List<MajorFaultsData> majorFaults;
+  private static final Logger logger = LoggerFactory.getLogger(PSeoController.class);
+  private final CarDataService dataService;
 
-  // Data Records
-  public record CarModelStats(
-      String id, String brand, String model, String generation, int startYear, int endYear,
-      double avgAnnualRepairCost, int reliabilityScore, double depreciationRate) {
-  }
-
-  public record MajorFaultsData(String model_id_ref, List<Fault> faults) {
-  }
-
-  public record Fault(String component, String symptoms, double repairCost, String verdictImplication) {
-  }
-
-  @PostConstruct
-  public void init() throws IOException {
-    InputStream modelsStream = getClass().getResourceAsStream("/data/car_models_top30.json");
-    InputStream faultsStream = getClass().getResourceAsStream("/data/major_faults.json");
-
-    if (modelsStream != null) {
-      carModels = objectMapper.readValue(modelsStream, new TypeReference<List<CarModelStats>>() {
-      });
-    }
-    if (faultsStream != null) {
-      majorFaults = objectMapper.readValue(faultsStream, new TypeReference<List<MajorFaultsData>>() {
-      });
-    }
+  public PSeoController(CarDataService dataService) {
+    this.dataService = dataService;
   }
 
   @GetMapping("/verdict/{brand}/{model}/{faultSlug}")
-  public String showVerdict(@PathVariable String brand, @PathVariable String model, @PathVariable String faultSlug,
+  public String showVerdict(
+      @PathVariable String brand,
+      @PathVariable String model,
+      @PathVariable String faultSlug,
       Model modelMap) {
 
     logger.info("Request for {} / {} / {}", brand, model, faultSlug);
 
-    // 1. Find the Car Model (Robust Matching)
-    // Normalize: "F-150" -> "f150", "f-150" -> "f150", "CR-V" -> "crv"
-    Optional<CarModelStats> carModelOpt = carModels.stream()
-        .filter(c -> normalize(c.brand()).equals(normalize(brand)) &&
-            normalize(c.model()).equals(normalize(model)))
-        .findFirst();
-
-    if (carModelOpt.isEmpty()) {
-      logger.info("Car Found FAILED for {} / {}", normalize(brand), normalize(model));
-      return "redirect:/"; // Soft fallback
+    // 1. Find Car Model
+    Optional<CarModel> carOpt = dataService.findCarBySlug(brand, model);
+    if (carOpt.isEmpty()) {
+      logger.warn("Car not found: {} / {}", brand, model);
+      return "redirect:/";
     }
-    CarModelStats carStats = carModelOpt.get();
-    logger.info("Car Found ID: {}", carStats.id());
+    CarModel car = carOpt.get();
 
-    // 2. Find the Fault Data
-    Optional<MajorFaultsData> faultsDataOpt = majorFaults.stream()
-        .filter(f -> f.model_id_ref().equals(carStats.id()))
-        .findFirst();
-
-    Fault specificFault = null;
-    if (faultsDataOpt.isPresent()) {
-      // Keyword matching: "cam-phasers" -> "cam phasers"
-      String targetKeyword = faultSlug.replace("-", " ").toLowerCase();
-
-      specificFault = faultsDataOpt.get().faults().stream()
-          .filter(f -> {
-            String comp = f.component().toLowerCase();
-            boolean match = comp.contains(targetKeyword) || targetKeyword.contains(comp);
-            return match;
-          })
-          .findFirst()
-          .orElse(null);
-    }
-
-    if (specificFault == null) {
-      logger.info("Fault Match FAILED");
+    // 2. Find Fault
+    Optional<MajorFaults> faultsOpt = dataService.findFaultsByModelId(car.id());
+    if (faultsOpt.isEmpty()) {
+      logger.warn("No faults data for model: {}", car.id());
       return "redirect:/";
     }
 
-    // 3. Populate Model
-    modelMap.addAttribute("car", carStats);
-    modelMap.addAttribute("fault", specificFault);
+    String targetKeyword = faultSlug.replace("-", " ").toLowerCase();
+    Optional<Fault> faultOpt = faultsOpt.get().faults().stream()
+        .filter(f -> {
+          String comp = f.component().toLowerCase();
+          return comp.contains(targetKeyword) || targetKeyword.contains(comp);
+        })
+        .findFirst();
 
-    // 4. Generate Schema Markup (JSON-LD)
-    String schema = generateFaqSchema(carStats, specificFault);
-    modelMap.addAttribute("schemaJson", schema);
+    if (faultOpt.isEmpty()) {
+      logger.warn("Fault not found: {}", faultSlug);
+      return "redirect:/";
+    }
+    Fault fault = faultOpt.get();
+
+    // 3. Load Reliability & Market Data
+    Optional<ModelReliability> reliabilityOpt = dataService.findReliabilityByModelId(car.id());
+    Optional<ModelMarket> marketOpt = dataService.findMarketByModelId(car.id());
+
+    // 4. Build View Model
+    ProfileViewModel profile = null;
+    if (reliabilityOpt.isPresent() && marketOpt.isPresent()) {
+      profile = new ProfileViewModel(
+          car,
+          reliabilityOpt.get(),
+          marketOpt.get());
+    }
+
+    // 5. Generate SEO Assets
+    String schemaJson = generateSchema(car, fault, profile);
+    String metaDescription = String.format(
+        "Actuarial verdict for %s %s owners facing %s failure. Repair cost: $%,.0f vs Market Value: $%,d. Don't fix it until you read this.",
+        car.brand(), car.model(), fault.component(), fault.repairCost(),
+        profile != null ? profile.market().jan2026AvgPrice() : 0);
+    String canonicalUrl = String.format("https://carmoneypit.com/verdict/%s/%s/%s",
+        brand, model, faultSlug);
+
+    modelMap.addAttribute("car", car);
+    modelMap.addAttribute("fault", fault);
+    modelMap.addAttribute("details", profile);
+    modelMap.addAttribute("schemaJson", schemaJson);
+    modelMap.addAttribute("metaDescription", metaDescription);
+    modelMap.addAttribute("canonicalUrl", canonicalUrl);
 
     return "pseo_landing";
   }
@@ -109,11 +102,7 @@ public class PSeoController {
 
   @GetMapping("/models")
   public String listBrands(Model modelMap) {
-    // Extract unique brands
-    List<java.util.Map.Entry<String, String>> brands = carModels.stream()
-        .map(c -> c.brand())
-        .distinct()
-        .sorted()
+    List<java.util.Map.Entry<String, String>> brands = dataService.getAllBrands().stream()
         .map(brand -> java.util.Map.entry(brand, "/models/" + normalize(brand)))
         .toList();
 
@@ -125,90 +114,129 @@ public class PSeoController {
 
   @GetMapping("/models/{brandSlug}")
   public String listModels(@PathVariable String brandSlug, Model modelMap) {
+    List<CarModel> models = dataService.getModelsByBrand(brandSlug);
 
-    List<java.util.Map.Entry<String, String>> models = carModels.stream()
-        .filter(c -> normalize(c.brand()).equals(normalize(brandSlug)))
-        .map(c -> c.model())
-        .distinct()
-        .sorted()
-        .map(model -> java.util.Map.entry(model, "/models/" + brandSlug + "/" + normalize(model)))
-        .toList();
-
-    if (models.isEmpty())
+    if (models.isEmpty()) {
       return "redirect:/models";
+    }
+
+    List<java.util.Map.Entry<String, String>> modelLinks = models.stream()
+        .map(c -> java.util.Map.entry(
+            c.model(),
+            "/models/" + brandSlug + "/" + normalize(c.model())))
+        .distinct()
+        .toList();
 
     modelMap.addAttribute("title", "Models for " + brandSlug.toUpperCase());
     modelMap.addAttribute("breadcrumbs", List.of("Models", brandSlug));
-    modelMap.addAttribute("items", models);
+    modelMap.addAttribute("items", modelLinks);
     return "pages/directory_list";
   }
 
   @GetMapping("/models/{brandSlug}/{modelSlug}")
   public String listFaults(@PathVariable String brandSlug, @PathVariable String modelSlug, Model modelMap) {
-
-    // Find Car ID first using normalized match
-    Optional<CarModelStats> carModelOpt = carModels.stream()
-        .filter(c -> normalize(c.brand()).equals(normalize(brandSlug)) &&
-            normalize(c.model()).equals(normalize(modelSlug)))
-        .findFirst();
-
-    if (carModelOpt.isEmpty())
+    Optional<CarModel> carOpt = dataService.findCarBySlug(brandSlug, modelSlug);
+    if (carOpt.isEmpty()) {
       return "redirect:/models/" + brandSlug;
-    CarModelStats car = carModelOpt.get();
+    }
+    CarModel car = carOpt.get();
 
-    // Find Faults
-    Optional<MajorFaultsData> faultsDataOpt = majorFaults.stream()
-        .filter(f -> f.model_id_ref().equals(car.id()))
-        .findFirst();
+    Optional<MajorFaults> faultsOpt = dataService.findFaultsByModelId(car.id());
 
-    List<java.util.Map.Entry<String, String>> faults = List.of();
-    if (faultsDataOpt.isPresent()) {
-      faults = faultsDataOpt.get().faults().stream()
+    List<java.util.Map.Entry<String, String>> faultLinks;
+    if (faultsOpt.isPresent()) {
+      faultLinks = faultsOpt.get().faults().stream()
           .map(f -> {
-            String slug = f.component().toLowerCase().replace(" ", "-").replaceAll("[^a-z0-9-]", "");
-            return java.util.Map.entry("Analyze " + f.component(),
+            String slug = f.component().toLowerCase()
+                .replace(" ", "-")
+                .replaceAll("[^a-z0-9-]", "");
+            return java.util.Map.entry(
+                "Analyze " + f.component(),
                 "/verdict/" + brandSlug + "/" + modelSlug + "/" + slug);
           })
           .toList();
+    } else {
+      // Fallback for models without specific faults
+      faultLinks = List.of(
+          java.util.Map.entry(
+              "General Reliability Analysis",
+              "/?vehicleType=" + brandSlug + "&model=" + modelSlug));
     }
 
     modelMap.addAttribute("title", "Common Problems: " + car.brand() + " " + car.model());
     modelMap.addAttribute("breadcrumbs", List.of("Models", brandSlug, modelSlug));
-    modelMap.addAttribute("items", faults);
+    modelMap.addAttribute("items", faultLinks);
     return "pages/directory_list";
   }
+
+  // --- Helper Methods ---
 
   private String normalize(String input) {
     return input.toLowerCase().replaceAll("[^a-z0-9]", "");
   }
 
-  private String generateFaqSchema(CarModelStats car, Fault fault) {
+  private String generateSchema(CarModel car, Fault fault, ProfileViewModel profile) {
+    long marketValue = profile != null ? profile.market().jan2026AvgPrice() : 0;
+
     return """
         {
           "@context": "https://schema.org",
-          "@type": "FAQPage",
-          "mainEntity": [{
-            "@type": "Question",
-            "name": "How much does it cost to fix %s %s on a %s %s?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "The average repair cost for the %s in a %s %s is $%s. However, if the car has high mileage, the total liability may exceed the vehicle's value."
+          "@graph": [
+            {
+              "@type": "Product",
+              "name": "%s %s (%s)",
+              "description": "Actuarial analysis of %s reliability and value.",
+              "brand": {
+                "@type": "Brand",
+                "name": "%s"
+              },
+              "offers": {
+                "@type": "Offer",
+                "price": "%d",
+                "priceCurrency": "USD",
+                "availability": "https://schema.org/InStock"
+              }
+            },
+            {
+              "@type": "FAQPage",
+              "mainEntity": [{
+                "@type": "Question",
+                "name": "How much does it cost to fix %s on a %s %s?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "The average repair cost for the %s in a %s %s is $%s."
+                }
+              }, {
+                "@type": "Question",
+                "name": "Is it worth fixing the %s on my %s %s?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "%s"
+                }
+              }]
             }
-          }, {
-            "@type": "Question",
-            "name": "Is it worth fixing the %s on my %s %s?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "%s Our actuarial analysis suggests evaluating the Regret Score before authorized repairs."
-            }
-          }]
+          ]
         }
         """
         .formatted(
-            fault.component(), car.model(), car.brand(), car.model(), // Q1
-            fault.component(), car.brand(), car.model(), String.format("%,.0f", fault.repairCost()), // A1
-            fault.component(), car.brand(), car.model(), // Q2
-            fault.verdictImplication() // A2
-        );
+            // Product params
+            car.brand(), car.model(), car.generation(),
+            car.model(),
+            car.brand(),
+            marketValue,
+
+            // FAQ params
+            fault.component(), car.brand(), car.model(),
+            fault.component(), car.brand(), car.model(), String.format("%,.0f", fault.repairCost()),
+            fault.component(), car.brand(), car.model(),
+            fault.verdictImplication().replace("\"", "\\\""));
+  }
+
+  // --- View Model (for template) ---
+
+  public record ProfileViewModel(
+      CarModel car,
+      ModelReliability reliability,
+      ModelMarket market) {
   }
 }

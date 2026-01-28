@@ -1,66 +1,145 @@
-@import com.carmoneypit.engine.web.PSeoController.CarModelStats
-@import com.carmoneypit.engine.web.PSeoController.Fault
-@param CarModelStats car
+@import com.carmoneypit.engine.service.CarDataService.CarModel
+@import com.carmoneypit.engine.service.CarDataService.Fault
+@import com.carmoneypit.engine.web.PSeoController.ProfileViewModel
+@param CarModel car
 @param Fault fault
+@param ProfileViewModel details
 @param String schemaJson
+@param String metaDescription
+@param String canonicalUrl
 
-@template.layout(content = @`
-    <!-- SEO Schema (Invisible) -->
-    <script type="application/ld+json">
-        $unsafe{schemaJson}
-    </script>
-
+@template.layout(
+    title = "Should You Fix the " + fault.component() + " on Your " + car.brand() + " " + car.model() + "?",
+    description = metaDescription,
+    canonical = canonicalUrl,
+    schemaJson = schemaJson,
+    content = @`
     <div class="pseo-container" style="max-width: 900px; margin: 0 auto; padding: 4rem 1rem;">
         
-        <!-- 1. The Hook (Header) -->
-        <header style="text-align: center; margin-bottom: 4rem;">
-            <div style="font-size: 1rem; color: #d91b1b; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 1rem;">
+        <!-- 1. The Hook (Hero) -->
+        <header style="text-align: center; margin-bottom: 5rem;">
+            <div style="font-size: 0.9rem; color: #d91b1b; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 1rem;">
                 Actuarial Verdict for ${car.brand()} Owners
             </div>
-            <h1 style="font-size: 2.8rem; font-weight: 800; line-height: 1.2; margin-bottom: 1.5rem;">
-                Should You Fix the <span style="text-decoration: underline; text-decoration-color: #d91b1b;">${fault.component()}</span> on Your ${car.model()}?
+            <h1 style="font-size: 3rem; font-weight: 800; line-height: 1.1; margin-bottom: 2rem; letter-spacing: -0.02em;">
+                Should You Fix the <span style="background: linear-gradient(120deg, #d91b1b33 0%, #d91b1b33 100%); background-repeat: no-repeat; background-size: 100% 40%; background-position: 0 90%;">${fault.component()}</span><br>on Your ${car.model()}?
             </h1>
-            <p style="font-size: 1.5rem; color: #666;">
-                Average Repair Cost: <strong style="color: #000;">$${String.format("%,.0f", fault.repairCost())}</strong>
-            </p>
+            
+            <div style="display: inline-flex; flex-direction: column; align-items: center; background: #fff; border: 2px solid #000; padding: 1.5rem 3rem; border-radius: 16px; box-shadow: 8px 8px 0px #000;">
+                <span style="font-size: 1rem; color: #666; font-weight: 600; text-transform: uppercase;">Estimated Repair Cost</span>
+                <span style="font-size: 3.5rem; font-weight: 900; color: #000; line-height: 1;">$${String.format("%,.0f", fault.repairCost())}</span>
+            </div>
         </header>
 
-        <!-- 2. The Agitation (Problem Details) -->
-        <div class="fault-card" style="background: #fff; padding: 2.5rem; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 1px solid #eee; margin-bottom: 4rem;">
+        <!-- 2. Vehicle Financial Profile (New Section) -->
+        @if(details != null)
+        <div style="background: #fdfdfd; border: 1px solid #e0e0e0; border-radius: 16px; padding: 2rem; margin-bottom: 5rem;">
+            <h2 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 2rem; display: flex; align-items: center;">
+                 📊 ${car.brand()} ${car.model()} Profile (Jan 2026 Data)
+            </h2>
+            
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                <!-- Left: Market Data -->
                 <div>
-                    <h3 style="font-size: 1.2rem; font-weight: 700; margin-bottom: 1rem;">Common Symptoms</h3>
-                    <ul style="list-style: none; padding: 0;">
-                        <li style="padding: 0.8rem 0; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center;">
-                            <span style="color: #d91b1b; margin-right: 1rem;">⚠</span> ${fault.symptoms()}
-                        </li>
-                    </ul>
+                     <div style="margin-bottom: 1.5rem;">
+                        <span style="display: block; font-size: 0.9rem; color: #666; text-transform: uppercase; font-weight: 600;">Avg. Market Value</span>
+                        <span style="font-size: 2rem; font-weight: 800; color: #2E7D32;">$${String.format("%,d", details.market().jan2026AvgPrice())}</span>
+                     </div>
+                     <div>
+                        <span style="display: block; font-size: 0.9rem; color: #666; text-transform: uppercase; font-weight: 600;">Expected Lifespan</span>
+                        <span style="font-size: 1.5rem; font-weight: 700; color: #333;">${String.format("%,d", details.reliability().lifespanMiles())} Miles</span>
+                     </div>
                 </div>
+
+                <!-- Right: Analysis -->
                 <div>
-                     <h3 style="font-size: 1.2rem; font-weight: 700; margin-bottom: 1rem;">Actuarial Risk</h3>
-                     <p style="font-style: italic; color: #555;">"${fault.verdictImplication()}"</p>
+                    @if(!details.reliability().worstYears().isEmpty())
+                    <div style="margin-bottom: 1.5rem; padding: 1rem; background: #FFF4F4; border-left: 4px solid #D91B1B; border-radius: 4px;">
+                        <strong style="color: #D91B1B;">Avoid Years:</strong>
+                         ${String.join(", ", details.reliability().worstYears().stream().map(Object::toString).toList())}
+                    </div>
+                    @endif
+                    
+                    <div style="font-size: 0.9rem; color: #555;">
+                        <strong>Next Big Hit:</strong> 
+                        @if(!details.reliability().criticalMilestones().isEmpty())
+                            At ${String.format("%,d", details.reliability().criticalMilestones().get(0).mileage())} miles, expect a 
+                            $${details.reliability().criticalMilestones().get(0).estCost()} service (${details.reliability().criticalMilestones().get(0).description()}).
+                        @endif
+                    </div>
                 </div>
             </div>
         </div>
+        @endif
 
-        <!-- 3. The Gap (General vs Specific) -->
-        <div style="background: #1a1a1a; color: #fff; padding: 3rem; border-radius: 12px; text-align: center; position: relative; overflow: hidden;">
+        <!-- 3. The Agitation (Symptoms & Risk) -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 5rem;">
+            <!-- Symptoms Card -->
+            <div style="background: #fff; padding: 2rem; border-radius: 12px; border: 1px solid #eee;">
+                <h3 style="font-size: 1.2rem; font-weight: 700; margin-bottom: 1rem; display: flex; align-items: center;">
+                    <span style="background: #FFF4F4; color: #D91B1B; width: 32px; height: 32px; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; margin-right: 0.8rem;">⚠</span> 
+                    Warning Signs
+                </h3>
+                <p style="font-size: 1.1rem; color: #444; line-height: 1.6;">
+                    ${fault.symptoms()}
+                </p>
+            </div>
+
+            <!-- Risk Card -->
+            <div style="background: #F8F9FA; padding: 2rem; border-radius: 12px; border: 1px solid #eee;">
+                <h3 style="font-size: 1.2rem; font-weight: 700; margin-bottom: 1rem; display: flex; align-items: center;">
+                    <span style="background: #E8F0FE; color: #1967D2; width: 32px; height: 32px; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; margin-right: 0.8rem;">ℹ</span> 
+                    Our Verdict
+                </h3>
+                <p style="font-size: 1.1rem; color: #444; line-height: 1.6; font-style: italic;">
+                    "${fault.verdictImplication()}"
+                </p>
+            </div>
+        </div>
+
+        <!-- 3. The Financial Trap (Educational Content) -->
+        <div style="margin-bottom: 5rem;">
+             <h2 style="font-size: 2rem; font-weight: 800; margin-bottom: 1.5rem;">The "Sunk Cost" Trap</h2>
+             <p style="font-size: 1.1rem; color: #444; line-height: 1.6; margin-bottom: 1.5rem;">
+                Many ${car.brand()} owners fall into the trap of thinking, "I've already spent so much maintenance, I have to keep it." This is financially dangerous.
+             </p>
+             <p style="font-size: 1.1rem; color: #444; line-height: 1.6; margin-bottom: 1.5rem;">
+                <strong>The 50% Rule:</strong> If a repair costs more than 50% of your vehicle's current market value, or if your total monthly repair average exceeds a new car payment, it is time to exit.
+             </p>
+        </div>
+
+        <!-- 4. The Solution (CTA) -->
+        <div style="background: #1a1a1a; color: #fff; padding: 4rem 2rem; border-radius: 24px; text-align: center; position: relative; overflow: hidden; margin-bottom: 5rem;">
             <div style="position: relative; z-index: 2;">
-                <h2 style="font-size: 2rem; font-weight: 800; margin-bottom: 1.5rem;">But is YOUR specific car worth saving?</h2>
-                <p style="font-size: 1.2rem; color: #aaa; margin-bottom: 2.5rem; max-width: 600px; margin-left: auto; margin-right: auto;">
-                    A $${String.format("%,.0f", fault.repairCost())} repair might make sense at 80,000 miles, but be financial suicide at 150,000 miles. Don't guess. Run the math.
+                <h2 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem;">Is your ${car.model()} an Asset or a Liability?</h2>
+                <p style="font-size: 1.3rem; color: #aaa; margin-bottom: 3rem; max-width: 700px; margin-left: auto; margin-right: auto;">
+                    We compare your specific vehicle's real-time market value against this $${String.format("%,.0f", fault.repairCost())} repair bill. The math doesn't lie.
                 </p>
                 
-                <!-- CTA Button -->
-                <a href="/?vehicleType=${car.brand()}&model=${car.model()}" class="btn-cinematic" style="display: inline-block; text-decoration: none; font-size: 1.2rem; padding: 1.2rem 3rem;">
-                    Run Custom Analysis <span>→</span>
+                <a href="/?vehicleType=${car.brand()}&model=${car.model()}" class="btn-cinematic" style="display: inline-block; text-decoration: none; font-size: 1.2rem; padding: 1.2rem 3rem; background: #2563EB; color: #ffffff; border-radius: 8px; font-weight: 700;">
+                    Run Free Financial Analysis <span>→</span>
                 </a>
             </div>
         </div>
 
-        <!-- 4. Trusted Data Badge -->
-        <div style="text-align: center; margin-top: 3rem; color: #888; font-size: 0.9rem;">
-            Data sourced from NHTSA, TSBs, and proprietary market analysis. <a href="/methodology" style="color: #666; text-decoration: underline;">See Methodology</a>.
+        <!-- 5. Visible FAQ -->
+        <div style="margin-bottom: 3rem;">
+            <h2 style="font-size: 2rem; font-weight: 800; margin-bottom: 2rem;">Frequently Asked Questions</h2>
+            
+            <div style="margin-bottom: 2rem;">
+                <h3 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 0.5rem;">Is it worth fixing the ${fault.component()}?</h3>
+                <p style="color: #555; line-height: 1.6;">
+                    It depends significantly on your vehicle's mileage. If your ${car.model()} has over 120,000 miles, a $${String.format("%,.0f", fault.repairCost())} repair might not be recoverable in resale value.
+                </p>
+            </div>
+            
+            <div style="margin-bottom: 2rem;">
+                <h3 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 0.5rem;">How much does it cost to fix?</h3>
+                <p style="color: #555; line-height: 1.6;">
+                    The average market rate for a ${fault.component()} replacement on a ${car.brand()} ${car.model()} is approximately <strong>$${String.format("%,.0f", fault.repairCost())}</strong>.
+                </p>
+            </div>
         </div>
+
     </div>
 `)
