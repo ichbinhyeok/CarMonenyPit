@@ -1,15 +1,18 @@
 @import com.carmoneypit.engine.service.CarDataService.CarModel
 @import com.carmoneypit.engine.service.CarDataService.Fault
 @import com.carmoneypit.engine.web.PSeoController.ProfileViewModel
+@import java.util.List
 @param CarModel car
 @param Fault fault
 @param ProfileViewModel details
 @param String schemaJson
 @param String metaDescription
 @param String canonicalUrl
+@param String ctaUrl
+@param List<Fault> relatedFaults
 
 @template.layout(
-    title = "Should You Fix the " + fault.component() + " on Your " + car.brand() + " " + car.model() + "?",
+    title = car.brand() + " " + car.model() + " " + fault.component() + " Repair ($" + String.format("%,.0f", fault.repairCost()) + "): Fix or Sell? [2026 Data]",
     description = metaDescription,
     canonical = canonicalUrl,
     schemaJson = schemaJson,
@@ -116,11 +119,34 @@
                     We compare your specific vehicle's real-time market value against this $${String.format("%,.0f", fault.repairCost())} repair bill. The math doesn't lie.
                 </p>
                 
-                <a href="/?vehicleType=${car.brand()}&model=${car.model()}" class="btn-cinematic" style="display: inline-block; text-decoration: none; font-size: 1.2rem; padding: 1.2rem 3rem; background: #2563EB; color: #ffffff; border-radius: 8px; font-weight: 700;">
-                    Run Free Financial Analysis <span>→</span>
+                <a href="${ctaUrl}" class="btn-cinematic" style="display: inline-block; text-decoration: none; font-size: 1.2rem; padding: 1.2rem 3rem; background: #2563EB; color: #ffffff; border-radius: 8px; font-weight: 700;">
+                    Pre-fill My Analysis <span>→</span>
                 </a>
             </div>
         </div>
+
+        <!-- Related Problems Section (Internal Linking) -->
+        @if(relatedFaults != null && !relatedFaults.isEmpty())
+        <div style="margin: 4rem 0; background: #F9FAFB; padding: 2.5rem; border-radius: 24px;">
+            <h2 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 2rem; text-align: center;">
+                ${car.brand()} ${car.model()} Owners Also Researched:
+            </h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
+                @for(var related : relatedFaults)
+                <a href="/verdict/${car.brand().toLowerCase().replaceAll("[^a-z0-9]", "")}/${car.model().toLowerCase().replaceAll("[^a-z0-9]", "")}/${related.component().toLowerCase().replace(" ", "-").replaceAll("[^a-z0-9-]", "")}" 
+                   style="text-decoration: none; background: #fff; padding: 1.5rem; border-radius: 16px; border: 1px solid #E5E7EB; transition: all 0.2s; display: block;">
+                    <h3 style="font-size: 1.1rem; font-weight: 700; color: #1F2937; margin-bottom: 0.5rem;">
+                        ${related.component()}
+                    </h3>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span style="font-size: 0.9rem; color: #6B7280; font-weight: 600;">Avg. Repair Cost</span>
+                        <span style="font-size: 1.3rem; font-weight: 800; color: #EF4444;">$${String.format("%,.0f", related.repairCost())}</span>
+                    </div>
+                </a>
+                @endfor
+            </div>
+        </div>
+        @endif
 
         <!-- 5. Visible FAQ -->
         <div style="margin-bottom: 3rem;">

@@ -1,5 +1,8 @@
 @import com.carmoneypit.engine.api.InputModels.VehicleType
 @import com.carmoneypit.engine.api.InputModels.CarBrand
+@param String prefillBrand = null
+@param String prefillModel = null
+@param Long prefillQuote = null
 
 @template.layout(
     title = "Car Money Pit | Precision Actuarial Analysis",
@@ -186,7 +189,11 @@
                                 hx-indicator=".integrity-dot"
                                 required>
                             @for(CarBrand brand : CarBrand.values())
-                                <option value="${brand}">${brand}</option>
+                                @if(prefillBrand != null && brand.name().equals(prefillBrand))
+                                    <option value="${brand}" selected>${brand}</option>
+                                @else
+                                    <option value="${brand}">${brand}</option>
+                                @endif
                             @endfor
                         </select>
                     </div>
@@ -194,7 +201,11 @@
                     <div class="input-group">
                         <label>Vehicle Model</label>
                         <select name="model" id="model-select" required>
-                            <option value="">Select a brand first</option>
+                            @if(prefillModel != null)
+                                <option value="${prefillModel}" selected>${prefillModel}</option>
+                            @else
+                                <option value="">Select a brand first</option>
+                            @endif
                         </select>
                     </div>
 
@@ -211,7 +222,11 @@
                                 I Don't Have a Quote
                             </label>
                         </div>
-                        <input type="number" id="repairQuoteInput" name="repairQuoteUsd" placeholder="1,500" required>
+                        @if(prefillQuote != null)
+                            <input type="number" id="repairQuoteInput" name="repairQuoteUsd" placeholder="1,500" value="${prefillQuote}" required>
+                        @else
+                            <input type="number" id="repairQuoteInput" name="repairQuoteUsd" placeholder="1,500" required>
+                        @endif
                         <input type="hidden" id="isQuoteMissing" name="isQuoteMissing" value="false">
                     </div>
 

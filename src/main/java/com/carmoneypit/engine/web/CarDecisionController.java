@@ -36,7 +36,18 @@ public class CarDecisionController {
         }
 
         @GetMapping("/")
-        public String index() {
+        public String index(
+                        @RequestParam(value = "brand", required = false) String brandParam,
+                        @RequestParam(value = "model", required = false) String modelParam,
+                        @RequestParam(value = "repairQuoteUsd", required = false) Long repairQuoteParam,
+                        @RequestParam(value = "pSEO", required = false) Boolean fromPSEO,
+                        Model model) {
+
+                if (brandParam != null && fromPSEO != null && fromPSEO) {
+                        model.addAttribute("prefillBrand", brandParam);
+                        model.addAttribute("prefillModel", modelParam);
+                        model.addAttribute("prefillQuote", repairQuoteParam);
+                }
                 return "index"; // Renders src/main/jte/index.jte
         }
 
