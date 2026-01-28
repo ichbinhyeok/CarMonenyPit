@@ -248,6 +248,9 @@
                     <div style="background: #eff6ff; color: #1e3a8a; padding: 0.75rem; border-radius: 12px; text-align: center; margin-bottom: 1.5rem; font-weight: 700; font-size: 0.9rem;">
                         SHARED DIAGNOSTIC RECEIPT • READ ONLY
                     </div>
+                    <div style="text-align: center; font-size: 0.7rem; color: var(--text-secondary); margin-bottom: 1rem;">
+                        Disclaimer: For informational purposes only. Not financial advice.
+                    </div>
                 @endif
                 
                 @template.fragments.verdict_card(result = result, verdictTitle = verdictTitle, verdictExplanation = verdictExplanation, verdictAction = verdictAction, verdictCss = verdictCss, leadLabel = leadLabel, leadDescription = leadDescription, leadUrl = leadUrl, isValueEstimated = isValueEstimated)

@@ -25,7 +25,7 @@ public class VerdictPresenter {
     public String encodeToken(EngineInput input) {
         try {
             String json = objectMapper.writeValueAsString(input);
-            return Base64.getUrlEncoder().withoutPadding().encodeToString(json.getBytes(StandardCharsets.UTF_8));
+            return compress(json);
         } catch (Exception e) {
             throw new RuntimeException("Token encoding failed", e);
         }
@@ -33,10 +33,48 @@ public class VerdictPresenter {
 
     public EngineInput decodeToken(String token) {
         try {
-            String json = new String(Base64.getUrlDecoder().decode(token), StandardCharsets.UTF_8);
+            String json = decompress(token);
             return objectMapper.readValue(json, EngineInput.class);
         } catch (Exception e) {
             throw new RuntimeException("Token decoding failed", e);
+        }
+    }
+
+    private String compress(String str) throws java.io.IOException {
+        if (str == null || str.length() == 0) {
+            return str;
+        }
+        java.io.ByteArrayOutputStream out = new java.io.ByteArrayOutputStream();
+        java.util.zip.GZIPOutputStream gzip = new java.util.zip.GZIPOutputStream(out);
+        gzip.write(str.getBytes(StandardCharsets.UTF_8));
+        gzip.close();
+        return Base64.getUrlEncoder().withoutPadding().encodeToString(out.toByteArray());
+    }
+
+    private String decompress(String str) throws java.io.IOException {
+        if (str == null || str.length() == 0) {
+            return str;
+        }
+        // Fallback for legacy tokens (non-GZIP, plain Base64)
+        // Check if it's likely GZIP (GZIP header is 0x1f8b, but Base64 makes it hard to
+        // peek directly without decoding)
+        // So we try strict GZIP decode, if fail, try legacy plain Base64 decode.
+        byte[] bytes = Base64.getUrlDecoder().decode(str);
+
+        try (java.io.ByteArrayInputStream in = new java.io.ByteArrayInputStream(bytes);
+                java.util.zip.GZIPInputStream gzip = new java.util.zip.GZIPInputStream(in);
+                java.io.InputStreamReader reader = new java.io.InputStreamReader(gzip, StandardCharsets.UTF_8);
+                java.io.BufferedReader br = new java.io.BufferedReader(reader)) {
+
+            StringBuilder sb = new StringBuilder();
+            String line;
+            while ((line = br.readLine()) != null) {
+                sb.append(line);
+            }
+            return sb.toString();
+        } catch (java.util.zip.ZipException e) {
+            // Not in GZIP format, assume legacy plain Base64 JSON
+            return new String(bytes, StandardCharsets.UTF_8);
         }
     }
 
@@ -80,12 +118,12 @@ public class VerdictPresenter {
                             brandName, brandData.get().majorIssues.get(0).part);
                 }
                 return String.format(
-                        "DECISION_AUDIT: Your brain's natural 'Endowment Effect' is masking the reality. While it's difficult to let go, the actuarial data is absolute.%s Projected maintenance overhead exceeds asset core equity. Strategic liquidation is the only mathematical move.",
+                        "DECISION_AUDIT: Our market data model suggests your asset is entering a rapid depreciation phase. While emotionally difficult, the statistical indicators are unfavorable.%s Projected maintenance overhead may exceed asset core equity. Strategic liquidation is strongly recommended by our algorithm.",
                         brandRisk);
 
             case STABLE:
                 return String.format(
-                        "VALIDATED: Maintenance is an investment, not a loss. The %s platform remains statistically efficient for your current usage window. Authorizing repair preserves capital better than entering the high-friction replacement market.",
+                        "VALIDATED: Maintenance appears to be a sound investment. The %s platform remains statistically efficient for your current usage window based on our data. Authorizing repair is likely to preserve capital better than entering the high-friction replacement market.",
                         brandName);
 
             case BORDERLINE:
@@ -96,7 +134,7 @@ public class VerdictPresenter {
                             brandData.get().majorIssues.get(0).part);
                 }
                 return String.format(
-                        "CAUTION: Correlation shift detected.%s Your asset is entering a high-variance risk window. If you proceed with repair, you are effectively gambling on secondary component longevity. Secure a 15%% discount on services or exit now.",
+                        "CAUTION: Correlation shift detected.%s Your asset is entering a high-variance risk window. Proceeding with repair may be speculative. We suggest securing a 15%% discount on services or considering an exit.",
                         issueWarning);
         }
     }
