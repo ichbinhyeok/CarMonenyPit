@@ -113,11 +113,25 @@ public class PSeoController {
         .limit(3)
         .toList();
 
-    // 6. Generate Social Assets
-    String ogImage = String.format(
-        "https://placehold.co/1200x630/b91c1c/ffffff?text=WARNING:%%20%s%%20%s%%0AAsset%%20Bleed%%20Detected&font=roboto",
-        car.brand().replace(" ", "%20"),
-        car.model().replace(" ", "%20"));
+    // 6. Generate Social Assets (Dynamic Receipt)
+    long marketValue = profile != null ? profile.market().jan2026AvgPrice() : 0;
+    double repairCost = fault.repairCost();
+    boolean isSell = repairCost > (marketValue * 0.5);
+    String verdictText = isSell ? "VERDICT: SELL" : "VERDICT: CAUTION";
+
+    // Format:
+    // [Brand Model]
+    // Repair: $X,XXX
+    // Value: $XX,XXX
+    // [Verdict]
+    String ogText = String.format("%s %s%%0ARepair: $%,.0f%%0AValue: $%,d%%0A%%0A%s",
+        car.brand(), car.model(),
+        repairCost,
+        marketValue,
+        verdictText)
+        .replace(" ", "%20");
+
+    String ogImage = "https://placehold.co/1200x630/1e293b/ffffff?text=" + ogText + "&font=oswald";
 
     // 7. Breadcrumbs (Clickable)
     List<Breadcrumb> breadcrumbs = List.of(

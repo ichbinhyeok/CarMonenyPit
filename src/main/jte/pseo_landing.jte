@@ -55,7 +55,7 @@
                 <span style="font-size: 1rem;">✓</span> ACTUARIAL ALGORITHM APPLIED
             </div>
             <div style="font-size: 0.9rem; color: #d91b1b; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 1rem;">
-                Actuarial Verdict for ${car.brand()} Owners
+                Market Analysis for ${car.brand()} Owners
             </div>
             <h1 style="font-size: 3rem; font-weight: 800; line-height: 1.1; margin-bottom: 2rem; letter-spacing: -0.02em;">
                 $unsafe{headline}
@@ -94,10 +94,10 @@
                 <!-- Right: Analysis -->
                 <div>
                     @if(!details.reliability().worstYears().isEmpty())
-                    <div style="margin-bottom: 1.5rem; padding: 1rem; background: #FFF4F4; border-left: 4px solid #D91B1B; border-radius: 4px;">
-                        <strong style="color: #D91B1B;">Avoid Years:</strong>
-                         ${String.join(", ", details.reliability().worstYears().stream().map(Object::toString).toList())}
-                    </div>
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-100 text-blue-700 text-xs font-semibold uppercase tracking-wider mb-4">
+                    <span class="w-2 h-2 rounded-full bg-blue-600 animate-pulse"></span>
+                    Market Value Analysis
+                </div>
                     @endif
                     
                     <div style="font-size: 0.9rem; color: #555;">

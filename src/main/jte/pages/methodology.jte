@@ -1,6 +1,6 @@
 @template.layout(content = @`
     <div class="static-page-container" style="max-width: 800px; margin: 0 auto; padding: 4rem 1rem;">
-        <h1 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 2rem;">The Actuarial Approach.</h1>
+        <h1 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 2rem;">The Market Liquidation Approach.</h1>
         
         <p style="font-size: 1.2rem; line-height: 1.8; margin-bottom: 2rem;">
             <strong>"Regret Score" isn't a guess. It's a calculation of liability.</strong>

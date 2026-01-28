@@ -5,7 +5,7 @@
 @param Long prefillQuote = null
 
 @template.layout(
-    title = "Auto Money Pit | Precision Actuarial Analysis",
+    title = "Auto Money Pit | Market Liquidation Value Analysis",
     extraStyles = @`
         <style>
             .hero-section {
@@ -232,7 +232,7 @@
 
                     <div class="analyze-footer">
                         <button type="submit" class="btn-cinematic">
-                            Run Actuarial Analysis <span>→</span>
+                            Run Market Analysis <span>→</span>
                         </button>
                         
                         <div class="market-integrity">
@@ -274,7 +274,7 @@
             <div class="card info-card" style="background: linear-gradient(135deg, #0066ff05, #6366f108);">
                 <div>
                     <div class="info-title">Instant Decisioning</div>
-                    <p class="info-body">Zero wait time. Actuarial logic computed at the edge for immediate conviction.</p>
+                    <p class="info-body">Zero wait time. Valuation logic computed at the edge for immediate conviction.</p>
                 </div>
             </div>
 

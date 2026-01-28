@@ -22,7 +22,7 @@
 @param boolean isValueEstimated = false
 
 @template.layout(
-    title = (ogTitle != null ? ogTitle : "AutoMoneyPit Actuarial Engine"),
+    title = (ogTitle != null ? ogTitle : "AutoMoneyPit Market Liquidation Engine"),
     noindex = true,
     ogTitle = ogTitle,
     ogDescription = verdictExplanation,
@@ -353,6 +353,10 @@
                             <div class="sim-column">
                                 <h4 style="color:var(--text-secondary); text-transform:uppercase; font-size: 0.75rem; letter-spacing:0.1em; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.5rem;">Strategy</h4>
 
+                                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-100 text-blue-700 text-xs font-semibold uppercase tracking-wider mb-4">
+                    <span class="w-2 h-2 rounded-full bg-blue-600 animate-pulse"></span>
+                    Market Liquidation Analysis
+                </div>
                                 <div class="sim-item">
                                     <label>Target Retention</label>
                                     <div class="pill-group">

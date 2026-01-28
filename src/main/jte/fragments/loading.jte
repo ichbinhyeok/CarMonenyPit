@@ -23,13 +23,8 @@
         <div class="center-core"></div>
     </div>
     
-    <h2 class="status-msg">Initiating Actuarial Scan</h2>
-    
-    <div class="log-output">
-        <div class="log-line" style="animation-delay: 0.2s;"><span>></span> Correlating ${brand} ${modelName} asset tables...</div>
-        <div class="log-line" style="animation-delay: 1.0s;"><span>></span> Processing ${mileage}mi depreciation nodes...</div>
-        <div class="log-line" style="animation-delay: 1.8s;"><span>></span> Evaluating cascade failure probability...</div>
-    </div>
+    <div class="text-blue-600 font-medium mb-2">Analyzing Market Data...</div>
+    <div class="text-slate-400 text-sm">Querying auction clearinghouses & repair databases</div>
 </div>
 
 <style>

@@ -22,7 +22,7 @@
         <ul style="list-style-type: disc; padding-left: 2rem; margin-bottom: 2rem;">
             <li style="margin-bottom: 0.5rem;"><strong>NHTSA Recall Databases</strong>: Identifying safety-critical failures.</li>
             <li style="margin-bottom: 0.5rem;"><strong>Technical Service Bulletins (TSBs)</strong>: Tracking manufacturer-acknowledged defects.</li>
-            <li style="margin-bottom: 0.5rem;"><strong>Actuarial Tables</strong>: Predicting component failure rates based on mileage.</li>
+            <li style="margin-bottom: 0.5rem;"><strong>Depreciation Tables</strong>: Predicting component failure rates based on mileage.</li>
         </ul>
 
         <h2 style="font-size: 1.8rem; font-weight: 700; margin-top: 3rem; margin-bottom: 1rem;">Who We Are</h2>

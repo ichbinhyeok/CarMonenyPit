@@ -22,7 +22,7 @@
                 
                 <div style="background: #fff; padding: 2.5rem; border-radius: 24px; box-shadow: 0 4px 20px rgba(0,0,0,0.02); border: 1px solid #f1f5f9;">
                     <div style="font-size: 2rem; margin-bottom: 1rem;">⚖️</div>
-                    <h2 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem;">The Actuarial Edge</h2>
+                    <h2 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem;">The Algorithm Edge</h2>
                     <p style="color: #64748b; line-height: 1.6;">
                         Unlike generic "advice," our engine calculates <strong>Regret Minimization</strong>. 
                         We don't just look at the repair cost; we factor in depreciation curves, failure cascades, 
@@ -34,10 +34,20 @@
             <section style="background: #0f172a; color: #fff; padding: 4rem; border-radius: 32px; margin-bottom: 6rem;">
                 <h2 style="font-size: 2rem; font-weight: 800; margin-bottom: 2rem; text-align: center;">Expertise & Methodology</h2>
                 <div style="max-width: 800px; margin: 0 auto;">
-                    <p style="opacity: 0.8; line-height: 1.8; margin-bottom: 1.5rem;">
-                        Our core algorithm utilizes <strong>repair industry data</strong> and <strong>financial actuarial models</strong>. 
-                        This ensures that every "verdict" aligns with documented mechanical labor times and market depreciation curves.
-                    </p>
+                    <div class="bg-white rounded-2xl p-8 border border-slate-100 shadow-sm relative overflow-hidden group hover:border-blue-100 transition-colors">
+                <div class="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                </div>
+                <h3 class="text-xl font-bold text-slate-900 mb-3 flex items-center gap-2">
+                    <span class="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center text-blue-600 overflow-hidden">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                    </span>
+                    Liquidation Valuation
+                </h3>
+                <p class="text-slate-600 leading-relaxed mb-4">
+                    The core of the engine. We apply simplified market liquidation models to determine the "Financial Death" of a vehicle.
+                </p>
+            </div>
                     <p style="opacity: 0.8; line-height: 1.8;">
                         Data is sourced from official NHTSA databases, Kelley Blue Book market indices, and proprietary analysis of 
                         over 14,000 real-world vehicle decision outcomes. We update our market data bi-weekly to reflect 

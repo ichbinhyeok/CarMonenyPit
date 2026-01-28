@@ -1,6 +1,6 @@
 @import gg.jte.Content
 
-@param String title = "Auto Money Pit | Precision Actuarial Analysis"
+@param String title = "Auto Money Pit | Market Liquidation Value Analysis"
 @param String description = null
 @param String canonical = null
 @param String schemaJson = null
@@ -140,7 +140,7 @@
             </div>
             
             <div style="border-top: 1px solid #2a2a2a; padding-top: 1.5rem; font-size: 0.75rem; line-height: 1.6; color: #555; max-width: 800px;">
-                <strong>Affiliate Disclosure:</strong> AutoMoneyPit is a participant in various affiliate partnership programs. We may earn a commission when you click through links on our site and complete a lead form, request a quote, or make a purchase. This partnership allows us to maintain our proprietary actuarial engine and provide high-precision financial diagnostics free of charge to all vehicle owners. Our verdicts remain data-driven and objective, independent of our affiliate relationships.
+                <strong>Affiliate Disclosure:</strong> AutoMoneyPit is a participant in various affiliate partnership programs. We may earn a commission when you click through links on our site and complete a lead form, request a quote, or make a purchase. This partnership allows us to maintain our proprietary valuation engine and provide high-precision financial diagnostics free of charge to all vehicle owners. Our verdicts remain data-driven and objective, independent of our affiliate relationships.
                 <br><br>
                 <strong>Disclaimer:</strong> This tool provides estimates based on market data for informational and entertainment purposes only. We are not financial advisors or certified mechanics. Always consult a professional before making financial decisions.
             </div>
