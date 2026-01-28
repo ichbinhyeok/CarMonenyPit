@@ -66,8 +66,8 @@ public class DecisionEngine {
         for (FinancialLineItem item : breakdown) {
             double roundedAmount = Math.round(item.amount() / 10.0) * 10.0;
             // Re-create the record with the rounded amount (Labels/descriptions stay same)
-            roundedBreakdown.add(new FinancialLineItem(item.label(), roundedAmount, item.description(), item.category(),
-                    item.severity()));
+            roundedBreakdown.add(new FinancialLineItem(item.label(), roundedAmount, item.description(), item.isNegative(),
+                    item.category()));
         }
 
         // Rounding Rule (100s) for display scores
