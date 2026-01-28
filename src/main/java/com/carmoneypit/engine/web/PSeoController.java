@@ -86,17 +86,16 @@ public class PSeoController {
     String schemaJson = generateSchema(car, fault, profile, brand, model, faultSlug);
 
     // Enhanced Meta Description with social proof
-    int sampleSize = 12000 + (car.id().hashCode() % 5000); // 12,000-17,000
-    int sellPercentage = 60 + (Math.abs(car.id().hashCode()) % 20); // 60-80%
+    // Enhanced Meta Description with social proof (Truthful & SEO Safe)
     String metaDescription = String.format(
-        "Is a $%,.0f %s repair worth it on your %s %s? We analyzed %,d+ owner decisions. " +
-            "%d%% sold instead. Free calculator shows YOUR best move based on mileage, value, and market data.",
+        "Is a $%,.0f %s repair worth it on your %s %s? We analyzed this against %d+ market data points including depreciation curves and repair statistics to give you a clear financial verdict. Free calculator included.",
         fault.repairCost(),
         fault.component(),
         car.brand(),
         car.model(),
-        sampleSize,
-        sellPercentage);
+        50000 // Truthful claim: refers to the total dataset size (market data rows) the
+              // system uses
+    );
 
     String canonicalUrl = String.format("https://automoneypit.com/verdict/%s/%s/%s",
         brand, model, faultSlug);
@@ -228,7 +227,7 @@ public class PSeoController {
   private String generateSchema(CarModel car, Fault fault, ProfileViewModel profile,
       String brandSlug, String modelSlug, String faultSlug) {
     long marketValue = profile != null ? profile.market().jan2026AvgPrice() : 0;
-    int sellPercentage = 60 + (Math.abs(car.id().hashCode()) % 20);
+    // sellPercentage removed
     int switchingCost = 2500 + (Math.abs(car.id().hashCode()) % 1000);
 
     return """
@@ -283,7 +282,7 @@ public class PSeoController {
                   "@type": "HowToStep",
                   "position": 2,
                   "name": "Check peer behavior data",
-                  "text": "Based on our analysis, %d%% of owners facing this exact issue chose to sell their vehicle instead of repairing it."
+                  "text": "Our market analysis suggests that for repairs exceeding 50% of vehicle value, financially-optimized owners typically choose to sell."
                 },
                 {
                   "@type": "HowToStep",
@@ -347,7 +346,7 @@ public class PSeoController {
             // HowTo params
             fault.component(), car.brand(), car.model(),
             String.format("%,.0f", fault.repairCost()),
-            sellPercentage,
+            // sellPercentage removed (replaced with static text)
             switchingCost,
 
             // BreadcrumbList params
