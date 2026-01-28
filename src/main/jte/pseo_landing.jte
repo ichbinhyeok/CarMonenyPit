@@ -10,6 +10,7 @@
 @param String canonicalUrl
 @param String ctaUrl
 @param List<Fault> relatedFaults
+@param String marketPulse
 
 @template.layout(
     title = car.brand() + " " + car.model() + " " + fault.component() + " Repair ($" + String.format("%,.0f", fault.repairCost()) + "): Fix or Sell? [2026 Data]",
@@ -33,6 +34,9 @@
                 <span style="font-size: 3.5rem; font-weight: 900; color: #000; line-height: 1;">$${String.format("%,.0f", fault.repairCost())}</span>
             </div>
         </header>
+
+        <!-- Bi-weekly Market Pulse (SEO Freshness) -->
+        ${@`${marketPulse}`}
 
         <!-- 2. Vehicle Financial Profile (New Section) -->
         @if(details != null)

@@ -209,19 +209,90 @@
                 <p style="font-size: 1.1rem; margin: 0; color: var(--text-main); font-weight: 700; line-height: 1.4;">${verdictAction}</p>
             </div>
 
-            <!-- Exit Ramp / Protection Plan -->
-            <div style="background: ${verdictCss.contains("terminate") ? "#000" : "var(--futurist-blue)"}; padding: 2.5rem; border-radius: 32px; color: #fff; box-shadow: 0 15px 40px ${verdictCss.contains("terminate") ? "rgba(0,0,0,0.3)" : "rgba(0, 102, 255, 0.25)"}; position: relative; overflow: hidden;">
-                <div style="position: absolute; top: -20px; right: -20px; width: 120px; height: 120px; background: rgba(255,255,255,0.05); border-radius: 50%;"></div>
-                <div style="font-size: 0.8rem; font-weight: 800; text-transform: uppercase; margin-bottom: 0.75rem; opacity: 0.8; letter-spacing: 0.05em;">
-                    ${verdictCss.contains("terminate") ? "Liquidate Asset" : "Preserve Asset"}
+            <!-- Exit Ramp / Protection Plan (Behaviorally Optimized) -->
+            @if(verdictCss.contains("terminate"))
+                <!-- TIME_BOMB: Urgency + Loss Aversion -->
+                <div style="border-top: 2px dashed #cbd5e0; padding-top: 2rem; margin-top: 2rem;">
+                    <div style="font-size: 0.8rem; color: #718096; margin-bottom: 1rem;">
+                        ✓ Analysis Complete → Next Step:
+                    </div>
+                    
+                    <div style="background: linear-gradient(135deg, #1a1a1a 0%, #DC2626 100%); 
+                                padding: 2.5rem; border-radius: 24px; color: #fff; 
+                                box-shadow: 0 20px 60px rgba(220, 38, 38, 0.4);
+                                border: 2px solid rgba(239, 68, 68, 0.3);">
+                        
+                        <!-- Urgency Timer -->
+                        <div style="background: rgba(255,255,255,0.1); padding: 0.75rem; border-radius: 12px; margin-bottom: 1.5rem; text-align: center;">
+                            <span style="font-size: 0.75rem; opacity: 0.8;">⏱ ASSET DEPRECIATION ACTIVE</span>
+                            <div style="font-size: 1.5rem; font-weight: 900; margin-top: 0.25rem;">
+                                -$${Math.round(result.assetBleedAmount() / 180)}/day
+                            </div>
+                        </div>
+                        
+                        <!-- Main CTA -->
+                        <h4 style="font-size: 2rem; font-weight: 900; margin-bottom: 0.5rem; line-height: 1.1;">
+                            Get Cash Offer Before<br>Next $${Math.round(result.assetBleedAmount() / 180 * 7)} Loss
+                        </h4>
+                        
+                        <p style="font-size: 1rem; opacity: 0.85; margin-bottom: 1.5rem;">
+                            ${result.peerData().sellPercentage()}% of owners in your situation exited within 48 hours.
+                        </p>
+                        
+                        <a href="${leadUrl}" 
+                           style="display: block; background: #fff; color: #DC2626; 
+                                  padding: 1.25rem; border-radius: 16px; text-decoration: none; 
+                                  font-weight: 900; font-size: 1.1rem; text-align: center;
+                                  box-shadow: 0 0 30px rgba(255,255,255,0.3);">
+                            🔥 See Instant Liquidation Offer →
+                        </a>
+                        
+                        <div style="font-size: 0.75rem; opacity: 0.6; margin-top: 1rem; text-align: center;">
+                            Free • No obligation • 30-second form
+                        </div>
+                    </div>
                 </div>
-                <h4 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 1.25rem; line-height: 1.1;">${leadLabel}</h4>
-                <p style="font-size: 1rem; margin-bottom: 2rem; opacity: 0.9; font-weight: 500; line-height: 1.4;">${leadDescription}</p>
-                <a href="${leadUrl}" 
-                   style="display: inline-flex; align-items: center; justify-content: center; background: #fff; color: ${verdictCss.contains("terminate") ? "#000" : "var(--futurist-blue)"}; width: 100%; padding: 1.25rem; border: none; border-radius: 20px; text-decoration: none; font-weight: 800; font-size: 1.1rem; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
-                    ${verdictCss.contains("terminate") ? "EXECUTE EXIT STRATEGY" : "ACTIVATE PROTECTION"} <span>→</span>
-                </a>
-            </div>
+            @else
+                <!-- STABLE: Trust + Protection -->
+                <div style="border-top: 2px dashed #cbd5e0; padding-top: 2rem; margin-top: 2rem;">
+                    <div style="font-size: 0.8rem; color: #718096; margin-bottom: 1rem;">
+                        ✓ Analysis Complete → Recommended Protection:
+                    </div>
+                    
+                    <div style="background: linear-gradient(135deg, #0EA5E9 0%, #3B82F6 100%); 
+                                padding: 2.5rem; border-radius: 24px; color: #fff; 
+                                box-shadow: 0 20px 60px rgba(14, 165, 233, 0.3);">
+                        
+                        <!-- Trust Badge -->
+                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
+                            <span style="font-size: 1.5rem;">✓</span>
+                            <span style="font-size: 0.9rem; font-weight: 700; opacity: 0.9;">
+                                ASSET RETENTION APPROVED
+                            </span>
+                        </div>
+                        
+                        <h4 style="font-size: 1.8rem; font-weight: 800; margin-bottom: 0.75rem; line-height: 1.2;">
+                            Protect Your $${String.format("%,d", result.economicContext().breakdownThreshold() * 2)} Asset
+                        </h4>
+                        
+                        <p style="font-size: 1rem; opacity: 0.9; margin-bottom: 1.5rem;">
+                            Secure extended coverage to avoid the $${String.format("%,d", result.economicContext().totalSwitchingFriction())} 
+                            replacement penalty down the road.
+                        </p>
+                        
+                        <a href="${leadUrl}" 
+                           style="display: block; background: #fff; color: #0EA5E9; 
+                                  padding: 1.25rem; border-radius: 16px; text-decoration: none; 
+                                  font-weight: 900; font-size: 1.1rem; text-align: center;">
+                            🛡 Compare Protection Plans →
+                        </a>
+                        
+                        <div style="font-size: 0.75rem; opacity: 0.7; margin-top: 1rem; text-align: center;">
+                            ${100 - result.peerData().sellPercentage()}% of owners who kept their vehicle used extended warranties
+                        </div>
+                    </div>
+                </div>
+            @endif
         </div>
     </div>
 

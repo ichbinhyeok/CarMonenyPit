@@ -2,6 +2,7 @@ package com.carmoneypit.engine.web;
 
 import com.carmoneypit.engine.service.CarDataService;
 import com.carmoneypit.engine.service.CarDataService.*;
+import com.carmoneypit.engine.service.MarketPulseService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -23,9 +24,11 @@ public class PSeoController {
 
   private static final Logger logger = LoggerFactory.getLogger(PSeoController.class);
   private final CarDataService dataService;
+  private final MarketPulseService marketPulseService;
 
-  public PSeoController(CarDataService dataService) {
+  public PSeoController(CarDataService dataService, MarketPulseService marketPulseService) {
     this.dataService = dataService;
+    this.marketPulseService = marketPulseService;
   }
 
   @GetMapping("/verdict/{brand}/{model}/{faultSlug}")
@@ -119,6 +122,7 @@ public class PSeoController {
     modelMap.addAttribute("canonicalUrl", canonicalUrl);
     modelMap.addAttribute("ctaUrl", ctaUrl);
     modelMap.addAttribute("relatedFaults", relatedFaults);
+    modelMap.addAttribute("marketPulse", marketPulseService.generateBiweeklyInsight(car, fault));
 
     return "pseo_landing";
   }
