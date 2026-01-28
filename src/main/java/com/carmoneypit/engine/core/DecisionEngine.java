@@ -61,6 +61,15 @@ public class DecisionEngine {
         long assetBleed = costOfInactionCalculator.calculateAssetBleed(input.vehicleType(), input.mileage(),
                 input.repairQuoteUsd(), input.currentValueUsd());
 
+        // Rounding Rule (10s) for "Professional Estimate" feel
+        List<FinancialLineItem> roundedBreakdown = new ArrayList<>();
+        for (FinancialLineItem item : breakdown) {
+            double roundedAmount = Math.round(item.amount() / 10.0) * 10.0;
+            // Re-create the record with the rounded amount (Labels/descriptions stay same)
+            roundedBreakdown.add(new FinancialLineItem(item.label(), roundedAmount, item.description(), item.category(),
+                    item.severity()));
+        }
+
         // Rounding Rule (100s) for display scores
         double roundedRF = Math.round(rfDetail.score() / 100.0) * 100.0;
         double roundedRM = Math.round(rmDetail.score() / 100.0) * 100.0;
@@ -111,7 +120,8 @@ public class DecisionEngine {
         );
 
         VisualizationHint hint = new VisualizationHint(roundedRF, roundedRM, moneyPitState);
-        return new VerdictResult(state, narrative, hint, breakdown, assetBleed, rfDetail.score(), rmDetail.score(),
+        return new VerdictResult(state, narrative, hint, roundedBreakdown, assetBleed, rfDetail.score(),
+                rmDetail.score(),
                 confidence, peerData, econContext);
     }
 

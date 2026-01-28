@@ -6,19 +6,19 @@
         </div>
         <div class="ticker-track">
             <div class="ticker-content">
-                <span>⚡ Analyzing: Ford F-150 (Texas)</span>
-                <span>⚡ Analyzing: Honda Accord (California)</span>
-                <span>✓ Verdict Generated: Jeep Wrangler (Florida) - $4,200 Bleed</span>
-                <span>⚡ Analyzing: Toyota Camry (New York)</span>
-                <span>✓ Verdict Generated: Chevrolet Silverado (Ohio) - SOLD</span>
-                <span>⚡ Analyzing: BMW 3-Series (Georgia)</span>
+                <span>⚡ Live Analysis: Ford F-150 (TX) - CAM_PHASER_DETECTED</span>
+                <span>⚡ Live Analysis: Honda Accord (CA) - VCM_VIBRATION</span>
+                <span>✓ Verdict: Jeep Wrangler (FL) - FINANCIAL_BLEED_CONFIRMED</span>
+                <span>⚡ Live Analysis: Toyota Camry (NY) - TRANSMISSION_SLIP</span>
+                <span>✓ Verdict: Chevrolet Silverado (OH) - ASSET_RETAINED</span>
+                <span>⚡ Live Analysis: BMW 3-Series (GA) - WATER_PUMP_FAILURE</span>
                 <!-- Duplicate for seamless loop -->
-                 <span>⚡ Analyzing: Ford F-150 (Texas)</span>
-                <span>⚡ Analyzing: Honda Accord (California)</span>
-                <span>✓ Verdict Generated: Jeep Wrangler (Florida) - $4,200 Bleed</span>
-                <span>⚡ Analyzing: Toyota Camry (New York)</span>
-                <span>✓ Verdict Generated: Chevrolet Silverado (Ohio) - SOLD</span>
-                <span>⚡ Analyzing: BMW 3-Series (Georgia)</span>
+                <span>⚡ Live Analysis: Ford F-150 (TX) - CAM_PHASER_DETECTED</span>
+                <span>⚡ Live Analysis: Honda Accord (CA) - VCM_VIBRATION</span>
+                <span>✓ Verdict: Jeep Wrangler (FL) - FINANCIAL_BLEED_CONFIRMED</span>
+                <span>⚡ Live Analysis: Toyota Camry (NY) - TRANSMISSION_SLIP</span>
+                <span>✓ Verdict: Chevrolet Silverado (OH) - ASSET_RETAINED</span>
+                <span>⚡ Live Analysis: BMW 3-Series (GA) - WATER_PUMP_FAILURE</span>
             </div>
         </div>
     </div>

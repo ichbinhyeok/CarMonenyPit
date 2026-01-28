@@ -155,7 +155,8 @@ public class CarDecisionController {
                         @RequestParam(value = "currentValueUsd", required = false) Long currentValueUsd,
                         @RequestParam(value = "isValueEstimated", defaultValue = "false") boolean isValueEstimated,
                         @RequestParam(value = "isQuoteEstimated", defaultValue = "false") boolean isQuoteEstimated,
-                        Model model) {
+                        Model model,
+                        jakarta.servlet.http.HttpServletResponse response) {
 
                 VehicleType effectiveType = (vehicleType != null) ? vehicleType : VehicleType.SEDAN;
 
@@ -198,11 +199,68 @@ public class CarDecisionController {
                 model.addAttribute("viewMode", "OWNER");
 
                 String shareToken = presenter.encodeToken(input);
-                model.addAttribute("shareToken", shareToken);
 
-                model.addAttribute("controls", defaultControls);
+                // Force client-side redirect to the GET report page.
+                // This ensures the URL is updated cleanly and specific "Refresh" behavior
+                // works.
+                response.setHeader("HX-Location", "/report?token=" + shareToken);
 
-                return "result";
+                // We return empty because HX-Location triggers a new request to /report
+                return "";
+        }
+
+        @GetMapping("/report")
+        public String getReport(
+                        @RequestParam("token") String token,
+                        Model model,
+                        jakarta.servlet.http.HttpServletResponse response) {
+
+                // Noindex for this report page as well to prevent duplicate content / private
+                // data indexing
+                response.setHeader("X-Robots-Tag", "noindex, nofollow");
+
+                try {
+                        EngineInput input = presenter.decodeToken(token);
+
+                        // Re-evaluate to ensure fresh logic (though input is immutable snapshot)
+                        VerdictResult result = decisionEngine.evaluate(input);
+
+                        SimulationControls defaultControls = new SimulationControls(
+                                        FailureSeverity.GENERAL_UNKNOWN,
+                                        MobilityStatus.DRIVABLE,
+                                        HassleTolerance.NEUTRAL,
+                                        null);
+
+                        model.addAttribute("input", input);
+                        model.addAttribute("result", result);
+                        model.addAttribute("verdictTitle", presenter.getVerdictTitle(result.verdictState()));
+                        model.addAttribute("verdictExplanation",
+                                        presenter.getLawyerExplanation(result.verdictState(), input));
+                        model.addAttribute("verdictAction", presenter.getActionPlan(result.verdictState()));
+                        model.addAttribute("verdictCss", presenter.getCssClass(result.verdictState()));
+                        model.addAttribute("leadLabel",
+                                        presenter.getLeadLabel(result.verdictState(), input, defaultControls));
+                        model.addAttribute("leadDescription",
+                                        presenter.getLeadDescription(result.verdictState(), input, defaultControls));
+                        model.addAttribute("leadUrl",
+                                        presenter.getLeadUrl(result.verdictState(), input, defaultControls));
+
+                        // Pass through flags if they were part of the token or derived
+                        // Since token only has core input fields, we might lose "isValueEstimated" flag
+                        // if not packed.
+                        // For now, re-calculation or defaults is acceptable.
+                        model.addAttribute("isValueEstimated", false);
+                        model.addAttribute("isQuoteEstimated", input.isQuoteEstimated());
+
+                        model.addAttribute("viewMode", "OWNER");
+                        model.addAttribute("shareToken", token);
+                        model.addAttribute("controls", defaultControls);
+
+                        return "result";
+                } catch (Exception e) {
+                        log.error("Invalid report token: {}", token);
+                        return "redirect:/"; // Fallback to home on error
+                }
         }
 
         @PostMapping("/simulate")

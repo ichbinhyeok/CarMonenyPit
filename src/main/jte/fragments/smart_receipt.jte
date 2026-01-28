@@ -78,6 +78,9 @@
                 ${stayTotal > moveTotal ? "RETENTION_LIABILITY_EXCEEDED" : "RETENTION_JUSTIFIED"}
             </div>
             <div class="barcode">|| |||| ||| ||||| || ||| ||</div>
+            <div style="margin-top: 1rem; font-size: 0.6rem; opacity: 0.5; text-align: center;">
+                * All figures are actuarial estimates based on market data.
+            </div>
         </div>
     </div>
 </div>

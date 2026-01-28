@@ -170,7 +170,7 @@
     content = @`
         <section class="hero-section">
             <div class="hero-badge">
-                <span style="font-size: 1.1rem;">🛡️</span> Expert-Validated Financial Logic
+                <span style="font-size: 1.1rem;">🛡️</span> Data-Driven Financial Logic
             </div>
             <h1 class="hero-title">Your Asset Is<br>Hemorrhaging.</h1>
             <p class="hero-subtitle">
@@ -178,12 +178,13 @@
             </p>
 
             <article class="modern-form-container" id="form-container">
-                <form hx-post="/analyze" hx-target="#form-container" hx-swap="outerHTML" hx-push-url="false" class="form-grid-modern">
+                <form hx-post="/analyze" hx-target="#form-container" hx-swap="outerHTML show:window:top" hx-push-url="false" class="form-grid-modern">
                     <div class="input-group">
                         <label>Manufacturer</label>
                         <select name="brand" 
                                 hx-get="/api/models" 
                                 hx-target="#model-select" 
+                                hx-swap="innerHTML"
                                 hx-trigger="change, load"
                                 hx-indicator=".integrity-dot"
                                 required>

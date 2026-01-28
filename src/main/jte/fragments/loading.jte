@@ -14,7 +14,7 @@
      hx-post="/analyze-final" 
      hx-trigger="load delay:2800ms" 
      hx-target="body" 
-     hx-push-url="/analyze"
+     hx-swap="innerHTML show:window:top"
      hx-vals='{"vehicleType": "${vehicleType}", "brand": "${brand}", "model": "${modelName}", "mileage": ${mileage}, "repairQuoteUsd": ${repairQuoteUsd}, "currentValueUsd": ${currentValueUsd}, "isValueEstimated": ${isValueEstimated}, "isQuoteEstimated": ${isQuoteEstimated}}'>
     
     <div class="scan-visual">
