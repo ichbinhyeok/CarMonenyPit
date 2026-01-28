@@ -166,7 +166,7 @@
             <div style="position: relative; z-index: 2;">
                 <h2 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem;">Is your ${car.model()} an Asset or a Liability?</h2>
                 <p style="font-size: 1.3rem; color: #aaa; margin-bottom: 3rem; max-width: 700px; margin-left: auto; margin-right: auto;">
-                    We compare your specific vehicle's real-time market value against this $${String.format("%,.0f", fault.repairCost())} repair bill. The math doesn't lie.
+                    We compare your specific vehicle's current market value against this $${String.format("%,.0f", fault.repairCost())} repair bill. The math doesn't lie.
                 </p>
                 
                 <a href="${ctaUrl}" class="btn-cinematic" style="display: inline-block; text-decoration: none; font-size: 1.2rem; padding: 1.2rem 3rem; background: #2563EB; color: #ffffff; border-radius: 8px; font-weight: 700;">

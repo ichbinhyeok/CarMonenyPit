@@ -237,7 +237,7 @@
                         
                         <div class="market-integrity">
                             <span class="integrity-dot"></span>
-                            MARKET: GLOBAL REAL-TIME SYNC // [0.08ms Latency]
+                            MARKET: GLOBAL DATA SYNC // [Updated Bi-weekly]
                         </div>
                     </div>
                 </form>

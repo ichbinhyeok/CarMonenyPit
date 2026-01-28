@@ -28,7 +28,7 @@
             To ensure accuracy, we do not rely on user-reported "reliability surveys," which are often biased. Instead, we use:
         </p>
         <ul style="list-style-type: disc; padding-left: 2rem; margin-bottom: 2rem;">
-            <li style="margin-bottom: 0.5rem;"><strong>Parts & Labor Databases:</strong> Real-time pricing for OEM and aftermarket components.</li>
+            <li style="margin-bottom: 0.5rem;"><strong>Parts & Labor Databases:</strong> Current pricing for OEM and aftermarket components.</li>
             <li style="margin-bottom: 0.5rem;"><strong>NHTSA Recalls:</strong> Federal safety recall data impacting vehicle value.</li>
             <li style="margin-bottom: 0.5rem;"><strong>Auction Data:</strong> Wholesale depreciation trends for specific model years.</li>
         </ul>
