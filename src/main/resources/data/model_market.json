@@ -348,5 +348,54 @@
         "depreciation_rate": 0.12,
         "avg_annual_repair_cost": 650,
         "depreciation_outlook": "Moderate"
+    },
+    {
+        "model_id": "ford_f250_alumiduty",
+        "jan_2026_avg_price": 42000,
+        "depreciation_rate": 0.05,
+        "avg_annual_repair_cost": 1200,
+        "depreciation_outlook": "Very Low (Workhorse)"
+    },
+    {
+        "model_id": "ram_2500_4th_gen",
+        "jan_2026_avg_price": 38000,
+        "depreciation_rate": 0.06,
+        "avg_annual_repair_cost": 1100,
+        "depreciation_outlook": "Low"
+    },
+    {
+        "model_id": "land_rover_range_rover_sport_l494",
+        "jan_2026_avg_price": 28000,
+        "depreciation_rate": 0.20,
+        "avg_annual_repair_cost": 2500,
+        "depreciation_outlook": "Extreme (Falling Knife)"
+    },
+    {
+        "model_id": "bmw_x5_f15",
+        "jan_2026_avg_price": 21000,
+        "depreciation_rate": 0.15,
+        "avg_annual_repair_cost": 1800,
+        "depreciation_outlook": "High"
+    },
+    {
+        "model_id": "audi_q7_4m",
+        "jan_2026_avg_price": 26500,
+        "depreciation_rate": 0.16,
+        "avg_annual_repair_cost": 1600,
+        "depreciation_outlook": "High"
+    },
+    {
+        "model_id": "honda_odyssey_rl6",
+        "jan_2026_avg_price": 24000,
+        "depreciation_rate": 0.09,
+        "avg_annual_repair_cost": 600,
+        "depreciation_outlook": "Low"
+    },
+    {
+        "model_id": "chrysler_pacifica_ru",
+        "jan_2026_avg_price": 18500,
+        "depreciation_rate": 0.14,
+        "avg_annual_repair_cost": 900,
+        "depreciation_outlook": "Moderate"
     }
 ]

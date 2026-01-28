@@ -398,5 +398,61 @@
         "generation": "S550",
         "start_year": 2015,
         "end_year": 2023
+    },
+    {
+        "id": "ford_f250_alumiduty",
+        "brand": "FORD",
+        "model": "F-250 Super Duty",
+        "generation": "Alumiduty",
+        "start_year": 2017,
+        "end_year": 2022
+    },
+    {
+        "id": "ram_2500_4th_gen",
+        "brand": "RAM",
+        "model": "2500",
+        "generation": "4th Gen (Cummins)",
+        "start_year": 2013,
+        "end_year": 2018
+    },
+    {
+        "id": "land_rover_range_rover_sport_l494",
+        "brand": "LAND ROVER",
+        "model": "Range Rover Sport",
+        "generation": "L494",
+        "start_year": 2014,
+        "end_year": 2022
+    },
+    {
+        "id": "bmw_x5_f15",
+        "brand": "BMW",
+        "model": "X5",
+        "generation": "F15",
+        "start_year": 2014,
+        "end_year": 2018
+    },
+    {
+        "id": "audi_q7_4m",
+        "brand": "AUDI",
+        "model": "Q7",
+        "generation": "4M",
+        "start_year": 2017,
+        "end_year": 2023
+    },
+    {
+        "id": "honda_odyssey_rl6",
+        "brand": "HONDA",
+        "model": "Odyssey",
+        "generation": "RL6",
+        "start_year": 2018,
+        "end_year": 2024
+    },
+    {
+        "id": "chrysler_pacifica_ru",
+        "brand": "CHRYSLER",
+        "model": "Pacifica",
+        "generation": "RU",
+        "start_year": 2017,
+        "end_year": 2023
     }
 ]

@@ -1474,5 +1474,210 @@
                 "est_cost": 450
             }
         ]
+    },
+    {
+        "model_id": "ford_f250_alumiduty",
+        "score": 45,
+        "lifespan_miles": 350000,
+        "best_years": [
+            2021,
+            2022
+        ],
+        "worst_years": [
+            2017,
+            2018
+        ],
+        "common_trouble_spots": [
+            "CP4 Fuel Pump",
+            "Death Wobble",
+            "Body Mounts"
+        ],
+        "critical_milestones": [
+            {
+                "mileage": 100000,
+                "description": "CP4 Disaster Prevention Kit",
+                "est_cost": 450
+            },
+            {
+                "mileage": 120000,
+                "description": "Front End Rebuild (Steering)",
+                "est_cost": 2500
+            }
+        ]
+    },
+    {
+        "model_id": "ram_2500_4th_gen",
+        "score": 50,
+        "lifespan_miles": 400000,
+        "best_years": [
+            2017,
+            2018
+        ],
+        "worst_years": [
+            2013,
+            2014
+        ],
+        "common_trouble_spots": [
+            "68RFE Transmission",
+            "Heater Grid Bolt",
+            "Actuator Failure"
+        ],
+        "critical_milestones": [
+            {
+                "mileage": 150000,
+                "description": "Transmission Rebuild",
+                "est_cost": 5500
+            },
+            {
+                "mileage": 100000,
+                "description": "Grid Heater Nut Delete",
+                "est_cost": 800
+            }
+        ]
+    },
+    {
+        "model_id": "land_rover_range_rover_sport_l494",
+        "score": 25,
+        "lifespan_miles": 140000,
+        "best_years": [],
+        "worst_years": [
+            2014,
+            2015,
+            2016
+        ],
+        "common_trouble_spots": [
+            "Timing Chain",
+            "Air Suspension",
+            "Coolant Pipes"
+        ],
+        "critical_milestones": [
+            {
+                "mileage": 80000,
+                "description": "Timing Chain Service",
+                "est_cost": 7500
+            },
+            {
+                "mileage": 60000,
+                "description": "Crossover Coolant Pipe",
+                "est_cost": 1200
+            }
+        ]
+    },
+    {
+        "model_id": "bmw_x5_f15",
+        "score": 40,
+        "lifespan_miles": 180000,
+        "best_years": [
+            2017,
+            2018
+        ],
+        "worst_years": [
+            2014
+        ],
+        "common_trouble_spots": [
+            "Valve Stem Seals (V8)",
+            "Water Pump",
+            "Oil Leaks"
+        ],
+        "critical_milestones": [
+            {
+                "mileage": 90000,
+                "description": "Valve Stem Seals (V8)",
+                "est_cost": 5000
+            },
+            {
+                "mileage": 70000,
+                "description": "Electric Water Pump",
+                "est_cost": 1200
+            }
+        ]
+    },
+    {
+        "model_id": "audi_q7_4m",
+        "score": 50,
+        "lifespan_miles": 180000,
+        "best_years": [
+            2020,
+            2021
+        ],
+        "worst_years": [
+            2017
+        ],
+        "common_trouble_spots": [
+            "Oil Consumption",
+            "Water Pump",
+            "Motor Mounts"
+        ],
+        "critical_milestones": [
+            {
+                "mileage": 80000,
+                "description": "Motor Mounts",
+                "est_cost": 1400
+            },
+            {
+                "mileage": 100000,
+                "description": "Oil Separator (PCV)",
+                "est_cost": 1200
+            }
+        ]
+    },
+    {
+        "model_id": "honda_odyssey_rl6",
+        "score": 75,
+        "lifespan_miles": 250000,
+        "best_years": [
+            2021,
+            2022
+        ],
+        "worst_years": [
+            2018,
+            2019
+        ],
+        "common_trouble_spots": [
+            "Transmission Judder",
+            "Sliding Doors",
+            "Infotainment"
+        ],
+        "critical_milestones": [
+            {
+                "mileage": 100000,
+                "description": "Timing Belt & Water Pump",
+                "est_cost": 1300
+            },
+            {
+                "mileage": 60000,
+                "description": "Transmission Fluid",
+                "est_cost": 300
+            }
+        ]
+    },
+    {
+        "model_id": "chrysler_pacifica_ru",
+        "score": 45,
+        "lifespan_miles": 180000,
+        "best_years": [
+            2021
+        ],
+        "worst_years": [
+            2017,
+            2018
+        ],
+        "common_trouble_spots": [
+            "Head Gasket (Hybrid)",
+            "Stalling",
+            "Rust"
+        ],
+        "critical_milestones": [
+            {
+                "mileage": 80000,
+                "description": "Head Gasket Check",
+                "est_cost": 3500
+            },
+            {
+                "mileage": 50000,
+                "description": "Electrical System",
+                "est_cost": 800
+            }
+        ]
     }
 ]

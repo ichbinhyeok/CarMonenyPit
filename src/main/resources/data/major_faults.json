@@ -614,5 +614,124 @@
                 "verdictImplication": "Moderate: Labor intensive repair."
             }
         ]
+    },
+    {
+        "model_id_ref": "ford_f250_alumiduty",
+        "faults": [
+            {
+                "component": "CP4 Fuel Pump Failure",
+                "symptoms": "Truck dies instantly, 'Low Fuel Pressure', no restart",
+                "repairCost": 9500,
+                "verdictImplication": "CATASTROPHIC: Pump sends metal shavings into all injectors and lines. Total fuel system replacement required."
+            },
+            {
+                "component": "Death Wobble",
+                "symptoms": "Violent shaking of steering wheel after irregular road surface",
+                "repairCost": 1800,
+                "verdictImplication": "Severe: Track bar and damper failure. Dangerous at highway speeds."
+            }
+        ]
+    },
+    {
+        "model_id_ref": "ram_2500_4th_gen",
+        "faults": [
+            {
+                "component": "68RFE Transmission Failure",
+                "symptoms": "Slipping gears, burnt fluid smell, limp mode",
+                "repairCost": 6500,
+                "verdictImplication": "Critical: The stock transmission cannot handle the Cummins torque. Expect failure near 150k miles."
+            },
+            {
+                "component": "Heater Grid Bolt",
+                "symptoms": "Bolt falls into intake manifold",
+                "repairCost": 12000,
+                "verdictImplication": "Engine Killer: A $2 bolt can destroy a $12k engine. Inspect immediately."
+            }
+        ]
+    },
+    {
+        "model_id_ref": "land_rover_range_rover_sport_l494",
+        "faults": [
+            {
+                "component": "Timing Chain Failure",
+                "symptoms": "Rattling noise from engine front (5.0L SC)",
+                "repairCost": 8500,
+                "verdictImplication": "Financial Ruin: Requires engine removal. Often exceeds vehicle value. SELL IMMEDIATELY."
+            },
+            {
+                "component": "Air Suspension Compressor",
+                "symptoms": "Vehicle sagging, 'Suspension Fault' error",
+                "repairCost": 1800,
+                "verdictImplication": "Common: Compressor wears out due to leak overwork."
+            }
+        ]
+    },
+    {
+        "model_id_ref": "bmw_x5_f15",
+        "faults": [
+            {
+                "component": "Valve Stem Seals",
+                "symptoms": "Blue smoke from exhaust after idling (N63 V8)",
+                "repairCost": 5500,
+                "verdictImplication": "High Risk: Engine burns extensive oil. Repair labor is intensive."
+            },
+            {
+                "component": "Timing Chain Guides",
+                "symptoms": "High pitched whine (N20/N26 4-cyl models)",
+                "repairCost": 3500,
+                "verdictImplication": "Critical: Plastic guides shatter and clog oil pickup."
+            }
+        ]
+    },
+    {
+        "model_id_ref": "audi_q7_4m",
+        "faults": [
+            {
+                "component": "Supercharger Clutch",
+                "symptoms": "Chirping noise during engagement (3.0T)",
+                "repairCost": 1500,
+                "verdictImplication": "Moderate: Wear item on high mileage units."
+            },
+            {
+                "component": "Oil Consumption",
+                "symptoms": "Low oil light every 500 miles",
+                "repairCost": 4500,
+                "verdictImplication": "Severe: Piston ring issues on early 3.0T/2.0T engines. Requires rebuild."
+            }
+        ]
+    },
+    {
+        "model_id_ref": "honda_odyssey_rl6",
+        "faults": [
+            {
+                "component": "Sliding Door Failure",
+                "symptoms": "Door stuck, motor grinding, battery drain",
+                "repairCost": 1500,
+                "verdictImplication": "Common: Cable or motor failure. Expensive convenience repair."
+            },
+            {
+                "component": "9-Speed/10-Speed Judder",
+                "symptoms": "Rough shifting, hunting for gears",
+                "repairCost": 3500,
+                "verdictImplication": "Moderate: Software updates help, but torque converter may fail."
+            }
+        ]
+    },
+    {
+        "model_id_ref": "chrysler_pacifica_ru",
+        "faults": [
+            {
+                "component": "Head Gasket Failure",
+                "symptoms": "Misfire, coolant consumption (Hybrid Models)",
+                "repairCost": 4000,
+                "verdictImplication": "Critical: Widespread issue on Hybrid Pacificas. Engine replacement likely."
+            },
+            {
+                "component": "Stalling while Driving",
+                "symptoms": "Engine cuts out at speed (PHEV)",
+                "repairCost": 2200,
+                "verdictImplication": "Dangerous: Transmission wiring harness recall. Verify VIN."
+            }
+        ]
     }
 ]
