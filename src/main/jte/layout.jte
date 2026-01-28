@@ -17,8 +17,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>${title}</title>
-    <link rel="icon" type="image/png" href="/favicon.png">
-    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon.png?v=2026.1">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png?v=2026.1">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico?v=2026.1">
+    <link rel="shortcut icon" href="/favicon.ico?v=2026.1">
     @if(description != null)
     <meta name="description" content="${description}">
     @endif

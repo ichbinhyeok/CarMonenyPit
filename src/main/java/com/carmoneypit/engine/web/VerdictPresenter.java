@@ -141,18 +141,18 @@ public class VerdictPresenter {
 
         switch (state) {
             case TIME_BOMB:
-                return "Execute Exit Strategy";
+                return "[COMING SOON] Exit Plan";
             case STABLE:
                 if (hasQuote)
-                    return "Verify Quote Integrity";
+                    return "[COMING SOON] Quote Verify";
                 if (isAccident)
-                    return "Request Rapid Appraisal";
-                return "Secure Protection Plan";
+                    return "[COMING SOON] Appraisal";
+                return "[COMING SOON] Protection";
             case BORDERLINE:
             default:
                 if (hasQuote)
-                    return "Audit Repair Financing";
-                return "Explore Bid Options";
+                    return "[COMING SOON] Audit Prep";
+                return "[COMING SOON] Explore";
         }
     }
 
@@ -181,14 +181,7 @@ public class VerdictPresenter {
     }
 
     public String getLeadUrl(VerdictState state, EngineInput input, SimulationControls controls) {
-        switch (state) {
-            case TIME_BOMB:
-                return "https://peddle.com";
-            case STABLE:
-                return "https://repairpal.com";
-            case BORDERLINE:
-            default:
-                return "https://www.carvana.com/sell-my-car";
-        }
+        // Partnership links currently under negotiation (3-day hold)
+        return "javascript:void(0)";
     }
 }

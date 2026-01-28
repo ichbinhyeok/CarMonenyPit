@@ -253,7 +253,7 @@
                                   padding: 1.25rem; border-radius: 16px; text-decoration: none; 
                                   font-weight: 900; font-size: 1.1rem; text-align: center;
                                   box-shadow: 0 0 30px rgba(255,255,255,0.3);">
-                            🔥 See Instant Liquidation Offer →
+                            ${leadLabel}
                         </a>
                         
                         <div style="font-size: 0.75rem; opacity: 0.6; margin-top: 1rem; text-align: center;">
@@ -293,7 +293,7 @@
                            style="display: block; background: #fff; color: #0EA5E9; 
                                   padding: 1.25rem; border-radius: 16px; text-decoration: none; 
                                   font-weight: 900; font-size: 1.1rem; text-align: center;">
-                            🛡 Compare Protection Plans →
+                            ${leadLabel}
                         </a>
                         
                         <div style="font-size: 0.75rem; opacity: 0.7; margin-top: 1rem; text-align: center;">
