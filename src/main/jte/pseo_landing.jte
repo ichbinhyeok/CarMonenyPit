@@ -50,57 +50,63 @@
             String headline = headlines[spinIndex];
         }
 
-        <header style="text-align: center; margin-bottom: 5rem;">
-            <div style="display: inline-flex; align-items: center; gap: 0.5rem; background: #f0fdf4; border: 1px solid #bbf7d0; padding: 0.5rem 1rem; border-radius: 99px; color: #166534; font-size: 0.8rem; font-weight: 700; margin-bottom: 2rem;">
-                <span style="font-size: 1rem;">✓</span> ACTUARIAL ALGORITHM APPLIED
+        <header style="text-align: center; margin-bottom: 3rem;">
+            <div style="display: inline-flex; align-items: center; gap: 0.5rem; background: #f0fdf4; border: 1px solid #bbf7d0; padding: 0.5rem 1rem; border-radius: 99px; color: #166534; font-size: 0.75rem; font-weight: 700; margin-bottom: 1.5rem;">
+                <span style="font-size: 0.9rem;">✓</span> ACTUARIAL ALGORITHM APPLIED
             </div>
-            <div style="font-size: 0.9rem; color: #d91b1b; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 1rem;">
+            <div style="font-size: 0.8rem; color: #d91b1b; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 0.75rem;">
                 Market Analysis for ${car.brand()} Owners
             </div>
-            <h1 style="font-size: 3rem; font-weight: 800; line-height: 1.1; margin-bottom: 2rem; letter-spacing: -0.02em;">
+            <h1 class="hero-title" style="font-weight: 800; line-height: 1.1; margin-bottom: 2rem; letter-spacing: -0.02em;">
                 $unsafe{headline}
             </h1>
             
-            <div style="display: inline-flex; flex-direction: column; align-items: center; background: #fff; border: 2px solid #000; padding: 1.5rem 3rem; border-radius: 16px; box-shadow: 8px 8px 0px #000;">
-                <span style="font-size: 1rem; color: #666; font-weight: 600; text-transform: uppercase;">Estimated Repair Cost</span>
-                <span style="font-size: 3.5rem; font-weight: 900; color: #000; line-height: 1;">$${String.format("%,.0f", fault.repairCost())}</span>
-                <span style="font-size: 0.7rem; color: #999; margin-top: 0.5rem; font-weight: 600;">(Est. National Avg.)</span>
+            <div class="repair-card" style="display: inline-flex; flex-direction: column; align-items: center; background: #fff; border: 2px solid #000; padding: 1.5rem 2.5rem; border-radius: 16px; box-shadow: 6px 6px 0px #000;">
+                <span style="font-size: 0.85rem; color: #666; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">Estimated Repair Cost</span>
+                <span style="font-size: 3.5rem; font-weight: 900; color: #000; line-height: 1; margin: 0.5rem 0;">$${String.format("%,.0f", fault.repairCost())}</span>
+                <span style="font-size: 0.65rem; color: #999; font-weight: 600;">(Est. National Avg.)</span>
             </div>
         </header>
+
+        <style>
+            .hero-title { font-size: 3.5rem; }
+            @media (max-width: 768px) {
+                .hero-title { font-size: 2.25rem; }
+                .repair-card { padding: 1.25rem 2rem !important; transform: scale(0.9); }
+                .repair-card span:nth-child(2) { font-size: 2.75rem !important; }
+            }
+        </style>
 
         <!-- Bi-weekly Market Pulse (SEO Freshness) -->
         $unsafe{marketPulse}
 
         <!-- 2. Vehicle Financial Profile (New Section) -->
         @if(details != null)
-        <div style="background: #fdfdfd; border: 1px solid #e0e0e0; border-radius: 16px; padding: 2rem; margin-bottom: 5rem;">
-            <h2 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 2rem; display: flex; align-items: center;">
+        <div class="profile-section" style="background: #fdfdfd; border: 1px solid #e0e0e0; border-radius: 20px; padding: 2rem; margin-bottom: 4rem;">
+            <h2 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem;">
                  📊 ${car.brand()} ${car.model()} Profile (Jan 2026 Data)
             </h2>
             
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+            <div class="profile-grid">
                 <!-- Left: Market Data -->
                 <div>
                      <div style="margin-bottom: 1.5rem;">
-                        <span style="display: block; font-size: 0.9rem; color: #666; text-transform: uppercase; font-weight: 600;">Avg. Market Value</span>
-                        <span style="font-size: 2rem; font-weight: 800; color: #2E7D32;">$${String.format("%,d", details.market().jan2026AvgPrice())}</span>
+                        <span style="display: block; font-size: 0.8rem; color: #666; text-transform: uppercase; font-weight: 600; letter-spacing: 0.05em;">Avg. Market Value</span>
+                        <span style="font-size: 1.75rem; font-weight: 800; color: #2E7D32;">$${String.format("%,d", details.market().jan2026AvgPrice())}</span>
                      </div>
                      <div>
-                        <span style="display: block; font-size: 0.9rem; color: #666; text-transform: uppercase; font-weight: 600;">Expected Lifespan</span>
+                        <span style="display: block; font-size: 0.8rem; color: #666; text-transform: uppercase; font-weight: 600; letter-spacing: 0.05em;">Expected Lifespan</span>
                         <span style="font-size: 1.5rem; font-weight: 700; color: #333;">${String.format("%,d", details.reliability().lifespanMiles())} Miles</span>
                      </div>
                 </div>
 
                 <!-- Right: Analysis -->
-                <div>
-                    @if(!details.reliability().worstYears().isEmpty())
-                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-100 text-blue-700 text-xs font-semibold uppercase tracking-wider mb-4">
-                    <span class="w-2 h-2 rounded-full bg-blue-600 animate-pulse"></span>
-                    Market Value Analysis
-                </div>
-                    @endif
+                <div style="border-top: 1px solid #eee; padding-top: 1.5rem; margin-top: 1rem;">
+                    <div style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.25rem 0.75rem; border-radius: 99px; background: #eff6ff; border: 1px solid #dbeafe; color: #1e40af; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; margin-bottom: 1rem;">
+                        <span style="width: 6px; height: 6px; background: #3b82f6; border-radius: 50%;"></span> Market Value Analysis
+                    </div>
                     
-                    <div style="font-size: 0.9rem; color: #555;">
+                    <div style="font-size: 0.95rem; color: #555; line-height: 1.5;">
                         <strong>Next Big Hit:</strong> 
                         @if(!details.reliability().criticalMilestones().isEmpty())
                             At ${String.format("%,d", details.reliability().criticalMilestones().get(0).mileage())} miles, expect a 
@@ -110,32 +116,44 @@
                 </div>
             </div>
         </div>
+        <style>
+            .profile-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+            @media (max-width: 768px) {
+                .profile-grid { grid-template-columns: 1fr; gap: 1rem; }
+                .profile-section { padding: 1.5rem !important; }
+            }
+        </style>
         @endif
 
         <!-- 3. The Agitation (Symptoms & Risk) -->
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 5rem;">
+        <div class="agitation-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 4rem;">
             <!-- Symptoms Card -->
             <div style="background: #fff; padding: 2rem; border-radius: 12px; border: 1px solid #eee;">
-                <h3 style="font-size: 1.2rem; font-weight: 700; margin-bottom: 1rem; display: flex; align-items: center;">
-                    <span style="background: #FFF4F4; color: #D91B1B; width: 32px; height: 32px; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; margin-right: 0.8rem;">⚠</span> 
+                <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 1rem; display: flex; align-items: center;">
+                    <span style="background: #FFF4F4; color: #D91B1B; width: 32px; height: 32px; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; margin-right: 0.8rem; font-size: 1rem;">⚠</span> 
                     Warning Signs
                 </h3>
-                <p style="font-size: 1.1rem; color: #444; line-height: 1.6;">
+                <p style="font-size: 1rem; color: #444; line-height: 1.6;">
                     ${fault.symptoms()}
                 </p>
             </div>
 
             <!-- Risk Card -->
             <div style="background: #F8F9FA; padding: 2rem; border-radius: 12px; border: 1px solid #eee;">
-                <h3 style="font-size: 1.2rem; font-weight: 700; margin-bottom: 1rem; display: flex; align-items: center;">
-                    <span style="background: #E8F0FE; color: #1967D2; width: 32px; height: 32px; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; margin-right: 0.8rem;">ℹ</span> 
+                <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 1rem; display: flex; align-items: center;">
+                    <span style="background: #E8F0FE; color: #1967D2; width: 32px; height: 32px; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; margin-right: 0.8rem; font-size: 1rem;">ℹ</span> 
                     Our Verdict
                 </h3>
-                <p style="font-size: 1.1rem; color: #444; line-height: 1.6; font-style: italic;">
+                <p style="font-size: 1rem; color: #444; line-height: 1.6; font-style: italic;">
                     "${fault.verdictImplication()}"
                 </p>
             </div>
         </div>
+        <style>
+            @media (max-width: 768px) {
+                .agitation-grid { grid-template-columns: 1fr !important; gap: 1rem !important; }
+            }
+        </style>
 
         <!-- 3. Symptom Matching (Instant Trust / UX) -->
         <div style="background: #fff; border-left: 6px solid #F59E0B; padding: 2rem; margin-bottom: 4rem; text-align: left; box-shadow: 0 10px 30px rgba(0,0,0,0.03); border-radius: 8px;">
@@ -151,29 +169,43 @@
         </div>
 
         <!-- 3. The Financial Trap (Educational Content) -->
-        <div style="margin-bottom: 5rem;">
-             <h2 style="font-size: 2rem; font-weight: 800; margin-bottom: 1.5rem;">The "Sunk Cost" Trap</h2>
-             <p style="font-size: 1.1rem; color: #444; line-height: 1.6; margin-bottom: 1.5rem;">
+        <div style="margin-bottom: 4rem;">
+             <h2 class="section-title" style="font-weight: 800; margin-bottom: 1.5rem;">The "Sunk Cost" Trap</h2>
+             <p style="font-size: 1.05rem; color: #444; line-height: 1.6; margin-bottom: 1.5rem;">
                 Many ${car.brand()} owners fall into the trap of thinking, "I've already spent so much maintenance, I have to keep it." This is financially dangerous.
              </p>
-             <p style="font-size: 1.1rem; color: #444; line-height: 1.6; margin-bottom: 1.5rem;">
+             <p style="font-size: 1.05rem; color: #444; line-height: 1.6;">
                 <strong>The 50% Rule:</strong> If a repair costs more than 50% of your vehicle's current market value, or if your total monthly repair average exceeds a new car payment, it is time to exit.
              </p>
         </div>
+        <style>
+            .section-title { font-size: 2rem; }
+            @media (max-width: 768px) {
+                .section-title { font-size: 1.5rem; }
+            }
+        </style>
 
         <!-- 4. The Solution (CTA) -->
-        <div style="background: #1a1a1a; color: #fff; padding: 4rem 2rem; border-radius: 24px; text-align: center; position: relative; overflow: hidden; margin-bottom: 5rem;">
+        <div class="cta-banner" style="background: #1a1a1a; color: #fff; padding: 4rem 2rem; border-radius: 24px; text-align: center; position: relative; overflow: hidden; margin-bottom: 4rem;">
             <div style="position: relative; z-index: 2;">
-                <h2 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem;">Is your ${car.model()} an Asset or a Liability?</h2>
-                <p style="font-size: 1.3rem; color: #aaa; margin-bottom: 3rem; max-width: 700px; margin-left: auto; margin-right: auto;">
+                <h2 style="font-weight: 800; margin-bottom: 1rem; line-height: 1.2;">Is your ${car.model()} an Asset or a Liability?</h2>
+                <p style="font-size: 1.1rem; color: #aaa; margin-bottom: 2.5rem; max-width: 600px; margin-left: auto; margin-right: auto; line-height: 1.5;">
                     We compare your specific vehicle's current market value against this $${String.format("%,.0f", fault.repairCost())} repair bill. The math doesn't lie.
                 </p>
                 
-                <a href="${ctaUrl}" class="btn-cinematic" style="display: inline-block; text-decoration: none; font-size: 1.2rem; padding: 1.2rem 3rem; background: #2563EB; color: #ffffff; border-radius: 8px; font-weight: 700;">
-                    Pre-fill My Analysis <span>→</span>
+                <a href="${ctaUrl}" class="btn-cinematic" style="display: inline-block; text-decoration: none; font-size: 1.1rem; padding: 1.2rem 2.5rem; background: #2563EB; color: #ffffff; border-radius: 12px; font-weight: 700; box-shadow: 0 10px 20px rgba(37, 99, 235, 0.3);">
+                    Free Liability Analysis <span>→</span>
                 </a>
             </div>
         </div>
+        <style>
+            .cta-banner h2 { font-size: 2.25rem; }
+            @media (max-width: 768px) {
+                .cta-banner { padding: 3rem 1.5rem !important; }
+                .cta-banner h2 { font-size: 1.75rem; }
+                .cta-banner p { font-size: 1rem; }
+            }
+        </style>
 
         <!-- Related Problems Section (Internal Linking) -->
         @if(relatedFaults != null && !relatedFaults.isEmpty())

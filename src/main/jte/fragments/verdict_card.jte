@@ -124,12 +124,22 @@
                 System Diagnostic Verdict
             </span>
         </div>
-        <h1 style="font-size: 5rem; font-weight: 800; letter-spacing: -0.05em; margin-bottom: 1.5rem; line-height: 0.9; color: #000;">
+        <h1 class="main-verdict-title" style="font-weight: 800; letter-spacing: -0.05em; margin-bottom: 1.5rem; line-height: 0.9; color: #000;">
             ${verdictTitle}
         </h1>
-        <p style="font-size: 1.25rem; color: var(--text-main); font-weight: 500; max-width: 750px; line-height: 1.5; margin-bottom: 3rem;">
+        <p class="verdict-intro" style="color: var(--text-main); font-weight: 500; max-width: 750px; line-height: 1.5; margin-bottom: 3rem;">
             "${verdictExplanation}"
         </p>
+        <style>
+            .main-verdict-title { font-size: 5rem; }
+            .verdict-intro { font-size: 1.25rem; }
+            @media (max-width: 768px) {
+                .main-verdict-title { font-size: 3rem !important; margin-bottom: 1rem !important; }
+                .verdict-intro { font-size: 1.1rem !important; margin-bottom: 2rem !important; }
+                .delta-container { padding: 1.5rem !important; flex-direction: column; align-items: flex-start !important; gap: 1rem; }
+                .delta-value { font-size: 2.25rem !important; }
+            }
+        </style>
 
         @if(result.stayTotal() > result.moveTotal())
             <div class="delta-container">
@@ -226,7 +236,7 @@
                         ✓ Analysis Complete → Next Step:
                     </div>
                     
-                    <div style="background: linear-gradient(135deg, #1a1a1a 0%, #DC2626 100%); 
+                    <div class="cta-card" style="background: linear-gradient(135deg, #1a1a1a 0%, #DC2626 100%); 
                                 padding: 2.5rem; border-radius: 24px; color: #fff; 
                                 box-shadow: 0 20px 60px rgba(220, 38, 38, 0.4);
                                 border: 2px solid rgba(239, 68, 68, 0.3);">
@@ -240,7 +250,7 @@
                         </div>
                         
                         <!-- Main CTA -->
-                        <h4 style="font-size: 2rem; font-weight: 900; margin-bottom: 0.5rem; line-height: 1.1;">
+                        <h4 class="cta-title" style="font-weight: 900; margin-bottom: 0.5rem; line-height: 1.1;">
                             Get Cash Offer Before<br>Next $${Math.round(result.assetBleedAmount() / 180 * 7)} Loss
                         </h4>
                         
@@ -261,6 +271,13 @@
                         </div>
                     </div>
                 </div>
+                <style>
+                    .cta-title { font-size: 2rem; }
+                    @media (max-width: 768px) {
+                        .cta-card { padding: 1.5rem !important; }
+                        .cta-title { font-size: 1.5rem !important; }
+                    }
+                </style>
             @else
                 <!-- STABLE: Trust + Protection -->
                 <div style="border-top: 2px dashed #cbd5e0; padding-top: 2rem; margin-top: 2rem;">

@@ -86,7 +86,8 @@ public class PSeoController {
     String schemaJson = generateSchema(car, fault, profile, brand, model, faultSlug);
 
     // Enhanced Meta Description with social proof (Truthful & SEO Safe)
-    String metaDescription = "Is a $" + String.format("%,.0f", fault.repairCost()) + " " + fault.component() +
+    // Enhanced Meta Description with social proof (Truthful & SEO Safe)
+    String metaDescription = "Is a $" + String.format("%,d", Math.round(fault.repairCost())) + " " + fault.component() +
         " repair worth it on your " + car.brand() + " " + car.model()
         + "? We analyzed this against 50,000+ market data points " +
         "including depreciation curves and repair statistics to give you a clear financial verdict. Free calculator included.";
@@ -96,7 +97,7 @@ public class PSeoController {
     // Pre-fill CTA URL for main page
     String ctaUrl = "/?brand=" + car.brand().replace(" ", "+") +
         "&model=" + car.model().replace(" ", "+") +
-        "&repairQuoteUsd=" + String.format("%.0f", fault.repairCost()) +
+        "&repairQuoteUsd=" + Math.round(fault.repairCost()) +
         "&pSEO=true";
 
     // Related faults for internal linking
@@ -111,7 +112,7 @@ public class PSeoController {
     boolean isSell = repairCost > (marketValue * 0.5);
     String verdictText = isSell ? "VERDICT: SELL" : "VERDICT: CAUTION";
 
-    String ogText = car.brand() + " " + car.model() + "%0ARepair: $" + String.format("%,.0f", repairCost) +
+    String ogText = car.brand() + " " + car.model() + "%0ARepair: $" + String.format("%,d", Math.round(repairCost)) +
         "%0AValue: $" + String.format("%,d", marketValue) + "%0A%0A" + verdictText;
 
     String ogImage = "https://placehold.co/1200x630/1e293b/ffffff?text=" + ogText.replace(" ", "%20") + "&font=oswald";
@@ -254,7 +255,7 @@ public class PSeoController {
         "\"acceptedAnswer\": {" +
         "\"@type\": \"Answer\"," +
         "\"text\": \"The average repair cost for the " + fault.component() + " in a " + car.brand() + " " + car.model()
-        + " is $" + String.format("%,.0f", fault.repairCost()) + ".\"" +
+        + " is $" + String.format("%,d", Math.round(fault.repairCost())) + ".\"" +
         "}" +
         "}, {" +
         "\"@type\": \"Question\"," +
@@ -276,7 +277,7 @@ public class PSeoController {
         "\"@type\": \"HowToStep\"," +
         "\"position\": 1," +
         "\"name\": \"Calculate Repair-to-Value Ratio\"," +
-        "\"text\": \"Divide the $" + String.format("%,.0f", fault.repairCost())
+        "\"text\": \"Divide the $" + String.format("%,d", Math.round(fault.repairCost()))
         + " repair cost by your vehicle's current market value. If the ratio exceeds 50%, it's typically not worth repairing.\""
         +
         "}," +

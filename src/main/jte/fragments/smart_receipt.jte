@@ -106,6 +106,11 @@
         border: 1px solid rgba(0,0,0,0.08); /* Added subtle border for contrast */
     }
 
+    @media (max-width: 480px) {
+        .receipt-paper { padding: 1.5rem 1rem; }
+        .receipt-title { font-size: 1.1rem; }
+    }
+
     .receipt-paper::after {
         content: "";
         position: absolute;

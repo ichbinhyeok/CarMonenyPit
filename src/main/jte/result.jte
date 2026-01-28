@@ -49,6 +49,11 @@
                 transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             }
 
+            @media (max-width: 768px) {
+                .container { gap: 1rem; margin-bottom: 3rem; }
+                .bento-card { padding: 1.5rem; border-radius: 24px; }
+            }
+
             .verdict-cell { grid-column: span 12; }
             .sim-cell { grid-column: span 12; background: #fff; }
 
@@ -256,7 +261,7 @@
                 @template.fragments.verdict_card(result = result, verdictTitle = verdictTitle, verdictExplanation = verdictExplanation, verdictAction = verdictAction, verdictCss = verdictCss, leadLabel = leadLabel, leadDescription = leadDescription, leadUrl = leadUrl, isValueEstimated = isValueEstimated)
                 
                 <!-- Viral & Explanation Actions -->
-                <div style="display: flex; gap: 1rem; margin-top: 2rem; justify-content: center;">
+                <div class="verdict-actions" style="display: flex; gap: 1rem; margin-top: 2rem; justify-content: center;">
                     <button onclick="document.getElementById('explanation-modal').showModal()" 
                             style="background: transparent; border: 1px solid #e2e8f0; padding: 0.8rem 1.5rem; border-radius: 12px; font-weight: 700; color: var(--text-secondary); cursor: pointer;">
                         Why this verdict?
@@ -270,6 +275,12 @@
                         </button>
                     @endif
                 </div>
+                <style>
+                    @media (max-width: 640px) {
+                        .verdict-actions { flex-direction: column; }
+                        .verdict-actions button { width: 100%; }
+                    }
+                </style>
             </section>
 
             <!-- Simulation Parameters -->

@@ -46,8 +46,8 @@ public class MarketPulseService {
                 + car.model() + " repair cost\" this period</li>" +
                 "<li>Vehicles with this issue sell in <strong>" + avgDaysToSell + " days</strong> on average</li>" +
                 "<li>Repair quotes for " + fault.component() + " range <strong>$"
-                + String.format("%,.0f", fault.repairCost() * 0.85) + " - $"
-                + String.format("%,.0f", fault.repairCost() * 1.15) + "</strong> regionally</li>" +
+                + String.format("%,d", Math.round(fault.repairCost() * 0.85)) + " - $"
+                + String.format("%,d", Math.round(fault.repairCost() * 1.15)) + "</strong> regionally</li>" +
                 "</ul></div>";
     }
 

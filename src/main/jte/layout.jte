@@ -107,6 +107,23 @@
             from { opacity: 0; transform: translateY(30px) scale(0.98); }
             to { opacity: 1; transform: translateY(0) scale(1); }
         }
+
+        /* --- Responsive Foundations --- */
+        @media (max-width: 768px) {
+            body {
+                padding-top: 4rem;
+            }
+            main {
+                padding: 1rem !important;
+            }
+        }
+
+        .btn-cinematic {
+            transition: transform 0.2s, background 0.2s;
+        }
+        .btn-cinematic:active {
+            transform: scale(0.96);
+        }
     </style>
     @if(extraStyles != null)
         ${extraStyles}
@@ -119,7 +136,7 @@
     
     @template.fragments.header()
 
-    <main style="flex: 1; width: 100%; max-width: 1400px; margin: 0 auto; padding: 2rem;">
+    <main style="flex: 1; width: 100%; max-width: 1400px; margin: 0 auto; padding: 2rem; position: relative; z-index: 1;">
         ${content}
     </main>
 

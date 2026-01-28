@@ -55,7 +55,7 @@ public class RegretCalculator {
 
         double riskRegret = failureProb * majorCostBase;
         items.add(new FinancialLineItem("Hidden Secondary Failure Risk", riskRegret,
-                String.format("%.0f%% actuarial probability of adjacent system collapse.", failureProb * 100),
+                String.format("%d%% actuarial probability of adjacent system collapse.", (int) (failureProb * 100)),
                 ItemCategory.STAY));
         totalScore += riskRegret;
 
