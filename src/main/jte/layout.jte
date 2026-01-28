@@ -1,6 +1,6 @@
 @import gg.jte.Content
 
-@param String title = "Car Money Pit | Precision Actuarial Analysis"
+@param String title = "Auto Money Pit | Precision Actuarial Analysis"
 @param String description = null
 @param String canonical = null
 @param String schemaJson = null
@@ -117,7 +117,7 @@
     <footer style="margin-top: auto; padding: 2rem; background-color: #1a1a1a; color: #666; font-size: 0.9rem; border-top: 1px solid #333;">
         <div style="max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
             <div>
-                &copy; 2026 CarMoneyPit. All rights reserved.
+                &copy; 2026 AutoMoneyPit. All rights reserved.
             </div>
             <div style="display: flex; gap: 1.5rem; flex-wrap: wrap;">
                 <a href="/about" style="color: #888; text-decoration: none; transition: color 0.2s;">About Us</a>

@@ -47,7 +47,7 @@ public class RootController {
                 User-agent: *
                 Allow: /
                 Disallow: /verdict/share # Prevent indexing of temporary personal results
-                Sitemap: https://carmoneypit.com/sitemap.xml
+                Sitemap: https://automoneypit.com/sitemap.xml
                 """;
     }
 
@@ -59,7 +59,7 @@ public class RootController {
         xml.append("<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n");
 
         String today = LocalDate.now().format(DateTimeFormatter.ISO_DATE);
-        String baseUrl = "https://carmoneypit.com";
+        String baseUrl = "https://automoneypit.com";
 
         // Static Pages
         addUrl(xml, baseUrl + "/", today, "1.0");

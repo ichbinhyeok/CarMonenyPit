@@ -98,7 +98,7 @@ public class PSeoController {
         sampleSize,
         sellPercentage);
 
-    String canonicalUrl = String.format("https://carmoneypit.com/verdict/%s/%s/%s",
+    String canonicalUrl = String.format("https://automoneypit.com/verdict/%s/%s/%s",
         brand, model, faultSlug);
 
     // Pre-fill CTA URL for main page
@@ -306,25 +306,25 @@ public class PSeoController {
                   "@type": "ListItem",
                   "position": 1,
                   "name": "Models",
-                  "item": "https://carmoneypit.com/models"
+                  "item": "https://automoneypit.com/models"
                 },
                 {
                   "@type": "ListItem",
                   "position": 2,
                   "name": "%s",
-                  "item": "https://carmoneypit.com/models/%s"
+                  "item": "https://automoneypit.com/models/%s"
                 },
                 {
                   "@type": "ListItem",
                   "position": 3,
                   "name": "%s",
-                  "item": "https://carmoneypit.com/models/%s/%s"
+                  "item": "https://automoneypit.com/models/%s/%s"
                 },
                 {
                   "@type": "ListItem",
                   "position": 4,
                   "name": "%s Analysis",
-                  "item": "https://carmoneypit.com/verdict/%s/%s/%s"
+                  "item": "https://automoneypit.com/verdict/%s/%s/%s"
                 }
               ]
             }

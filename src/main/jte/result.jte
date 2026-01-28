@@ -22,7 +22,7 @@
 @param boolean isValueEstimated = false
 
 @template.layout(
-    title = (ogTitle != null ? ogTitle : "Analysis Engine | Future Verdict"),
+    title = (ogTitle != null ? ogTitle : "AutoMoneyPit Actuarial Engine"),
     noindex = true,
     ogTitle = ogTitle,
     ogDescription = verdictExplanation,
@@ -415,7 +415,7 @@
 
         <script>
             function shareResult(token) {
-                const url = window.location.origin + "/RentVerdict/verdict?token=" + token;
+                const url = window.location.origin + "/report?token=" + token;
                 navigator.clipboard.writeText(url).then(() => {
                     alert('Link copied to clipboard! Share this diagnostic receipt.');
                 });

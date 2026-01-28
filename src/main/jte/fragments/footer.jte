@@ -1,7 +1,7 @@
 <footer class="main-footer">
     <div class="footer-content">
         <div class="footer-bottom">
-            <p>&copy; 2026 CarMoneyPit Predictive Engine. All rights reserved.</p>
+            <p>&copy; 2026 AutoMoneyPit Predictive Engine. All rights reserved.</p>
             <div class="footer-links">
                 <span class="footer-tag">TRUST_NO_PIT</span>
                 <span class="footer-tag">DATA_DRIVEN_EQUITY</span>

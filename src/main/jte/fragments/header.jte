@@ -25,7 +25,7 @@
     <div class="header-content">
         <a href="/" class="logo">
             <span class="logo-icon">PIT</span>
-            <span class="logo-text">CarMoney<span>Pit</span></span>
+            <span class="logo-text">AutoMoney<span>Pit</span></span>
         </a>
         <nav class="header-nav">
             <span class="sys-status">

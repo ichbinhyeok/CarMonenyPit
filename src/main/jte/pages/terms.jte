@@ -5,12 +5,12 @@
 
         <h2 style="font-size: 1.5rem; font-weight: 700; margin-top: 2rem; margin-bottom: 1rem;">1. Disclaimer</h2>
         <p style="margin-bottom: 1.5rem; border: 1px solid #d91b1b; padding: 1rem; border-radius: 4px; color: #d91b1b;">
-            <strong>CarMoneyPit is for informational purposes only. We are not certified financial advisors or mechanics.</strong> The information provided on this website, including "Regret Scores" and repair estimates, is based on aggregated data and statistical models. It should not be considered as professional financial or mechanical advice.
+            <strong>AutoMoneyPit is for informational purposes only. We are not certified financial advisors or mechanics.</strong> The information provided on this website, including "Regret Scores" and repair estimates, is based on aggregated data and statistical models. It should not be considered as professional financial or mechanical advice.
         </p>
 
         <h2 style="font-size: 1.5rem; font-weight: 700; margin-top: 2rem; margin-bottom: 1rem;">2. Limitation of Liability</h2>
         <p style="margin-bottom: 1.5rem;">
-            In no event shall CarMoneyPit, nor any of its officers, directors, and employees, be held liable for anything arising out of or in any way connected with your use of this Website whether such liability is under contract. CarMoneyPit, including its officers, directors, and employees, shall not be held liable for any indirect, consequential, or special liability arising out of or in any way related to your use of this Website.
+            In no event shall AutoMoneyPit, nor any of its officers, directors, and employees, be held liable for anything arising out of or in any way connected with your use of this Website whether such liability is under contract. AutoMoneyPit, including its officers, directors, and employees, shall not be held liable for any indirect, consequential, or special liability arising out of or in any way related to your use of this Website.
         </p>
 
         <h2 style="font-size: 1.5rem; font-weight: 700; margin-top: 2rem; margin-bottom: 1rem;">3. Data Accuracy</h2>

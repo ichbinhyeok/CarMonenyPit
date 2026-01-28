@@ -3,7 +3,7 @@
         <h1 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 2rem;">Stop the Bleeding.</h1>
         
         <p style="font-size: 1.2rem; line-height: 1.8; margin-bottom: 2rem; border-left: 4px solid #d91b1b; padding-left: 1rem;">
-            <strong>CarMoneyPit is not a car review site. We are a financial triage unit.</strong>
+            <strong>AutoMoneyPit is not a car review site. We are a financial triage unit.</strong>
         </p>
 
         <h2 style="font-size: 1.8rem; font-weight: 700; margin-top: 3rem; margin-bottom: 1rem;">Our Mission</h2>
@@ -11,7 +11,7 @@
             Every day, thousands of people keep pouring money into "financial zombie" vehicles—cars where the repair liabilities mathematically exceed the utility they provide. This is often driven by the "Sunk Cost Fallacy" or emotional attachment.
         </p>
         <p style="margin-bottom: 1.5rem;">
-            We built CarMoneyPit to replace emotional guessing with <strong>actuarial coldness</strong>. Our goal is simple: to tell you exactly when to hold 'em, and when to fold 'em.
+            We built AutoMoneyPit to replace emotional guessing with <strong>actuarial coldness</strong>. Our goal is simple: to tell you exactly when to hold 'em, and when to fold 'em.
         </p>
 
         <h2 style="font-size: 1.8rem; font-weight: 700; margin-top: 3rem; margin-bottom: 1rem;">Why Trust Our Data?</h2>

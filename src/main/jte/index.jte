@@ -5,7 +5,7 @@
 @param Long prefillQuote = null
 
 @template.layout(
-    title = "Car Money Pit | Precision Actuarial Analysis",
+    title = "Auto Money Pit | Precision Actuarial Analysis",
     extraStyles = @`
         <style>
             .hero-section {

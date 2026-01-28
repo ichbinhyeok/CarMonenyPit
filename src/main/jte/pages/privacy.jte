@@ -4,7 +4,7 @@
         <p style="color: #666; margin-bottom: 2rem;">Last Updated: January 28, 2026</p>
 
         <p style="margin-bottom: 1.5rem;">
-            At CarMoneyPit, accessible from carmoneypit.com, one of our main priorities is the privacy of our visitors. This Privacy Policy document contains types of information that is collected and recorded by CarMoneyPit and how we use it.
+            At AutoMoneyPit, accessible from automoneypit.com, one of our main priorities is the privacy of our visitors. This Privacy Policy document contains types of information that is collected and recorded by AutoMoneyPit and how we use it.
         </p>
 
         <h2 style="font-size: 1.5rem; font-weight: 700; margin-top: 2rem; margin-bottom: 1rem;">Log Files</h2>

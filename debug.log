@@ -1725,3 +1725,5 @@ java.lang.NullPointerException: Cannot invoke "java.util.List.size()" because "t
 2026-01-28T18:04:18.177+09:00  WARN 24736 --- [http-nio-8080-exec-3] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'GET' is not supported]
 2026-01-28T18:09:07.868+09:00  WARN 24736 --- [http-nio-8080-exec-4] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'GET' is not supported]
 2026-01-28T18:18:34.217+09:00  INFO 24736 --- [http-nio-8080-exec-9] c.carmoneypit.engine.web.PSeoController  : Request for acura / mdx / rod-bearing
+2026-01-28T18:39:53.237+09:00  INFO 24736 --- [http-nio-8080-exec-2] c.carmoneypit.engine.web.PSeoController  : Request for kia / sportage / theta-ii-engine-risk
+2026-01-28T18:39:53.238+09:00  WARN 24736 --- [http-nio-8080-exec-2] c.carmoneypit.engine.web.PSeoController  : Fault not found: theta-ii-engine-risk

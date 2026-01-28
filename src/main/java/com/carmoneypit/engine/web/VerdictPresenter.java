@@ -43,13 +43,13 @@ public class VerdictPresenter {
     public String getViralOgTitle(VerdictState state) {
         switch (state) {
             case TIME_BOMB:
-                return "My Car is a TIME BOMB | CarMoneyPit Diagnostic";
+                return "My Car is a TIME BOMB | AutoMoneyPit Diagnostic";
             case STABLE:
-                return "My Car is STABLE | CarMoneyPit Diagnostic";
+                return "My Car is STABLE | AutoMoneyPit Diagnostic";
             case BORDERLINE:
-                return "My Car is a MONEY PIT | CarMoneyPit Diagnostic";
+                return "My Car is a MONEY PIT | AutoMoneyPit Diagnostic";
             default:
-                return "CarMoneyPit Diagnostic Result";
+                return "AutoMoneyPit Diagnostic Result";
         }
     }
 
