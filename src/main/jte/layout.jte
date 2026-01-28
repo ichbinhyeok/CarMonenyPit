@@ -95,6 +95,7 @@
             </div>
             <div style="display: flex; gap: 1.5rem;">
                 <a href="/about" style="color: #888; text-decoration: none; transition: color 0.2s;">About</a>
+                <a href="/models" style="color: #888; text-decoration: none; transition: color 0.2s;">Browse Models</a>
                 <a href="/methodology" style="color: #888; text-decoration: none; transition: color 0.2s;">Methodology</a>
                 <a href="/privacy" style="color: #888; text-decoration: none; transition: color 0.2s;">Privacy</a>
                 <a href="/terms" style="color: #888; text-decoration: none; transition: color 0.2s;">Terms</a>
