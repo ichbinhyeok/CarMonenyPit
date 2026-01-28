@@ -1,5 +1,6 @@
 package com.carmoneypit.engine.web;
 
+import com.carmoneypit.engine.api.InputModels.CarBrand;
 import com.carmoneypit.engine.api.InputModels.EngineInput;
 import com.carmoneypit.engine.api.InputModels.SimulationControls;
 import com.carmoneypit.engine.api.InputModels.VehicleType;
@@ -39,27 +40,38 @@ public class CarDecisionController {
                 return "index"; // Renders src/main/jte/index.jte
         }
 
+        @GetMapping("/api/models")
+        public String getModelsByBrand(@RequestParam("brand") String brand, Model model) {
+                var models = valuationService.getModelsByBrand(brand);
+                model.addAttribute("models", models);
+                return "fragments/model_options";
+        }
+
         @PostMapping("/analyze")
         public String analyzeLoading(
-                        @RequestParam("vehicleType") VehicleType vehicleType,
-                        @RequestParam("brand") com.carmoneypit.engine.api.InputModels.CarBrand brand,
+                        @RequestParam("brand") CarBrand brand,
+                        @RequestParam(value = "model", required = false) String carModel,
+                        @RequestParam(value = "vehicleType", required = false) VehicleType vehicleType,
                         @RequestParam("mileage") long mileage,
                         @RequestParam(value = "repairQuoteUsd", required = false) Long repairQuoteUsd,
                         @RequestParam(value = "isQuoteMissing", defaultValue = "false") boolean isQuoteMissing,
                         @RequestParam(value = "currentValueUsd", required = false) Long currentValueUsd,
                         Model model) {
 
+                VehicleType effectiveType = (vehicleType != null) ? vehicleType : VehicleType.SEDAN;
+
                 long effectiveValue = (currentValueUsd != null && currentValueUsd > 0)
                                 ? currentValueUsd
-                                : valuationService.estimateValue(brand, vehicleType, mileage);
+                                : valuationService.estimateValue(brand, effectiveType, mileage);
                 boolean isEstimated = (currentValueUsd == null || currentValueUsd <= 0);
 
                 long effectiveRepairQuote = (repairQuoteUsd != null && repairQuoteUsd > 0)
                                 ? repairQuoteUsd
-                                : valuationService.estimateRepairCost(brand, vehicleType, mileage);
+                                : valuationService.estimateRepairCost(brand, effectiveType, mileage);
 
-                model.addAttribute("vehicleType", vehicleType);
                 model.addAttribute("brand", brand);
+                model.addAttribute("modelName", carModel != null ? carModel : "Other");
+                model.addAttribute("vehicleType", effectiveType);
                 model.addAttribute("mileage", mileage);
                 model.addAttribute("repairQuoteUsd", effectiveRepairQuote);
                 model.addAttribute("currentValueUsd", effectiveValue);
@@ -118,8 +130,9 @@ public class CarDecisionController {
 
         @PostMapping("/analyze-final")
         public String analyzeFinal(
-                        @RequestParam("vehicleType") VehicleType vehicleType,
-                        @RequestParam("brand") com.carmoneypit.engine.api.InputModels.CarBrand brand,
+                        @RequestParam("brand") CarBrand brand,
+                        @RequestParam(value = "model", required = false) String carModel,
+                        @RequestParam(value = "vehicleType", required = false) VehicleType vehicleType,
                         @RequestParam("mileage") long mileage,
                         @RequestParam(value = "repairQuoteUsd", required = false) Long repairQuoteUsd,
                         @RequestParam(value = "isQuoteMissing", defaultValue = "false") boolean isQuoteMissing,
@@ -128,18 +141,22 @@ public class CarDecisionController {
                         @RequestParam(value = "isQuoteEstimated", defaultValue = "false") boolean isQuoteEstimated,
                         Model model) {
 
+                VehicleType effectiveType = (vehicleType != null) ? vehicleType : VehicleType.SEDAN;
+
                 long effectiveValue = (currentValueUsd != null && currentValueUsd > 0)
                                 ? currentValueUsd
-                                : valuationService.estimateValue(brand, vehicleType, mileage);
+                                : valuationService.estimateValue(brand, effectiveType, mileage);
                 boolean finalIsEstimated = isValueEstimated || (currentValueUsd == null || currentValueUsd <= 0);
 
                 long effectiveRepairQuote = (repairQuoteUsd != null && repairQuoteUsd > 0)
                                 ? repairQuoteUsd
-                                : valuationService.estimateRepairCost(brand, vehicleType, mileage);
+                                : valuationService.estimateRepairCost(brand, effectiveType, mileage);
                 boolean finalIsQuoteEstimated = isQuoteEstimated || isQuoteMissing
                                 || (repairQuoteUsd == null || repairQuoteUsd <= 0);
 
-                EngineInput input = new EngineInput(vehicleType, brand, mileage, effectiveRepairQuote, effectiveValue,
+                EngineInput input = new EngineInput(carModel != null ? carModel : "Other", effectiveType, brand,
+                                mileage,
+                                effectiveRepairQuote, effectiveValue,
                                 finalIsQuoteEstimated);
                 VerdictResult result = decisionEngine.evaluate(input);
 
@@ -174,6 +191,7 @@ public class CarDecisionController {
 
         @PostMapping("/simulate")
         public String simulate(
+                        @RequestParam(value = "model", required = false) String carModel,
                         @RequestParam("vehicleType") VehicleType vehicleType,
                         @RequestParam("brand") com.carmoneypit.engine.api.InputModels.CarBrand brand,
                         @RequestParam("mileage") long mileage,
@@ -185,7 +203,8 @@ public class CarDecisionController {
                         @RequestParam(value = "retentionHorizon", required = false) com.carmoneypit.engine.api.InputModels.RetentionHorizon retentionHorizon,
                         @RequestParam(value = "isValueEstimated", defaultValue = "false") boolean isValueEstimated,
                         Model model) {
-                EngineInput input = new EngineInput(vehicleType, brand, mileage, repairQuoteUsd, currentValueUsd,
+                EngineInput input = new EngineInput(carModel != null ? carModel : "Other", vehicleType, brand, mileage,
+                                repairQuoteUsd, currentValueUsd,
                                 false); // Simulation default to false
                 SimulationControls controls = new SimulationControls(failureSeverity, mobilityStatus, hassleTolerance,
                                 retentionHorizon);

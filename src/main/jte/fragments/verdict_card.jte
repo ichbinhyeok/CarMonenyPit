@@ -74,6 +74,38 @@
             width: 85%; /* Dynamic later? */
             border-radius: 100px;
         }
+        .strategic-insight-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .insight-card {
+            background: #f8fafc;
+            padding: 1.5rem;
+            border-radius: 24px;
+            border: 1px solid #e2e8f0;
+        }
+        .insight-val {
+            font-size: 1.75rem;
+            font-weight: 800;
+            margin-bottom: 0.25rem;
+            display: flex;
+            align-items: baseline;
+            gap: 0.4rem;
+        }
+        .insight-label {
+            font-size: 0.75rem;
+            font-weight: 800;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        @media (max-width: 900px) {
+            .strategic-insight-row {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 
     <!-- Main Verdict Hero -->
@@ -103,6 +135,43 @@
                 <div style="position: absolute; right: -10px; bottom: -10px; font-size: 8rem; font-weight: 900; opacity: 0.05; pointer-events: none;">LOSS</div>
             </div>
         @endif
+
+        <!-- Strategic Insights Row -->
+        <div class="strategic-insight-row">
+            <!-- 1. Peer Comparison -->
+            <div class="insight-card">
+                <div class="insight-label">Community Benchmark</div>
+                <div class="insight-val">
+                    ${result.peerData().sellPercentage()}% 
+                    <span style="font-size: 0.9rem; font-weight: 700; color: #ef4444;">SOLD</span>
+                </div>
+                <p style="font-size: 0.8rem; margin: 0; color: var(--text-secondary); font-weight: 600;">
+                    of owners facing this diagnostic exit the asset.
+                </p>
+            </div>
+
+            <!-- 2. Replacement Economics -->
+            <div class="insight-card">
+                <div class="insight-label">Switching Friction</div>
+                <div class="insight-val">
+                    $${String.format("%,d", result.economicContext().totalSwitchingFriction())}
+                </div>
+                <p style="font-size: 0.8rem; margin: 0; color: var(--text-secondary); font-weight: 600;">
+                    Average tax/fee penalty to replace this asset.
+                </p>
+            </div>
+
+            <!-- 3. Diagnostic Confidence -->
+            <div class="insight-card">
+                <div class="insight-label">System Confidence</div>
+                <div class="insight-val" style="color: ${result.confidenceScore() > 85 ? "#10b981" : "#f59e0b"};">
+                    ${result.confidenceScore()}%
+                </div>
+                <p style="font-size: 0.8rem; margin: 0; color: var(--text-secondary); font-weight: 600;">
+                    Based on actuarial sample size and brand history.
+                </p>
+            </div>
+        </div>
     </div>
 
     <!-- Data Breakdown Grid -->

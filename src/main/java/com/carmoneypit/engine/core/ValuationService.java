@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -20,6 +21,7 @@ import java.util.Optional;
 public class ValuationService {
 
     private final ObjectMapper objectMapper;
+    private final com.carmoneypit.engine.service.CarDataService carDataService;
     private Map<CarBrand, CarBrandData> brandDataMap = new HashMap<>();
 
     // Base prices for reference (approximate 5-year old market value)
@@ -31,8 +33,9 @@ public class ValuationService {
 
     private static final long SCRAP_VALUE = 500;
 
-    public ValuationService(ObjectMapper objectMapper) {
+    public ValuationService(ObjectMapper objectMapper, com.carmoneypit.engine.service.CarDataService carDataService) {
         this.objectMapper = objectMapper;
+        this.carDataService = carDataService;
     }
 
     @PostConstruct
@@ -157,5 +160,17 @@ public class ValuationService {
 
     public Optional<CarBrandData> getBrandData(CarBrand brand) {
         return Optional.ofNullable(brandDataMap.get(brand));
+    }
+
+    public List<com.carmoneypit.engine.service.CarDataService.CarModel> getModelsByBrand(String brand) {
+        return carDataService.getModelsByBrand(brand);
+    }
+
+    public Optional<com.carmoneypit.engine.service.CarDataService.ModelMarket> getMarketData(String modelName) {
+        // Need to find model ID from name
+        return carDataService.getAllModels().stream()
+                .filter(m -> m.model().equalsIgnoreCase(modelName))
+                .findFirst()
+                .flatMap(m -> carDataService.findMarketByModelId(m.id()));
     }
 }

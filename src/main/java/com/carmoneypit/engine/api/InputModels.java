@@ -2,6 +2,7 @@ package com.carmoneypit.engine.api;
 
 public class InputModels {
     public record EngineInput(
+            String model,
             VehicleType vehicleType,
             CarBrand brand,
             long mileage,

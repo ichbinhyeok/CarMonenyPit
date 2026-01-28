@@ -11,7 +11,22 @@ public class OutputModels {
             List<FinancialLineItem> costBreakdown,
             long assetBleedAmount,
             double stayTotal,
-            double moveTotal) {
+            double moveTotal,
+            int confidenceScore,
+            PeerData peerData,
+            EconomicContext economicContext) {
+    }
+
+    public record PeerData(
+            int sellPercentage,
+            int repairPercentage,
+            double avgSatisfaction) {
+    }
+
+    public record EconomicContext(
+            long totalSwitchingFriction,
+            long avgMonthlyPayment,
+            long breakdownThreshold) {
     }
 
     public record VisualizationHint(

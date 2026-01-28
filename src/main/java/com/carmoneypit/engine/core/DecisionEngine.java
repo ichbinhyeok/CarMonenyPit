@@ -17,13 +17,16 @@ public class DecisionEngine {
 
     private final RegretCalculator regretCalculator;
     private final CostOfInactionCalculator costOfInactionCalculator;
+    private final ValuationService valuationService;
 
     // Margin to prevent flickering verdicts (hysteresis-like thought process)
     private static final double SIGNIFICANCE_MARGIN = 50.0;
 
-    public DecisionEngine(RegretCalculator regretCalculator, CostOfInactionCalculator costOfInactionCalculator) {
+    public DecisionEngine(RegretCalculator regretCalculator, CostOfInactionCalculator costOfInactionCalculator,
+            ValuationService valuationService) {
         this.regretCalculator = regretCalculator;
         this.costOfInactionCalculator = costOfInactionCalculator;
+        this.valuationService = valuationService;
     }
 
     /**
@@ -62,8 +65,54 @@ public class DecisionEngine {
         double roundedRF = Math.round(rfDetail.score() / 100.0) * 100.0;
         double roundedRM = Math.round(rmDetail.score() / 100.0) * 100.0;
 
+        // --- NEW STRATEGIC METRICS ---
+        var brandDataOpt = valuationService.getBrandData(input.brand());
+
+        // 3. Confidence Score (Data Source Integrity)
+        int confidence = 60; // Base for generic brand data
+        if (input.model() != null && !input.model().isBlank() && !"other".equalsIgnoreCase(input.model())) {
+            confidence += 25; // Significant boost for specific model data
+        } else if (input.vehicleType() != null) {
+            confidence += 10; // Better if we have segments
+        }
+
+        if (!input.isQuoteEstimated())
+            confidence += 13; // Better if we have real quote
+
+        // 1. Peer Data (Owner Behavior)
+        int sellPct = brandDataOpt.map(d -> d.sellStatPct).orElse(40);
+        if (state == VerdictState.TIME_BOMB)
+            sellPct += 15; // Shift if it's a bomb
+        if (state == VerdictState.STABLE)
+            sellPct -= 15;
+        sellPct = Math.min(Math.max(sellPct, 5), 95);
+
+        var peerData = new com.carmoneypit.engine.api.OutputModels.PeerData(
+                sellPct,
+                100 - sellPct,
+                state == VerdictState.STABLE ? 8.2 : 4.1);
+
+        // 2. Economic Context (Switching Reality)
+        long friction = brandDataOpt.map(d -> d.avgSwitchingFriction).orElse(3000L);
+        int monthly = brandDataOpt.map(d -> d.avgNewMonthly).orElse(748);
+
+        // Granular Model Context if available
+        var marketDataOpt = valuationService.getMarketData(input.model());
+        if (marketDataOpt.isPresent()) {
+            // Adjust confidence if we have exact market matchups
+            confidence += 5;
+        }
+        confidence = Math.min(confidence, 98);
+
+        var econContext = new com.carmoneypit.engine.api.OutputModels.EconomicContext(
+                friction,
+                (int) monthly,
+                input.currentValueUsd() / 2 // 50% Rule threshold
+        );
+
         VisualizationHint hint = new VisualizationHint(roundedRF, roundedRM, moneyPitState);
-        return new VerdictResult(state, narrative, hint, breakdown, assetBleed, rfDetail.score(), rmDetail.score());
+        return new VerdictResult(state, narrative, hint, breakdown, assetBleed, rfDetail.score(), rmDetail.score(),
+                confidence, peerData, econContext);
     }
 
     private VerdictState determineState(double rf, double rm) {

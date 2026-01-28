@@ -21,7 +21,10 @@
                 "cost": 1200,
                 "risk_msg": "Expensive, but the only major expense you'll likely face."
             }
-        ]
+        ],
+        "avg_switching_friction": 2800,
+        "avg_new_monthly": 650,
+        "sell_stat_pct": 12
     },
     "HONDA": {
         "name": "Honda",
@@ -45,7 +48,10 @@
                 "cost": 900,
                 "risk_msg": "Known weak point. Annoying but not fatal."
             }
-        ]
+        ],
+        "avg_switching_friction": 2800,
+        "avg_new_monthly": 680,
+        "sell_stat_pct": 15
     },
     "LEXUS": {
         "name": "Lexus",
@@ -63,7 +69,10 @@
                 "cost": 2500,
                 "risk_msg": "The only thing that breaks. Swap to coils and keep driving."
             }
-        ]
+        ],
+        "avg_switching_friction": 3200,
+        "avg_new_monthly": 850,
+        "sell_stat_pct": 8
     },
     "BMW": {
         "name": "BMW",
@@ -93,7 +102,10 @@
                 "cost": 3500,
                 "risk_msg": "The ticking time bomb. Spin a bearing, lose the engine."
             }
-        ]
+        ],
+        "avg_switching_friction": 4500,
+        "avg_new_monthly": 1100,
+        "sell_stat_pct": 72
     },
     "MERCEDES": {
         "name": "Mercedes-Benz",
@@ -189,7 +201,10 @@
                 "cost": 4500,
                 "risk_msg": "Jerky shifting, potential drum failure."
             }
-        ]
+        ],
+        "avg_switching_friction": 3500,
+        "avg_new_monthly": 780,
+        "sell_stat_pct": 45
     },
     "CHEVROLET": {
         "name": "Chevrolet",
@@ -261,7 +276,10 @@
                 "cost": 900,
                 "risk_msg": "Plastic part sits in the V of the engine. Leaks oil everywhere."
             }
-        ]
+        ],
+        "avg_switching_friction": 4000,
+        "avg_new_monthly": 680,
+        "sell_stat_pct": 58
     },
     "SUBARU": {
         "name": "Subaru",
@@ -375,7 +393,10 @@
                 "cost": 1200,
                 "risk_msg": "Heavy car eats suspension bushings for breakfast."
             }
-        ]
+        ],
+        "avg_switching_friction": 3000,
+        "avg_new_monthly": 740,
+        "sell_stat_pct": 40
     },
     "LAND_ROVER": {
         "name": "Land Rover",

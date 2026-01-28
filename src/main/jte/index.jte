@@ -179,7 +179,12 @@
                 <form hx-post="/analyze" hx-target="#form-container" hx-swap="outerHTML" hx-push-url="false" class="form-grid-modern">
                     <div class="input-group">
                         <label>Manufacturer</label>
-                        <select name="brand" required>
+                        <select name="brand" 
+                                hx-get="/api/models" 
+                                hx-target="#model-select" 
+                                hx-trigger="change, load"
+                                hx-indicator=".integrity-dot"
+                                required>
                             @for(CarBrand brand : CarBrand.values())
                                 <option value="${brand}">${brand}</option>
                             @endfor
@@ -187,11 +192,9 @@
                     </div>
 
                     <div class="input-group">
-                        <label>Vehicle Type</label>
-                        <select name="vehicleType" required>
-                            @for(VehicleType type : VehicleType.values())
-                                <option value="${type}">${type}</option>
-                            @endfor
+                        <label>Vehicle Model</label>
+                        <select name="model" id="model-select" required>
+                            <option value="">Select a brand first</option>
                         </select>
                     </div>
 

@@ -288,6 +288,8 @@
                     </p>
                     
                     <form hx-post="/simulate" hx-target="#verdict-card" hx-trigger="change, submit" hx-swap="outerHTML" onsubmit="event.preventDefault(); return false;">
+                        <input type="hidden" name="brand" value="${input.brand()}">
+                        <input type="hidden" name="model" value="${input.model()}">
                         <input type="hidden" name="vehicleType" value="${input.vehicleType()}">
                         <input type="hidden" name="mileage" value="${input.mileage()}">
                         <input type="hidden" name="repairQuoteUsd" value="${input.repairQuoteUsd()}">

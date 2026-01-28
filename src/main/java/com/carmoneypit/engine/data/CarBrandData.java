@@ -20,6 +20,12 @@ public class CarBrandData {
     public String marketPerception;
     @JsonProperty("major_issues")
     public List<MajorIssue> majorIssues;
+    @JsonProperty("avg_switching_friction")
+    public long avgSwitchingFriction;
+    @JsonProperty("avg_new_monthly")
+    public int avgNewMonthly;
+    @JsonProperty("sell_stat_pct")
+    public int sellStatPct;
 
     public static class MajorIssue {
         public long mileage;
