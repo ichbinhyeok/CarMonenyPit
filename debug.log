@@ -1211,3 +1211,4 @@ java.util.IllegalFormatConversionException: f != java.lang.Integer
 2026-01-28T13:56:27.666+09:00  INFO 31424 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
 2026-01-28T13:56:27.666+09:00  INFO 31424 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
 2026-01-28T13:56:27.703+09:00  INFO 31424 --- [http-nio-8080-exec-1] c.carmoneypit.engine.web.PSeoController  : Request for ford / f150 / cam-phasers
+2026-01-28T17:04:41.757+09:00  INFO 31424 --- [http-nio-8080-exec-6] c.carmoneypit.engine.web.PSeoController  : Request for ford / f150 / cam-phaser

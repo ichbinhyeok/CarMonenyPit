@@ -107,10 +107,11 @@
             <div>
                 &copy; 2026 CarMoneyPit. All rights reserved.
             </div>
-            <div style="display: flex; gap: 1.5rem;">
-                <a href="/about" style="color: #888; text-decoration: none; transition: color 0.2s;">About</a>
-                <a href="/models" style="color: #888; text-decoration: none; transition: color 0.2s;">Browse Models</a>
-                <a href="/methodology" style="color: #888; text-decoration: none; transition: color 0.2s;">Methodology</a>
+            <div style="display: flex; gap: 1.5rem; flex-wrap: wrap;">
+                <a href="/about" style="color: #888; text-decoration: none; transition: color 0.2s;">About Us</a>
+                <a href="/models" style="color: #888; text-decoration: none; transition: color 0.2s;">Models</a>
+                <a href="/about#expertise" style="color: #888; text-decoration: none; transition: color 0.2s;">Methodology</a>
+                <a href="/contact" style="color: #888; text-decoration: none; transition: color 0.2s;">Contact</a>
                 <a href="/privacy" style="color: #888; text-decoration: none; transition: color 0.2s;">Privacy</a>
                 <a href="/terms" style="color: #888; text-decoration: none; transition: color 0.2s;">Terms</a>
             </div>

@@ -22,6 +22,9 @@
         
         <!-- 1. The Hook (Hero) -->
         <header style="text-align: center; margin-bottom: 5rem;">
+            <div style="display: inline-flex; align-items: center; gap: 0.5rem; background: #f0fdf4; border: 1px solid #bbf7d0; padding: 0.5rem 1rem; border-radius: 99px; color: #166534; font-size: 0.8rem; font-weight: 700; margin-bottom: 2rem;">
+                <span style="font-size: 1rem;">✓</span> EXPERT VERIFIED METHODOLOGY
+            </div>
             <div style="font-size: 0.9rem; color: #d91b1b; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 1rem;">
                 Actuarial Verdict for ${car.brand()} Owners
             </div>

@@ -170,10 +170,9 @@
     content = @`
         <section class="hero-section">
             <div class="hero-badge">
-                <span class="integrity-dot"></span>
-                ACTIVE ACTUARIAL SCANNER
+                <span style="font-size: 1.1rem;">🛡️</span> Expert-Validated Financial Logic
             </div>
-            <h1 class="hero-title">Own the Math.<br>Not the Pit.</h1>
+            <h1 class="hero-title">Your Asset Is<br>Hemorrhaging.</h1>
             <p class="hero-subtitle">
                 Stop guessing. Connect your vehicle data to our global actuarial grid for a definitive financial verdict in 30 seconds.
             </p>
