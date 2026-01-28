@@ -89,8 +89,8 @@
     .receipt-container {
         display: flex;
         justify-content: center;
-        padding: 1rem 0;
-        filter: drop-shadow(0 10px 20px rgba(0,0,0,0.05));
+        padding: 2rem 0;
+        filter: drop-shadow(0 20px 40px rgba(0,0,0,0.15));
     }
 
     .receipt-paper {
@@ -103,6 +103,7 @@
         position: relative;
         border-radius: 2px;
         box-shadow: inset 0 0 50px rgba(0,0,0,0.02);
+        border: 1px solid rgba(0,0,0,0.08); /* Added subtle border for contrast */
     }
 
     .receipt-paper::after {
@@ -142,7 +143,7 @@
     .receipt-divider {
         text-align: center;
         letter-spacing: -2px;
-        opacity: 0.2;
+        color: #9ca3af; /* clearer grey color instead of opacity */
         margin: 1rem 0;
         user-select: none;
     }
@@ -170,10 +171,10 @@
     }
 
     .item-sub {
-        font-size: 0.7rem;
-        opacity: 0.5;
-        margin-top: 0.2rem;
-        line-height: 1.3;
+        font-size: 0.8rem; /* Increased from 0.7rem (~11px -> ~13px) */
+        color: #555555;    /* Solid dark grey, removed opacity */
+        margin-top: 0.35rem;
+        line-height: 1.4;
     }
 
     .receipt-footer {

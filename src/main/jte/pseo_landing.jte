@@ -58,7 +58,7 @@
         </header>
 
         <!-- Bi-weekly Market Pulse (SEO Freshness) -->
-        ${@`${marketPulse}`}
+        $unsafe{marketPulse}
 
         <!-- 2. Vehicle Financial Profile (New Section) -->
         @if(details != null)
