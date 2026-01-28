@@ -28,4 +28,4 @@ WORKDIR /app
 COPY --from=build /app/build/libs/app.jar app.jar
 
 # JVM options for low-spec ARM64 server
-ENTRYPOINT ["java", "-XX:+UseSerialGC", "-Xms128m", "-Xmx256m", "-Xss512k", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-XX:+UseSerialGC", "-Xms256m", "-Xmx384m", "-Xss512k", "-jar", "app.jar"]
