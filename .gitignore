@@ -38,3 +38,7 @@ out/
 
 ### JTE ###
 /jte-classes/
+*.log
+build_output*.txt
+test_error.txt
+test_report.txt
