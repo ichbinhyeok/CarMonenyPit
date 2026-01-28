@@ -1,0 +1,397 @@
+2026-01-28T12:22:03.974+09:00  INFO 33144 --- [main] com.carmoneypit.CarMoneyPitApplication   : Starting CarMoneyPitApplication using Java 17.0.17 with PID 33144 (C:\Development\Owner\CarMoneyPit\build\classes\java\main started by tlsgu in C:\Development\Owner\CarMoneyPit)
+2026-01-28T12:22:03.976+09:00 DEBUG 33144 --- [main] com.carmoneypit.CarMoneyPitApplication   : Running with Spring Boot v3.5.10, Spring v6.2.15
+2026-01-28T12:22:03.977+09:00  INFO 33144 --- [main] com.carmoneypit.CarMoneyPitApplication   : No active profile set, falling back to 1 default profile: "default"
+2026-01-28T12:22:04.878+09:00  INFO 33144 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-01-28T12:22:04.890+09:00  INFO 33144 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-01-28T12:22:04.899+09:00  INFO 33144 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.50]
+2026-01-28T12:22:04.948+09:00  INFO 33144 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-01-28T12:22:04.949+09:00  INFO 33144 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 923 ms
+2026-01-28T12:22:05.326+09:00  WARN 33144 --- [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'requestMappingHandlerAdapter' defined in class path resource [org/springframework/boot/autoconfigure/web/servlet/WebMvcAutoConfiguration$EnableWebMvcConfiguration.class]: Error creating bean with name 'viewResolver' defined in class path resource [org/springframework/boot/autoconfigure/web/servlet/WebMvcAutoConfiguration$WebMvcAutoConfigurationAdapter.class]: Error creating bean with name 'jteViewResolver' defined in class path resource [gg/jte/springframework/boot/autoconfigure/JteAutoConfiguration.class]: Unsatisfied dependency expressed through method 'jteViewResolver' parameter 0: Error creating bean with name 'jteTemplateEngine' defined in class path resource [gg/jte/springframework/boot/autoconfigure/JteAutoConfiguration.class]: Failed to instantiate [gg.jte.TemplateEngine]: Factory method 'jteTemplateEngine' threw exception with message: You need to either set gg.jte.usePrecompiledTemplates or gg.jte.developmentMode to true 
+Related cause: org.springframework.beans.factory.BeanCurrentlyInCreationException: Error creating bean with name 'viewResolver': Requested bean is currently in creation: Is there an unresolvable circular reference or an asynchronous initialization dependency?
+2026-01-28T12:22:05.330+09:00  INFO 33144 --- [main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2026-01-28T12:22:05.341+09:00  INFO 33144 --- [main] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2026-01-28T12:22:05.358+09:00 ERROR 33144 --- [main] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'requestMappingHandlerAdapter' defined in class path resource [org/springframework/boot/autoconfigure/web/servlet/WebMvcAutoConfiguration$EnableWebMvcConfiguration.class]: Error creating bean with name 'viewResolver' defined in class path resource [org/springframework/boot/autoconfigure/web/servlet/WebMvcAutoConfiguration$WebMvcAutoConfigurationAdapter.class]: Error creating bean with name 'jteViewResolver' defined in class path resource [gg/jte/springframework/boot/autoconfigure/JteAutoConfiguration.class]: Unsatisfied dependency expressed through method 'jteViewResolver' parameter 0: Error creating bean with name 'jteTemplateEngine' defined in class path resource [gg/jte/springframework/boot/autoconfigure/JteAutoConfiguration.class]: Failed to instantiate [gg.jte.TemplateEngine]: Factory method 'jteTemplateEngine' threw exception with message: You need to either set gg.jte.usePrecompiledTemplates or gg.jte.developmentMode to true 
+Related cause: org.springframework.beans.factory.BeanCurrentlyInCreationException: Error creating bean with name 'viewResolver': Requested bean is currently in creation: Is there an unresolvable circular reference or an asynchronous initialization dependency?
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1826) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:607) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:529) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:373) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.instantiateSingleton(DefaultListableBeanFactory.java:1228) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingleton(DefaultListableBeanFactory.java:1194) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:1130) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:990) ~[spring-context-6.2.15.jar:6.2.15]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:627) ~[spring-context-6.2.15.jar:6.2.15]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.5.10.jar:3.5.10]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:752) ~[spring-boot-3.5.10.jar:3.5.10]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:439) ~[spring-boot-3.5.10.jar:3.5.10]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:318) ~[spring-boot-3.5.10.jar:3.5.10]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1361) ~[spring-boot-3.5.10.jar:3.5.10]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1350) ~[spring-boot-3.5.10.jar:3.5.10]
+	at com.carmoneypit.CarMoneyPitApplication.main(CarMoneyPitApplication.java:10) ~[main/:na]
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'viewResolver' defined in class path resource [org/springframework/boot/autoconfigure/web/servlet/WebMvcAutoConfiguration$WebMvcAutoConfigurationAdapter.class]: Error creating bean with name 'jteViewResolver' defined in class path resource [gg/jte/springframework/boot/autoconfigure/JteAutoConfiguration.class]: Unsatisfied dependency expressed through method 'jteViewResolver' parameter 0: Error creating bean with name 'jteTemplateEngine' defined in class path resource [gg/jte/springframework/boot/autoconfigure/JteAutoConfiguration.class]: Failed to instantiate [gg.jte.TemplateEngine]: Factory method 'jteTemplateEngine' threw exception with message: You need to either set gg.jte.usePrecompiledTemplates or gg.jte.developmentMode to true 
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:614) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:529) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:373) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.getBeansOfType(DefaultListableBeanFactory.java:748) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.BeanFactoryUtils.beansOfTypeIncludingAncestors(BeanFactoryUtils.java:372) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.initViewResolvers(RequestMappingHandlerAdapter.java:821) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.getDefaultReturnValueHandlers(RequestMappingHandlerAdapter.java:776) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.afterPropertiesSet(RequestMappingHandlerAdapter.java:604) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1873) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1822) ~[spring-beans-6.2.15.jar:6.2.15]
+	... 18 common frames omitted
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'jteViewResolver' defined in class path resource [gg/jte/springframework/boot/autoconfigure/JteAutoConfiguration.class]: Unsatisfied dependency expressed through method 'jteViewResolver' parameter 0: Error creating bean with name 'jteTemplateEngine' defined in class path resource [gg/jte/springframework/boot/autoconfigure/JteAutoConfiguration.class]: Failed to instantiate [gg.jte.TemplateEngine]: Factory method 'jteTemplateEngine' threw exception with message: You need to either set gg.jte.usePrecompiledTemplates or gg.jte.developmentMode to true 
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:804) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:546) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1375) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1205) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:569) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:529) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:373) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.getBeansOfType(DefaultListableBeanFactory.java:748) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.getBeansOfType(DefaultListableBeanFactory.java:736) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.context.support.AbstractApplicationContext.getBeansOfType(AbstractApplicationContext.java:1421) ~[spring-context-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.BeanFactoryUtils.beansOfTypeIncludingAncestors(BeanFactoryUtils.java:325) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.web.servlet.view.ContentNegotiatingViewResolver.initServletContext(ContentNegotiatingViewResolver.java:187) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at org.springframework.web.context.support.WebApplicationObjectSupport.initApplicationContext(WebApplicationObjectSupport.java:82) ~[spring-web-6.2.15.jar:6.2.15]
+	at org.springframework.context.support.ApplicationObjectSupport.setApplicationContext(ApplicationObjectSupport.java:78) ~[spring-context-6.2.15.jar:6.2.15]
+	at org.springframework.context.support.ApplicationContextAwareProcessor.invokeAwareInterfaces(ApplicationContextAwareProcessor.java:110) ~[spring-context-6.2.15.jar:6.2.15]
+	at org.springframework.context.support.ApplicationContextAwareProcessor.postProcessBeforeInitialization(ApplicationContextAwareProcessor.java:85) ~[spring-context-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyBeanPostProcessorsBeforeInitialization(AbstractAutowireCapableBeanFactory.java:429) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1818) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:607) ~[spring-beans-6.2.15.jar:6.2.15]
+	... 30 common frames omitted
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'jteTemplateEngine' defined in class path resource [gg/jte/springframework/boot/autoconfigure/JteAutoConfiguration.class]: Failed to instantiate [gg.jte.TemplateEngine]: Factory method 'jteTemplateEngine' threw exception with message: You need to either set gg.jte.usePrecompiledTemplates or gg.jte.developmentMode to true 
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:657) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:489) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1375) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1205) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:569) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:529) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:373) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1770) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1653) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:913) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:791) ~[spring-beans-6.2.15.jar:6.2.15]
+	... 51 common frames omitted
+Caused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [gg.jte.TemplateEngine]: Factory method 'jteTemplateEngine' threw exception with message: You need to either set gg.jte.usePrecompiledTemplates or gg.jte.developmentMode to true 
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.lambda$instantiate$0(SimpleInstantiationStrategy.java:200) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiateWithFactoryMethod(SimpleInstantiationStrategy.java:89) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:169) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:653) ~[spring-beans-6.2.15.jar:6.2.15]
+	... 65 common frames omitted
+Caused by: gg.jte.springframework.boot.autoconfigure.JteConfigurationException: You need to either set gg.jte.usePrecompiledTemplates or gg.jte.developmentMode to true 
+	at gg.jte.springframework.boot.autoconfigure.JteAutoConfiguration.jteTemplateEngine(JteAutoConfiguration.java:50) ~[jte-spring-boot-starter-3-3.1.16.jar:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569) ~[na:na]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.lambda$instantiate$0(SimpleInstantiationStrategy.java:172) ~[spring-beans-6.2.15.jar:6.2.15]
+	... 68 common frames omitted
+
+2026-01-28T12:23:56.746+09:00  INFO 21296 --- [main] com.carmoneypit.CarMoneyPitApplication   : Starting CarMoneyPitApplication using Java 17.0.17 with PID 21296 (C:\Development\Owner\CarMoneyPit\build\classes\java\main started by tlsgu in C:\Development\Owner\CarMoneyPit)
+2026-01-28T12:23:56.748+09:00 DEBUG 21296 --- [main] com.carmoneypit.CarMoneyPitApplication   : Running with Spring Boot v3.5.10, Spring v6.2.15
+2026-01-28T12:23:56.750+09:00  INFO 21296 --- [main] com.carmoneypit.CarMoneyPitApplication   : No active profile set, falling back to 1 default profile: "default"
+2026-01-28T12:23:57.765+09:00  INFO 21296 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-01-28T12:23:57.780+09:00  INFO 21296 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-01-28T12:23:57.780+09:00  INFO 21296 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.50]
+2026-01-28T12:23:57.834+09:00  INFO 21296 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-01-28T12:23:57.835+09:00  INFO 21296 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1029 ms
+2026-01-28T12:23:58.307+09:00  INFO 21296 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2026-01-28T12:23:58.315+09:00  INFO 21296 --- [main] com.carmoneypit.CarMoneyPitApplication   : Started CarMoneyPitApplication in 2.045 seconds (process running for 2.354)
+2026-01-28T12:25:47.916+09:00  INFO 21916 --- [main] com.carmoneypit.CarMoneyPitApplication   : Starting CarMoneyPitApplication using Java 17.0.17 with PID 21916 (C:\Development\Owner\CarMoneyPit\build\classes\java\main started by tlsgu in C:\Development\Owner\CarMoneyPit)
+2026-01-28T12:25:47.918+09:00 DEBUG 21916 --- [main] com.carmoneypit.CarMoneyPitApplication   : Running with Spring Boot v3.5.10, Spring v6.2.15
+2026-01-28T12:25:47.918+09:00  INFO 21916 --- [main] com.carmoneypit.CarMoneyPitApplication   : No active profile set, falling back to 1 default profile: "default"
+2026-01-28T12:25:48.854+09:00  INFO 21916 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-01-28T12:25:48.872+09:00  INFO 21916 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-01-28T12:25:48.872+09:00  INFO 21916 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.50]
+2026-01-28T12:25:48.931+09:00  INFO 21916 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-01-28T12:25:48.932+09:00  INFO 21916 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 967 ms
+2026-01-28T12:25:49.378+09:00  WARN 21916 --- [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'
+2026-01-28T12:25:49.390+09:00  INFO 21916 --- [main] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2026-01-28T12:25:49.405+09:00 ERROR 21916 --- [main] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 8080 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 8080 or configure this application to listen on another port.
+
+2026-01-28T12:26:36.423+09:00  INFO 3160 --- [main] com.carmoneypit.CarMoneyPitApplication   : Starting CarMoneyPitApplication using Java 17.0.17 with PID 3160 (C:\Development\Owner\CarMoneyPit\build\classes\java\main started by tlsgu in C:\Development\Owner\CarMoneyPit)
+2026-01-28T12:26:36.425+09:00 DEBUG 3160 --- [main] com.carmoneypit.CarMoneyPitApplication   : Running with Spring Boot v3.5.10, Spring v6.2.15
+2026-01-28T12:26:36.426+09:00  INFO 3160 --- [main] com.carmoneypit.CarMoneyPitApplication   : No active profile set, falling back to 1 default profile: "default"
+2026-01-28T12:26:37.238+09:00  INFO 3160 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-01-28T12:26:37.250+09:00  INFO 3160 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-01-28T12:26:37.251+09:00  INFO 3160 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.50]
+2026-01-28T12:26:37.296+09:00  INFO 3160 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-01-28T12:26:37.296+09:00  INFO 3160 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 820 ms
+2026-01-28T12:26:37.690+09:00  INFO 3160 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2026-01-28T12:26:37.700+09:00  INFO 3160 --- [main] com.carmoneypit.CarMoneyPitApplication   : Started CarMoneyPitApplication in 1.724 seconds (process running for 2.015)
+2026-01-28T12:26:47.064+09:00  INFO 3160 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-01-28T12:26:47.064+09:00  INFO 3160 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-01-28T12:26:47.066+09:00  INFO 3160 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2026-01-28T12:26:47.104+09:00  INFO 3160 --- [http-nio-8080-exec-1] c.carmoneypit.engine.web.PSeoController  : Request for ford / f-150 / cam-phasers
+2026-01-28T12:26:47.105+09:00  INFO 3160 --- [http-nio-8080-exec-1] c.carmoneypit.engine.web.PSeoController  : Car Found ID: ford_f150_13th
+2026-01-28T12:26:47.105+09:00  INFO 3160 --- [http-nio-8080-exec-1] c.carmoneypit.engine.web.PSeoController  : Found MajorFaultsData entry.
+2026-01-28T12:26:47.105+09:00  INFO 3160 --- [http-nio-8080-exec-1] c.carmoneypit.engine.web.PSeoController  : Searching for keyword: cam phasers
+2026-01-28T12:26:47.105+09:00  INFO 3160 --- [http-nio-8080-exec-1] c.carmoneypit.engine.web.PSeoController  : Matched on component: cam phasers
+2026-01-28T12:26:47.112+09:00 ERROR 3160 --- [http-nio-8080-exec-1] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: java.nio.file.InvalidPathException: Illegal char <:> at index 20: SUCCESS! Found fault: Cam Phasers
+DEBUG MODE
+Request for ford / f-150 / cam-phasers
+Car Found ID: ford_f150_13th
+Found MajorFaultsData entry.
+Searching for keyword: cam phasers
+Matched on component: cam phasers
+.jte] with root cause
+
+java.nio.file.InvalidPathException: Illegal char <:> at index 20: SUCCESS! Found fault: Cam Phasers
+DEBUG MODE
+Request for ford / f-150 / cam-phasers
+Car Found ID: ford_f150_13th
+Found MajorFaultsData entry.
+Searching for keyword: cam phasers
+Matched on component: cam phasers
+.jte
+	at java.base/sun.nio.fs.WindowsPathParser.normalize(WindowsPathParser.java:182) ~[na:na]
+	at java.base/sun.nio.fs.WindowsPathParser.parse(WindowsPathParser.java:153) ~[na:na]
+	at java.base/sun.nio.fs.WindowsPathParser.parse(WindowsPathParser.java:77) ~[na:na]
+	at java.base/sun.nio.fs.WindowsPath.parse(WindowsPath.java:92) ~[na:na]
+	at java.base/sun.nio.fs.WindowsFileSystem.getPath(WindowsFileSystem.java:232) ~[na:na]
+	at java.base/java.nio.file.Path.resolve(Path.java:515) ~[na:na]
+	at gg.jte.resolve.DirectoryCodeResolver.getLastModified(DirectoryCodeResolver.java:54) ~[jte-3.1.16.jar:na]
+	at gg.jte.compiler.TemplateCompiler.initTemplateDependencies(TemplateCompiler.java:228) ~[jte-3.1.16.jar:na]
+	at gg.jte.compiler.TemplateCompiler.generate(TemplateCompiler.java:167) ~[jte-3.1.16.jar:na]
+	at gg.jte.compiler.TemplateCompiler.precompile(TemplateCompiler.java:93) ~[jte-3.1.16.jar:na]
+	at gg.jte.compiler.TemplateCompiler.load(TemplateCompiler.java:50) ~[jte-3.1.16.jar:na]
+	at gg.jte.TemplateEngine.lambda$resolveTemplateOnDemand$0(TemplateEngine.java:354) ~[jte-runtime-3.1.16.jar:na]
+	at java.base/java.util.concurrent.ConcurrentHashMap.compute(ConcurrentHashMap.java:1916) ~[na:na]
+	at gg.jte.TemplateEngine.resolveTemplateOnDemand(TemplateEngine.java:347) ~[jte-runtime-3.1.16.jar:na]
+	at gg.jte.TemplateEngine.resolveTemplate(TemplateEngine.java:337) ~[jte-runtime-3.1.16.jar:na]
+	at gg.jte.TemplateEngine.hasTemplate(TemplateEngine.java:264) ~[jte-runtime-3.1.16.jar:na]
+	at gg.jte.springframework.boot.autoconfigure.JteView.checkResource(JteView.java:22) ~[jte-spring-boot-starter-3-3.1.16.jar:na]
+	at org.springframework.web.servlet.view.UrlBasedViewResolver.loadView(UrlBasedViewResolver.java:554) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at org.springframework.web.servlet.view.AbstractCachingViewResolver.createView(AbstractCachingViewResolver.java:275) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at org.springframework.web.servlet.view.UrlBasedViewResolver.createView(UrlBasedViewResolver.java:493) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at org.springframework.web.servlet.view.AbstractCachingViewResolver.resolveViewName(AbstractCachingViewResolver.java:184) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at org.springframework.web.servlet.view.ContentNegotiatingViewResolver.getCandidateViews(ContentNegotiatingViewResolver.java:316) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at org.springframework.web.servlet.view.ContentNegotiatingViewResolver.resolveViewName(ContentNegotiatingViewResolver.java:229) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at org.springframework.web.servlet.DispatcherServlet.resolveViewNameInternal(DispatcherServlet.java:1484) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at org.springframework.web.servlet.DispatcherServlet.resolveViewName(DispatcherServlet.java:1477) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at org.springframework.web.servlet.DispatcherServlet.render(DispatcherServlet.java:1410) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at org.springframework.web.servlet.DispatcherServlet.processDispatchResult(DispatcherServlet.java:1168) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1106) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:903) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:564) ~[tomcat-embed-core-10.1.50.jar:6.0]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658) ~[tomcat-embed-core-10.1.50.jar:6.0]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51) ~[tomcat-embed-websocket-10.1.50.jar:10.1.50]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-6.2.15.jar:6.2.15]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.15.jar:6.2.15]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-6.2.15.jar:6.2.15]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.15.jar:6.2.15]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-6.2.15.jar:6.2.15]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.15.jar:6.2.15]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:88) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:113) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:83) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:72) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1774) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:973) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:491) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at java.base/java.lang.Thread.run(Thread.java:840) ~[na:na]
+
+2026-01-28T12:26:47.263+09:00  INFO 3160 --- [http-nio-8080-exec-3] c.carmoneypit.engine.web.PSeoController  : Request for honda / cr-v / vtc-actuator
+2026-01-28T12:26:47.264+09:00  INFO 3160 --- [http-nio-8080-exec-3] c.carmoneypit.engine.web.PSeoController  : Car Found ID: honda_crv_rm
+2026-01-28T12:26:47.264+09:00  INFO 3160 --- [http-nio-8080-exec-3] c.carmoneypit.engine.web.PSeoController  : Found MajorFaultsData entry.
+2026-01-28T12:26:47.264+09:00  INFO 3160 --- [http-nio-8080-exec-3] c.carmoneypit.engine.web.PSeoController  : Searching for keyword: vtc actuator
+2026-01-28T12:26:47.264+09:00  INFO 3160 --- [http-nio-8080-exec-3] c.carmoneypit.engine.web.PSeoController  : Matched on component: vtc actuator
+2026-01-28T12:26:47.264+09:00 ERROR 3160 --- [http-nio-8080-exec-3] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: java.nio.file.InvalidPathException: Illegal char <:> at index 20: SUCCESS! Found fault: VTC Actuator
+DEBUG MODE
+Request for honda / cr-v / vtc-actuator
+Car Found ID: honda_crv_rm
+Found MajorFaultsData entry.
+Searching for keyword: vtc actuator
+Matched on component: vtc actuator
+.jte] with root cause
+
+java.nio.file.InvalidPathException: Illegal char <:> at index 20: SUCCESS! Found fault: VTC Actuator
+DEBUG MODE
+Request for honda / cr-v / vtc-actuator
+Car Found ID: honda_crv_rm
+Found MajorFaultsData entry.
+Searching for keyword: vtc actuator
+Matched on component: vtc actuator
+.jte
+	at java.base/sun.nio.fs.WindowsPathParser.normalize(WindowsPathParser.java:182) ~[na:na]
+	at java.base/sun.nio.fs.WindowsPathParser.parse(WindowsPathParser.java:153) ~[na:na]
+	at java.base/sun.nio.fs.WindowsPathParser.parse(WindowsPathParser.java:77) ~[na:na]
+	at java.base/sun.nio.fs.WindowsPath.parse(WindowsPath.java:92) ~[na:na]
+	at java.base/sun.nio.fs.WindowsFileSystem.getPath(WindowsFileSystem.java:232) ~[na:na]
+	at java.base/java.nio.file.Path.resolve(Path.java:515) ~[na:na]
+	at gg.jte.resolve.DirectoryCodeResolver.getLastModified(DirectoryCodeResolver.java:54) ~[jte-3.1.16.jar:na]
+	at gg.jte.compiler.TemplateCompiler.initTemplateDependencies(TemplateCompiler.java:228) ~[jte-3.1.16.jar:na]
+	at gg.jte.compiler.TemplateCompiler.generate(TemplateCompiler.java:167) ~[jte-3.1.16.jar:na]
+	at gg.jte.compiler.TemplateCompiler.precompile(TemplateCompiler.java:93) ~[jte-3.1.16.jar:na]
+	at gg.jte.compiler.TemplateCompiler.load(TemplateCompiler.java:50) ~[jte-3.1.16.jar:na]
+	at gg.jte.TemplateEngine.lambda$resolveTemplateOnDemand$0(TemplateEngine.java:354) ~[jte-runtime-3.1.16.jar:na]
+	at java.base/java.util.concurrent.ConcurrentHashMap.compute(ConcurrentHashMap.java:1916) ~[na:na]
+	at gg.jte.TemplateEngine.resolveTemplateOnDemand(TemplateEngine.java:347) ~[jte-runtime-3.1.16.jar:na]
+	at gg.jte.TemplateEngine.resolveTemplate(TemplateEngine.java:337) ~[jte-runtime-3.1.16.jar:na]
+	at gg.jte.TemplateEngine.hasTemplate(TemplateEngine.java:264) ~[jte-runtime-3.1.16.jar:na]
+	at gg.jte.springframework.boot.autoconfigure.JteView.checkResource(JteView.java:22) ~[jte-spring-boot-starter-3-3.1.16.jar:na]
+	at org.springframework.web.servlet.view.UrlBasedViewResolver.loadView(UrlBasedViewResolver.java:554) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at org.springframework.web.servlet.view.AbstractCachingViewResolver.createView(AbstractCachingViewResolver.java:275) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at org.springframework.web.servlet.view.UrlBasedViewResolver.createView(UrlBasedViewResolver.java:493) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at org.springframework.web.servlet.view.AbstractCachingViewResolver.resolveViewName(AbstractCachingViewResolver.java:184) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at org.springframework.web.servlet.view.ContentNegotiatingViewResolver.getCandidateViews(ContentNegotiatingViewResolver.java:316) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at org.springframework.web.servlet.view.ContentNegotiatingViewResolver.resolveViewName(ContentNegotiatingViewResolver.java:229) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at org.springframework.web.servlet.DispatcherServlet.resolveViewNameInternal(DispatcherServlet.java:1484) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at org.springframework.web.servlet.DispatcherServlet.resolveViewName(DispatcherServlet.java:1477) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at org.springframework.web.servlet.DispatcherServlet.render(DispatcherServlet.java:1410) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at org.springframework.web.servlet.DispatcherServlet.processDispatchResult(DispatcherServlet.java:1168) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1106) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:903) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:564) ~[tomcat-embed-core-10.1.50.jar:6.0]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658) ~[tomcat-embed-core-10.1.50.jar:6.0]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51) ~[tomcat-embed-websocket-10.1.50.jar:10.1.50]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-6.2.15.jar:6.2.15]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.15.jar:6.2.15]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-6.2.15.jar:6.2.15]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.15.jar:6.2.15]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-6.2.15.jar:6.2.15]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.15.jar:6.2.15]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:88) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:113) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:83) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:72) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1774) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:973) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:491) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at java.base/java.lang.Thread.run(Thread.java:840) ~[na:na]
+
+2026-01-28T12:28:04.250+09:00  INFO 1264 --- [main] com.carmoneypit.CarMoneyPitApplication   : Starting CarMoneyPitApplication using Java 17.0.17 with PID 1264 (C:\Development\Owner\CarMoneyPit\build\classes\java\main started by tlsgu in C:\Development\Owner\CarMoneyPit)
+2026-01-28T12:28:04.252+09:00 DEBUG 1264 --- [main] com.carmoneypit.CarMoneyPitApplication   : Running with Spring Boot v3.5.10, Spring v6.2.15
+2026-01-28T12:28:04.253+09:00  INFO 1264 --- [main] com.carmoneypit.CarMoneyPitApplication   : No active profile set, falling back to 1 default profile: "default"
+2026-01-28T12:28:05.199+09:00  INFO 1264 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-01-28T12:28:05.212+09:00  INFO 1264 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-01-28T12:28:05.212+09:00  INFO 1264 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.50]
+2026-01-28T12:28:05.265+09:00  INFO 1264 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-01-28T12:28:05.265+09:00  INFO 1264 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 964 ms
+2026-01-28T12:28:05.689+09:00  WARN 1264 --- [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'
+2026-01-28T12:28:05.701+09:00  INFO 1264 --- [main] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2026-01-28T12:28:05.718+09:00 ERROR 1264 --- [main] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 8080 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 8080 or configure this application to listen on another port.
+
+2026-01-28T12:28:42.947+09:00  INFO 2492 --- [main] com.carmoneypit.CarMoneyPitApplication   : Starting CarMoneyPitApplication using Java 17.0.17 with PID 2492 (C:\Development\Owner\CarMoneyPit\build\classes\java\main started by tlsgu in C:\Development\Owner\CarMoneyPit)
+2026-01-28T12:28:42.950+09:00 DEBUG 2492 --- [main] com.carmoneypit.CarMoneyPitApplication   : Running with Spring Boot v3.5.10, Spring v6.2.15
+2026-01-28T12:28:42.950+09:00  INFO 2492 --- [main] com.carmoneypit.CarMoneyPitApplication   : No active profile set, falling back to 1 default profile: "default"
+2026-01-28T12:28:43.678+09:00  INFO 2492 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-01-28T12:28:43.690+09:00  INFO 2492 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-01-28T12:28:43.690+09:00  INFO 2492 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.50]
+2026-01-28T12:28:43.734+09:00  INFO 2492 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-01-28T12:28:43.735+09:00  INFO 2492 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 743 ms
+2026-01-28T12:28:44.120+09:00  INFO 2492 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2026-01-28T12:28:44.126+09:00  INFO 2492 --- [main] com.carmoneypit.CarMoneyPitApplication   : Started CarMoneyPitApplication in 1.576 seconds (process running for 1.846)
+2026-01-28T12:28:58.769+09:00  INFO 2492 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-01-28T12:28:58.769+09:00  INFO 2492 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-01-28T12:28:58.770+09:00  INFO 2492 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-01-28T12:28:58.802+09:00  INFO 2492 --- [http-nio-8080-exec-1] c.carmoneypit.engine.web.PSeoController  : Request for ford / f-150 / cam-phasers
+2026-01-28T12:28:58.803+09:00  INFO 2492 --- [http-nio-8080-exec-1] c.carmoneypit.engine.web.PSeoController  : Car Found ID: ford_f150_13th
+2026-01-28T12:28:58.803+09:00  INFO 2492 --- [http-nio-8080-exec-1] c.carmoneypit.engine.web.PSeoController  : Found MajorFaultsData entry.
+2026-01-28T12:28:58.803+09:00  INFO 2492 --- [http-nio-8080-exec-1] c.carmoneypit.engine.web.PSeoController  : Searching for keyword: cam phasers
+2026-01-28T12:28:58.803+09:00  INFO 2492 --- [http-nio-8080-exec-1] c.carmoneypit.engine.web.PSeoController  : Matched on component: cam phasers
+2026-01-28T12:28:58.902+09:00  INFO 2492 --- [http-nio-8080-exec-2] c.carmoneypit.engine.web.PSeoController  : Request for honda / cr-v / vtc-actuator
+2026-01-28T12:28:58.902+09:00  INFO 2492 --- [http-nio-8080-exec-2] c.carmoneypit.engine.web.PSeoController  : Car Found ID: honda_crv_rm
+2026-01-28T12:28:58.902+09:00  INFO 2492 --- [http-nio-8080-exec-2] c.carmoneypit.engine.web.PSeoController  : Found MajorFaultsData entry.
+2026-01-28T12:28:58.902+09:00  INFO 2492 --- [http-nio-8080-exec-2] c.carmoneypit.engine.web.PSeoController  : Searching for keyword: vtc actuator
+2026-01-28T12:28:58.902+09:00  INFO 2492 --- [http-nio-8080-exec-2] c.carmoneypit.engine.web.PSeoController  : Matched on component: vtc actuator
+2026-01-28T12:29:15.371+09:00  INFO 2492 --- [http-nio-8080-exec-3] c.carmoneypit.engine.web.PSeoController  : Request for subaru / forester / oil-consumption
+2026-01-28T12:29:15.371+09:00  INFO 2492 --- [http-nio-8080-exec-3] c.carmoneypit.engine.web.PSeoController  : Car Found ID: subaru_forester_sj
+2026-01-28T12:29:15.371+09:00  INFO 2492 --- [http-nio-8080-exec-3] c.carmoneypit.engine.web.PSeoController  : Found MajorFaultsData entry.
+2026-01-28T12:29:15.371+09:00  INFO 2492 --- [http-nio-8080-exec-3] c.carmoneypit.engine.web.PSeoController  : Searching for keyword: oil consumption
+2026-01-28T12:29:15.372+09:00  INFO 2492 --- [http-nio-8080-exec-3] c.carmoneypit.engine.web.PSeoController  : Checked component: cvt transmission | Match: false
+2026-01-28T12:29:15.372+09:00  INFO 2492 --- [http-nio-8080-exec-3] c.carmoneypit.engine.web.PSeoController  : Matched on component: oil consumption
+2026-01-28T12:29:35.836+09:00  INFO 2492 --- [http-nio-8080-exec-4] c.carmoneypit.engine.web.PSeoController  : Request for ford / f-150 / cam-phasers
+2026-01-28T12:29:35.836+09:00  INFO 2492 --- [http-nio-8080-exec-4] c.carmoneypit.engine.web.PSeoController  : Car Found ID: ford_f150_13th
+2026-01-28T12:29:35.836+09:00  INFO 2492 --- [http-nio-8080-exec-4] c.carmoneypit.engine.web.PSeoController  : Found MajorFaultsData entry.
+2026-01-28T12:29:35.836+09:00  INFO 2492 --- [http-nio-8080-exec-4] c.carmoneypit.engine.web.PSeoController  : Searching for keyword: cam phasers
+2026-01-28T12:29:35.837+09:00  INFO 2492 --- [http-nio-8080-exec-4] c.carmoneypit.engine.web.PSeoController  : Matched on component: cam phasers
