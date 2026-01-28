@@ -35,9 +35,8 @@
                 <h2 style="font-size: 2rem; font-weight: 800; margin-bottom: 2rem; text-align: center;">Expertise & Methodology</h2>
                 <div style="max-width: 800px; margin: 0 auto;">
                     <p style="opacity: 0.8; line-height: 1.8; margin-bottom: 1.5rem;">
-                        Our core algorithm has been developed in consultation with <strong>ASE-certified master mechanics</strong> 
-                        and <strong>financial analysts</strong>. This ensures that every "verdict" aligns with both mechanical reality 
-                        and economic common sense.
+                        Our core algorithm utilizes <strong>repair industry data</strong> and <strong>financial actuarial models</strong>. 
+                        This ensures that every "verdict" aligns with documented mechanical labor times and market depreciation curves.
                     </p>
                     <p style="opacity: 0.8; line-height: 1.8;">
                         Data is sourced from official NHTSA databases, Kelley Blue Book market indices, and proprietary analysis of 

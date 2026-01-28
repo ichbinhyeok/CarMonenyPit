@@ -23,7 +23,7 @@
         <!-- 1. The Hook (Hero) -->
         <header style="text-align: center; margin-bottom: 5rem;">
             <div style="display: inline-flex; align-items: center; gap: 0.5rem; background: #f0fdf4; border: 1px solid #bbf7d0; padding: 0.5rem 1rem; border-radius: 99px; color: #166534; font-size: 0.8rem; font-weight: 700; margin-bottom: 2rem;">
-                <span style="font-size: 1rem;">✓</span> EXPERT VERIFIED METHODOLOGY
+                <span style="font-size: 1rem;">✓</span> ACTUARIAL ALGORITHM APPLIED
             </div>
             <div style="font-size: 0.9rem; color: #d91b1b; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 1rem;">
                 Actuarial Verdict for ${car.brand()} Owners
@@ -35,6 +35,7 @@
             <div style="display: inline-flex; flex-direction: column; align-items: center; background: #fff; border: 2px solid #000; padding: 1.5rem 3rem; border-radius: 16px; box-shadow: 8px 8px 0px #000;">
                 <span style="font-size: 1rem; color: #666; font-weight: 600; text-transform: uppercase;">Estimated Repair Cost</span>
                 <span style="font-size: 3.5rem; font-weight: 900; color: #000; line-height: 1;">$${String.format("%,.0f", fault.repairCost())}</span>
+                <span style="font-size: 0.7rem; color: #999; margin-top: 0.5rem; font-weight: 600;">(Est. National Avg.)</span>
             </div>
         </header>
 
@@ -105,6 +106,19 @@
                     "${fault.verdictImplication()}"
                 </p>
             </div>
+        </div>
+
+        <!-- 3. Symptom Matching (Instant Trust / UX) -->
+        <div style="background: #fff; border-left: 6px solid #F59E0B; padding: 2rem; margin-bottom: 4rem; text-align: left; box-shadow: 0 10px 30px rgba(0,0,0,0.03); border-radius: 8px;">
+            <h3 style="font-size: 1.25rem; font-weight: 800; color: #78350F; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                <span style="font-size: 1.5rem;">🩺</span> Does it sound like this?
+            </h3>
+            <p style="font-size: 1.1rem; line-height: 1.6; color: #1F2937; margin-bottom: 0;">
+                Common symptoms for <strong>${fault.component()}</strong> failures in this model include: <br>
+                <span style="display: block; margin-top: 0.75rem; padding: 1rem; background: #FFFBEB; border-radius: 8px; font-weight: 600; font-style: italic; color: #92400E;">
+                    "${fault.symptoms()}"
+                </span>
+            </p>
         </div>
 
         <!-- 3. The Financial Trap (Educational Content) -->
