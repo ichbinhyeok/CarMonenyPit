@@ -1727,3 +1727,317 @@ java.lang.NullPointerException: Cannot invoke "java.util.List.size()" because "t
 2026-01-28T18:18:34.217+09:00  INFO 24736 --- [http-nio-8080-exec-9] c.carmoneypit.engine.web.PSeoController  : Request for acura / mdx / rod-bearing
 2026-01-28T18:39:53.237+09:00  INFO 24736 --- [http-nio-8080-exec-2] c.carmoneypit.engine.web.PSeoController  : Request for kia / sportage / theta-ii-engine-risk
 2026-01-28T18:39:53.238+09:00  WARN 24736 --- [http-nio-8080-exec-2] c.carmoneypit.engine.web.PSeoController  : Fault not found: theta-ii-engine-risk
+2026-01-28T18:53:43.066+09:00 ERROR 24736 --- [http-nio-8080-exec-2] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: gg.jte.TemplateException: Failed to compile template, error at index.jte:1
+C:\Development\Owner\CarMoneyPit\jte-classes\gg\jte\generated\ondemand\JteindexGenerated.java:2: error: package com.carmoneypit.engine.api.InputModels does not exist
+import com.carmoneypit.engine.api.InputModels.VehicleType;
+                                             ^
+C:\Development\Owner\CarMoneyPit\jte-classes\gg\jte\generated\ondemand\JteindexGenerated.java:3: error: package com.carmoneypit.engine.api.InputModels does not exist
+import com.carmoneypit.engine.api.InputModels.CarBrand;
+                                             ^
+C:\Development\Owner\CarMoneyPit\jte-classes\gg\jte\generated\ondemand\JteindexGenerated.java:13: error: cannot find symbol
+				for (CarBrand brand : CarBrand.values()) {
+				                      ^
+  symbol: variable CarBrand
+C:\Development\Owner\CarMoneyPit\jte-classes\gg\jte\generated\ondemand\JteindexGenerated.java:13: error: cannot find symbol
+				for (CarBrand brand : CarBrand.values()) {
+				     ^
+  symbol: class CarBrand
+4 errors
+] with root cause
+
+gg.jte.TemplateException: Failed to compile template, error at index.jte:1
+C:\Development\Owner\CarMoneyPit\jte-classes\gg\jte\generated\ondemand\JteindexGenerated.java:2: error: package com.carmoneypit.engine.api.InputModels does not exist
+import com.carmoneypit.engine.api.InputModels.VehicleType;
+                                             ^
+C:\Development\Owner\CarMoneyPit\jte-classes\gg\jte\generated\ondemand\JteindexGenerated.java:3: error: package com.carmoneypit.engine.api.InputModels does not exist
+import com.carmoneypit.engine.api.InputModels.CarBrand;
+                                             ^
+C:\Development\Owner\CarMoneyPit\jte-classes\gg\jte\generated\ondemand\JteindexGenerated.java:13: error: cannot find symbol
+				for (CarBrand brand : CarBrand.values()) {
+				                      ^
+  symbol: variable CarBrand
+C:\Development\Owner\CarMoneyPit\jte-classes\gg\jte\generated\ondemand\JteindexGenerated.java:13: error: cannot find symbol
+				for (CarBrand brand : CarBrand.values()) {
+				     ^
+  symbol: class CarBrand
+4 errors
+
+	at gg.jte.compiler.java.JavaClassCompiler.runCompiler(JavaClassCompiler.java:49) ~[jte-3.1.16.jar:na]
+	at gg.jte.compiler.java.JavaClassCompiler.compile(JavaClassCompiler.java:38) ~[jte-3.1.16.jar:na]
+	at gg.jte.compiler.TemplateCompiler.precompileClasses(TemplateCompiler.java:114) ~[jte-3.1.16.jar:na]
+	at gg.jte.compiler.TemplateCompiler.hotReload(TemplateCompiler.java:60) ~[jte-3.1.16.jar:na]
+	at gg.jte.TemplateEngine.lambda$resolveTemplateOnDemand$0(TemplateEngine.java:356) ~[jte-runtime-3.1.16.jar:na]
+	at java.base/java.util.concurrent.ConcurrentHashMap.compute(ConcurrentHashMap.java:1940) ~[na:na]
+	at gg.jte.TemplateEngine.resolveTemplateOnDemand(TemplateEngine.java:347) ~[jte-runtime-3.1.16.jar:na]
+	at gg.jte.TemplateEngine.resolveTemplate(TemplateEngine.java:337) ~[jte-runtime-3.1.16.jar:na]
+	at gg.jte.TemplateEngine.render(TemplateEngine.java:228) ~[jte-runtime-3.1.16.jar:na]
+	at gg.jte.springframework.boot.autoconfigure.JteView.renderMergedTemplateModel(JteView.java:31) ~[jte-spring-boot-starter-3-3.1.16.jar:na]
+	at org.springframework.web.servlet.view.AbstractTemplateView.renderMergedOutputModel(AbstractTemplateView.java:181) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at org.springframework.web.servlet.view.AbstractView.render(AbstractView.java:314) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at org.springframework.web.servlet.DispatcherServlet.render(DispatcherServlet.java:1438) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at org.springframework.web.servlet.DispatcherServlet.processDispatchResult(DispatcherServlet.java:1168) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1106) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:903) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:564) ~[tomcat-embed-core-10.1.50.jar:6.0]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658) ~[tomcat-embed-core-10.1.50.jar:6.0]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51) ~[tomcat-embed-websocket-10.1.50.jar:10.1.50]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-6.2.15.jar:6.2.15]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.15.jar:6.2.15]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-6.2.15.jar:6.2.15]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.15.jar:6.2.15]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-6.2.15.jar:6.2.15]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.15.jar:6.2.15]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:88) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:113) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:83) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:72) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1774) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:973) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:491) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at java.base/java.lang.Thread.run(Thread.java:840) ~[na:na]
+
+2026-01-28T18:56:57.071+09:00 ERROR 24736 --- [http-nio-8080-exec-5] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: gg.jte.TemplateException: Failed to compile template, error at index.jte:1
+C:\Development\Owner\CarMoneyPit\jte-classes\gg\jte\generated\ondemand\JteindexGenerated.java:2: error: package com.carmoneypit.engine.api.InputModels does not exist
+import com.carmoneypit.engine.api.InputModels.VehicleType;
+                                             ^
+C:\Development\Owner\CarMoneyPit\jte-classes\gg\jte\generated\ondemand\JteindexGenerated.java:3: error: package com.carmoneypit.engine.api.InputModels does not exist
+import com.carmoneypit.engine.api.InputModels.CarBrand;
+                                             ^
+C:\Development\Owner\CarMoneyPit\jte-classes\gg\jte\generated\ondemand\JteindexGenerated.java:13: error: cannot find symbol
+				for (CarBrand brand : CarBrand.values()) {
+				                      ^
+  symbol: variable CarBrand
+C:\Development\Owner\CarMoneyPit\jte-classes\gg\jte\generated\ondemand\JteindexGenerated.java:13: error: cannot find symbol
+				for (CarBrand brand : CarBrand.values()) {
+				     ^
+  symbol: class CarBrand
+4 errors
+] with root cause
+
+gg.jte.TemplateException: Failed to compile template, error at index.jte:1
+C:\Development\Owner\CarMoneyPit\jte-classes\gg\jte\generated\ondemand\JteindexGenerated.java:2: error: package com.carmoneypit.engine.api.InputModels does not exist
+import com.carmoneypit.engine.api.InputModels.VehicleType;
+                                             ^
+C:\Development\Owner\CarMoneyPit\jte-classes\gg\jte\generated\ondemand\JteindexGenerated.java:3: error: package com.carmoneypit.engine.api.InputModels does not exist
+import com.carmoneypit.engine.api.InputModels.CarBrand;
+                                             ^
+C:\Development\Owner\CarMoneyPit\jte-classes\gg\jte\generated\ondemand\JteindexGenerated.java:13: error: cannot find symbol
+				for (CarBrand brand : CarBrand.values()) {
+				                      ^
+  symbol: variable CarBrand
+C:\Development\Owner\CarMoneyPit\jte-classes\gg\jte\generated\ondemand\JteindexGenerated.java:13: error: cannot find symbol
+				for (CarBrand brand : CarBrand.values()) {
+				     ^
+  symbol: class CarBrand
+4 errors
+
+	at gg.jte.compiler.java.JavaClassCompiler.runCompiler(JavaClassCompiler.java:49) ~[jte-3.1.16.jar:na]
+	at gg.jte.compiler.java.JavaClassCompiler.compile(JavaClassCompiler.java:38) ~[jte-3.1.16.jar:na]
+	at gg.jte.compiler.TemplateCompiler.precompileClasses(TemplateCompiler.java:114) ~[jte-3.1.16.jar:na]
+	at gg.jte.compiler.TemplateCompiler.precompile(TemplateCompiler.java:94) ~[jte-3.1.16.jar:na]
+	at gg.jte.compiler.TemplateCompiler.load(TemplateCompiler.java:50) ~[jte-3.1.16.jar:na]
+	at gg.jte.TemplateEngine.lambda$resolveTemplateOnDemand$0(TemplateEngine.java:354) ~[jte-runtime-3.1.16.jar:na]
+	at java.base/java.util.concurrent.ConcurrentHashMap.compute(ConcurrentHashMap.java:1955) ~[na:na]
+	at gg.jte.TemplateEngine.resolveTemplateOnDemand(TemplateEngine.java:347) ~[jte-runtime-3.1.16.jar:na]
+	at gg.jte.TemplateEngine.resolveTemplate(TemplateEngine.java:337) ~[jte-runtime-3.1.16.jar:na]
+	at gg.jte.TemplateEngine.render(TemplateEngine.java:228) ~[jte-runtime-3.1.16.jar:na]
+	at gg.jte.springframework.boot.autoconfigure.JteView.renderMergedTemplateModel(JteView.java:31) ~[jte-spring-boot-starter-3-3.1.16.jar:na]
+	at org.springframework.web.servlet.view.AbstractTemplateView.renderMergedOutputModel(AbstractTemplateView.java:181) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at org.springframework.web.servlet.view.AbstractView.render(AbstractView.java:314) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at org.springframework.web.servlet.DispatcherServlet.render(DispatcherServlet.java:1438) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at org.springframework.web.servlet.DispatcherServlet.processDispatchResult(DispatcherServlet.java:1168) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1106) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:903) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:564) ~[tomcat-embed-core-10.1.50.jar:6.0]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658) ~[tomcat-embed-core-10.1.50.jar:6.0]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51) ~[tomcat-embed-websocket-10.1.50.jar:10.1.50]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-6.2.15.jar:6.2.15]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.15.jar:6.2.15]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-6.2.15.jar:6.2.15]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.15.jar:6.2.15]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-6.2.15.jar:6.2.15]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.15.jar:6.2.15]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:88) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:113) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:83) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:72) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1774) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:973) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:491) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at java.base/java.lang.Thread.run(Thread.java:840) ~[na:na]
+
+2026-01-28T18:56:57.093+09:00  WARN 24736 --- [http-nio-8080-exec-5] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.http.converter.HttpMessageNotWritableException: No converter for [class java.util.LinkedHashMap] with preset Content-Type 'text/html;charset=UTF-8']
+2026-01-28T19:08:17.751+09:00  INFO 30560 --- [main] com.carmoneypit.CarMoneyPitApplication   : Starting CarMoneyPitApplication using Java 17.0.17 with PID 30560 (C:\Development\Owner\CarMoneyPit\build\classes\java\main started by tlsgu in C:\Development\Owner\CarMoneyPit)
+2026-01-28T19:08:17.752+09:00 DEBUG 30560 --- [main] com.carmoneypit.CarMoneyPitApplication   : Running with Spring Boot v3.5.10, Spring v6.2.15
+2026-01-28T19:08:17.754+09:00  INFO 30560 --- [main] com.carmoneypit.CarMoneyPitApplication   : No active profile set, falling back to 1 default profile: "default"
+2026-01-28T19:08:18.934+09:00  INFO 30560 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-01-28T19:08:18.949+09:00  INFO 30560 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-01-28T19:08:18.949+09:00  INFO 30560 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.50]
+2026-01-28T19:08:19.020+09:00  INFO 30560 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-01-28T19:08:19.020+09:00  INFO 30560 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1218 ms
+2026-01-28T19:08:19.201+09:00  INFO 30560 --- [main] c.c.engine.service.CarDataService        : Loaded 50 car models, 50 reliability profiles, 50 market profiles, 50 fault profiles
+2026-01-28T19:08:19.358+09:00  WARN 30560 --- [main] o.s.w.s.resource.ResourceHandlerUtils    : Appended trailing slash to static resource location: classpath:/static/favicon.ico/
+2026-01-28T19:08:19.358+09:00  WARN 30560 --- [main] o.s.w.s.resource.ResourceHandlerUtils    : Appended trailing slash to static resource location: classpath:/static/favicon.png/
+2026-01-28T19:08:19.519+09:00  INFO 30560 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2026-01-28T19:08:19.526+09:00  INFO 30560 --- [main] com.carmoneypit.CarMoneyPitApplication   : Started CarMoneyPitApplication in 2.259 seconds (process running for 2.552)
+2026-01-28T19:08:38.053+09:00  INFO 30560 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-01-28T19:08:38.053+09:00  INFO 30560 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-01-28T19:08:38.054+09:00  INFO 30560 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-01-28T19:08:46.729+09:00  INFO 30560 --- [http-nio-8080-exec-3] c.carmoneypit.engine.web.PSeoController  : Request for ford / f150 / cam-phasers
+2026-01-28T19:10:00.863+09:00  INFO 30560 --- [http-nio-8080-exec-8] c.carmoneypit.engine.web.PSeoController  : Request for ford / f150 / cam-phasers
+2026-01-28T22:16:37.713+09:00  INFO 30560 --- [http-nio-8080-exec-1] c.carmoneypit.engine.web.PSeoController  : Request for acura / mdx / rod-bearing
+2026-01-28T22:18:19.988+09:00  WARN 30560 --- [http-nio-8080-exec-7] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'POST' is not supported]
+2026-01-28T22:19:52.812+09:00  INFO 30560 --- [http-nio-8080-exec-4] c.carmoneypit.engine.web.PSeoController  : Request for acura / mdx / rod-bearing
+2026-01-28T22:20:00.565+09:00  INFO 30560 --- [http-nio-8080-exec-6] c.carmoneypit.engine.web.PSeoController  : Request for acura / mdx / rod-bearing
+2026-01-28T22:20:49.771+09:00  INFO 30560 --- [http-nio-8080-exec-6] c.carmoneypit.engine.web.PSeoController  : Request for audi / a4 / water-pump
+2026-01-28T22:22:08.513+09:00  INFO 30560 --- [http-nio-8080-exec-1] c.carmoneypit.engine.web.PSeoController  : Request for audi / a4 / water-pump
+2026-01-28T22:22:37.911+09:00  WARN 30560 --- [http-nio-8080-exec-8] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'POST' is not supported]
+2026-01-28T22:25:39.156+09:00  INFO 30560 --- [http-nio-8080-exec-1] c.carmoneypit.engine.web.PSeoController  : Request for ford / f150 / cam-phaser
+2026-01-28T22:30:06.493+09:00  INFO 7588 --- [main] com.carmoneypit.CarMoneyPitApplication   : Starting CarMoneyPitApplication using Java 17.0.17 with PID 7588 (C:\Development\Owner\CarMoneyPit\build\classes\java\main started by tlsgu in C:\Development\Owner\CarMoneyPit)
+2026-01-28T22:30:06.497+09:00 DEBUG 7588 --- [main] com.carmoneypit.CarMoneyPitApplication   : Running with Spring Boot v3.5.10, Spring v6.2.15
+2026-01-28T22:30:06.498+09:00  INFO 7588 --- [main] com.carmoneypit.CarMoneyPitApplication   : No active profile set, falling back to 1 default profile: "default"
+2026-01-28T22:30:08.259+09:00  INFO 7588 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-01-28T22:30:08.291+09:00  INFO 7588 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-01-28T22:30:08.292+09:00  INFO 7588 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.50]
+2026-01-28T22:30:08.409+09:00  INFO 7588 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-01-28T22:30:08.409+09:00  INFO 7588 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1842 ms
+2026-01-28T22:30:08.718+09:00  INFO 7588 --- [main] c.c.engine.service.CarDataService        : Loaded 50 car models, 50 reliability profiles, 50 market profiles, 50 fault profiles
+2026-01-28T22:30:08.995+09:00  WARN 7588 --- [main] o.s.w.s.resource.ResourceHandlerUtils    : Appended trailing slash to static resource location: classpath:/static/favicon.ico/
+2026-01-28T22:30:08.995+09:00  WARN 7588 --- [main] o.s.w.s.resource.ResourceHandlerUtils    : Appended trailing slash to static resource location: classpath:/static/favicon.png/
+2026-01-28T22:30:09.345+09:00  INFO 7588 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2026-01-28T22:30:09.362+09:00  INFO 7588 --- [main] com.carmoneypit.CarMoneyPitApplication   : Started CarMoneyPitApplication in 3.589 seconds (process running for 4.052)
+2026-01-28T22:30:30.166+09:00  INFO 7588 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-01-28T22:30:30.166+09:00  INFO 7588 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-01-28T22:30:30.167+09:00  INFO 7588 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-01-28T22:31:03.729+09:00  INFO 17440 --- [main] com.carmoneypit.CarMoneyPitApplication   : Starting CarMoneyPitApplication using Java 17.0.17 with PID 17440 (C:\Development\Owner\CarMoneyPit\build\classes\java\main started by tlsgu in C:\Development\Owner\CarMoneyPit)
+2026-01-28T22:31:03.733+09:00 DEBUG 17440 --- [main] com.carmoneypit.CarMoneyPitApplication   : Running with Spring Boot v3.5.10, Spring v6.2.15
+2026-01-28T22:31:03.735+09:00  INFO 17440 --- [main] com.carmoneypit.CarMoneyPitApplication   : No active profile set, falling back to 1 default profile: "default"
+2026-01-28T22:31:05.286+09:00  INFO 17440 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-01-28T22:31:05.308+09:00  INFO 17440 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-01-28T22:31:05.309+09:00  INFO 17440 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.50]
+2026-01-28T22:31:05.400+09:00  INFO 17440 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-01-28T22:31:05.402+09:00  INFO 17440 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1595 ms
+2026-01-28T22:31:05.693+09:00  INFO 17440 --- [main] c.c.engine.service.CarDataService        : Loaded 50 car models, 50 reliability profiles, 50 market profiles, 50 fault profiles
+2026-01-28T22:31:05.928+09:00  WARN 17440 --- [main] o.s.w.s.resource.ResourceHandlerUtils    : Appended trailing slash to static resource location: classpath:/static/favicon.ico/
+2026-01-28T22:31:05.929+09:00  WARN 17440 --- [main] o.s.w.s.resource.ResourceHandlerUtils    : Appended trailing slash to static resource location: classpath:/static/favicon.png/
+2026-01-28T22:31:06.138+09:00  INFO 17440 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2026-01-28T22:31:06.151+09:00  INFO 17440 --- [main] com.carmoneypit.CarMoneyPitApplication   : Started CarMoneyPitApplication in 3.164 seconds (process running for 3.707)
+2026-01-28T22:31:09.216+09:00  INFO 17440 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-01-28T22:31:09.216+09:00  INFO 17440 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-01-28T22:31:09.217+09:00  INFO 17440 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-01-28T22:31:09.267+09:00 ERROR 17440 --- [http-nio-8080-exec-1] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: java.lang.RuntimeException: Test error for custom 500 page] with root cause
+
+java.lang.RuntimeException: Test error for custom 500 page
+	at com.carmoneypit.engine.web.CustomErrorController.triggerError(CustomErrorController.java:34) ~[main/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569) ~[na:na]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:258) ~[spring-web-6.2.15.jar:6.2.15]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:191) ~[spring-web-6.2.15.jar:6.2.15]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:991) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:896) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:903) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:564) ~[tomcat-embed-core-10.1.50.jar:6.0]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658) ~[tomcat-embed-core-10.1.50.jar:6.0]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51) ~[tomcat-embed-websocket-10.1.50.jar:10.1.50]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-6.2.15.jar:6.2.15]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.15.jar:6.2.15]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-6.2.15.jar:6.2.15]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.15.jar:6.2.15]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-6.2.15.jar:6.2.15]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.15.jar:6.2.15]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:88) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:113) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:83) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:72) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1774) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:973) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:491) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at java.base/java.lang.Thread.run(Thread.java:840) ~[na:na]
+
+2026-01-28T22:32:09.079+09:00  INFO 28676 --- [main] com.carmoneypit.CarMoneyPitApplication   : Starting CarMoneyPitApplication using Java 17.0.17 with PID 28676 (C:\Development\Owner\CarMoneyPit\build\classes\java\main started by tlsgu in C:\Development\Owner\CarMoneyPit)
+2026-01-28T22:32:09.083+09:00 DEBUG 28676 --- [main] com.carmoneypit.CarMoneyPitApplication   : Running with Spring Boot v3.5.10, Spring v6.2.15
+2026-01-28T22:32:09.085+09:00  INFO 28676 --- [main] com.carmoneypit.CarMoneyPitApplication   : No active profile set, falling back to 1 default profile: "default"
+2026-01-28T22:32:10.598+09:00  INFO 28676 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-01-28T22:32:10.619+09:00  INFO 28676 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-01-28T22:32:10.619+09:00  INFO 28676 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.50]
+2026-01-28T22:32:10.700+09:00  INFO 28676 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-01-28T22:32:10.701+09:00  INFO 28676 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1545 ms
+2026-01-28T22:32:11.000+09:00  INFO 28676 --- [main] c.c.engine.service.CarDataService        : Loaded 50 car models, 50 reliability profiles, 50 market profiles, 50 fault profiles
+2026-01-28T22:32:11.226+09:00  WARN 28676 --- [main] o.s.w.s.resource.ResourceHandlerUtils    : Appended trailing slash to static resource location: classpath:/static/favicon.ico/
+2026-01-28T22:32:11.226+09:00  WARN 28676 --- [main] o.s.w.s.resource.ResourceHandlerUtils    : Appended trailing slash to static resource location: classpath:/static/favicon.png/
+2026-01-28T22:32:11.433+09:00  INFO 28676 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2026-01-28T22:32:11.444+09:00  INFO 28676 --- [main] com.carmoneypit.CarMoneyPitApplication   : Started CarMoneyPitApplication in 3.143 seconds (process running for 3.693)
+2026-01-28T22:32:21.405+09:00  INFO 28676 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-01-28T22:32:21.405+09:00  INFO 28676 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-01-28T22:32:21.406+09:00  INFO 28676 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-01-28T22:43:40.773+09:00  WARN 28676 --- [http-nio-8080-exec-10] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'POST' is not supported]
+2026-01-28T22:50:42.788+09:00  INFO 28676 --- [http-nio-8080-exec-4] c.carmoneypit.engine.web.PSeoController  : Request for ford / f150 / cam-phaser
+2026-01-28T22:52:46.621+09:00  WARN 28676 --- [http-nio-8080-exec-3] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'POST' is not supported]

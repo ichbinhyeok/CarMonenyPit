@@ -66,15 +66,21 @@ public class RootController {
         addUrl(xml, baseUrl + "/about", today, "0.8");
         addUrl(xml, baseUrl + "/models", today, "0.9");
         addUrl(xml, baseUrl + "/methodology", today, "0.8");
+        addUrl(xml, baseUrl + "/privacy", today, "0.5");
+        addUrl(xml, baseUrl + "/terms", today, "0.5");
+
+        // Brand Pages (Unique)
+        java.util.Set<String> processedBrands = new java.util.HashSet<>();
 
         // Dynamic Pages
         for (CarModel car : dataService.getAllModels()) {
             String brandSlug = normalize(car.brand());
             String modelSlug = normalize(car.model());
 
-            // Brand listing (if we supported it explicitly, but /models/{brand} works via
-            // PSeoController)
-            addUrl(xml, baseUrl + "/models/" + brandSlug, today, "0.8");
+            // Brand listing - Only add once
+            if (processedBrands.add(brandSlug)) {
+                addUrl(xml, baseUrl + "/models/" + brandSlug, today, "0.8");
+            }
 
             // Model listing
             addUrl(xml, baseUrl + "/models/" + brandSlug + "/" + modelSlug, today, "0.9");

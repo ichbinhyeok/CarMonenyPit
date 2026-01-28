@@ -123,18 +123,24 @@
         ${content}
     </main>
 
-    <footer style="margin-top: auto; padding: 2rem; background-color: #1a1a1a; color: #666; font-size: 0.9rem; border-top: 1px solid #333;">
-        <div style="max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
-            <div>
-                &copy; 2026 AutoMoneyPit. All rights reserved.
+    <footer style="margin-top: auto; padding: 3rem 2rem; background-color: #1a1a1a; color: #666; font-size: 0.9rem; border-top: 1px solid #333;">
+        <div style="max-width: 1400px; margin: 0 auto;">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem;">
+                <div style="font-weight: 700; color: #888;">
+                    &copy; 2026 AutoMoneyPit. All rights reserved.
+                </div>
+                <div style="display: flex; gap: 1.5rem; flex-wrap: wrap;">
+                    <a href="/about" style="color: #888; text-decoration: none; transition: color 0.2s;">About Us</a>
+                    <a href="/models" style="color: #888; text-decoration: none; transition: color 0.2s;">Models</a>
+                    <a href="/about#expertise" style="color: #888; text-decoration: none; transition: color 0.2s;">Methodology</a>
+                    <a href="/contact" style="color: #888; text-decoration: none; transition: color 0.2s;">Contact</a>
+                    <a href="/privacy" style="color: #888; text-decoration: none; transition: color 0.2s;">Privacy</a>
+                    <a href="/terms" style="color: #888; text-decoration: none; transition: color 0.2s;">Terms</a>
+                </div>
             </div>
-            <div style="display: flex; gap: 1.5rem; flex-wrap: wrap;">
-                <a href="/about" style="color: #888; text-decoration: none; transition: color 0.2s;">About Us</a>
-                <a href="/models" style="color: #888; text-decoration: none; transition: color 0.2s;">Models</a>
-                <a href="/about#expertise" style="color: #888; text-decoration: none; transition: color 0.2s;">Methodology</a>
-                <a href="/contact" style="color: #888; text-decoration: none; transition: color 0.2s;">Contact</a>
-                <a href="/privacy" style="color: #888; text-decoration: none; transition: color 0.2s;">Privacy</a>
-                <a href="/terms" style="color: #888; text-decoration: none; transition: color 0.2s;">Terms</a>
+            
+            <div style="border-top: 1px solid #2a2a2a; padding-top: 1.5rem; font-size: 0.75rem; line-height: 1.6; color: #555; max-width: 800px;">
+                <strong>Affiliate Disclosure:</strong> AutoMoneyPit is a participant in various affiliate partnership programs. We may earn a commission when you click through links on our site and complete a lead form, request a quote, or make a purchase. This partnership allows us to maintain our proprietary actuarial engine and provide high-precision financial diagnostics free of charge to all vehicle owners. Our verdicts remain data-driven and objective, independent of our affiliate relationships.
             </div>
         </div>
     </footer>
