@@ -179,18 +179,18 @@ public class VerdictPresenter {
 
         switch (state) {
             case TIME_BOMB:
-                return "[COMING SOON] Exit Plan";
+                return "Get Instant Cash Offer";
             case STABLE:
                 if (hasQuote)
-                    return "[COMING SOON] Quote Verify";
+                    return "Verify Fair Repair Price";
                 if (isAccident)
-                    return "[COMING SOON] Appraisal";
-                return "[COMING SOON] Protection";
+                    return "Find Certified Shop";
+                return "Check RepairPal Estimate";
             case BORDERLINE:
             default:
                 if (hasQuote)
-                    return "[COMING SOON] Audit Prep";
-                return "[COMING SOON] Explore";
+                    return "Get 2nd Opinion";
+                return "Check Market Value";
         }
     }
 
@@ -203,23 +203,44 @@ public class VerdictPresenter {
 
         switch (state) {
             case TIME_BOMB:
-                return "Your asset is hemorrhaging value. Convert it to cash within 48 hours before the next total failure.";
+                return "Stop the bleeding. See exactly what your vehicle is worth in its current condition (even if broken).";
             case STABLE:
                 if (hasQuote)
-                    return "Verify your current estimate against market fair-price indices to ensure you aren't overpaying.";
+                    return "Ensure you aren't being overcharged. Compare your quote against the national average for this specific repair.";
                 if (isAccident)
-                    return "Asset remains viable. Connect with a mobile appraiser to get a professional damage summary.";
-                return "Asset efficiency verified. Find a specialist to execute a multi-year reliability hold.";
+                    return "Don't guess on damage. Connect with a certified facility to get an accurate, professional assessment.";
+                return "Your car is worth keeping. Find a trusted local mechanic to perform this repair at a fair price.";
             case BORDERLINE:
             default:
                 if (hasQuote)
-                    return "Compare immediate sell-out offers versus tiered financing plans for this specific repair.";
-                return "Asset is entering a high-variance window. Check local liquidation bids versus certified refurbishers.";
+                    return "This repair is risky. Get a second opinion to confirm the diagnosis before committing capital.";
+                return "The decision is close. Check the current private party value to see if repairing makes financial sense.";
         }
     }
 
     public String getLeadUrl(VerdictState state, EngineInput input, SimulationControls controls) {
-        // Partnership links currently under negotiation (3-day hold)
-        return "javascript:void(0)";
+        String brand = (input != null && input.brand() != null) ? input.brand().name() : "";
+        String model = (input != null && input.model() != null) ? input.model() : "";
+
+        // URL Encoding helper (basic)
+        String encodedBrand = brand.replace(" ", "-").toLowerCase();
+        String encodedModel = model.replace(" ", "-").toLowerCase();
+
+        switch (state) {
+            case TIME_BOMB:
+                // Direct to Peddle (Instant Cash Offer) - High Intent for "Junk/Sell"
+                // Ideally we would pass vehicle params if they supported query strings,
+                // but linking to the landing page is the best UX for now.
+                return "https://www.peddle.com/instant-offer";
+
+            case STABLE:
+                // Direct to RepairPal (Fair Price Estimator) - High Trust for "Fix"
+                return "https://repairpal.com/estimator";
+
+            case BORDERLINE:
+            default:
+                // Fallback: Check value on KBB or similar, or generic RepairPal
+                return "https://www.kbb.com/";
+        }
     }
 }

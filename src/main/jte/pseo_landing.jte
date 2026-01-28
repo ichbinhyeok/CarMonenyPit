@@ -38,7 +38,18 @@
             @endfor
         </nav>
         
-        <!-- 1. The Hook (Hero) -->
+        <!-- 1. The Hook (Hero) - Spintax Randomization -->
+        !{
+            // Simple deterministic randomization based on model name length to keep it consistent per page but varied across pages
+            int spinIndex = (car.model().length() + fault.component().length()) % 3;
+            String[] headlines = {
+                "Should You Fix the <span style=\"background: linear-gradient(120deg, #d91b1b33 0%, #d91b1b33 100%); background-repeat: no-repeat; background-size: 100% 40%; background-position: 0 90%;\">" + fault.component() + "</span><br>on Your " + car.model() + "?",
+                "Is the " + car.model() + " <span style=\"background: linear-gradient(120deg, #d91b1b33 0%, #d91b1b33 100%); background-repeat: no-repeat; background-size: 100% 40%; background-position: 0 90%;\">" + fault.component() + "</span><br>Worth Repairing in 2026?",
+                "<span style=\"background: linear-gradient(120deg, #d91b1b33 0%, #d91b1b33 100%); background-repeat: no-repeat; background-size: 100% 40%; background-position: 0 90%;\">" + fault.component() + "</span> Failure:<br>Fix or Sell Your " + car.model() + "?"
+            };
+            String headline = headlines[spinIndex];
+        }
+
         <header style="text-align: center; margin-bottom: 5rem;">
             <div style="display: inline-flex; align-items: center; gap: 0.5rem; background: #f0fdf4; border: 1px solid #bbf7d0; padding: 0.5rem 1rem; border-radius: 99px; color: #166534; font-size: 0.8rem; font-weight: 700; margin-bottom: 2rem;">
                 <span style="font-size: 1rem;">✓</span> ACTUARIAL ALGORITHM APPLIED
@@ -47,7 +58,7 @@
                 Actuarial Verdict for ${car.brand()} Owners
             </div>
             <h1 style="font-size: 3rem; font-weight: 800; line-height: 1.1; margin-bottom: 2rem; letter-spacing: -0.02em;">
-                Should You Fix the <span style="background: linear-gradient(120deg, #d91b1b33 0%, #d91b1b33 100%); background-repeat: no-repeat; background-size: 100% 40%; background-position: 0 90%;">${fault.component()}</span><br>on Your ${car.model()}?
+                $unsafe{headline}
             </h1>
             
             <div style="display: inline-flex; flex-direction: column; align-items: center; background: #fff; border: 2px solid #000; padding: 1.5rem 3rem; border-radius: 16px; box-shadow: 8px 8px 0px #000;">
