@@ -24,16 +24,18 @@
     <style>
         .verdict-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-            margin: 3rem 0;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
         }
-        @media (max-width: 768px) {
+        @media (max-width: 1024px) {
             .verdict-grid {
                 grid-template-columns: 1fr;
             }
+        }
+        @media (max-width: 768px) {
             .verdict-hero h1 {
-                font-size: 3.5rem !important;
+                font-size: clamp(2.5rem, 10vw, 3.5rem) !important;
             }
         }
         .delta-container {
@@ -131,14 +133,14 @@
             "${verdictExplanation}"
         </p>
         <style>
-            .main-verdict-title { font-size: 5rem; }
-            .verdict-intro { font-size: 1.25rem; }
-            @media (max-width: 768px) {
-                .main-verdict-title { font-size: 3rem !important; margin-bottom: 1rem !important; }
-                .verdict-intro { font-size: 1.1rem !important; margin-bottom: 2rem !important; }
-                .delta-container { padding: 1.5rem !important; flex-direction: column; align-items: flex-start !important; gap: 1rem; }
-                .delta-value { font-size: 2.25rem !important; }
-            }
+        .main-verdict-title { font-size: clamp(3rem, 12vw, 5rem); }
+        .verdict-intro { font-size: 1.25rem; }
+        @media (max-width: 768px) {
+            .main-verdict-title { font-size: clamp(2.25rem, 10vw, 3rem) !important; margin-bottom: 1rem !important; }
+            .verdict-intro { font-size: 1.1rem !important; margin-bottom: 1.5rem !important; padding: 0 0.5rem; }
+            .delta-container { padding: 1.25rem !important; flex-direction: column; align-items: flex-start !important; gap: 0.75rem; }
+            .delta-value { font-size: 2rem !important; }
+        }
         </style>
 
         @if(result.stayTotal() > result.moveTotal())
@@ -323,7 +325,7 @@
     </div>
 
     <!-- E-E-A-T Data Integrity Section -->
-    <div style="margin-top: 4rem; padding: 2.5rem; background: #f8fafc; border-radius: 24px; border: 1px solid #e2e8f0;" id="methodology-section">
+    <div style="margin-top: 3rem; padding: clamp(1.5rem, 5vw, 2.5rem); background: #f8fafc; border-radius: 24px; border: 1px solid #e2e8f0; overflow: hidden;" id="methodology-section">
         <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem;">
             <span style="font-size: 1.5rem;">🔬</span>
             <h4 style="font-size: 1.1rem; font-weight: 800; color: #0f172a; margin: 0;">Methodology & Data Integrity</h4>

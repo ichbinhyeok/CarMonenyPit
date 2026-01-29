@@ -65,8 +65,8 @@
             /* Sim Lab Layout */
             .sim-grid-revamped { 
                 display: grid; 
-                grid-template-columns: repeat(3, 1fr); 
-                gap: 2.5rem; 
+                grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); 
+                gap: 1.5rem; 
                 margin-top: 2rem; 
             }
             .sim-column { display: flex; flex-direction: column; gap: 1.5rem; }
@@ -194,8 +194,8 @@
                 backdrop-filter: blur(4px);
             }
 
-            @media (max-width: 900px) {
-                .sim-grid-revamped { grid-template-columns: 1fr; gap: 2rem; }
+            @media (max-width: 1024px) {
+                .sim-grid-revamped { grid-template-columns: 1fr; gap: 1.5rem; }
             }
 
             /* Sticky Bar Styles */
@@ -364,10 +364,10 @@
                             <div class="sim-column">
                                 <h4 style="color:var(--text-secondary); text-transform:uppercase; font-size: 0.75rem; letter-spacing:0.1em; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.5rem;">Strategy</h4>
 
-                                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-100 text-blue-700 text-xs font-semibold uppercase tracking-wider mb-4">
-                    <span class="w-2 h-2 rounded-full bg-blue-600 animate-pulse"></span>
-                    Market Liquidation Analysis
-                </div>
+                                <div style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.25rem 0.75rem; border-radius: 9999px; background-color: #eff6ff; border: 1px solid #dbeafe; color: #1d4ed8; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1rem;">
+                                    <span style="width: 0.5rem; height: 0.5rem; border-radius: 50%; background-color: #2563eb;"></span>
+                                    Market Liquidation Analysis
+                                </div>
                                 <div class="sim-item">
                                     <label>Target Retention</label>
                                     <div class="pill-group">

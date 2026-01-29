@@ -39,12 +39,13 @@
             }
 
             .hero-subtitle {
-                font-size: 1.25rem;
+                font-size: clamp(1rem, 4vw, 1.25rem);
                 color: var(--text-secondary);
                 font-weight: 500;
                 max-width: 600px;
-                margin: 0 auto 4rem;
+                margin: 0 auto 3rem;
                 line-height: 1.5;
+                padding: 0 1rem;
             }
 
             /* Modern Grid Layout */
@@ -161,9 +162,11 @@
             }
 
             @media (max-width: 768px) {
-                .form-grid-modern { grid-template-columns: 1fr; }
+                .modern-form-container { padding: 1.5rem; border-radius: 24px; }
+                .form-grid-modern { grid-template-columns: 1fr; gap: 1.5rem; }
                 .analyze-footer { grid-column: span 1; }
-                .hero-title { font-size: 3.5rem; }
+                .hero-title { font-size: clamp(2.5rem, 12vw, 4rem); }
+                .hero-section { padding: 2rem 1rem 4rem; }
             }
         </style>
     `,
@@ -263,7 +266,7 @@
         </section>
 
         <!-- Bento Secondary Cards -->
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; max-width: 1000px; margin: 0 auto 10rem;">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 1.5rem; max-width: 1000px; margin: 0 auto 10rem; padding: 0 1rem;">
             <div class="card info-card">
                 <div>
                     <div class="info-title">Global Data Correlated</div>
