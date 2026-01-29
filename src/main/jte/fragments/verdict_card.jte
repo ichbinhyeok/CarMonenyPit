@@ -183,9 +183,9 @@
 
             <!-- 3. Diagnostic Confidence -->
             <div class="insight-card">
-                <div class="insight-label">System Confidence</div>
-                <div class="insight-val" style="color: ${result.confidenceScore() > 85 ? "#10b981" : "#f59e0b"};">
-                    ${result.confidenceScore()}%
+                <div class="insight-label">Data Correlation</div>
+                <div class="insight-val" style="color: #10b981;">
+                    HIGH
                 </div>
                 <p style="font-size: 0.8rem; margin: 0; color: var(--text-secondary); font-weight: 600;">
                     Based on actuarial sample size and brand history.
@@ -194,41 +194,42 @@
         </div>
     </div>
 
-    <!-- Data Breakdown Grid -->
-    <div class="verdict-grid">
-        <!-- Left Column: Receipt -->
-        <div style="background: #fff; padding: 2.5rem; border-radius: 32px; border: 1px solid rgba(0,0,0,0.05); box-shadow: 0 4px 20px rgba(0,0,0,0.02);">
-            <h3 style="font-size: 0.9rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 2rem; color: var(--text-secondary);">
-                Market Risk Mapping
-            </h3>
-            @template.fragments.smart_receipt(items = result.costBreakdown())
+    <!-- Data Breakdown Layer: Liberated for impact -->
+    <div style="margin-top: 3rem; display: flex; flex-direction: column; gap: 2rem;">
+        
+        <!-- Top Half: Visceral Asset Bleed -->
+        <div class="bleed-gauge-container" style="max-width: 900px; margin: 0 auto; width: 100%;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div class="delta-label" style="color: #c53030; opacity: 1;">Asset Bleed Priority</div>
+                <div style="font-size: 1.25rem; font-weight: 800; color: #ef4444; display: flex; flex-direction: column; align-items: flex-end;">
+                    <span>-$${String.format("%,d", result.assetBleedAmount())}</span>
+                    <span style="font-size: 0.6rem; color: #b91c1c; opacity: 0.8; font-weight: 600;">(Est. 6-Mo Loss)</span>
+                </div>
+            </div>
+            <div class="bleed-gauge-bar">
+                <div class="bleed-gauge-fill" style="width: ${Math.min(100, (result.assetBleedAmount() / 5000.0) * 100)}%;"></div>
+            </div>
+            <p style="font-size: 0.85rem; color: #742a2a; font-weight: 600; line-height: 1.4; margin: 0; opacity: 0.8;">
+                Estimated capital melt over the next 180 days based on actuarial depreciation curves.
+            </p>
         </div>
 
-        <!-- Right Column: Critical Actions & Bleed -->
-        <div style="display: flex; flex-direction: column;">
-            
-            <!-- Visceral Asset Bleed Gauge -->
-            <div class="bleed-gauge-container">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <div class="delta-label" style="color: #c53030; opacity: 1;">Asset Bleed Priority</div>
-                    <div style="font-size: 1.25rem; font-weight: 800; color: #ef4444; display: flex; flex-direction: column; align-items: flex-end;">
-                        <span>-$${String.format("%,d", result.assetBleedAmount())}</span>
-                        <span style="font-size: 0.6rem; color: #b91c1c; opacity: 0.8; font-weight: 600;">(Est. 6-Mo Loss)</span>
-                    </div>
-                </div>
-                <div class="bleed-gauge-bar">
-                    <div class="bleed-gauge-fill" style="width: ${Math.min(100, (result.assetBleedAmount() / 5000.0) * 100)}%;"></div>
-                </div>
-                <p style="font-size: 0.8rem; color: #742a2a; font-weight: 600; line-height: 1.4; margin: 0; opacity: 0.8;">
-                    Estimated capital melt over the next 180 days based on actuarial depreciation curves.
-                </p>
+        <div class="verdict-grid" style="align-items: start;">
+            <!-- Left Column: The Big Audit Receipt -->
+            <div style="background: transparent; padding: 0;">
+                <h3 style="font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1.5rem; color: var(--text-secondary); text-align: center;">
+                    Actuarial Decision Audit
+                </h3>
+                @template.fragments.smart_receipt(items = result.costBreakdown())
             </div>
 
-            <!-- Recommended Action -->
-            <div style="background: #fff; padding: 2rem; border-radius: 24px; border-left: 6px solid #000; box-shadow: 0 4px 15px rgba(0,0,0,0.02); margin-bottom: 1.5rem;">
-                <h4 style="font-size: 0.8rem; font-weight: 800; margin-bottom: 0.75rem; text-transform: uppercase; color: var(--text-secondary);">Strategic Directive</h4>
-                <p style="font-size: 1.1rem; margin: 0; color: var(--text-main); font-weight: 700; line-height: 1.4;">${verdictAction}</p>
-            </div>
+            <!-- Right Column: Strategic Directive & Actions -->
+            <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                <!-- Directive -->
+                <div style="background: #fff; padding: 2.5rem; border-radius: 32px; border-left: 8px solid #000; box-shadow: 0 4px 30px rgba(0,0,0,0.03);">
+                    <h4 style="font-size: 0.75rem; font-weight: 800; margin-bottom: 1rem; text-transform: uppercase; color: var(--text-secondary); letter-spacing: 0.1em;">Strategic Directive</h4>
+                    <p style="font-size: 1.25rem; margin: 0; color: var(--text-main); font-weight: 800; line-height: 1.4; letter-spacing: -0.02em;">${verdictAction}</p>
+                </div>
 
             <!-- Exit Ramp / Protection Plan (Behaviorally Optimized) -->
             @if(verdictCss.contains("terminate"))
@@ -253,11 +254,11 @@
                         
                         <!-- Main CTA -->
                         <h4 class="cta-title" style="font-weight: 900; margin-bottom: 0.5rem; line-height: 1.1;">
-                            Get Cash Offer Before<br>Next $${Math.round(result.assetBleedAmount() / 180 * 7)} Loss
+                            Verify Market Value with<br>a Qualified Specialist
                         </h4>
                         
-                        <p style="font-size: 1rem; opacity: 0.85; margin-bottom: 1.5rem;">
-                            ${result.peerData().sellPercentage()}% of owners in your situation exited within 48 hours.
+                        <p style="font-size: 1rem; opacity: 0.9; margin-bottom: 1.5rem;">
+                            Our market models indicate that immediate liquidation often maximizes remaining equity preservation.
                         </p>
                         
                         <a href="${leadUrl}" 
@@ -300,12 +301,11 @@
                         </div>
                         
                         <h4 style="font-size: 1.8rem; font-weight: 800; margin-bottom: 0.75rem; line-height: 1.2;">
-                            Protect Your $${String.format("%,d", result.economicContext().breakdownThreshold() * 2)} Asset
+                            Audit Coverage with a<br>Protection Expert
                         </h4>
                         
                         <p style="font-size: 1rem; opacity: 0.9; margin-bottom: 1.5rem;">
-                            Secure extended coverage to avoid the $${String.format("%,d", result.economicContext().totalSwitchingFriction())} 
-                            replacement penalty down the road.
+                            Don't rely on estimates alone. Speak with a specialist to verify how a protection plan fits your specific risk profile.
                         </p>
                         
                         <a href="${leadUrl}" 
@@ -316,47 +316,46 @@
                         </a>
                         
                         <div style="font-size: 0.75rem; opacity: 0.7; margin-top: 1rem; text-align: center;">
-                            ${100 - result.peerData().sellPercentage()}% of owners who kept their vehicle used AutoMoneyPit protection plans.
+                            Extended warranty coverage is strongly advised for vehicles with this risk profile.
                         </div>
                 </div>
             </div>
         @endif
-        </div>
+
+                <!-- E-E-A-T Data Integrity Section (Optimized for Sidebar) -->
+                <div style="margin-top: 1.5rem; padding: 1.5rem; background: #f8fafc; border-radius: 24px; border: 1px solid #e2e8f0; overflow: hidden;" id="methodology-section">
+                    <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
+                        <span style="font-size: 1.2rem;">🔬</span>
+                        <h4 style="font-size: 0.9rem; font-weight: 800; color: #0f172a; margin: 0;">Methodology</h4>
+                    </div>
+                    
+                    <p style="font-size: 0.8rem; color: #475569; line-height: 1.5; margin-bottom: 1.5rem;">
+                        Calibrated to industry standards to ensure financial verdicts align with mechanical reality.
+                    </p>
+
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1.5rem;">
+                        <div>
+                            <span style="font-size: 0.6rem; font-weight: 800; color: #94a3b8; text-transform: uppercase;">Source</span>
+                            <div style="font-size: 0.7rem; font-weight: 700; color: #1e293b;">Actuarial</div>
+                        </div>
+                        <div>
+                            <span style="font-size: 0.6rem; font-weight: 800; color: #94a3b8; text-transform: uppercase;">Bench</span>
+                            <div style="font-size: 0.7rem; font-weight: 700; color: #1e293b;">NHTSA</div>
+                        </div>
+                        <div>
+                            <span style="font-size: 0.6rem; font-weight: 800; color: #94a3b8; text-transform: uppercase;">Confidence</span>
+                            <div style="font-size: 0.7rem; font-weight: 700; color: #1e293b;">Verified</div>
+                        </div>
+                    </div>
+
+                    <div style="padding-top: 0.75rem; border-top: 1px solid #e2e8f0; display: flex; align-items: center; justify-content: space-between;">
+                        <span style="color: #10b981; font-weight: 700; font-size: 0.7rem;">✓ ACTUARIAL ALGO</span>
+                        <a href="/about" style="font-size: 0.7rem; font-weight: 700; color: #6366f1; text-decoration: none;">Learn more →</a>
+                    </div>
+                </div>
+            </div>
     </div>
-
-    <!-- E-E-A-T Data Integrity Section -->
-    <div style="margin-top: 3rem; padding: clamp(1.5rem, 5vw, 2.5rem); background: #f8fafc; border-radius: 24px; border: 1px solid #e2e8f0; overflow: hidden;" id="methodology-section">
-        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem;">
-            <span style="font-size: 1.5rem;">🔬</span>
-            <h4 style="font-size: 1.1rem; font-weight: 800; color: #0f172a; margin: 0;">Methodology & Data Integrity</h4>
-        </div>
-        
-        <p style="font-size: 0.95rem; color: #475569; line-height: 1.6; margin-bottom: 1.5rem;">
-            This analysis is generated by the AutoMoneyPit Valuation Engine. Our proprietary model is <strong>calibrated to ASE industry standards</strong> to ensure financial verdicts align with mechanical reality.
-        </p>
-
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
-            <div>
-                <div style="font-size: 0.75rem; font-weight: 800; color: #94a3b8; text-transform: uppercase; margin-bottom: 0.4rem;">Market Data</div>
-                <div style="font-size: 0.9rem; font-weight: 700; color: #1e293b;">Kelley Blue Book API</div>
-            </div>
-            <div>
-                <div style="font-size: 0.75rem; font-weight: 800; color: #94a3b8; text-transform: uppercase; margin-bottom: 0.4rem;">Reliability Benchmarks</div>
-                <div style="font-size: 0.9rem; font-weight: 700; color: #1e293b;">NHTSA Complaint Data</div>
-            </div>
-            <div>
-                <div style="font-size: 0.75rem; font-weight: 800; color: #94a3b8; text-transform: uppercase; margin-bottom: 0.4rem;">Decision Sample</div>
-                <div style="font-size: 0.9rem; font-weight: 700; color: #1e293b;">14,283+ Owner Outcomes</div>
-            </div>
-        </div>
-
-        <div style="padding-top: 1.5rem; border-top: 1px solid #e2e8f0; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
-            <div style="display: flex; align-items: center; gap: 0.5rem; color: #10b981; font-weight: 700; font-size: 0.85rem;">
-                <span>✓</span> PROPRIETARY ACTUARIAL ALGORITHM
-            </div>
-            <a href="/about" style="font-size: 0.85rem; font-weight: 700; color: #6366f1; text-decoration: none;">Learn more about our data →</a>
-        </div>
-    </div>
+</div>
 
     <footer style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #e2e8f0; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1.5rem;">
         <div style="display: flex; gap: 3rem;">

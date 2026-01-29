@@ -1,0 +1,30 @@
+﻿**********************
+Windows PowerShell 기록 시작
+시작 시간: 20260129154359
+사용자 이름: HYEOK\tlsgu
+RunAs 사용자: HYEOK\tlsgu
+구성 이름: 
+Machine: HYEOK (Microsoft Windows NT 10.0.26200.0)
+호스트 응용 프로그램: C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -Command Start-Transcript -Path 'build_transcript.txt'; ./gradlew generateJte; Stop-Transcript
+프로세스 ID: 15532
+PSVersion: 5.1.26100.7462
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.7462
+BuildVersion: 10.0.26100.7462
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+기록이 시작되었습니다. 출력 파일은 build_transcript.txt입니다.
+> Run with --info or --debug option to get
+more log output.
+> Run with --scan to get full insights.
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 1s
+1 actionable task: 1 executed
+**********************
+Windows PowerShell 기록 끝
+종료 시간: 20260129154400
+**********************

@@ -1,0 +1,290 @@
+Initialized native services in: C:\Users\tlsgu\.gradle\native
+Initialized jansi services in: C:\Users\tlsgu\.gradle\native
+Found daemon DaemonInfo{pid=28732, address=[10e293e5-0c3a-40df-84c6-0355fdc20ace port:60957, addresses:[/127.0.0.1]], state=Idle, lastBusy=1769668850821, context=DefaultDaemonContext[uid=677fb811-bd67-476d-a57e-7f04cee0eb92,javaHome=C:\Users\tlsgu\.antigravity\extensions\redhat.java-1.51.0-win32-x64\jre\21.0.9-win32-x86_64,javaVersion=21,javaVendor=Eclipse Adoptium,daemonRegistryDir=C:\Users\tlsgu\.gradle\daemon,pid=28732,idleTimeout=10800000,priority=NORMAL,applyInstrumentationAgent=true,nativeServicesMode=ENABLED,daemonOpts=-XX:MaxMetaspaceSize=384m,-XX:+HeapDumpOnOutOfMemoryError,-Xms256m,-Xmx512m,-Dfile.encoding=UTF-8,-Duser.country=KR,-Duser.language=ko,-Duser.variant]} however its context does not match the desired criteria.
+JVM is incompatible.
+Wanted: DaemonRequestContext{jvmCriteria=C:\Program Files\Java\jdk-23 (no JDK specified, using current Java home), daemonOpts=[-XX:MaxMetaspaceSize=384m, -XX:+HeapDumpOnOutOfMemoryError, -Xms256m, -Xmx512m, -Dfile.encoding=UTF-8, -Duser.country=KR, -Duser.language=ko, -Duser.variant], applyInstrumentationAgent=true, nativeServicesMode=ENABLED, priority=NORMAL}
+Actual: DefaultDaemonContext[uid=677fb811-bd67-476d-a57e-7f04cee0eb92,javaHome=C:\Users\tlsgu\.antigravity\extensions\redhat.java-1.51.0-win32-x64\jre\21.0.9-win32-x86_64,javaVersion=21,javaVendor=Eclipse Adoptium,daemonRegistryDir=C:\Users\tlsgu\.gradle\daemon,pid=28732,idleTimeout=10800000,priority=NORMAL,applyInstrumentationAgent=true,nativeServicesMode=ENABLED,daemonOpts=-XX:MaxMetaspaceSize=384m,-XX:+HeapDumpOnOutOfMemoryError,-Xms256m,-Xmx512m,-Dfile.encoding=UTF-8,-Duser.country=KR,-Duser.language=ko,-Duser.variant]
+
+  Looking for a different daemon...
+The client will now receive all logging from the daemon (pid: 24496). The daemon log file: C:\Users\tlsgu\.gradle\daemon\8.14.3\daemon-24496.out.log
+Starting 16th build in daemon [uptime: 7 mins 33.499 secs, performance: 100%, GC rate: 0.00/s, heap usage: 0% of 512 MiB, non-heap usage: 19% of 384 MiB]
+Using 16 worker leases.
+Now considering [C:\Development\Owner\CarMoneyPit] as hierarchies to watch
+Watching the file system is configured to be enabled if available
+File system watching is active
+Starting Build
+Settings evaluated using settings file 'C:\Development\Owner\CarMoneyPit\settings.gradle'.
+Projects loaded. Root project using build file 'C:\Development\Owner\CarMoneyPit\build.gradle'.
+Included projects: [root project 'CarMoneyPit']
+
+> Configure project :
+Evaluating root project 'CarMoneyPit' using build file 'C:\Development\Owner\CarMoneyPit\build.gradle'.
+Resolved plugin [id: 'java']
+Resolved plugin [id: 'org.springframework.boot', version: '3.5.10']
+Resolved plugin [id: 'io.spring.dependency-management', version: '1.1.7']
+Resolved plugin [id: 'gg.jte.gradle', version: '3.1.16']
+Applying dependency management to configuration 'annotationProcessor' in project 'CarMoneyPit'
+Applying dependency management to configuration 'apiElements' in project 'CarMoneyPit'
+Applying dependency management to configuration 'archives' in project 'CarMoneyPit'
+Applying dependency management to configuration 'bootArchives' in project 'CarMoneyPit'
+Applying dependency management to configuration 'compileClasspath' in project 'CarMoneyPit'
+Applying dependency management to configuration 'compileOnly' in project 'CarMoneyPit'
+Applying dependency management to configuration 'default' in project 'CarMoneyPit'
+Applying dependency management to configuration 'developmentOnly' in project 'CarMoneyPit'
+Applying dependency management to configuration 'implementation' in project 'CarMoneyPit'
+Applying dependency management to configuration 'mainSourceElements' in project 'CarMoneyPit'
+Applying dependency management to configuration 'productionRuntimeClasspath' in project 'CarMoneyPit'
+Applying dependency management to configuration 'runtimeClasspath' in project 'CarMoneyPit'
+Applying dependency management to configuration 'runtimeElements' in project 'CarMoneyPit'
+Applying dependency management to configuration 'runtimeOnly' in project 'CarMoneyPit'
+Applying dependency management to configuration 'testAndDevelopmentOnly' in project 'CarMoneyPit'
+Applying dependency management to configuration 'testAnnotationProcessor' in project 'CarMoneyPit'
+Applying dependency management to configuration 'testCompileClasspath' in project 'CarMoneyPit'
+Applying dependency management to configuration 'testCompileOnly' in project 'CarMoneyPit'
+Applying dependency management to configuration 'testImplementation' in project 'CarMoneyPit'
+Applying dependency management to configuration 'testResultsElementsForTest' in project 'CarMoneyPit'
+Applying dependency management to configuration 'testRuntimeClasspath' in project 'CarMoneyPit'
+Applying dependency management to configuration 'testRuntimeOnly' in project 'CarMoneyPit'
+Applying dependency management to configuration 'jteGenerate' in project 'CarMoneyPit'
+All projects evaluated.
+Task name matched 'compileTestJava'
+Selected primary task 'compileTestJava' from project :
+Excluding []
+Resolving global dependency management for project 'CarMoneyPit'
+Excluding []
+Excluding []
+Excluding []
+Excluding []
+Excluding []
+Tasks to be executed: [task ':generateJte', task ':compileJava', task ':processResources', task ':classes', task ':compileTestJava']
+Tasks that were excluded: []
+Resolve mutations for :generateJte (Thread[#2873,Execution worker,5,main]) started.
+:generateJte (Thread[#2873,Execution worker,5,main]) started.
+
+> Task :generateJte UP-TO-DATE
+Caching disabled for task ':generateJte' because:
+  Build cache is disabled
+Skipping task ':generateJte' as it is up-to-date.
+Resolve mutations for :compileJava (Thread[#2873,Execution worker,5,main]) started.
+:compileJava (Thread[#2873,Execution worker,5,main]) started.
+
+> Task :compileJava UP-TO-DATE
+Custom actions are attached to task ':compileJava'.
+Caching disabled for task ':compileJava' because:
+  Build cache is disabled
+Skipping task ':compileJava' as it is up-to-date.
+Resolve mutations for :processResources (Thread[#2873,Execution worker,5,main]) started.
+:processResources (Thread[#2873,Execution worker,5,main]) started.
+
+> Task :processResources UP-TO-DATE
+Caching disabled for task ':processResources' because:
+  Build cache is disabled
+  Not worth caching
+Skipping task ':processResources' as it is up-to-date.
+Resolve mutations for :classes (Thread[#2873,Execution worker,5,main]) started.
+:classes (Thread[#2873,Execution worker,5,main]) started.
+
+> Task :classes UP-TO-DATE
+Skipping task ':classes' as it has no actions.
+Resolve mutations for :compileTestJava (Thread[#2873,Execution worker,5,main]) started.
+:compileTestJava (Thread[#2873,Execution worker,5,main]) started.
+This JVM does not support getting OS memory, so no OS memory status updates will be broadcast
+
+> Task :compileTestJava FAILED
+Custom actions are attached to task ':compileTestJava'.
+Caching disabled for task ':compileTestJava' because:
+  Build cache is disabled
+Task ':compileTestJava' is not up-to-date because:
+  Task has failed previously.
+The input changes require a full rebuild for incremental task ':compileTestJava'.
+Compilation mode: default, forking compiler
+Full recompilation is required because no incremental change information is available. This is usually caused by clean builds or changing compiler arguments.
+Compiling with toolchain 'C:\Users\tlsgu\.gradle\jdks\eclipse_adoptium-17-amd64-windows.2'.
+Log level has changed, stopping idle worker daemon with out-of-date log level.
+Starting process 'Gradle Worker Daemon 2'. Working directory: C:\Users\tlsgu\.gradle\workers Command: C:\Users\tlsgu\.gradle\jdks\eclipse_adoptium-17-amd64-windows.2\bin\java.exe --add-exports=jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED --add-exports=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED @C:\Users\tlsgu\.gradle\.tmp\gradle-worker-classpath6264271168962951962txt -Xmx512m -Dfile.encoding=UTF-8 -Duser.country=KR -Duser.language=ko -Duser.variant worker.org.gradle.process.internal.worker.GradleWorkerMain 'Gradle Worker Daemon 2'
+Successfully started process 'Gradle Worker Daemon 2'
+Started Gradle worker daemon (0.475 secs) with fork options DaemonForkOptions{executable=C:\Users\tlsgu\.gradle\jdks\eclipse_adoptium-17-amd64-windows.2\bin\java.exe, minHeapSize=null, maxHeapSize=null, jvmArgs=[--add-exports=jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED, --add-exports=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED], keepAliveMode=DAEMON}.
+Compiling with JDK Java compiler API.
+C:\Development\Owner\CarMoneyPit\src\test\java\com\carmoneypit\engine\core\ValuationServiceTest.java:9: error: constructor ValuationService in class ValuationService cannot be applied to given types;
+    private final ValuationService service = new ValuationService();
+                                             ^
+  required: ObjectMapper,CarDataService
+  found:    no arguments
+  reason: actual and formal argument lists differ in length
+C:\Development\Owner\CarMoneyPit\src\test\java\com\carmoneypit\engine\core\ValuationServiceTest.java:15: error: method estimateValue in class ValuationService cannot be applied to given types;
+        long val = service.estimateValue(VehicleType.SEDAN, 10_000);
+                          ^
+  required: CarBrand,VehicleType,long
+  found:    VehicleType,int
+  reason: actual and formal argument lists differ in length
+C:\Development\Owner\CarMoneyPit\src\test\java\com\carmoneypit\engine\core\ValuationServiceTest.java:23: error: method estimateValue in class ValuationService cannot be applied to given types;
+        long val = service.estimateValue(VehicleType.SEDAN, 200_000);
+                          ^
+  required: CarBrand,VehicleType,long
+  found:    VehicleType,int
+  reason: actual and formal argument lists differ in length
+C:\Development\Owner\CarMoneyPit\src\test\java\com\carmoneypit\engine\core\ValuationServiceTest.java:31: error: method estimateValue in class ValuationService cannot be applied to given types;
+        long sedanVal = service.estimateValue(VehicleType.SEDAN, 100_000);
+                               ^
+  required: CarBrand,VehicleType,long
+  found:    VehicleType,int
+  reason: actual and formal argument lists differ in length
+C:\Development\Owner\CarMoneyPit\src\test\java\com\carmoneypit\engine\core\ValuationServiceTest.java:32: error: method estimateValue in class ValuationService cannot be applied to given types;
+        long luxVal = service.estimateValue(VehicleType.LUXURY, 100_000);
+                             ^
+  required: CarBrand,VehicleType,long
+  found:    VehicleType,int
+  reason: actual and formal argument lists differ in length
+C:\Development\Owner\CarMoneyPit\src\test\java\com\carmoneypit\engine\core\ValuationServiceTest.java:38: error: method estimateValue in class ValuationService cannot be applied to given types;
+        long valLowMiles = service.estimateValue(VehicleType.LUXURY, 10_000);
+                                  ^
+  required: CarBrand,VehicleType,long
+  found:    VehicleType,int
+  reason: actual and formal argument lists differ in length
+C:\Development\Owner\CarMoneyPit\src\test\java\com\carmoneypit\engine\core\ValuationServiceTest.java:39: error: method estimateValue in class ValuationService cannot be applied to given types;
+        long valHighMiles = service.estimateValue(VehicleType.LUXURY, 150_000);
+                                   ^
+  required: CarBrand,VehicleType,long
+  found:    VehicleType,int
+  reason: actual and formal argument lists differ in length
+C:\Development\Owner\CarMoneyPit\src\test\java\com\carmoneypit\engine\EngineTest.java:23: error: constructor DecisionEngine in class DecisionEngine cannot be applied to given types;
+        engine = new DecisionEngine(calculator, costCalc);
+                 ^
+  required: RegretCalculator,CostOfInactionCalculator,ValuationService
+  found:    RegretCalculator,CostOfInactionCalculator
+  reason: actual and formal argument lists differ in length
+C:\Development\Owner\CarMoneyPit\src\test\java\com\carmoneypit\engine\EngineTest.java:29: error: constructor EngineInput in record EngineInput cannot be applied to given types;
+        EngineInput input = new EngineInput(
+                            ^
+  required: String,VehicleType,CarBrand,long,long,long,boolean
+  found:    VehicleType,CarBrand,int,int,int
+  reason: actual and formal argument lists differ in length
+C:\Development\Owner\CarMoneyPit\src\test\java\com\carmoneypit\engine\EngineTest.java:47: error: constructor EngineInput in record EngineInput cannot be applied to given types;
+        EngineInput input = new EngineInput(
+                            ^
+  required: String,VehicleType,CarBrand,long,long,long,boolean
+  found:    VehicleType,CarBrand,int,int,int
+  reason: actual and formal argument lists differ in length
+C:\Development\Owner\CarMoneyPit\src\test\java\com\carmoneypit\engine\web\WebLayerTest.java:33: warning: [removal] MockBean in org.springframework.boot.test.mock.mockito has been deprecated and marked for removal
+        @MockBean
+         ^
+C:\Development\Owner\CarMoneyPit\src\test\java\com\carmoneypit\engine\web\WebLayerTest.java:36: warning: [removal] MockBean in org.springframework.boot.test.mock.mockito has been deprecated and marked for removal
+        @MockBean
+         ^
+C:\Development\Owner\CarMoneyPit\src\test\java\com\carmoneypit\engine\web\WebLayerTest.java:39: warning: [removal] MockBean in org.springframework.boot.test.mock.mockito has been deprecated and marked for removal
+        @MockBean
+         ^
+C:\Development\Owner\CarMoneyPit\src\test\java\com\carmoneypit\engine\web\WebLayerTest.java:52: error: constructor VerdictResult in record VerdictResult cannot be applied to given types;
+                VerdictResult mockResult = new VerdictResult(
+                                           ^
+  required: VerdictState,String,VisualizationHint,List<FinancialLineItem>,long,double,double,int,PeerData,EconomicContext
+  found:    VerdictState,String,VisualizationHint,List<Object>,long
+  reason: actual and formal argument lists differ in length
+C:\Development\Owner\CarMoneyPit\src\test\java\com\carmoneypit\engine\web\WebLayerTest.java:65: error: method getLeadLabel in class VerdictPresenter cannot be applied to given types;
+                given(verdictPresenter.getLeadLabel(any())).willReturn("Lead Label");
+                                      ^
+  required: VerdictState,EngineInput,SimulationControls
+  found:    Object
+  reason: actual and formal argument lists differ in length
+C:\Development\Owner\CarMoneyPit\src\test\java\com\carmoneypit\engine\web\WebLayerTest.java:66: error: method getLeadDescription in class VerdictPresenter cannot be applied to given types;
+                given(verdictPresenter.getLeadDescription(any())).willReturn("Lead Desc");
+                                      ^
+  required: VerdictState,EngineInput,SimulationControls
+  found:    Object
+  reason: actual and formal argument lists differ in length
+C:\Development\Owner\CarMoneyPit\src\test\java\com\carmoneypit\engine\web\WebLayerTest.java:67: error: method getLeadUrl in class VerdictPresenter cannot be applied to given types;
+                given(verdictPresenter.getLeadUrl(any())).willReturn("http://example.com");
+                                      ^
+  required: VerdictState,EngineInput,SimulationControls
+  found:    Object
+  reason: actual and formal argument lists differ in length
+C:\Development\Owner\CarMoneyPit\src\test\java\com\carmoneypit\engine\web\WebLayerTest.java:83: error: constructor VerdictResult in record VerdictResult cannot be applied to given types;
+                VerdictResult mockResult = new VerdictResult(
+                                           ^
+  required: VerdictState,String,VisualizationHint,List<FinancialLineItem>,long,double,double,int,PeerData,EconomicContext
+  found:    VerdictState,String,VisualizationHint,List<Object>,long
+  reason: actual and formal argument lists differ in length
+C:\Development\Owner\CarMoneyPit\src\test\java\com\carmoneypit\engine\web\WebLayerTest.java:97: error: method getLeadLabel in class VerdictPresenter cannot be applied to given types;
+                given(verdictPresenter.getLeadLabel(any())).willReturn("Term Label");
+                                      ^
+  required: VerdictState,EngineInput,SimulationControls
+  found:    Object
+  reason: actual and formal argument lists differ in length
+C:\Development\Owner\CarMoneyPit\src\test\java\com\carmoneypit\engine\web\WebLayerTest.java:98: error: method getLeadDescription in class VerdictPresenter cannot be applied to given types;
+                given(verdictPresenter.getLeadDescription(any())).willReturn("Term Desc");
+                                      ^
+  required: VerdictState,EngineInput,SimulationControls
+  found:    Object
+  reason: actual and formal argument lists differ in length
+C:\Development\Owner\CarMoneyPit\src\test\java\com\carmoneypit\engine\web\WebLayerTest.java:99: error: method getLeadUrl in class VerdictPresenter cannot be applied to given types;
+                given(verdictPresenter.getLeadUrl(any())).willReturn("http://term-url.com");
+                                      ^
+  required: VerdictState,EngineInput,SimulationControls
+  found:    Object
+  reason: actual and formal argument lists differ in length
+C:\Development\Owner\CarMoneyPit\src\test\java\com\carmoneypit\engine\web\WebLayerTest.java:118: error: constructor VerdictResult in record VerdictResult cannot be applied to given types;
+                VerdictResult mockResult = new VerdictResult(
+                                           ^
+  required: VerdictState,String,VisualizationHint,List<FinancialLineItem>,long,double,double,int,PeerData,EconomicContext
+  found:    VerdictState,String,VisualizationHint,List<Object>,long
+  reason: actual and formal argument lists differ in length
+C:\Development\Owner\CarMoneyPit\src\test\java\com\carmoneypit\engine\web\WebLayerTest.java:126: error: method estimateValue in class ValuationService cannot be applied to given types;
+                given(valuationService.estimateValue(any(), anyLong())).willReturn(12500L);
+                                      ^
+  required: CarBrand,VehicleType,long
+  found:    Object,long
+  reason: actual and formal argument lists differ in length
+C:\Development\Owner\CarMoneyPit\src\test\java\com\carmoneypit\engine\web\WebLayerTest.java:126: error: incompatible types: long cannot be converted to VehicleType
+                given(valuationService.estimateValue(any(), anyLong())).willReturn(12500L);
+                                                                   ^
+C:\Development\Owner\CarMoneyPit\src\test\java\com\carmoneypit\engine\web\WebLayerTest.java:134: error: method getLeadLabel in class VerdictPresenter cannot be applied to given types;
+                given(verdictPresenter.getLeadLabel(any())).willReturn("Lead Label");
+                                      ^
+  required: VerdictState,EngineInput,SimulationControls
+  found:    Object
+  reason: actual and formal argument lists differ in length
+C:\Development\Owner\CarMoneyPit\src\test\java\com\carmoneypit\engine\web\WebLayerTest.java:135: error: method getLeadDescription in class VerdictPresenter cannot be applied to given types;
+                given(verdictPresenter.getLeadDescription(any())).willReturn("Lead Desc");
+                                      ^
+  required: VerdictState,EngineInput,SimulationControls
+  found:    Object
+  reason: actual and formal argument lists differ in length
+C:\Development\Owner\CarMoneyPit\src\test\java\com\carmoneypit\engine\web\WebLayerTest.java:136: error: method getLeadUrl in class VerdictPresenter cannot be applied to given types;
+                given(verdictPresenter.getLeadUrl(any())).willReturn("http://example.com");
+                                      ^
+  required: VerdictState,EngineInput,SimulationControls
+  found:    Object
+  reason: actual and formal argument lists differ in length
+Note: Some messages have been simplified; recompile with -Xdiags:verbose to get full output
+24 errors
+3 warnings
+
+[Incubating] Problems report is available at: file:///C:/Development/Owner/CarMoneyPit/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':compileTestJava'.
+> Compilation failed; see the compiler output below.
+  C:\Development\Owner\CarMoneyPit\src\test\java\com\carmoneypit\engine\core\ValuationServiceTest.java:9: error: constructor ValuationService in class ValuationService cannot be applied to given types;
+      private final ValuationService service = new ValuationService();
+                                               ^
+    required: ObjectMapper,CarDataService
+    found:    no arguments
+    reason: actual and formal argument lists differ in length
+  24 errors
+  3 warnings
+
+* Try:
+> Check your code and dependencies to fix the compilation error(s)
+> Run with --scan to get full insights.
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.14.3/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD FAILED in 3s
+4 actionable tasks: 1 executed, 3 up-to-date
+Watched directory hierarchies: [C:\Development\Owner\CarMoneyPit]

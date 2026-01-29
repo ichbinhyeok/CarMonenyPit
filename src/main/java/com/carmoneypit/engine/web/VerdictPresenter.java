@@ -79,29 +79,22 @@ public class VerdictPresenter {
     }
 
     public String getViralOgTitle(VerdictState state) {
-        switch (state) {
-            case TIME_BOMB:
-                return "My Car is a TIME BOMB | AutoMoneyPit Diagnostic";
-            case STABLE:
-                return "My Car is STABLE | AutoMoneyPit Diagnostic";
-            case BORDERLINE:
-                return "My Car is a MONEY PIT | AutoMoneyPit Diagnostic";
-            default:
-                return "AutoMoneyPit Diagnostic Result";
-        }
+        return switch (state) {
+            case TIME_BOMB -> "Statistical signal of significant financial bleed relative to market benchmarks.";
+            case STABLE -> "Maintenance profile suggests asset stability within normal actuarial parameters.";
+            case BORDERLINE ->
+                "Market data indicates an inflection point. Retention viability is sensitive to service pricing.";
+            default -> "Estimated AutoMoneyPit Diagnostic Result";
+        };
     }
 
     public String getVerdictTitle(VerdictState state) {
-        switch (state) {
-            case TIME_BOMB:
-                return "LIQUIDATE";
-            case STABLE:
-                return "SUSTAIN";
-            case BORDERLINE:
-                return "RISK_ALERT";
-            default:
-                return "SCAN_FAILURE";
-        }
+        return switch (state) {
+            case TIME_BOMB -> "Estimated LIQUIDATE";
+            case STABLE -> "Estimated SUSTAIN";
+            case BORDERLINE -> "Estimated RISK_ALERT";
+            default -> "Estimated SCAN_FAILURE";
+        };
     }
 
     public String getLawyerExplanation(VerdictState state, EngineInput input) {
@@ -114,11 +107,11 @@ public class VerdictPresenter {
                 String brandRisk = "";
                 if (brandData.isPresent() && !brandData.get().majorIssues.isEmpty()) {
                     brandRisk = String.format(
-                            " Statistical failure node for %s detected: %s issues peak at this mileage.",
+                            " Statistical signal for %s detected: %s issues peak at this mileage.",
                             brandName, brandData.get().majorIssues.get(0).part);
                 }
                 return String.format(
-                        "DECISION_AUDIT: Our market data model suggests your asset is entering a rapid depreciation phase. While emotionally difficult, the statistical indicators are unfavorable.%s Projected maintenance overhead may exceed asset core equity. Strategic liquidation is strongly recommended by our algorithm.",
+                        "DECISION_AUDIT: Our market data model suggests your asset is entering a potential rapid depreciation phase. While emotionally difficult, the statistical indicators are unfavorable.%s Projected maintenance overhead may exceed asset core equity. Strategic liquidation is strongly recommended by our algorithm.",
                         brandRisk);
 
             case STABLE:
@@ -130,7 +123,7 @@ public class VerdictPresenter {
             default:
                 String issueWarning = "";
                 if (brandData.isPresent() && !brandData.get().majorIssues.isEmpty()) {
-                    issueWarning = String.format(" Known %s vulnerability: %s. ", brandName,
+                    issueWarning = String.format(" Potential %s vulnerability: %s. ", brandName,
                             brandData.get().majorIssues.get(0).part);
                 }
                 return String.format(
@@ -146,15 +139,13 @@ public class VerdictPresenter {
     }
 
     public String getActionPlan(VerdictState state) {
-        switch (state) {
-            case TIME_BOMB:
-                return "Initiate asset liquidation. Shift remaining equity into a higher-efficiency mobility platform.";
-            case STABLE:
-                return "Authorize specific service. Execute a 12-month maintenance hold followed by a strategic review.";
-            case BORDERLINE:
-            default:
-                return "Negotiate a 15% service discount to offset risk variance. If unsuccessful, abort repair and exit.";
-        }
+        return switch (state) {
+            case TIME_BOMB -> "Review immediate exit strategy to mitigate estimated capital loss.";
+            case STABLE -> "Authorize specific service. Execute maintenance hold followed by strategic review.";
+            case BORDERLINE -> "Request line-item repair audit. Pivot based on actual localized service quotes.";
+            default ->
+                "Negotiate a 15% service discount to offset risk variance. If unsuccessful, abort repair and exit.";
+        };
     }
 
     public String getCssClass(VerdictState state) {

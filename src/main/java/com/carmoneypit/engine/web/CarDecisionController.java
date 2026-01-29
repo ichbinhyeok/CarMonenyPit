@@ -75,11 +75,6 @@ public class CarDecisionController {
                 return new ClassPathResource("static/favicon.png");
         }
 
-        @GetMapping("/contact")
-        public String contact() {
-                return "contact";
-        }
-
         @PostMapping("/analyze")
         public String analyzeLoading(
                         @RequestParam("brand") CarBrand brand,

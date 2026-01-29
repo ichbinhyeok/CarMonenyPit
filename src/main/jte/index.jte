@@ -269,15 +269,15 @@
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 1.5rem; max-width: 1000px; margin: 0 auto 10rem; padding: 0 1rem;">
             <div class="card info-card">
                 <div>
-                    <div class="info-title">Global Data Correlated</div>
-                    <p class="info-body">Synchronizing with 18,204 actuarial maintenance data points across all segments.</p>
+                    <div class="info-title">Market Data Correlated</div>
+                    <div class="info-desc">Cross-referenced against standardized actuarial grids and NADA/KBB market frameworks.</div>
                 </div>
             </div>
 
             <div class="card info-card" style="background: linear-gradient(135deg, #0066ff05, #6366f108);">
                 <div>
-                    <div class="info-title">Instant Decisioning</div>
-                    <p class="info-body">Zero wait time. Valuation logic computed at the edge for immediate conviction.</p>
+                    <div class="info-title">Actuarial Precision</div>
+                    <div class="info-desc">Not a guess. A specialized decision framework that balances repair cost vs. equity bleed.</div>
                 </div>
             </div>
 

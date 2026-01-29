@@ -142,7 +142,7 @@
             <div style="background: #F8F9FA; padding: 2rem; border-radius: 12px; border: 1px solid #eee;">
                 <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 1rem; display: flex; align-items: center;">
                     <span style="background: #E8F0FE; color: #1967D2; width: 32px; height: 32px; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; margin-right: 0.8rem; font-size: 1rem;">ℹ</span> 
-                    Our Verdict
+                    Market Implication
                 </h3>
                 <p style="font-size: 1rem; color: #444; line-height: 1.6; font-style: italic;">
                     "${fault.verdictImplication()}"
@@ -175,7 +175,9 @@
                 Many ${car.brand()} owners fall into the trap of thinking, "I've already spent so much maintenance, I have to keep it." This is financially dangerous.
              </p>
              <p style="font-size: 1.05rem; color: #444; line-height: 1.6;">
-                <strong>The 50% Rule:</strong> If a repair costs more than 50% of your vehicle's current market value, or if your total monthly repair average exceeds a new car payment, it is time to exit.
+                CarMoneyPit was founded on a simple premise: vehicle repair decisions should be informed by actuarial logic and financial frameworks, not just emotion.
+                Our data suggests that if a repair costs more than 50% of your vehicle's current estimated market value, or if your total monthly repair average exceeds a new car payment, it may be time to exit.
+                Always consult with a certified mechanic and financial advisor for personalized advice.
              </p>
         </div>
         <style>
@@ -190,11 +192,11 @@
             <div style="position: relative; z-index: 2;">
                 <h2 style="font-weight: 800; margin-bottom: 1rem; line-height: 1.2;">Is your ${car.model()} an Asset or a Liability?</h2>
                 <p style="font-size: 1.1rem; color: #aaa; margin-bottom: 2.5rem; max-width: 600px; margin-left: auto; margin-right: auto; line-height: 1.5;">
-                    We compare your specific vehicle's current market value against this $${String.format("%,.0f", fault.repairCost())} repair bill. The math doesn't lie.
+                    Verify how this estimated $${String.format("%,.0f", fault.repairCost())} repair bill impacts your core equity. Consult our partners to confirm actual market viability.
                 </p>
                 
                 <a href="${ctaUrl}" class="btn-cinematic" style="display: inline-block; text-decoration: none; font-size: 1.1rem; padding: 1.2rem 2.5rem; background: #2563EB; color: #ffffff; border-radius: 12px; font-weight: 700; box-shadow: 0 10px 20px rgba(37, 99, 235, 0.3);">
-                    Free Liability Analysis <span>→</span>
+                    Get Expert Assessment <span>→</span>
                 </a>
             </div>
         </div>
@@ -227,6 +229,10 @@
                 </a>
                 @endfor
             </div>
+            <p style="font-size: 0.85rem; color: #6B7280; text-align: center; margin-top: 2rem;">
+                Data is sourced from official NHTSA databases, and market frameworks. Our bi-weekly updates reflect 
+                estimated market trends for your asset.
+            </p>
         </div>
         @endif
 

@@ -1,0 +1,30 @@
+﻿**********************
+Windows PowerShell 기록 시작
+시작 시간: 20260129154822
+사용자 이름: HYEOK\tlsgu
+RunAs 사용자: HYEOK\tlsgu
+구성 이름: 
+Machine: HYEOK (Microsoft Windows NT 10.0.26200.0)
+호스트 응용 프로그램: C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -Command Start-Transcript -Path 'build_log_2.txt'; ./gradlew build; Stop-Transcript
+프로세스 ID: 2816
+PSVersion: 5.1.26100.7462
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.7462
+BuildVersion: 10.0.26100.7462
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+기록이 시작되었습니다. 출력 파일은 build_log_2.txt입니다.
+ocs.gradle.org/8.14.3/userguide/command_lin
+e_interface.html#sec:command_line_warnings
+in the Gradle documentation.
+
+BUILD FAILED in 2s
+6 actionable tasks: 1 executed, 5 up-to-dat
+e
+**********************
+Windows PowerShell 기록 끝
+종료 시간: 20260129154824
+**********************

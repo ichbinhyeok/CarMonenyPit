@@ -62,6 +62,10 @@
         font-size: 0.7rem;
         font-weight: 700;
         position: relative;
+        transition: height 0.3s;
+    }
+    @media (max-width: 768px) {
+        .live-ticker-bar { height: 24px; font-size: 0.65rem; }
     }
 
     .live-label {
@@ -74,6 +78,10 @@
         z-index: 10;
         box-shadow: 5px 0 10px rgba(0,0,0,0.5);
         white-space: nowrap;
+    }
+    @media (max-width: 768px) {
+        .live-label span:not(.live-dot) { display: none; }
+        .live-label { padding: 0 0.5rem; }
     }
 
     .live-dot {
@@ -175,8 +183,9 @@
     }
 
     @media (max-width: 768px) {
-        .header-content { padding: 0.8rem 1rem; }
-        .logo-text { font-size: 1.1rem; }
-        .live-ticker-bar { display: flex; } /* Ensure it shows on mobile too */
+        .header-content { padding: 0.5rem 1rem; }
+        .logo-text { font-size: 1rem; }
+        .logo-icon { padding: 2px 6px; font-size: 0.6rem; }
+        .live-ticker-bar { display: flex; }
     }
 </style>

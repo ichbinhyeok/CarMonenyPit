@@ -44,7 +44,7 @@
             @endfor
             <div class="receipt-item total-row" style="border-top: 1px solid #000; padding-top: 0.5rem; margin-top: 0.5rem;">
                 <div class="item-main" style="color: #d91b1b;">
-                    <span class="item-label" style="font-weight: 900;">TOTAL RETENTION COST</span>
+                    <span class="item-label" style="font-weight: 900;">EST. RETENTION COST</span>
                     <span class="item-amount" style="font-weight: 900;">$${String.format("%,.0f", stayTotal)}</span>
                 </div>
             </div>
@@ -64,7 +64,7 @@
             @endfor
             <div class="receipt-item total-row" style="border-top: 1px solid #000; padding-top: 0.5rem; margin-top: 0.5rem;">
                 <div class="item-main" style="color: #1a1a1a;">
-                    <span class="item-label" style="font-weight: 900;">TOTAL SWITCHING FRICTION</span>
+                    <span class="item-label" style="font-weight: 900;">EST. SWITCHING COST</span>
                     <span class="item-amount" style="font-weight: 900;">$${String.format("%,.0f", moveTotal)}</span>
                 </div>
             </div>

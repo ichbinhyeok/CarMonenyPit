@@ -1,0 +1,188 @@
+> Task :generateJte UP-TO-DATE
+> Task :compileJava UP-TO-DATE
+> Task :processResources UP-TO-DATE
+> Task :classes UP-TO-DATE
+
+> Task :compileTestJava FAILED
+C:\Development\Owner\CarMoneyPit\src\test\java\com\carmoneypit\engine\core\ValuationServiceTest.java:9: error: constructor ValuationService in class ValuationService cannot be applied to given types;
+    private final ValuationService service = new ValuationService();
+                                             ^
+  required: ObjectMapper,CarDataService
+  found:    no arguments
+  reason: actual and formal argument lists differ in length
+C:\Development\Owner\CarMoneyPit\src\test\java\com\carmoneypit\engine\core\ValuationServiceTest.java:15: error: method estimateValue in class ValuationService cannot be applied to given types;
+        long val = service.estimateValue(VehicleType.SEDAN, 10_000);
+                          ^
+  required: CarBrand,VehicleType,long
+  found:    VehicleType,int
+  reason: actual and formal argument lists differ in length
+C:\Development\Owner\CarMoneyPit\src\test\java\com\carmoneypit\engine\core\ValuationServiceTest.java:23: error: method estimateValue in class ValuationService cannot be applied to given types;
+        long val = service.estimateValue(VehicleType.SEDAN, 200_000);
+                          ^
+  required: CarBrand,VehicleType,long
+  found:    VehicleType,int
+  reason: actual and formal argument lists differ in length
+C:\Development\Owner\CarMoneyPit\src\test\java\com\carmoneypit\engine\core\ValuationServiceTest.java:31: error: method estimateValue in class ValuationService cannot be applied to given types;
+        long sedanVal = service.estimateValue(VehicleType.SEDAN, 100_000);
+                               ^
+  required: CarBrand,VehicleType,long
+  found:    VehicleType,int
+  reason: actual and formal argument lists differ in length
+C:\Development\Owner\CarMoneyPit\src\test\java\com\carmoneypit\engine\core\ValuationServiceTest.java:32: error: method estimateValue in class ValuationService cannot be applied to given types;
+        long luxVal = service.estimateValue(VehicleType.LUXURY, 100_000);
+                             ^
+  required: CarBrand,VehicleType,long
+  found:    VehicleType,int
+  reason: actual and formal argument lists differ in length
+C:\Development\Owner\CarMoneyPit\src\test\java\com\carmoneypit\engine\core\ValuationServiceTest.java:38: error: method estimateValue in class ValuationService cannot be applied to given types;
+        long valLowMiles = service.estimateValue(VehicleType.LUXURY, 10_000);
+                                  ^
+  required: CarBrand,VehicleType,long
+  found:    VehicleType,int
+  reason: actual and formal argument lists differ in length
+C:\Development\Owner\CarMoneyPit\src\test\java\com\carmoneypit\engine\core\ValuationServiceTest.java:39: error: method estimateValue in class ValuationService cannot be applied to given types;
+        long valHighMiles = service.estimateValue(VehicleType.LUXURY, 150_000);
+                                   ^
+  required: CarBrand,VehicleType,long
+  found:    VehicleType,int
+  reason: actual and formal argument lists differ in length
+C:\Development\Owner\CarMoneyPit\src\test\java\com\carmoneypit\engine\EngineTest.java:23: error: constructor DecisionEngine in class DecisionEngine cannot be applied to given types;
+        engine = new DecisionEngine(calculator, costCalc);
+                 ^
+  required: RegretCalculator,CostOfInactionCalculator,ValuationService
+  found:    RegretCalculator,CostOfInactionCalculator
+  reason: actual and formal argument lists differ in length
+C:\Development\Owner\CarMoneyPit\src\test\java\com\carmoneypit\engine\EngineTest.java:29: error: constructor EngineInput in record EngineInput cannot be applied to given types;
+        EngineInput input = new EngineInput(
+                            ^
+  required: String,VehicleType,CarBrand,long,long,long,boolean
+  found:    VehicleType,CarBrand,int,int,int
+  reason: actual and formal argument lists differ in length
+C:\Development\Owner\CarMoneyPit\src\test\java\com\carmoneypit\engine\EngineTest.java:47: error: constructor EngineInput in record EngineInput cannot be applied to given types;
+        EngineInput input = new EngineInput(
+                            ^
+  required: String,VehicleType,CarBrand,long,long,long,boolean
+  found:    VehicleType,CarBrand,int,int,int
+  reason: actual and formal argument lists differ in length
+C:\Development\Owner\CarMoneyPit\src\test\java\com\carmoneypit\engine\web\WebLayerTest.java:33: warning: [removal] MockBean in org.springframework.boot.test.mock.mockito has been deprecated and marked for removal
+        @MockBean
+         ^
+C:\Development\Owner\CarMoneyPit\src\test\java\com\carmoneypit\engine\web\WebLayerTest.java:36: warning: [removal] MockBean in org.springframework.boot.test.mock.mockito has been deprecated and marked for removal
+        @MockBean
+         ^
+C:\Development\Owner\CarMoneyPit\src\test\java\com\carmoneypit\engine\web\WebLayerTest.java:39: warning: [removal] MockBean in org.springframework.boot.test.mock.mockito has been deprecated and marked for removal
+        @MockBean
+         ^
+C:\Development\Owner\CarMoneyPit\src\test\java\com\carmoneypit\engine\web\WebLayerTest.java:52: error: constructor VerdictResult in record VerdictResult cannot be applied to given types;
+                VerdictResult mockResult = new VerdictResult(
+                                           ^
+  required: VerdictState,String,VisualizationHint,List<FinancialLineItem>,long,double,double,int,PeerData,EconomicContext
+  found:    VerdictState,String,VisualizationHint,List<Object>,long
+  reason: actual and formal argument lists differ in length
+C:\Development\Owner\CarMoneyPit\src\test\java\com\carmoneypit\engine\web\WebLayerTest.java:65: error: method getLeadLabel in class VerdictPresenter cannot be applied to given types;
+                given(verdictPresenter.getLeadLabel(any())).willReturn("Lead Label");
+                                      ^
+  required: VerdictState,EngineInput,SimulationControls
+  found:    Object
+  reason: actual and formal argument lists differ in length
+C:\Development\Owner\CarMoneyPit\src\test\java\com\carmoneypit\engine\web\WebLayerTest.java:66: error: method getLeadDescription in class VerdictPresenter cannot be applied to given types;
+                given(verdictPresenter.getLeadDescription(any())).willReturn("Lead Desc");
+                                      ^
+  required: VerdictState,EngineInput,SimulationControls
+  found:    Object
+  reason: actual and formal argument lists differ in length
+C:\Development\Owner\CarMoneyPit\src\test\java\com\carmoneypit\engine\web\WebLayerTest.java:67: error: method getLeadUrl in class VerdictPresenter cannot be applied to given types;
+                given(verdictPresenter.getLeadUrl(any())).willReturn("http://example.com");
+                                      ^
+  required: VerdictState,EngineInput,SimulationControls
+  found:    Object
+  reason: actual and formal argument lists differ in length
+C:\Development\Owner\CarMoneyPit\src\test\java\com\carmoneypit\engine\web\WebLayerTest.java:83: error: constructor VerdictResult in record VerdictResult cannot be applied to given types;
+                VerdictResult mockResult = new VerdictResult(
+                                           ^
+  required: VerdictState,String,VisualizationHint,List<FinancialLineItem>,long,double,double,int,PeerData,EconomicContext
+  found:    VerdictState,String,VisualizationHint,List<Object>,long
+  reason: actual and formal argument lists differ in length
+C:\Development\Owner\CarMoneyPit\src\test\java\com\carmoneypit\engine\web\WebLayerTest.java:97: error: method getLeadLabel in class VerdictPresenter cannot be applied to given types;
+                given(verdictPresenter.getLeadLabel(any())).willReturn("Term Label");
+                                      ^
+  required: VerdictState,EngineInput,SimulationControls
+  found:    Object
+  reason: actual and formal argument lists differ in length
+C:\Development\Owner\CarMoneyPit\src\test\java\com\carmoneypit\engine\web\WebLayerTest.java:98: error: method getLeadDescription in class VerdictPresenter cannot be applied to given types;
+                given(verdictPresenter.getLeadDescription(any())).willReturn("Term Desc");
+                                      ^
+  required: VerdictState,EngineInput,SimulationControls
+  found:    Object
+  reason: actual and formal argument lists differ in length
+C:\Development\Owner\CarMoneyPit\src\test\java\com\carmoneypit\engine\web\WebLayerTest.java:99: error: method getLeadUrl in class VerdictPresenter cannot be applied to given types;
+                given(verdictPresenter.getLeadUrl(any())).willReturn("http://term-url.com");
+                                      ^
+  required: VerdictState,EngineInput,SimulationControls
+  found:    Object
+  reason: actual and formal argument lists differ in length
+C:\Development\Owner\CarMoneyPit\src\test\java\com\carmoneypit\engine\web\WebLayerTest.java:118: error: constructor VerdictResult in record VerdictResult cannot be applied to given types;
+                VerdictResult mockResult = new VerdictResult(
+                                           ^
+  required: VerdictState,String,VisualizationHint,List<FinancialLineItem>,long,double,double,int,PeerData,EconomicContext
+  found:    VerdictState,String,VisualizationHint,List<Object>,long
+  reason: actual and formal argument lists differ in length
+C:\Development\Owner\CarMoneyPit\src\test\java\com\carmoneypit\engine\web\WebLayerTest.java:126: error: method estimateValue in class ValuationService cannot be applied to given types;
+                given(valuationService.estimateValue(any(), anyLong())).willReturn(12500L);
+                                      ^
+  required: CarBrand,VehicleType,long
+  found:    Object,long
+  reason: actual and formal argument lists differ in length
+C:\Development\Owner\CarMoneyPit\src\test\java\com\carmoneypit\engine\web\WebLayerTest.java:126: error: incompatible types: long cannot be converted to VehicleType
+                given(valuationService.estimateValue(any(), anyLong())).willReturn(12500L);
+                                                                   ^
+C:\Development\Owner\CarMoneyPit\src\test\java\com\carmoneypit\engine\web\WebLayerTest.java:134: error: method getLeadLabel in class VerdictPresenter cannot be applied to given types;
+                given(verdictPresenter.getLeadLabel(any())).willReturn("Lead Label");
+                                      ^
+  required: VerdictState,EngineInput,SimulationControls
+  found:    Object
+  reason: actual and formal argument lists differ in length
+C:\Development\Owner\CarMoneyPit\src\test\java\com\carmoneypit\engine\web\WebLayerTest.java:135: error: method getLeadDescription in class VerdictPresenter cannot be applied to given types;
+                given(verdictPresenter.getLeadDescription(any())).willReturn("Lead Desc");
+                                      ^
+  required: VerdictState,EngineInput,SimulationControls
+  found:    Object
+  reason: actual and formal argument lists differ in length
+C:\Development\Owner\CarMoneyPit\src\test\java\com\carmoneypit\engine\web\WebLayerTest.java:136: error: method getLeadUrl in class VerdictPresenter cannot be applied to given types;
+                given(verdictPresenter.getLeadUrl(any())).willReturn("http://example.com");
+                                      ^
+  required: VerdictState,EngineInput,SimulationControls
+  found:    Object
+  reason: actual and formal argument lists differ in length
+Note: Some messages have been simplified; recompile with -Xdiags:verbose to get full output
+24 errors
+3 warnings
+
+[Incubating] Problems report is available at: file:///C:/Development/Owner/CarMoneyPit/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':compileTestJava'.
+> Compilation failed; see the compiler output below.
+  C:\Development\Owner\CarMoneyPit\src\test\java\com\carmoneypit\engine\core\ValuationServiceTest.java:9: error: constructor ValuationService in class ValuationService cannot be applied to given types;
+      private final ValuationService service = new ValuationService();
+                                               ^
+    required: ObjectMapper,CarDataService
+    found:    no arguments
+    reason: actual and formal argument lists differ in length
+  24 errors
+  3 warnings
+
+* Try:
+> Check your code and dependencies to fix the compilation error(s)
+> Run with --scan to get full insights.
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.14.3/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD FAILED in 1s
+4 actionable tasks: 1 executed, 3 up-to-date

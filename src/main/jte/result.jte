@@ -201,7 +201,7 @@
             /* Sticky Bar Styles */
             .sticky-bar {
                 position: fixed;
-                top: 20px;
+                top: 80px;
                 left: 50%;
                 transform: translateX(-50%) translateY(-20px);
                 width: 90%;
@@ -222,6 +222,19 @@
                 opacity: 1;
                 pointer-events: all;
                 transform: translateX(-50%) translateY(0);
+            }
+
+            @media (max-width: 768px) {
+                .sticky-bar {
+                    top: auto;
+                    bottom: 20px;
+                    transform: translateX(-50%) translateY(20px);
+                    border-radius: 20px;
+                    padding: 0.6rem 1rem;
+                }
+                .sticky-bar.visible {
+                    transform: translateX(-50%) translateY(0);
+                }
             }
             .sticky-bar .sticky-content { display: flex; justify-content: space-between; align-items: center; width: 100%; }
             .sticky-bar .sticky-left { display: flex; align-items: center; gap: 1rem; }

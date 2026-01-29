@@ -40,6 +40,11 @@ public class RootController {
         return "pages/terms";
     }
 
+    @GetMapping("/contact")
+    public String contact() {
+        return "pages/contact";
+    }
+
     @GetMapping(value = "/robots.txt", produces = "text/plain")
     @ResponseBody
     public String robots() {
@@ -68,6 +73,7 @@ public class RootController {
         addUrl(xml, baseUrl + "/methodology", today, "0.8");
         addUrl(xml, baseUrl + "/privacy", today, "0.5");
         addUrl(xml, baseUrl + "/terms", today, "0.5");
+        addUrl(xml, baseUrl + "/contact", today, "0.5");
 
         // Brand Pages (Unique)
         java.util.Set<String> processedBrands = new java.util.HashSet<>();

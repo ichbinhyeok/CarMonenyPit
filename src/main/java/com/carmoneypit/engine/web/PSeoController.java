@@ -44,7 +44,7 @@ public class PSeoController {
     Optional<CarModel> carOpt = dataService.findCarBySlug(brand, model);
     if (carOpt.isEmpty()) {
       logger.warn("Car not found: {} / {}", brand, model);
-      return "redirect:/";
+      return "redirect:/models/" + normalize(brand);
     }
     CarModel car = carOpt.get();
 
@@ -52,7 +52,7 @@ public class PSeoController {
     Optional<MajorFaults> faultsOpt = dataService.findFaultsByModelId(car.id());
     if (faultsOpt.isEmpty()) {
       logger.warn("No faults data for model: {}", car.id());
-      return "redirect:/";
+      return "redirect:/models/" + brand + "/" + model;
     }
 
     String targetKeyword = faultSlug.replace("-", " ").toLowerCase();
@@ -65,7 +65,7 @@ public class PSeoController {
 
     if (faultOpt.isEmpty()) {
       logger.warn("Fault not found: {}", faultSlug);
-      return "redirect:/";
+      return "redirect:/models/" + brand + "/" + model;
     }
     Fault fault = faultOpt.get();
 
@@ -87,10 +87,11 @@ public class PSeoController {
 
     // Enhanced Meta Description with social proof (Truthful & SEO Safe)
     // Enhanced Meta Description with social proof (Truthful & SEO Safe)
-    String metaDescription = "Is a $" + String.format("%,d", Math.round(fault.repairCost())) + " " + fault.component() +
+    // Enhanced Meta Description with social proof (Truthful & SEO Safe)
+    String metaDescription = "Experiencing " + fault.symptoms().toLowerCase() + "? Is a $"
+        + String.format("%,d", Math.round(fault.repairCost())) + " " + fault.component() +
         " repair worth it on your " + car.brand() + " " + car.model()
-        + "? We analyzed this against 50,000+ market data points " +
-        "including depreciation curves and repair statistics to give you a clear financial verdict. Free calculator included.";
+        + "? We analyzed market data and depreciation curves to give you a clear financial verdict.";
 
     String canonicalUrl = "https://automoneypit.com/verdict/" + brand + "/" + model + "/" + faultSlug;
 

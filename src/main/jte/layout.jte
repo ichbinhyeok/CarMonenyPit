@@ -89,7 +89,7 @@
             flex-direction: column;
             position: relative;
             overflow-x: hidden;
-            padding-top: 5rem; /* Space for the fixed header */
+            padding-top: 5.5rem; /* Reduced after slimming header */
         }
 
         /* Sophisticated Mesh Background */
@@ -111,7 +111,7 @@
         /* --- Responsive Foundations --- */
         @media (max-width: 768px) {
             body {
-                padding-top: 4rem;
+                padding-top: 4.5rem;
             }
             main {
                 padding: 1rem !important;
