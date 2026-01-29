@@ -7,6 +7,7 @@ import com.carmoneypit.engine.core.ValuationService;
 import com.carmoneypit.engine.data.CarBrandData;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import java.util.Base64;
 import java.nio.charset.StandardCharsets;
 import java.util.Optional;
@@ -20,6 +21,34 @@ public class VerdictPresenter {
     public VerdictPresenter(ObjectMapper objectMapper, ValuationService valuationService) {
         this.objectMapper = objectMapper;
         this.valuationService = valuationService;
+    }
+
+    /**
+     * Centralized UI Model preparation for the verdict report/result page.
+     */
+    public void populateModel(Model model, EngineInput input,
+            com.carmoneypit.engine.api.OutputModels.VerdictResult result,
+            SimulationControls controls, String viewMode, String token) {
+        model.addAttribute("input", input);
+        model.addAttribute("result", result);
+        model.addAttribute("verdictTitle", getVerdictTitle(result.verdictState()));
+        model.addAttribute("verdictExplanation", getLawyerExplanation(result.verdictState(), input));
+        model.addAttribute("verdictAction", getActionPlan(result.verdictState()));
+        model.addAttribute("verdictCss", getCssClass(result.verdictState()));
+        model.addAttribute("leadLabel", getLeadLabel(result.verdictState(), input, controls));
+        model.addAttribute("leadDescription", getLeadDescription(result.verdictState(), input, controls));
+        model.addAttribute("leadUrl", getLeadUrl(result.verdictState(), input, controls));
+
+        model.addAttribute("isValueEstimated", input.isValueEstimated());
+        model.addAttribute("isQuoteEstimated", input.isQuoteEstimated());
+
+        model.addAttribute("viewMode", viewMode);
+        model.addAttribute("shareToken", token);
+        model.addAttribute("controls", controls);
+
+        if ("RECEIPT".equals(viewMode)) {
+            model.addAttribute("ogTitle", getViralOgTitle(result.verdictState()));
+        }
     }
 
     public String encodeToken(EngineInput input) {
@@ -97,6 +126,10 @@ public class VerdictPresenter {
         };
     }
 
+    private static final String NARRATIVE_TIME_BOMB = "DECISION_AUDIT: Our market data model suggests your asset is entering a rapid depreciation phase relative to national benchmarks.%s Projected maintenance overhead vs current equity indicates a high-variance risk. Authorizing large repairs at this stage is statistically inefficient for capital preservation. Strategic liquidation is advised via optimized exit-ramp.";
+    private static final String NARRATIVE_STABLE = "VALIDATED: Maintenance appears to be a sound investment. The %s platform remains statistically efficient for your current usage window based on our data. Authorizing repair is likely to preserve capital better than entering the high-friction replacement market.";
+    private static final String NARRATIVE_BORDERLINE = "CAUTION: Correlation shift detected.%s Your asset is entering a high-variance risk window. Proceeding with repair may be speculative. We suggest securing a 15%% discount on services or considering an exit.";
+
     public String getLawyerExplanation(VerdictState state, EngineInput input) {
         Optional<CarBrandData> brandData = (input != null) ? valuationService.getBrandData(input.brand())
                 : Optional.empty();
@@ -110,14 +143,10 @@ public class VerdictPresenter {
                             " Statistical signal for %s detected: %s issues peak at this mileage.",
                             brandName, brandData.get().majorIssues.get(0).part);
                 }
-                return String.format(
-                        "DECISION_AUDIT: Our market data model suggests your asset is entering a potential rapid depreciation phase. While emotionally difficult, the statistical indicators are unfavorable.%s Projected maintenance overhead may exceed asset core equity. Strategic liquidation is strongly recommended by our algorithm.",
-                        brandRisk);
+                return String.format(NARRATIVE_TIME_BOMB, brandRisk);
 
             case STABLE:
-                return String.format(
-                        "VALIDATED: Maintenance appears to be a sound investment. The %s platform remains statistically efficient for your current usage window based on our data. Authorizing repair is likely to preserve capital better than entering the high-friction replacement market.",
-                        brandName);
+                return String.format(NARRATIVE_STABLE, brandName);
 
             case BORDERLINE:
             default:
@@ -126,9 +155,7 @@ public class VerdictPresenter {
                     issueWarning = String.format(" Potential %s vulnerability: %s. ", brandName,
                             brandData.get().majorIssues.get(0).part);
                 }
-                return String.format(
-                        "CAUTION: Correlation shift detected.%s Your asset is entering a high-variance risk window. Proceeding with repair may be speculative. We suggest securing a 15%% discount on services or considering an exit.",
-                        issueWarning);
+                return String.format(NARRATIVE_BORDERLINE, issueWarning);
         }
     }
 
@@ -149,16 +176,12 @@ public class VerdictPresenter {
     }
 
     public String getCssClass(VerdictState state) {
-        switch (state) {
-            case TIME_BOMB:
-                return "verdict-terminate";
-            case STABLE:
-                return "verdict-sustain";
-            case BORDERLINE:
-                return "verdict-probation";
-            default:
-                return "verdict-unknown";
-        }
+        return switch (state) {
+            case TIME_BOMB -> "verdict-liquidate"; // Switched from terminate to match result.jte
+            case STABLE -> "verdict-sustain";
+            case BORDERLINE -> "verdict-risk_alert"; // Switched from probation to match result.jte
+            default -> "verdict-unknown";
+        };
     }
 
     public String getLeadLabel(VerdictState state, EngineInput input, SimulationControls controls) {

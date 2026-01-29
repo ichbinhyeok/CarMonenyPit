@@ -15,6 +15,12 @@ import java.util.List;
 @Component
 public class RegretCalculator {
 
+    private final com.carmoneypit.engine.service.CarDataService carDataService;
+
+    public RegretCalculator(com.carmoneypit.engine.service.CarDataService carDataService) {
+        this.carDataService = carDataService;
+    }
+
     public record RegretDetail(double score, List<FinancialLineItem> items) {
     }
 
@@ -42,20 +48,42 @@ public class RegretCalculator {
         }
 
         double majorCostBase = MAJOR_FAILURE_GENERAL;
+
+        // --- DYNAMIC FAULT LOOKUP (The Expert Move) ---
+        if (input.model() != null && !input.model().isBlank()) {
+            var modelOpt = carDataService.getAllModels().stream()
+                    .filter(m -> m.model().equalsIgnoreCase(input.model()))
+                    .findFirst();
+
+            if (modelOpt.isPresent()) {
+                var faultsOpt = carDataService.findFaultsByModelId(modelOpt.get().id());
+                if (faultsOpt.isPresent()) {
+                    var faultsList = faultsOpt.get().faults();
+                    if (!faultsList.isEmpty()) {
+                        majorCostBase = faultsList.stream()
+                                .mapToDouble(f -> f.repairCost())
+                                .max().orElse(MAJOR_FAILURE_GENERAL);
+                    }
+                }
+            }
+        }
+
         if (controls != null) {
-            // [LOGIC FIX 3] Severity Boosts Probability, not just Cost
+            // Severity Boosts Probability
             if (controls.failureSeverity() == FailureSeverity.ENGINE_TRANSMISSION) {
-                majorCostBase = MAJOR_FAILURE_ENGINE;
-                failureProb *= 1.5; // "Engine failure implies systemic rot"
-                failureProb = Math.min(failureProb, 0.95); // Cap at 95%
+                // If we didn't find a monster fault in JSON, ensure it's at least the base
+                majorCostBase = Math.max(majorCostBase, MAJOR_FAILURE_ENGINE);
+                failureProb *= 1.5;
+                failureProb = Math.min(failureProb, 0.95);
             } else if (controls.failureSeverity() == FailureSeverity.SUSPENSION_BRAKES) {
-                majorCostBase = MAJOR_FAILURE_SUSPENSION;
+                majorCostBase = Math.max(majorCostBase, MAJOR_FAILURE_SUSPENSION);
             }
         }
 
         double riskRegret = failureProb * majorCostBase;
-        items.add(new FinancialLineItem("Hidden Secondary Failure Risk", riskRegret,
-                String.format("%d%% actuarial probability of adjacent system collapse.", (int) (failureProb * 100)),
+        items.add(new FinancialLineItem("Secondary failure risk", riskRegret,
+                String.format("[Fault DB] %d%% actuarial probability of adjacent system collapse.",
+                        (int) (failureProb * 100)),
                 ItemCategory.STAY));
         totalScore += riskRegret;
 
@@ -63,7 +91,7 @@ public class RegretCalculator {
         double timingCost = input.currentValueUsd() * 0.05; // 5% penalty for missing the current 'working condition'
                                                             // sale window
         items.add(new FinancialLineItem("Opportunity Cost of Delay", timingCost,
-                "The economic cost of missing the optimal asset disposal window.", ItemCategory.STAY));
+                "[Market Index] The economic cost of missing the optimal asset disposal window.", ItemCategory.STAY));
         totalScore += timingCost;
 
         // 4. Pain Score (Time/Stress + Tow Truck Rage)
@@ -107,7 +135,8 @@ public class RegretCalculator {
                     break;
             }
             items.add(
-                    new FinancialLineItem("Retention Horizon Liability", horizonCost, horizonNote, ItemCategory.STAY));
+                    new FinancialLineItem("Retention Horizon Liability", horizonCost,
+                            "[Actuarial Bench] " + horizonNote, ItemCategory.STAY));
             totalScore += horizonCost;
         }
 

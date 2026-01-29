@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DecisionEngine {
@@ -19,8 +20,20 @@ public class DecisionEngine {
     private final CostOfInactionCalculator costOfInactionCalculator;
     private final ValuationService valuationService;
 
-    // Margin to prevent flickering verdicts (hysteresis-like thought process)
+    // --- Actuarial Constants & Thresholds ---
     private static final double SIGNIFICANCE_MARGIN = 50.0;
+    private static final int BASE_CONFIDENCE_GENERIC = 60;
+    private static final int BOOST_MODEL_DATA = 25;
+    private static final int BOOST_VEHICLE_SEGMENT = 10;
+    private static final int BOOST_REAL_QUOTE = 13;
+    private static final int BOOST_MARKETING_MATCH = 5;
+
+    private static final int DEFAULT_SELL_PCT = 40;
+    private static final int SELL_PCT_SHIFT_BOMB = 15;
+    private static final int SELL_PCT_SHIFT_STABLE = 15;
+
+    private static final long DEFAULT_SWITCHING_FRICTION = 3000L;
+    private static final int DEFAULT_NEW_MONTHLY_PAYMENT = 748;
 
     public DecisionEngine(RegretCalculator regretCalculator, CostOfInactionCalculator costOfInactionCalculator,
             ValuationService valuationService) {
@@ -57,17 +70,20 @@ public class DecisionEngine {
         breakdown.addAll(rfDetail.items());
         breakdown.addAll(rmDetail.items());
 
+        // Granular Model Context if available
+        var marketDataOpt = valuationService.getMarketData(input.model());
+
         // Calculate Cost of Inaction (Asset Bleed)
+        Double depRate = marketDataOpt.map(m -> m.depreciationRate()).orElse(null);
         long assetBleed = costOfInactionCalculator.calculateAssetBleed(input.vehicleType(), input.mileage(),
-                input.repairQuoteUsd(), input.currentValueUsd());
+                input.repairQuoteUsd(), input.currentValueUsd(), depRate);
 
         // Rounding Rule (10s) for "Professional Estimate" feel
         List<FinancialLineItem> roundedBreakdown = new ArrayList<>();
         for (FinancialLineItem item : breakdown) {
             double roundedAmount = Math.round(item.amount() / 10.0) * 10.0;
-            // Re-create the record with the rounded amount (Labels/descriptions stay same)
-            roundedBreakdown.add(new FinancialLineItem(item.label(), roundedAmount, item.description(), item.isNegative(),
-                    item.category()));
+            roundedBreakdown.add(new FinancialLineItem(item.label(), roundedAmount, item.description(),
+                    item.isNegative(), item.category()));
         }
 
         // Rounding Rule (100s) for display scores
@@ -77,23 +93,25 @@ public class DecisionEngine {
         // --- NEW STRATEGIC METRICS ---
         var brandDataOpt = valuationService.getBrandData(input.brand());
 
-        // 3. Confidence Score (Data Source Integrity)
-        int confidence = 60; // Base for generic brand data
+        // 1. Data Integrity & Confidence
+        int confidence = BASE_CONFIDENCE_GENERIC;
         if (input.model() != null && !input.model().isBlank() && !"other".equalsIgnoreCase(input.model())) {
-            confidence += 25; // Significant boost for specific model data
+            confidence += BOOST_MODEL_DATA;
         } else if (input.vehicleType() != null) {
-            confidence += 10; // Better if we have segments
+            confidence += BOOST_VEHICLE_SEGMENT;
         }
-
         if (!input.isQuoteEstimated())
-            confidence += 13; // Better if we have real quote
+            confidence += BOOST_REAL_QUOTE;
+        if (marketDataOpt.isPresent())
+            confidence += BOOST_MARKETING_MATCH;
+        confidence = Math.min(confidence, 98);
 
-        // 1. Peer Data (Owner Behavior)
-        int sellPct = brandDataOpt.map(d -> d.sellStatPct).orElse(40);
+        // 2. Peer Data (Owner Behavior)
+        int sellPct = brandDataOpt.map(d -> d.sellStatPct).orElse(DEFAULT_SELL_PCT);
         if (state == VerdictState.TIME_BOMB)
-            sellPct += 15; // Shift if it's a bomb
+            sellPct += SELL_PCT_SHIFT_BOMB;
         if (state == VerdictState.STABLE)
-            sellPct -= 15;
+            sellPct -= SELL_PCT_SHIFT_STABLE;
         sellPct = Math.min(Math.max(sellPct, 5), 95);
 
         var peerData = new com.carmoneypit.engine.api.OutputModels.PeerData(
@@ -101,21 +119,13 @@ public class DecisionEngine {
                 100 - sellPct,
                 state == VerdictState.STABLE ? 8.2 : 4.1);
 
-        // 2. Economic Context (Switching Reality)
-        long friction = brandDataOpt.map(d -> d.avgSwitchingFriction).orElse(3000L);
-        int monthly = brandDataOpt.map(d -> d.avgNewMonthly).orElse(748);
-
-        // Granular Model Context if available
-        var marketDataOpt = valuationService.getMarketData(input.model());
-        if (marketDataOpt.isPresent()) {
-            // Adjust confidence if we have exact market matchups
-            confidence += 5;
-        }
-        confidence = Math.min(confidence, 98);
+        // 3. Economic Context (Switching Reality)
+        long friction = brandDataOpt.map(d -> d.avgSwitchingFriction).orElse(DEFAULT_SWITCHING_FRICTION);
+        int monthly = brandDataOpt.map(d -> d.avgNewMonthly).orElse(DEFAULT_NEW_MONTHLY_PAYMENT);
 
         var econContext = new com.carmoneypit.engine.api.OutputModels.EconomicContext(
                 friction,
-                (int) monthly,
+                monthly,
                 input.currentValueUsd() / 2 // 50% Rule threshold
         );
 
@@ -136,15 +146,14 @@ public class DecisionEngine {
     }
 
     private String generateNarrative(VerdictState state, double rf, double rm) {
-        // v1 Simple Narrative Generation
-        switch (state) {
-            case TIME_BOMB:
-                return "This repair is likely a sunk cost. The regret of fixing (RF) significantly outweighs the hassle of switching.";
-            case STABLE:
-                return "Proceed with caution, but fixing once makes sense. The cost of switching is currently higher than the repair regret.";
-            case BORDERLINE:
-            default:
-                return "It's a toss-up. You are arguably in the 'Zone of Indecision'. Consider your personal stress tolerance.";
-        }
+        return switch (state) {
+            case TIME_BOMB ->
+                "This repair is likely a sunk cost. The regret of fixing (RF) significantly outweighs the hassle of switching.";
+            case STABLE ->
+                "Proceed with caution, but fixing once makes sense. The cost of switching is currently higher than the repair regret.";
+            case BORDERLINE ->
+                "It's a toss-up. You are arguably in the 'Zone of Indecision'. Consider your personal stress tolerance.";
+            default -> "Engine analysis complete. Review specialized metrics for guidance.";
+        };
     }
 }

@@ -42,7 +42,7 @@
         position: fixed;
         top: 0;
         left: 0;
-        z-index: 100;
+        z-index: 50;
         background: rgba(252, 252, 253, 0.9);
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);

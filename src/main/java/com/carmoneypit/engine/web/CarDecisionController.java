@@ -90,7 +90,7 @@ public class CarDecisionController {
 
                 long effectiveValue = (currentValueUsd != null && currentValueUsd > 0)
                                 ? currentValueUsd
-                                : valuationService.estimateValue(brand, effectiveType, mileage);
+                                : valuationService.estimateValue(brand, carModel, effectiveType, mileage);
                 boolean isEstimated = (currentValueUsd == null || currentValueUsd <= 0);
 
                 long effectiveRepairQuote = (repairQuoteUsd != null && repairQuoteUsd > 0)
@@ -114,41 +114,19 @@ public class CarDecisionController {
                         Model model,
                         jakarta.servlet.http.HttpServletResponse response) {
 
-                // Anti-Viral Safety: Ensure this page is NEVER indexed
                 response.setHeader("X-Robots-Tag", "noindex, nofollow");
 
                 try {
                         EngineInput input = presenter.decodeToken(token);
                         VerdictResult result = decisionEngine.evaluate(input);
 
-                        // Default simulation controls for a "shared" view
                         SimulationControls sharedControls = new SimulationControls(
-                                        com.carmoneypit.engine.api.InputModels.FailureSeverity.GENERAL_UNKNOWN,
-                                        com.carmoneypit.engine.api.InputModels.MobilityStatus.DRIVABLE,
-                                        com.carmoneypit.engine.api.InputModels.HassleTolerance.NEUTRAL,
+                                        FailureSeverity.GENERAL_UNKNOWN,
+                                        MobilityStatus.DRIVABLE,
+                                        HassleTolerance.NEUTRAL,
                                         null);
 
-                        model.addAttribute("input", input);
-                        model.addAttribute("result", result);
-                        model.addAttribute("verdictTitle", presenter.getVerdictTitle(result.verdictState()));
-                        model.addAttribute("verdictExplanation",
-                                        presenter.getLawyerExplanation(result.verdictState(), input));
-                        model.addAttribute("verdictAction", presenter.getActionPlan(result.verdictState()));
-                        model.addAttribute("verdictCss", presenter.getCssClass(result.verdictState()));
-                        model.addAttribute("leadLabel",
-                                        presenter.getLeadLabel(result.verdictState(), input, sharedControls));
-                        model.addAttribute("leadDescription",
-                                        presenter.getLeadDescription(result.verdictState(), input, sharedControls));
-                        model.addAttribute("leadUrl",
-                                        presenter.getLeadUrl(result.verdictState(), input, sharedControls));
-
-                        // Shared View Mode
-                        model.addAttribute("viewMode", "RECEIPT");
-                        model.addAttribute("shareToken", token);
-                        model.addAttribute("ogTitle", presenter.getViralOgTitle(result.verdictState()));
-
-                        model.addAttribute("controls", sharedControls);
-
+                        presenter.populateModel(model, input, result, sharedControls, "RECEIPT", token);
                         return "result";
                 } catch (Exception e) {
                         log.error("Invalid token provided: {}", token);
@@ -174,7 +152,7 @@ public class CarDecisionController {
 
                 long effectiveValue = (currentValueUsd != null && currentValueUsd > 0)
                                 ? currentValueUsd
-                                : valuationService.estimateValue(brand, effectiveType, mileage);
+                                : valuationService.estimateValue(brand, carModel, effectiveType, mileage);
                 boolean finalIsEstimated = isValueEstimated || (currentValueUsd == null || currentValueUsd <= 0);
 
                 long effectiveRepairQuote = (repairQuoteUsd != null && repairQuoteUsd > 0)
@@ -186,38 +164,10 @@ public class CarDecisionController {
                 EngineInput input = new EngineInput(carModel != null ? carModel : "Other", effectiveType, brand,
                                 mileage,
                                 effectiveRepairQuote, effectiveValue,
-                                finalIsQuoteEstimated);
-                VerdictResult result = decisionEngine.evaluate(input);
-
-                SimulationControls defaultControls = new SimulationControls(
-                                FailureSeverity.GENERAL_UNKNOWN,
-                                MobilityStatus.DRIVABLE,
-                                HassleTolerance.NEUTRAL,
-                                null);
-
-                model.addAttribute("input", input);
-                model.addAttribute("result", result);
-                model.addAttribute("verdictTitle", presenter.getVerdictTitle(result.verdictState()));
-                model.addAttribute("verdictExplanation", presenter.getLawyerExplanation(result.verdictState(), input));
-                model.addAttribute("verdictAction", presenter.getActionPlan(result.verdictState()));
-                model.addAttribute("verdictCss", presenter.getCssClass(result.verdictState()));
-                model.addAttribute("leadLabel", presenter.getLeadLabel(result.verdictState(), input, defaultControls));
-                model.addAttribute("leadDescription",
-                                presenter.getLeadDescription(result.verdictState(), input, defaultControls));
-                model.addAttribute("leadUrl", presenter.getLeadUrl(result.verdictState(), input, defaultControls));
-                model.addAttribute("isValueEstimated", finalIsEstimated);
-                model.addAttribute("isQuoteEstimated", finalIsQuoteEstimated);
-
-                model.addAttribute("viewMode", "OWNER");
+                                finalIsQuoteEstimated, finalIsEstimated);
 
                 String shareToken = presenter.encodeToken(input);
-
-                // Force client-side redirect to the GET report page.
-                // This ensures the URL is updated cleanly and specific "Refresh" behavior
-                // works.
                 response.setHeader("HX-Location", "/report?token=" + shareToken);
-
-                // We return empty because HX-Location triggers a new request to /report
                 return "";
         }
 
@@ -227,14 +177,10 @@ public class CarDecisionController {
                         Model model,
                         jakarta.servlet.http.HttpServletResponse response) {
 
-                // Noindex for this report page as well to prevent duplicate content / private
-                // data indexing
                 response.setHeader("X-Robots-Tag", "noindex, nofollow");
 
                 try {
                         EngineInput input = presenter.decodeToken(token);
-
-                        // Re-evaluate to ensure fresh logic (though input is immutable snapshot)
                         VerdictResult result = decisionEngine.evaluate(input);
 
                         SimulationControls defaultControls = new SimulationControls(
@@ -243,35 +189,11 @@ public class CarDecisionController {
                                         HassleTolerance.NEUTRAL,
                                         null);
 
-                        model.addAttribute("input", input);
-                        model.addAttribute("result", result);
-                        model.addAttribute("verdictTitle", presenter.getVerdictTitle(result.verdictState()));
-                        model.addAttribute("verdictExplanation",
-                                        presenter.getLawyerExplanation(result.verdictState(), input));
-                        model.addAttribute("verdictAction", presenter.getActionPlan(result.verdictState()));
-                        model.addAttribute("verdictCss", presenter.getCssClass(result.verdictState()));
-                        model.addAttribute("leadLabel",
-                                        presenter.getLeadLabel(result.verdictState(), input, defaultControls));
-                        model.addAttribute("leadDescription",
-                                        presenter.getLeadDescription(result.verdictState(), input, defaultControls));
-                        model.addAttribute("leadUrl",
-                                        presenter.getLeadUrl(result.verdictState(), input, defaultControls));
-
-                        // Pass through flags if they were part of the token or derived
-                        // Since token only has core input fields, we might lose "isValueEstimated" flag
-                        // if not packed.
-                        // For now, re-calculation or defaults is acceptable.
-                        model.addAttribute("isValueEstimated", false);
-                        model.addAttribute("isQuoteEstimated", input.isQuoteEstimated());
-
-                        model.addAttribute("viewMode", "OWNER");
-                        model.addAttribute("shareToken", token);
-                        model.addAttribute("controls", defaultControls);
-
+                        presenter.populateModel(model, input, result, defaultControls, "OWNER", token);
                         return "result";
                 } catch (Exception e) {
                         log.error("Invalid report token: {}", token);
-                        return "redirect:/"; // Fallback to home on error
+                        return "redirect:/";
                 }
         }
 
@@ -291,26 +213,13 @@ public class CarDecisionController {
                         Model model) {
                 EngineInput input = new EngineInput(carModel != null ? carModel : "Other", vehicleType, brand, mileage,
                                 repairQuoteUsd, currentValueUsd,
-                                false); // Simulation default to false
+                                false, isValueEstimated);
                 SimulationControls controls = new SimulationControls(failureSeverity, mobilityStatus, hassleTolerance,
                                 retentionHorizon);
 
                 VerdictResult result = decisionEngine.simulate(input, controls);
 
-                model.addAttribute("input", input);
-                model.addAttribute("result", result);
-                model.addAttribute("controls", controls);
-                model.addAttribute("isValueEstimated", isValueEstimated);
-
-                // Presentation Logic
-                model.addAttribute("verdictTitle", presenter.getVerdictTitle(result.verdictState()));
-                model.addAttribute("verdictExplanation", presenter.getLawyerExplanation(result.verdictState(), input));
-                model.addAttribute("verdictAction", presenter.getActionPlan(result.verdictState()));
-                model.addAttribute("verdictCss", presenter.getCssClass(result.verdictState()));
-                model.addAttribute("leadLabel", presenter.getLeadLabel(result.verdictState(), input, controls));
-                model.addAttribute("leadDescription",
-                                presenter.getLeadDescription(result.verdictState(), input, controls));
-                model.addAttribute("leadUrl", presenter.getLeadUrl(result.verdictState(), input, controls));
+                presenter.populateModel(model, input, result, controls, "OWNER", null);
 
                 return "simulation_response";
         }

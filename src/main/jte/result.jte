@@ -198,108 +198,93 @@
                 .sim-grid-revamped { grid-template-columns: 1fr; gap: 1.5rem; }
             }
 
-            /* Sticky Bar Styles */
+            /* --- UI Constants --- */
+            :root {
+                --z-sticky: 2147483647;
+                --sticky-width: auto;
+                --sticky-max-width: 800px;
+                --header-height-offset: 80px;
+            }
+
+            /* --- Sticky Bar System --- */
             .sticky-bar {
                 position: fixed;
-                top: 46px; /* Adjusted to center in header (below 32px ticker) */
                 left: 50%;
                 transform: translateX(-50%);
-                width: auto;
-                max-width: 800px;
-                
-                /* Desktop: Integrated Look - visible by default */
+                width: var(--sticky-width);
+                max-width: var(--sticky-max-width);
                 background: rgba(255, 255, 255, 0.95);
                 backdrop-filter: blur(8px);
                 -webkit-backdrop-filter: blur(8px);
                 border: 1px solid rgba(0,0,0,0.08);
                 border-radius: 100px;
-                
                 padding: 0.4rem 1rem 0.4rem 1.4rem;
                 box-shadow: 0 4px 12px rgba(0,0,0,0.08); 
-                
-                z-index: 9999;
-                transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-                
-                /* Only hide initially on mobile where scroll trigger is used */
+                z-index: var(--z-sticky) !important;
+                transition: opacity 0.3s ease-out, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+                opacity: 0;
+                transform: translateX(-50%) translateY(-20px);
+                pointer-events: none;
+                visibility: hidden;
+                display: flex; /* Always flex but hidden */
+            }
+
+            .sticky-bar.is-visible {
+                visibility: visible;
                 opacity: 1;
+                transform: translateX(-50%) translateY(0);
                 pointer-events: all;
             }
 
+            .sticky-content { display: flex; align-items: center; gap: 1.5rem; }
+            .sticky-left { display: flex; align-items: center; gap: 0.8rem; }
+            .status-dot { width: 8px; height: 8px; border-radius: 50%; }
+            
+            .verdict-liquidate .status-dot { background: var(--red-alert); box-shadow: 0 0 8px rgba(239, 68, 68, 0.4); }
+            .verdict-sustain .status-dot { background: var(--green-safe); box-shadow: 0 0 8px rgba(16, 185, 129, 0.4); }
+            .verdict-risk_alert .status-dot { background: var(--orange-warn); box-shadow: 0 0 8px rgba(245, 158, 11, 0.4); }
+            
+            .sticky-title { font-weight: 800; font-size: 0.9rem; letter-spacing: -0.01em; color: var(--text-main); }
+            .sticky-action-text { font-size: 0.8rem; color: var(--text-secondary); font-weight: 600; border-left: 2px solid #e2e8f0; padding-left: 0.8rem; }
+            
+            .sticky-cta {
+                background: var(--text-main); color: #fff; padding: 0.5rem 1rem; border-radius: 20px; text-decoration: none; 
+                font-weight: 700; font-size: 0.8rem; display: flex; align-items: center; gap: 0.4rem; transition: transform 0.2s; white-space: nowrap;
+            }
+            .sticky-cta:hover { transform: scale(1.05); }
+
+            /* --- Dashboard Actions --- */
+            .verdict-actions { display: flex; gap: 1rem; margin-top: 2rem; justify-content: center; }
+            .btn-secondary { background: transparent; border: 1px solid #e2e8f0; padding: 0.8rem 1.5rem; border-radius: 12px; font-weight: 700; color: var(--text-secondary); cursor: pointer; }
+            .btn-primary-dark { background: #111; color: #fff; padding: 0.8rem 1.5rem; border-radius: 12px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; border: none; }
+
+            /* --- Responsive --- */
             @media (max-width: 1024px) {
-                .sticky-bar .sticky-action-text { display: none; }
+                .sticky-action-text { display: none; }
             }
 
             @media (max-width: 768px) {
                 .sticky-bar {
-                    top: auto;
+                    top: auto !important;
                     bottom: 20px;
-                    transform: translateX(-50%) translateY(20px);
                     border-radius: 20px;
                     padding: 0.8rem 1.2rem;
                     width: 90%;
                     max-width: 400px;
-                    
-                    /* Mobile: Hidden initially, triggered by scroll */
-                    opacity: 0;
-                    pointer-events: none;
+                    transform: translateX(-50%) translateY(20px);
                 }
-                .sticky-bar.visible {
-                    opacity: 1;
-                    pointer-events: all;
-                    transform: translateX(-50%) translateY(0);
-                }
-                
-                /* Mobile Layout Fixes */
-                .sticky-bar .sticky-content { 
-                    display: flex; 
-                    justify-content: space-between; 
-                    align-items: center; 
-                    width: 100%; 
-                }
-                .sticky-bar .sticky-left { 
-                    display: flex; 
-                    flex-direction: row; /* Force row to keep dot next to text */
-                    align-items: center; 
-                    gap: 0.8rem; 
-                }
-                .sticky-bar .sticky-text {
-                    display: flex;
-                    flex-direction: column;
-                    align-items: flex-start;
-                }
-                /* Mobile typography adjustments */
-                .sticky-bar .sticky-title { font-size: 0.9rem; margin-bottom: 2px; }
-                .sticky-bar .sticky-action-text { 
-                    display: block; 
-                    border: none; 
-                    padding: 0; 
-                    font-size: 0.7rem; 
-                    line-height: 1;
-                    color: var(--text-secondary);
-                }
-                .sticky-bar .status-dot { margin-top: 2px; } /* Optical alignment */
+                .sticky-bar.is-visible { transform: translateX(-50%) translateY(0); }
+                .sticky-content { justify-content: space-between; width: 100%; }
+                .sticky-left { flex-direction: row; gap: 0.8rem; }
+                .sticky-text { display: flex; flex-direction: column; align-items: flex-start; }
+                .sticky-title { font-size: 0.9rem; margin-bottom: 2px; }
+                .sticky-action-text { display: block; border: none; padding: 0; font-size: 0.7rem; line-height: 1; }
+                .status-dot { margin-top: 2px; }
             }
-            
-            /* Shared Styles */
-            .sticky-bar .sticky-content { display: flex; align-items: center; gap: 1.5rem; }
-            .sticky-bar .sticky-left { display: flex; align-items: center; gap: 0.8rem; }
-            .sticky-bar .status-dot { width: 8px; height: 8px; border-radius: 50%; }
-            .sticky-bar.verdict-liquidate .status-dot { background: #ef4444; box-shadow: 0 0 8px rgba(239, 68, 68, 0.6); }
-            .sticky-bar.verdict-sustain .status-dot { background: #10b981; box-shadow: 0 0 8px rgba(16, 185, 129, 0.6); }
-            .sticky-bar.verdict-risk_alert .status-dot { background: #f59e0b; box-shadow: 0 0 8px rgba(245, 158, 11, 0.6); }
-            
-            .sticky-bar .sticky-title { font-weight: 800; font-size: 0.9rem; letter-spacing: -0.01em; color: #1e293b; }
-            
-            /* Desktop divider */
-            .sticky-bar .sticky-action-text { font-size: 0.8rem; color: var(--text-secondary); font-weight: 600; border-left: 2px solid #e2e8f0; padding-left: 0.8rem; }
-            
-            .sticky-bar .sticky-cta {
-                background: #0f172a; color: #fff; padding: 0.5rem 1rem; border-radius: 20px; text-decoration: none; font-weight: 700; font-size: 0.8rem; display: flex; align-items: center; gap: 0.4rem; transition: transform 0.2s; white-space: nowrap;
-            }
-            .sticky-bar .sticky-cta:hover { transform: scale(1.05); }
 
             @media (max-width: 640px) {
-                 .sticky-bar .sticky-action-text { display: none; }
+                 .verdict-actions { flex-direction: column; }
+                 .verdict-actions button { width: 100%; }
             }
         </style>
 
@@ -312,34 +297,29 @@
                     <div style="background: #eff6ff; color: #1e3a8a; padding: 0.75rem; border-radius: 12px; text-align: center; margin-bottom: 1.5rem; font-weight: 700; font-size: 0.9rem;">
                         SHARED DIAGNOSTIC RECEIPT • READ ONLY
                     </div>
-                    <div style="text-align: center; font-size: 0.7rem; color: var(--text-secondary); margin-bottom: 1rem;">
-                        Disclaimer: For informational purposes only. Not financial advice.
-                    </div>
                 @endif
+                
+                <div style="text-align: center; font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 1.5rem; opacity: 0.8; line-height: 1.4;">
+                    <span style="display: inline-block; background: #f8fafc; padding: 4px 12px; border-radius: 99px; border: 1px solid #e2e8f0;">
+                         * Estimates based on national averages. Actual values vary. Not financial advice.
+                    </span>
+                </div>
                 
                 @template.fragments.verdict_card(result = result, verdictTitle = verdictTitle, verdictExplanation = verdictExplanation, verdictAction = verdictAction, verdictCss = verdictCss, leadLabel = leadLabel, leadDescription = leadDescription, leadUrl = leadUrl, isValueEstimated = isValueEstimated)
                 
                 <!-- Viral & Explanation Actions -->
-                <div class="verdict-actions" style="display: flex; gap: 1rem; margin-top: 2rem; justify-content: center;">
-                    <button onclick="document.getElementById('explanation-modal').showModal()" 
-                            style="background: transparent; border: 1px solid #e2e8f0; padding: 0.8rem 1.5rem; border-radius: 12px; font-weight: 700; color: var(--text-secondary); cursor: pointer;">
+                <div class="verdict-actions">
+                    <button onclick="document.getElementById('explanation-modal').showModal()" class="btn-secondary">
                         Why this verdict?
                     </button>
                     
                     @if(viewMode.equals("OWNER") && shareToken != null)
-                        <button onclick="shareResult('${shareToken}')" 
-                                style="background: #111; color: #fff; padding: 0.8rem 1.5rem; border-radius: 12px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 0.5rem;">
+                        <button onclick="shareResult('${shareToken}')" class="btn-primary-dark">
                             <span>Share Verdict</span>
                             <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8m-4-6l-4-4-4 4m4-4v13"></path></svg>
                         </button>
                     @endif
                 </div>
-                <style>
-                    @media (max-width: 640px) {
-                        .verdict-actions { flex-direction: column; }
-                        .verdict-actions button { width: 100%; }
-                    }
-                </style>
             </section>
 
             <!-- Simulation Parameters -->
@@ -485,12 +465,65 @@
                 Our actuarial engine calculated a <strong>Cost of Inaction</strong> that exceeds your repair quote.
                 The <strong>Retention Exposure</strong> (visible in the breakdown) indicates that holding this asset requires taking on disproportionate risk.
             </p>
-            <form method="dialog" style="text-align: right;">
-                <button style="background: #111; color: #fff; border: none; padding: 0.8rem 1.5rem; border-radius: 12px; font-weight: 700; cursor: pointer;">I Understand</button>
+            <form method="dialog">
+                <button>I Understand</button>
             </form>
         </dialog>
 
         <script>
+            /**
+             * StickyBarController: Manages visibility and positioning of the floating verdict bar.
+             */
+            const StickyBarController = {
+                bar: null,
+                threshold: 50,
+                
+                init() {
+                    this.bar = document.getElementById('sticky-verdict-bar');
+                    if (!this.bar) return;
+
+                    this.hoist();
+                    this.bindEvents();
+                    this.update();
+                    
+                    // Fail-safe retries for dynamic loads
+                    [100, 500, 2000].forEach(ms => setTimeout(() => this.update(), ms));
+                },
+
+                hoist() {
+                    if (this.bar.parentElement !== document.body) {
+                        document.body.appendChild(this.bar);
+                    }
+                },
+
+                bindEvents() {
+                    window.addEventListener('scroll', () => this.update(), { passive: true });
+                    window.addEventListener('resize', () => this.update(), { passive: true });
+                    document.body.addEventListener('htmx:afterSettle', () => this.init());
+                },
+
+                update() {
+                    if (!this.bar) return;
+                    
+                    const scrollPos = window.scrollY || window.pageYOffset || document.documentElement.scrollTop;
+                    const isMobile = window.innerWidth <= 768;
+                    
+                    // Dynamic Positioning
+                    if (!isMobile) {
+                        this.bar.style.top = '80px';
+                    } else {
+                        this.bar.style.top = 'auto'; // Reset top for mobile
+                    }
+
+                    if (scrollPos > this.threshold) {
+                        this.bar.classList.add('is-visible');
+                    } else {
+                        this.bar.classList.remove('is-visible');
+                    }
+                }
+            };
+
+            // Global Share Function
             function shareResult(token) {
                 const url = window.location.origin + "/report?token=" + token;
                 navigator.clipboard.writeText(url).then(() => {
@@ -498,28 +531,8 @@
                 });
             }
 
-            // Scroll & HTMX Observer for Sticky Bar
-            function updateSticky() {
-                const nav = document.getElementById('sticky-verdict-bar');
-                if (nav) {
-                    const isMobile = window.innerWidth <= 768;
-                    // On desktop, always show (integrated into header)
-                    // On mobile, show only when scrolled past hero
-                    if (!isMobile) {
-                        nav.classList.add('visible');
-                    } else {
-                        if (window.scrollY > 300) {
-                            nav.classList.add('visible');
-                        } else {
-                            nav.classList.remove('visible');
-                        }
-                    }
-                }
-            }
-            document.addEventListener('scroll', updateSticky);
-            document.body.addEventListener('htmx:afterSettle', updateSticky);
-            // Initial check
-            updateSticky();
+            // Bootstrap
+            StickyBarController.init();
         </script>
     `
 )

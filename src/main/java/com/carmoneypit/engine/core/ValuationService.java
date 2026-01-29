@@ -24,14 +24,35 @@ public class ValuationService {
     private final com.carmoneypit.engine.service.CarDataService carDataService;
     private Map<CarBrand, CarBrandData> brandDataMap = new HashMap<>();
 
-    // Base prices for reference (approximate 5-year old market value)
+    // --- Asset Value Benchmarks ---
     private static final long BASE_SEDAN = 18_000;
     private static final long BASE_SUV = 24_000;
     private static final long BASE_TRUCK = 32_000;
     private static final long BASE_LUXURY = 28_000;
     private static final long BASE_PERFORMANCE = 35_000;
-
     private static final long SCRAP_VALUE = 500;
+
+    // --- Heuristic Factors ---
+    private static final double FACTOR_LOYALTY_KEEPER = 1.15; // Toyota/Lexus Tax
+    private static final double FACTOR_DEPRECIATION_LEASER = 0.85; // Luxury Cliff
+    private static final double FACTOR_WORKHORSE_TRUCK = 1.20; // Truck value retention
+
+    private static final double DECAY_DEFAULT = 0.90;
+    private static final double DECAY_FLAT = 0.94;
+    private static final double DECAY_STEEP = 0.88;
+    private static final double DECAY_CLIFF_LOW = 0.90;
+    private static final double DECAY_CLIFF_HIGH = 0.85;
+    private static final double DECAY_REAL_DATA_SOFTEN = 0.92;
+
+    private static final double UNCERTAINTY_PENALTY_RATE = 0.60;
+    private static final double DEFERRED_MAINTENANCE_RATE = 0.40;
+
+    // --- Risk Multipliers (per mile) ---
+    private static final double RISK_DEFAULT = 0.015;
+    private static final double RISK_KEEPER = 0.008;
+    private static final double RISK_WORKHORSE = 0.012;
+    private static final double RISK_PERFORMANCE = 0.025;
+    private static final double RISK_TECH = 0.020;
 
     public ValuationService(ObjectMapper objectMapper, com.carmoneypit.engine.service.CarDataService carDataService) {
         this.objectMapper = objectMapper;
@@ -60,46 +81,54 @@ public class ValuationService {
         }
     }
 
-    public long estimateValue(CarBrand brand, VehicleType type, long mileage) {
-        long basePrice = getBasePrice(type);
-        CarBrandData data = brandDataMap.get(brand);
+    public long estimateValue(CarBrand brand, String modelName, VehicleType type, long mileage) {
+        long basePrice;
+        Optional<com.carmoneypit.engine.service.CarDataService.ModelMarket> marketData = (modelName != null)
+                ? getMarketData(modelName)
+                : Optional.empty();
 
-        // 1. Brand Factor (Reliability Premium / Luxury Tax)
+        boolean usingRealMarketData = false;
+        if (marketData.isPresent()) {
+            basePrice = marketData.get().jan2026AvgPrice();
+            usingRealMarketData = true;
+        } else {
+            basePrice = getBasePrice(type);
+        }
+
+        CarBrandData data = brandDataMap.get(brand);
         double brandFactor = 1.0;
-        if (data != null) {
-            if ("KEEPER".equals(data.segment)) {
-                brandFactor = 1.15; // Toyota Tax
-            } else if ("LEASER".equals(data.segment)) {
-                brandFactor = 0.85; // Depreciation Cliff
-            } else if ("WORKHORSE".equals(data.segment) && type == VehicleType.TRUCK_VAN) {
-                brandFactor = 1.2; // Truck value retention
-            }
+
+        if (!usingRealMarketData && data != null) {
+            if ("KEEPER".equals(data.segment))
+                brandFactor = FACTOR_LOYALTY_KEEPER;
+            else if ("LEASER".equals(data.segment))
+                brandFactor = FACTOR_DEPRECIATION_LEASER;
+            else if ("WORKHORSE".equals(data.segment) && type == VehicleType.TRUCK_VAN)
+                brandFactor = FACTOR_WORKHORSE_TRUCK;
         }
 
         // 2. Mileage Decay Curve
-        double decayRate = 0.90; // Standard per 10k miles
+        double decayRate = DECAY_DEFAULT;
         if (data != null) {
             switch (data.depreciationCurve) {
-                case "FLAT" -> decayRate = 0.94; // Holds value well
-                case "STEEP" -> decayRate = 0.88; // Drops fast
-                case "CLIFF" -> decayRate = mileage > 50000 ? 0.85 : 0.90; // Warranty cliff
-                default -> decayRate = 0.90;
+                case "FLAT" -> decayRate = DECAY_FLAT;
+                case "STEEP" -> decayRate = DECAY_STEEP;
+                case "CLIFF" -> decayRate = mileage > 50000 ? DECAY_CLIFF_HIGH : DECAY_CLIFF_LOW;
+                default -> {
+                    if (usingRealMarketData)
+                        decayRate = DECAY_REAL_DATA_SOFTEN;
+                }
             }
         }
 
-        double timeUnits = (double) mileage / 12000.0; // Approx years equivalent
+        double timeUnits = (double) mileage / 12000.0; // Normalized years
         double estimatedValue = basePrice * brandFactor * Math.pow(decayRate, timeUnits);
 
-        // 3. Repair Debt Deduction (Virtual)
-        // If the car is in the "Danger Zone" (passed major issue mileage), assume value
-        // is hit
+        // 3. Repair Debt Deduction (Uncertainty Penalty)
         if (data != null && data.majorIssues != null) {
             for (CarBrandData.MajorIssue issue : data.majorIssues) {
                 if (mileage > issue.mileage) {
-                    // If mileage is past the failure point, market assumes it might be broken or
-                    // soon to break
-                    // We penalize the value by 50% of the repair cost (uncertainty penalty)
-                    estimatedValue -= (issue.cost * 0.6);
+                    estimatedValue -= (issue.cost * UNCERTAINTY_PENALTY_RATE);
                 }
             }
         }
@@ -107,37 +136,18 @@ public class ValuationService {
         return Math.max((long) estimatedValue, SCRAP_VALUE);
     }
 
-    private long getBasePrice(VehicleType type) {
-        switch (type) {
-            case SUV:
-                return BASE_SUV;
-            case TRUCK_VAN:
-                return BASE_TRUCK;
-            case LUXURY:
-                return BASE_LUXURY;
-            case PERFORMANCE:
-                return BASE_PERFORMANCE;
-            case SEDAN:
-            default:
-                return BASE_SEDAN;
-        }
-    }
-
     public long estimateRepairCost(CarBrand brand, VehicleType type, long mileage) {
         CarBrandData data = brandDataMap.get(brand);
         long estimatedCost = 0;
 
-        // 1. Base Maintenance (Tires, Brakes, Fluids)
+        // 1. Deferred Maintenance Assumption
         long yearlyBase = (data != null) ? data.maintenanceCostYearly : 1000;
-        // Accumulate "Deferred" maintenance assumption based on mileage
-        // Assume users often defer ~30% of maintenance in the last year
-        estimatedCost += (long) (yearlyBase * 0.4);
+        estimatedCost += (long) (yearlyBase * DEFERRED_MAINTENANCE_RATE);
 
-        // 2. Major Issues (The Killers)
+        // 2. Failure Points (The Killers)
         boolean hasMajorIssue = false;
         if (data != null && data.majorIssues != null) {
             for (CarBrandData.MajorIssue issue : data.majorIssues) {
-                // Trigger logic: If mileage is within -5k to +20k of the failure point
                 if (mileage >= issue.mileage - 5000 && mileage <= issue.mileage + 20000) {
                     estimatedCost += issue.cost;
                     hasMajorIssue = true;
@@ -145,17 +155,32 @@ public class ValuationService {
             }
         }
 
-        // 3. Generic High Mileage Penalty if no specific major issue found yet
+        // 3. Segment-Aware High Mileage Risk
         if (!hasMajorIssue && mileage > 100000) {
-            long highMileageRisk = (long) (mileage * 0.015); // $1500 for 100k miles
-            // Brand multiplier for parts
-            if (data != null && "LEASER".equals(data.segment)) {
-                highMileageRisk *= 1.5;
+            double riskMultiplier = RISK_DEFAULT;
+            if (data != null) {
+                switch (data.segment) {
+                    case "KEEPER" -> riskMultiplier = RISK_KEEPER;
+                    case "WORKHORSE" -> riskMultiplier = RISK_WORKHORSE;
+                    case "LEASER", "PERFORMANCE" -> riskMultiplier = RISK_PERFORMANCE;
+                    case "TECH" -> riskMultiplier = RISK_TECH;
+                }
             }
-            estimatedCost += highMileageRisk;
+            estimatedCost += (long) (mileage * riskMultiplier);
         }
 
-        return Math.max(estimatedCost, 250); // Minimum visit cost
+        return Math.max(estimatedCost, 250);
+    }
+
+    private long getBasePrice(VehicleType type) {
+        return switch (type) {
+            case SUV -> BASE_SUV;
+            case TRUCK_VAN -> BASE_TRUCK;
+            case LUXURY -> BASE_LUXURY;
+            case PERFORMANCE -> BASE_PERFORMANCE;
+            case SEDAN -> BASE_SEDAN;
+            default -> BASE_SEDAN;
+        };
     }
 
     public Optional<CarBrandData> getBrandData(CarBrand brand) {
@@ -167,7 +192,6 @@ public class ValuationService {
     }
 
     public Optional<com.carmoneypit.engine.service.CarDataService.ModelMarket> getMarketData(String modelName) {
-        // Need to find model ID from name
         return carDataService.getAllModels().stream()
                 .filter(m -> m.model().equalsIgnoreCase(modelName))
                 .findFirst()

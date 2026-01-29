@@ -8,7 +8,8 @@ public class InputModels {
             long mileage,
             long repairQuoteUsd,
             long currentValueUsd,
-            boolean isQuoteEstimated) {
+            boolean isQuoteEstimated,
+            boolean isValueEstimated) {
     }
 
     public record SimulationControls(

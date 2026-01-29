@@ -6,21 +6,33 @@ import org.springframework.stereotype.Component;
 @Component
 public class CostOfInactionCalculator {
 
-    public long calculateAssetBleed(VehicleType vehicleType, long mileage, long repairQuoteUsd, long currentValueUsd) {
+    public long calculateAssetBleed(VehicleType vehicleType, long mileage, long repairQuoteUsd, long currentValueUsd,
+            Double depRateOverride) {
         // 公式: Asset Bleed (6mo) = (CurrentValue × 6moDepreciationRate) +
         // (BaseRepairCost × 0.5 [Risk Probability])
 
         // 1. 6moDepreciationRate
-        double depRate = 0.10; // SEDAN (Standard)
-        switch (vehicleType) {
-            case LUXURY:
-            case PERFORMANCE:
-                depRate = 0.15;
-                break;
-            case SUV:
-            case TRUCK_VAN:
-                depRate = 0.08;
-                break;
+        double depRate = 0.10; // Default
+
+        if (depRateOverride != null) {
+            // JSON rate is annual (e.g., 0.15), convert to 6-mo
+            depRate = depRateOverride / 2.0;
+        } else {
+            // Fallback to legacy heuristic
+            switch (vehicleType) {
+                case LUXURY:
+                case PERFORMANCE:
+                    depRate = 0.15;
+                    break;
+                case SUV:
+                case TRUCK_VAN:
+                    depRate = 0.08;
+                    break;
+                case SEDAN:
+                default:
+                    depRate = 0.10;
+                    break;
+            }
         }
 
         // 2. Risk Probability

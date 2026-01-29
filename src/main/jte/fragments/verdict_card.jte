@@ -184,11 +184,11 @@
             <!-- 3. Diagnostic Confidence -->
             <div class="insight-card">
                 <div class="insight-label">Data Correlation</div>
-                <div class="insight-val" style="color: #10b981;">
-                    HIGH
+                <div class="insight-val" style="color: ${result.confidence() >= 85 ? "#10b981" : (result.confidence() >= 70 ? "#f59e0b" : "#64748b")};">
+                    ${result.confidence() >= 90 ? "ACTUARIAL" : (result.confidence() >= 75 ? "HIGH" : "MODERATE")}
                 </div>
                 <p style="font-size: 0.8rem; margin: 0; color: var(--text-secondary); font-weight: 600;">
-                    Based on actuarial sample size and brand history.
+                    ${result.confidence()}% signal based on ${result.confidence() >= 85 ? "model-specific metadata." : "brand-level diagnostics."}
                 </p>
             </div>
         </div>
@@ -232,7 +232,7 @@
                 </div>
 
             <!-- Exit Ramp / Protection Plan (Behaviorally Optimized) -->
-            @if(verdictCss.contains("terminate"))
+            @if(verdictCss.contains("liquidate"))
                 <!-- TIME_BOMB: Urgency + Loss Aversion -->
                 <div style="border-top: 2px dashed #cbd5e0; padding-top: 2rem; margin-top: 2rem;">
                     <div style="font-size: 0.8rem; color: #718096; margin-bottom: 1rem;">
@@ -344,7 +344,7 @@
                         </div>
                         <div>
                             <span style="font-size: 0.6rem; font-weight: 800; color: #94a3b8; text-transform: uppercase;">Confidence</span>
-                            <div style="font-size: 0.7rem; font-weight: 700; color: #1e293b;">Verified</div>
+                            <div style="font-size: 0.7rem; font-weight: 700; color: #1e293b;">${result.confidence()}%</div>
                         </div>
                     </div>
 

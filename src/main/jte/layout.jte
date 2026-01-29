@@ -25,7 +25,7 @@
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name='impact-site-verification' value='22f0d4c7-22ae-4b3b-b1dd-42533abebf19'>
+    <meta name='impact-site-verification' content='22f0d4c7-22ae-4b3b-b1dd-42533abebf19'>
     <title>${title}</title>
     <link rel="apple-touch-icon" sizes="180x180" href="/favicon.png?v=2026.1">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png?v=2026.1">
@@ -125,6 +125,60 @@
         .btn-cinematic:active {
             transform: scale(0.96);
         }
+
+        /* --- Footer Styles --- */
+        .main-footer {
+            margin-top: auto;
+            padding: 3rem 2rem;
+            background-color: #1a1a1a;
+            color: #666;
+            font-size: 0.9rem;
+            border-top: 1px solid #333;
+        }
+
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-copyright {
+            font-weight: 700;
+            color: #888;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: #888;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: #fff;
+        }
+
+        .footer-disclosure {
+            border-top: 1px solid #2a2a2a;
+            padding-top: 1.5rem;
+            font-size: 0.75rem;
+            line-height: 1.6;
+            color: #555;
+            max-width: 800px;
+        }
     </style>
     @if(extraStyles != null)
         ${extraStyles}
@@ -137,27 +191,27 @@
     
     @template.fragments.header()
 
-    <main style="flex: 1; width: 100%; max-width: 1400px; margin: 0 auto; padding: 2rem; position: relative; z-index: 1;">
+    <main style="flex: 1; width: 100%; max-width: 1400px; margin: 0 auto; padding: 2rem; position: relative;">
         ${content}
     </main>
 
-    <footer style="margin-top: auto; padding: 3rem 2rem; background-color: #1a1a1a; color: #666; font-size: 0.9rem; border-top: 1px solid #333;">
-        <div style="max-width: 1400px; margin: 0 auto;">
-            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem;">
-                <div style="font-weight: 700; color: #888;">
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-top">
+                <div class="footer-copyright">
                     &copy; 2026 AutoMoneyPit. All rights reserved.
                 </div>
-                <div style="display: flex; gap: 1.5rem; flex-wrap: wrap;">
-                    <a href="/about" style="color: #888; text-decoration: none; transition: color 0.2s;">About Us</a>
-                    <a href="/models" style="color: #888; text-decoration: none; transition: color 0.2s;">Models</a>
-                    <a href="/about#expertise" style="color: #888; text-decoration: none; transition: color 0.2s;">Methodology</a>
-                    <a href="/contact" style="color: #888; text-decoration: none; transition: color 0.2s;">Contact</a>
-                    <a href="/privacy" style="color: #888; text-decoration: none; transition: color 0.2s;">Privacy</a>
-                    <a href="/terms" style="color: #888; text-decoration: none; transition: color 0.2s;">Terms</a>
+                <div class="footer-links">
+                    <a href="/about">About Us</a>
+                    <a href="/models">Models</a>
+                    <a href="/about#expertise">Methodology</a>
+                    <a href="/contact">Contact</a>
+                    <a href="/privacy">Privacy</a>
+                    <a href="/terms">Terms</a>
                 </div>
             </div>
             
-            <div style="border-top: 1px solid #2a2a2a; padding-top: 1.5rem; font-size: 0.75rem; line-height: 1.6; color: #555; max-width: 800px;">
+            <div class="footer-disclosure">
                 <strong>Affiliate Disclosure:</strong> AutoMoneyPit is a participant in various affiliate partnership programs. We may earn a commission when you click through links on our site and complete a lead form, request a quote, or make a purchase. This partnership allows us to maintain our proprietary valuation engine and provide high-precision financial diagnostics free of charge to all vehicle owners. Our verdicts remain data-driven and objective, independent of our affiliate relationships.
                 <br><br>
                 <strong>Disclaimer:</strong> This tool provides estimates based on market data for informational and entertainment purposes only. We are not financial advisors or certified mechanics. Always consult a professional before making financial decisions.

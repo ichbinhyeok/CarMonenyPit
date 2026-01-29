@@ -2830,3 +2830,123 @@ com.carmoneypit.engine.web.CarDecisionController#contact() mapped.
 2026-01-29T15:56:03.799+09:00  INFO 10588 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
 2026-01-29T15:56:50.430+09:00  INFO 10588 --- [http-nio-8080-exec-2] c.carmoneypit.engine.web.PSeoController  : Request for acura / mdx / rod-bearing
 2026-01-29T15:57:06.138+09:00  WARN 10588 --- [http-nio-8080-exec-9] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'POST' is not supported]
+2026-01-29T20:12:52.290+09:00  WARN 10588 --- [http-nio-8080-exec-2] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'POST' is not supported]
+2026-01-29T20:14:44.628+09:00  INFO 29996 --- [main] com.carmoneypit.CarMoneyPitApplication   : Starting CarMoneyPitApplication using Java 17.0.11 with PID 29996 (C:\Development\Owner\CarMoneyPit\bin\main started by tlsgu in C:\Development\Owner\CarMoneyPit)
+2026-01-29T20:14:44.631+09:00 DEBUG 29996 --- [main] com.carmoneypit.CarMoneyPitApplication   : Running with Spring Boot v3.5.10, Spring v6.2.15
+2026-01-29T20:14:44.632+09:00  INFO 29996 --- [main] com.carmoneypit.CarMoneyPitApplication   : No active profile set, falling back to 1 default profile: "default"
+2026-01-29T20:14:45.882+09:00  INFO 29996 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-01-29T20:14:45.900+09:00  INFO 29996 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-01-29T20:14:45.900+09:00  INFO 29996 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.50]
+2026-01-29T20:14:45.972+09:00  INFO 29996 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-01-29T20:14:45.973+09:00  INFO 29996 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1290 ms
+2026-01-29T20:14:46.229+09:00  INFO 29996 --- [main] c.c.engine.service.CarDataService        : Loaded 75 car models, 75 reliability profiles, 75 market profiles, 75 fault profiles
+2026-01-29T20:14:46.439+09:00  WARN 29996 --- [main] o.s.w.s.resource.ResourceHandlerUtils    : Appended trailing slash to static resource location: classpath:/static/favicon.ico/
+2026-01-29T20:14:46.440+09:00  WARN 29996 --- [main] o.s.w.s.resource.ResourceHandlerUtils    : Appended trailing slash to static resource location: classpath:/static/favicon.png/
+2026-01-29T20:14:46.586+09:00  INFO 29996 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2026-01-29T20:14:46.595+09:00  INFO 29996 --- [main] com.carmoneypit.CarMoneyPitApplication   : Started CarMoneyPitApplication in 2.523 seconds (process running for 2.875)
+2026-01-29T20:14:50.748+09:00  INFO 29996 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-01-29T20:14:50.750+09:00  INFO 29996 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-01-29T20:14:50.751+09:00  INFO 29996 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+2026-01-29T20:14:58.068+09:00  INFO 11288 --- [main] com.carmoneypit.CarMoneyPitApplication   : Starting CarMoneyPitApplication using Java 17.0.11 with PID 11288 (C:\Development\Owner\CarMoneyPit\bin\main started by tlsgu in C:\Development\Owner\CarMoneyPit)
+2026-01-29T20:14:58.070+09:00 DEBUG 11288 --- [main] com.carmoneypit.CarMoneyPitApplication   : Running with Spring Boot v3.5.10, Spring v6.2.15
+2026-01-29T20:14:58.071+09:00  INFO 11288 --- [main] com.carmoneypit.CarMoneyPitApplication   : No active profile set, falling back to 1 default profile: "default"
+2026-01-29T20:14:59.284+09:00  INFO 11288 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-01-29T20:14:59.299+09:00  INFO 11288 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-01-29T20:14:59.299+09:00  INFO 11288 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.50]
+2026-01-29T20:14:59.366+09:00  INFO 11288 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-01-29T20:14:59.366+09:00  INFO 11288 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1242 ms
+2026-01-29T20:14:59.607+09:00  INFO 11288 --- [main] c.c.engine.service.CarDataService        : Loaded 75 car models, 75 reliability profiles, 75 market profiles, 75 fault profiles
+2026-01-29T20:14:59.806+09:00  WARN 11288 --- [main] o.s.w.s.resource.ResourceHandlerUtils    : Appended trailing slash to static resource location: classpath:/static/favicon.ico/
+2026-01-29T20:14:59.806+09:00  WARN 11288 --- [main] o.s.w.s.resource.ResourceHandlerUtils    : Appended trailing slash to static resource location: classpath:/static/favicon.png/
+2026-01-29T20:14:59.959+09:00  INFO 11288 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2026-01-29T20:14:59.969+09:00  INFO 11288 --- [main] com.carmoneypit.CarMoneyPitApplication   : Started CarMoneyPitApplication in 2.493 seconds (process running for 2.846)
+2026-01-29T20:15:03.934+09:00  INFO 11288 --- [http-nio-8080-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-01-29T20:15:03.934+09:00  INFO 11288 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-01-29T20:15:03.935+09:00  INFO 11288 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+2026-01-29T20:21:18.006+09:00  WARN 11288 --- [http-nio-8080-exec-2] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'POST' is not supported]
+2026-01-29T20:36:21.666+09:00  INFO 20260 --- [main] com.carmoneypit.CarMoneyPitApplication   : Starting CarMoneyPitApplication using Java 17.0.11 with PID 20260 (C:\Development\Owner\CarMoneyPit\bin\main started by tlsgu in C:\Development\Owner\CarMoneyPit)
+2026-01-29T20:36:21.669+09:00 DEBUG 20260 --- [main] com.carmoneypit.CarMoneyPitApplication   : Running with Spring Boot v3.5.10, Spring v6.2.15
+2026-01-29T20:36:21.672+09:00  INFO 20260 --- [main] com.carmoneypit.CarMoneyPitApplication   : No active profile set, falling back to 1 default profile: "default"
+2026-01-29T20:36:25.114+09:00  INFO 20260 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-01-29T20:36:25.169+09:00  INFO 20260 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-01-29T20:36:25.170+09:00  INFO 20260 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.50]
+2026-01-29T20:36:25.349+09:00  INFO 20260 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-01-29T20:36:25.352+09:00  INFO 20260 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 3564 ms
+2026-01-29T20:36:26.037+09:00  INFO 20260 --- [main] c.c.engine.service.CarDataService        : Loaded 75 car models, 75 reliability profiles, 75 market profiles, 75 fault profiles
+2026-01-29T20:36:26.604+09:00  WARN 20260 --- [main] o.s.w.s.resource.ResourceHandlerUtils    : Appended trailing slash to static resource location: classpath:/static/favicon.ico/
+2026-01-29T20:36:26.607+09:00  WARN 20260 --- [main] o.s.w.s.resource.ResourceHandlerUtils    : Appended trailing slash to static resource location: classpath:/static/favicon.png/
+2026-01-29T20:36:27.023+09:00  INFO 20260 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2026-01-29T20:36:27.043+09:00  INFO 20260 --- [main] com.carmoneypit.CarMoneyPitApplication   : Started CarMoneyPitApplication in 6.98 seconds (process running for 7.536)
+2026-01-29T20:36:27.515+09:00  INFO 20260 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-01-29T20:36:27.516+09:00  INFO 20260 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-01-29T20:36:27.519+09:00  INFO 20260 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2026-01-29T20:46:01.105+09:00  INFO 32356 --- [main] com.carmoneypit.CarMoneyPitApplication   : Starting CarMoneyPitApplication using Java 17.0.11 with PID 32356 (C:\Development\Owner\CarMoneyPit\bin\main started by tlsgu in C:\Development\Owner\CarMoneyPit)
+2026-01-29T20:46:01.110+09:00 DEBUG 32356 --- [main] com.carmoneypit.CarMoneyPitApplication   : Running with Spring Boot v3.5.10, Spring v6.2.15
+2026-01-29T20:46:01.113+09:00  INFO 32356 --- [main] com.carmoneypit.CarMoneyPitApplication   : No active profile set, falling back to 1 default profile: "default"
+2026-01-29T20:46:03.031+09:00  INFO 32356 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-01-29T20:46:03.058+09:00  INFO 32356 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-01-29T20:46:03.058+09:00  INFO 32356 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.50]
+2026-01-29T20:46:03.185+09:00  INFO 32356 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-01-29T20:46:03.187+09:00  INFO 32356 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1988 ms
+2026-01-29T20:46:03.601+09:00  INFO 32356 --- [main] c.c.engine.service.CarDataService        : Loaded 75 car models, 75 reliability profiles, 75 market profiles, 75 fault profiles
+2026-01-29T20:46:03.949+09:00  WARN 32356 --- [main] o.s.w.s.resource.ResourceHandlerUtils    : Appended trailing slash to static resource location: classpath:/static/favicon.ico/
+2026-01-29T20:46:03.949+09:00  WARN 32356 --- [main] o.s.w.s.resource.ResourceHandlerUtils    : Appended trailing slash to static resource location: classpath:/static/favicon.png/
+2026-01-29T20:46:04.280+09:00  INFO 32356 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2026-01-29T20:46:04.295+09:00  INFO 32356 --- [main] com.carmoneypit.CarMoneyPitApplication   : Started CarMoneyPitApplication in 4.187 seconds (process running for 4.823)
+2026-01-29T20:46:12.452+09:00  INFO 32356 --- [http-nio-8080-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-01-29T20:46:12.452+09:00  INFO 32356 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-01-29T20:46:12.455+09:00  INFO 32356 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2026-01-29T20:46:34.593+09:00  WARN 32356 --- [http-nio-8080-exec-1] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'POST' is not supported]
+2026-01-29T20:48:48.930+09:00  INFO 27284 --- [main] com.carmoneypit.CarMoneyPitApplication   : Starting CarMoneyPitApplication using Java 17.0.11 with PID 27284 (C:\Development\Owner\CarMoneyPit\bin\main started by tlsgu in C:\Development\Owner\CarMoneyPit)
+2026-01-29T20:48:48.934+09:00 DEBUG 27284 --- [main] com.carmoneypit.CarMoneyPitApplication   : Running with Spring Boot v3.5.10, Spring v6.2.15
+2026-01-29T20:48:48.936+09:00  INFO 27284 --- [main] com.carmoneypit.CarMoneyPitApplication   : No active profile set, falling back to 1 default profile: "default"
+2026-01-29T20:48:50.940+09:00  INFO 27284 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-01-29T20:48:50.963+09:00  INFO 27284 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-01-29T20:48:50.963+09:00  INFO 27284 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.50]
+2026-01-29T20:48:51.050+09:00  INFO 27284 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-01-29T20:48:51.050+09:00  INFO 27284 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2021 ms
+2026-01-29T20:48:51.485+09:00  INFO 27284 --- [main] c.c.engine.service.CarDataService        : Loaded 75 car models, 75 reliability profiles, 75 market profiles, 75 fault profiles
+2026-01-29T20:48:51.824+09:00  WARN 27284 --- [main] o.s.w.s.resource.ResourceHandlerUtils    : Appended trailing slash to static resource location: classpath:/static/favicon.ico/
+2026-01-29T20:48:51.825+09:00  WARN 27284 --- [main] o.s.w.s.resource.ResourceHandlerUtils    : Appended trailing slash to static resource location: classpath:/static/favicon.png/
+2026-01-29T20:48:52.117+09:00  INFO 27284 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2026-01-29T20:48:52.130+09:00  INFO 27284 --- [main] com.carmoneypit.CarMoneyPitApplication   : Started CarMoneyPitApplication in 4.088 seconds (process running for 4.543)
+2026-01-29T20:49:05.070+09:00  INFO 27284 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-01-29T20:49:05.071+09:00  INFO 27284 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-01-29T20:49:05.072+09:00  INFO 27284 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-01-29T20:49:17.278+09:00  WARN 27284 --- [http-nio-8080-exec-1] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'POST' is not supported]
+2026-01-29T20:53:09.859+09:00  WARN 27284 --- [http-nio-8080-exec-5] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'POST' is not supported]
+2026-01-29T20:53:41.692+09:00  INFO 18056 --- [main] com.carmoneypit.CarMoneyPitApplication   : Starting CarMoneyPitApplication using Java 17.0.11 with PID 18056 (C:\Development\Owner\CarMoneyPit\bin\main started by tlsgu in C:\Development\Owner\CarMoneyPit)
+2026-01-29T20:53:41.695+09:00 DEBUG 18056 --- [main] com.carmoneypit.CarMoneyPitApplication   : Running with Spring Boot v3.5.10, Spring v6.2.15
+2026-01-29T20:53:41.697+09:00  INFO 18056 --- [main] com.carmoneypit.CarMoneyPitApplication   : No active profile set, falling back to 1 default profile: "default"
+2026-01-29T20:53:43.795+09:00  INFO 18056 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-01-29T20:53:43.823+09:00  INFO 18056 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-01-29T20:53:43.823+09:00  INFO 18056 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.50]
+2026-01-29T20:53:43.961+09:00  INFO 18056 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-01-29T20:53:43.962+09:00  INFO 18056 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2175 ms
+2026-01-29T20:53:44.380+09:00  INFO 18056 --- [main] c.c.engine.service.CarDataService        : Loaded 75 car models, 75 reliability profiles, 75 market profiles, 75 fault profiles
+2026-01-29T20:53:44.743+09:00  WARN 18056 --- [main] o.s.w.s.resource.ResourceHandlerUtils    : Appended trailing slash to static resource location: classpath:/static/favicon.ico/
+2026-01-29T20:53:44.744+09:00  WARN 18056 --- [main] o.s.w.s.resource.ResourceHandlerUtils    : Appended trailing slash to static resource location: classpath:/static/favicon.png/
+2026-01-29T20:53:45.014+09:00  INFO 18056 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2026-01-29T20:53:45.031+09:00  INFO 18056 --- [main] com.carmoneypit.CarMoneyPitApplication   : Started CarMoneyPitApplication in 4.34 seconds (process running for 4.978)
+2026-01-29T20:53:48.966+09:00  INFO 18056 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-01-29T20:53:48.968+09:00  INFO 18056 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-01-29T20:53:48.970+09:00  INFO 18056 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2026-01-29T20:58:08.517+09:00  WARN 18056 --- [http-nio-8080-exec-9] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'POST' is not supported]
+2026-01-29T21:08:52.532+09:00  INFO 30288 --- [main] com.carmoneypit.CarMoneyPitApplication   : Starting CarMoneyPitApplication using Java 17.0.11 with PID 30288 (C:\Development\Owner\CarMoneyPit\bin\main started by tlsgu in C:\Development\Owner\CarMoneyPit)
+2026-01-29T21:08:52.536+09:00 DEBUG 30288 --- [main] com.carmoneypit.CarMoneyPitApplication   : Running with Spring Boot v3.5.10, Spring v6.2.15
+2026-01-29T21:08:52.539+09:00  INFO 30288 --- [main] com.carmoneypit.CarMoneyPitApplication   : No active profile set, falling back to 1 default profile: "default"
+2026-01-29T21:08:54.029+09:00  INFO 30288 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-01-29T21:08:54.046+09:00  INFO 30288 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-01-29T21:08:54.046+09:00  INFO 30288 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.50]
+2026-01-29T21:08:54.125+09:00  INFO 30288 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-01-29T21:08:54.127+09:00  INFO 30288 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1512 ms
+2026-01-29T21:08:54.433+09:00  INFO 30288 --- [main] c.c.engine.service.CarDataService        : Loaded 75 car models, 75 reliability profiles, 75 market profiles, 75 fault profiles
+2026-01-29T21:08:54.712+09:00  WARN 30288 --- [main] o.s.w.s.resource.ResourceHandlerUtils    : Appended trailing slash to static resource location: classpath:/static/favicon.ico/
+2026-01-29T21:08:54.713+09:00  WARN 30288 --- [main] o.s.w.s.resource.ResourceHandlerUtils    : Appended trailing slash to static resource location: classpath:/static/favicon.png/
+2026-01-29T21:08:54.955+09:00  INFO 30288 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2026-01-29T21:08:54.966+09:00  INFO 30288 --- [main] com.carmoneypit.CarMoneyPitApplication   : Started CarMoneyPitApplication in 3.207 seconds (process running for 3.79)
+2026-01-29T21:09:04.152+09:00  INFO 30288 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-01-29T21:09:04.153+09:00  INFO 30288 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-01-29T21:09:04.155+09:00  INFO 30288 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-01-29T21:09:17.272+09:00  WARN 30288 --- [http-nio-8080-exec-8] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'POST' is not supported]
+2026-01-29T21:14:41.862+09:00  WARN 30288 --- [http-nio-8080-exec-2] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'POST' is not supported]
