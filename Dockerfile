@@ -28,4 +28,4 @@ WORKDIR /app
 COPY --from=build /app/build/libs/app.jar app.jar
 
 # JVM options for low-spec ARM64 server
-ENTRYPOINT ["java", "-XX:+UseSerialGC", "-Xms256m", "-Xmx384m", "-Xss512k", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-XX:+UseG1GC", "-Xms384m", "-Xmx512m", "-Xss512k", "-Djava.security.egd=file:/dev/./urandom", "-jar", "app.jar"]
