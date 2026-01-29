@@ -25,6 +25,7 @@
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name='impact-site-verification' value='22f0d4c7-22ae-4b3b-b1dd-42533abebf19'>
     <title>${title}</title>
     <link rel="apple-touch-icon" sizes="180x180" href="/favicon.png?v=2026.1">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png?v=2026.1">
