@@ -201,18 +201,22 @@
             /* Sticky Bar Styles */
             .sticky-bar {
                 position: fixed;
-                top: 80px;
+                top: 36px; /* Aligned with header center (32px ticker + padding) */
                 left: 50%;
-                transform: translateX(-50%) translateY(-20px);
-                width: 90%;
-                max-width: 700px;
-                background: rgba(255, 255, 255, 0.95);
-                backdrop-filter: blur(12px);
-                -webkit-backdrop-filter: blur(12px);
-                border: 1px solid rgba(0,0,0,0.08);
+                transform: translateX(-50%);
+                width: auto;
+                max-width: 800px;
+                
+                /* Desktop: Integrated Header Look (Transparent/Integrated) */
+                background: rgba(255, 255, 255, 0.9);
+                backdrop-filter: blur(4px);
+                -webkit-backdrop-filter: blur(4px);
+                border: 1px solid rgba(0,0,0,0.05);
                 border-radius: 100px;
-                padding: 0.75rem 1.5rem;
-                box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+                
+                padding: 0.4rem 1.2rem;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.05); 
+                
                 z-index: 9999;
                 transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
                 opacity: 0;
@@ -221,7 +225,12 @@
             .sticky-bar.visible {
                 opacity: 1;
                 pointer-events: all;
-                transform: translateX(-50%) translateY(0);
+                transform: translateX(-50%); /* Removed Y translation to keep it centered */
+            }
+
+            @media (max-width: 1024px) {
+                 /* Hide text explanation on smaller desktops to prevent collision */
+                .sticky-bar .sticky-action-text { display: none; }
             }
 
             @media (max-width: 768px) {
@@ -231,29 +240,41 @@
                     transform: translateX(-50%) translateY(20px);
                     border-radius: 20px;
                     padding: 0.6rem 1rem;
+                    background: rgba(255, 255, 255, 0.95);
+                    backdrop-filter: blur(12px);
+                    -webkit-backdrop-filter: blur(12px);
+                    box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+                    width: 90%;
                 }
                 .sticky-bar.visible {
                     transform: translateX(-50%) translateY(0);
                 }
+                /* Show text again on mobile as it has its own row */
+                .sticky-bar .sticky-action-text { display: block; border: none; padding-left: 0; margin-top: 0.2rem; font-size: 0.75rem; }
+                .sticky-bar .sticky-content { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+                .sticky-bar .sticky-left { display: flex; flex-direction: column; align-items: flex-start; gap: 0.2rem; }
             }
-            .sticky-bar .sticky-content { display: flex; justify-content: space-between; align-items: center; width: 100%; }
-            .sticky-bar .sticky-left { display: flex; align-items: center; gap: 1rem; }
-            .sticky-bar .status-dot { width: 10px; height: 10px; border-radius: 50%; }
-            .sticky-bar.verdict-liquidate .status-dot { background: #ef4444; box-shadow: 0 0 12px rgba(239, 68, 68, 0.6); }
-            .sticky-bar.verdict-sustain .status-dot { background: #10b981; box-shadow: 0 0 12px rgba(16, 185, 129, 0.6); }
-            .sticky-bar.verdict-risk_alert .status-dot { background: #f59e0b; box-shadow: 0 0 12px rgba(245, 158, 11, 0.6); }
             
-            .sticky-bar .sticky-title { font-weight: 800; font-size: 1rem; letter-spacing: -0.02em; color: #1e293b; }
-            .sticky-bar .sticky-action-text { font-size: 0.85rem; color: var(--text-secondary); font-weight: 500; border-left: 1px solid #e2e8f0; padding-left: 1rem; }
+            /* Shared Styles */
+            .sticky-bar .sticky-content { display: flex; align-items: center; gap: 1.5rem; }
+            .sticky-bar .sticky-left { display: flex; align-items: center; gap: 0.8rem; }
+            .sticky-bar .status-dot { width: 8px; height: 8px; border-radius: 50%; }
+            .sticky-bar.verdict-liquidate .status-dot { background: #ef4444; box-shadow: 0 0 8px rgba(239, 68, 68, 0.6); }
+            .sticky-bar.verdict-sustain .status-dot { background: #10b981; box-shadow: 0 0 8px rgba(16, 185, 129, 0.6); }
+            .sticky-bar.verdict-risk_alert .status-dot { background: #f59e0b; box-shadow: 0 0 8px rgba(245, 158, 11, 0.6); }
+            
+            .sticky-bar .sticky-title { font-weight: 800; font-size: 0.9rem; letter-spacing: -0.01em; color: #1e293b; }
+            
+            /* Desktop divider */
+            .sticky-bar .sticky-action-text { font-size: 0.8rem; color: var(--text-secondary); font-weight: 600; border-left: 2px solid #e2e8f0; padding-left: 0.8rem; }
             
             .sticky-bar .sticky-cta {
-                background: #0f172a; color: #fff; padding: 0.6rem 1.2rem; border-radius: 20px; text-decoration: none; font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; gap: 0.4rem; transition: transform 0.2s;
+                background: #0f172a; color: #fff; padding: 0.5rem 1rem; border-radius: 20px; text-decoration: none; font-weight: 700; font-size: 0.8rem; display: flex; align-items: center; gap: 0.4rem; transition: transform 0.2s; white-space: nowrap;
             }
             .sticky-bar .sticky-cta:hover { transform: scale(1.05); }
 
             @media (max-width: 640px) {
-                .sticky-bar .sticky-action-text { display: none; }
-                .sticky-bar { padding: 0.6rem 1rem; width: 95%; }
+                 .sticky-bar .sticky-action-text { display: none; }
             }
         </style>
 
@@ -456,15 +477,24 @@
             function updateSticky() {
                 const nav = document.getElementById('sticky-verdict-bar');
                 if (nav) {
-                    if (window.scrollY > 300) {
+                    const isMobile = window.innerWidth <= 768;
+                    // On desktop, always show (integrated into header)
+                    // On mobile, show only when scrolled past hero
+                    if (!isMobile) {
                         nav.classList.add('visible');
                     } else {
-                        nav.classList.remove('visible');
+                        if (window.scrollY > 300) {
+                            nav.classList.add('visible');
+                        } else {
+                            nav.classList.remove('visible');
+                        }
                     }
                 }
             }
             document.addEventListener('scroll', updateSticky);
             document.body.addEventListener('htmx:afterSettle', updateSticky);
+            // Initial check
+            updateSticky();
         </script>
     `
 )
