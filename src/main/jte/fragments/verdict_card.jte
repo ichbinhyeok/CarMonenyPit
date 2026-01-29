@@ -150,7 +150,7 @@
                     <div style="font-size: 1.1rem; font-weight: 700;">Cost of Inaction (1 Yr)</div>
                 </div>
                 <div class="delta-value">
-                    +$${String.format("%,.0f", result.stayTotal() - result.moveTotal())}
+                    -$${String.format("%,.0f", result.stayTotal() - result.moveTotal())}
                 </div>
                 <div style="position: absolute; right: -10px; bottom: -10px; font-size: 8rem; font-weight: 900; opacity: 0.05; pointer-events: none;">LOSS</div>
             </div>

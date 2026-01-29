@@ -278,7 +278,7 @@
                 .sticky-left { flex-direction: row; gap: 0.8rem; }
                 .sticky-text { display: flex; flex-direction: column; align-items: flex-start; }
                 .sticky-title { font-size: 0.9rem; margin-bottom: 2px; }
-                .sticky-action-text { display: block; border: none; padding: 0; font-size: 0.7rem; line-height: 1; }
+                .sticky-action-text { display: none; }
                 .status-dot { margin-top: 2px; }
             }
 

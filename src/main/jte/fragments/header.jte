@@ -1,41 +1,3 @@
-<header class="main-header">
-    <div class="live-ticker-bar">
-        <div class="live-label">
-            <span class="live-dot"></span>
-            LIVE SYSTEM ACTIVITY
-        </div>
-        <div class="ticker-track">
-            <div class="ticker-content">
-                <span>⚡ Live Analysis: Ford F-150 (TX) - CAM_PHASER_DETECTED</span>
-                <span>⚡ Live Analysis: Honda Accord (CA) - VCM_VIBRATION</span>
-                <span>✓ Verdict: Jeep Wrangler (FL) - FINANCIAL_BLEED_CONFIRMED</span>
-                <span>⚡ Live Analysis: Toyota Camry (NY) - TRANSMISSION_SLIP</span>
-                <span>✓ Verdict: Chevrolet Silverado (OH) - ASSET_RETAINED</span>
-                <span>⚡ Live Analysis: BMW 3-Series (GA) - WATER_PUMP_FAILURE</span>
-                <!-- Duplicate for seamless loop -->
-                <span>⚡ Live Analysis: Ford F-150 (TX) - CAM_PHASER_DETECTED</span>
-                <span>⚡ Live Analysis: Honda Accord (CA) - VCM_VIBRATION</span>
-                <span>✓ Verdict: Jeep Wrangler (FL) - FINANCIAL_BLEED_CONFIRMED</span>
-                <span>⚡ Live Analysis: Toyota Camry (NY) - TRANSMISSION_SLIP</span>
-                <span>✓ Verdict: Chevrolet Silverado (OH) - ASSET_RETAINED</span>
-                <span>⚡ Live Analysis: BMW 3-Series (GA) - WATER_PUMP_FAILURE</span>
-            </div>
-        </div>
-    </div>
-    <div class="header-content">
-        <a href="/" class="logo">
-            <span class="logo-icon">PIT</span>
-            <span class="logo-text">AutoMoney<span>Pit</span></span>
-        </a>
-        <nav class="header-nav">
-            <span class="sys-status">
-                <span class="status-dot"></span>
-                SYSTEM_ACTIVE_v4.2
-            </span>
-        </nav>
-    </div>
-</header>
-
 <style>
     .main-header {
         width: 100%;
@@ -161,6 +123,7 @@
         background: linear-gradient(90deg, #0066ff, #6366f1);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
+        -webkit-text-fill-color: transparent; 
     }
 
     .sys-status {
@@ -189,3 +152,41 @@
         .live-ticker-bar { display: flex; }
     }
 </style>
+
+<header class="main-header">
+    <div class="live-ticker-bar">
+        <div class="live-label">
+            <span class="live-dot"></span>
+            LIVE SYSTEM ACTIVITY
+        </div>
+        <div class="ticker-track">
+            <div class="ticker-content">
+                <span>⚡ Live Analysis: Ford F-150 (TX) - CAM_PHASER_DETECTED</span>
+                <span>⚡ Live Analysis: Honda Accord (CA) - VCM_VIBRATION</span>
+                <span>✓ Verdict: Jeep Wrangler (FL) - FINANCIAL_BLEED_CONFIRMED</span>
+                <span>⚡ Live Analysis: Toyota Camry (NY) - TRANSMISSION_SLIP</span>
+                <span>✓ Verdict: Chevrolet Silverado (OH) - ASSET_RETAINED</span>
+                <span>⚡ Live Analysis: BMW 3-Series (GA) - WATER_PUMP_FAILURE</span>
+                <!-- Duplicate for seamless loop -->
+                <span>⚡ Live Analysis: Ford F-150 (TX) - CAM_PHASER_DETECTED</span>
+                <span>⚡ Live Analysis: Honda Accord (CA) - VCM_VIBRATION</span>
+                <span>✓ Verdict: Jeep Wrangler (FL) - FINANCIAL_BLEED_CONFIRMED</span>
+                <span>⚡ Live Analysis: Toyota Camry (NY) - TRANSMISSION_SLIP</span>
+                <span>✓ Verdict: Chevrolet Silverado (OH) - ASSET_RETAINED</span>
+                <span>⚡ Live Analysis: BMW 3-Series (GA) - WATER_PUMP_FAILURE</span>
+            </div>
+        </div>
+    </div>
+    <div class="header-content">
+        <a href="/" class="logo">
+            <span class="logo-icon">PIT</span>
+            <span class="logo-text">AutoMoney<span>Pit</span></span>
+        </a>
+        <nav class="header-nav">
+            <span class="sys-status">
+                <span class="status-dot"></span>
+                SYSTEM_ACTIVE_v4.2
+            </span>
+        </nav>
+    </div>
+</header>
