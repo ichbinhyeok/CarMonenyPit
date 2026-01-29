@@ -201,35 +201,31 @@
             /* Sticky Bar Styles */
             .sticky-bar {
                 position: fixed;
-                top: 36px; /* Aligned with header center (32px ticker + padding) */
+                top: 46px; /* Adjusted to center in header (below 32px ticker) */
                 left: 50%;
                 transform: translateX(-50%);
                 width: auto;
                 max-width: 800px;
                 
-                /* Desktop: Integrated Header Look (Transparent/Integrated) */
-                background: rgba(255, 255, 255, 0.9);
-                backdrop-filter: blur(4px);
-                -webkit-backdrop-filter: blur(4px);
-                border: 1px solid rgba(0,0,0,0.05);
+                /* Desktop: Integrated Look - visible by default */
+                background: rgba(255, 255, 255, 0.95);
+                backdrop-filter: blur(8px);
+                -webkit-backdrop-filter: blur(8px);
+                border: 1px solid rgba(0,0,0,0.08);
                 border-radius: 100px;
                 
-                padding: 0.4rem 1.2rem;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.05); 
+                padding: 0.4rem 1rem 0.4rem 1.4rem;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.08); 
                 
                 z-index: 9999;
                 transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-                opacity: 0;
-                pointer-events: none;
-            }
-            .sticky-bar.visible {
+                
+                /* Only hide initially on mobile where scroll trigger is used */
                 opacity: 1;
                 pointer-events: all;
-                transform: translateX(-50%); /* Removed Y translation to keep it centered */
             }
 
             @media (max-width: 1024px) {
-                 /* Hide text explanation on smaller desktops to prevent collision */
                 .sticky-bar .sticky-action-text { display: none; }
             }
 
@@ -239,20 +235,49 @@
                     bottom: 20px;
                     transform: translateX(-50%) translateY(20px);
                     border-radius: 20px;
-                    padding: 0.6rem 1rem;
-                    background: rgba(255, 255, 255, 0.95);
-                    backdrop-filter: blur(12px);
-                    -webkit-backdrop-filter: blur(12px);
-                    box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+                    padding: 0.8rem 1.2rem;
                     width: 90%;
+                    max-width: 400px;
+                    
+                    /* Mobile: Hidden initially, triggered by scroll */
+                    opacity: 0;
+                    pointer-events: none;
                 }
                 .sticky-bar.visible {
+                    opacity: 1;
+                    pointer-events: all;
                     transform: translateX(-50%) translateY(0);
                 }
-                /* Show text again on mobile as it has its own row */
-                .sticky-bar .sticky-action-text { display: block; border: none; padding-left: 0; margin-top: 0.2rem; font-size: 0.75rem; }
-                .sticky-bar .sticky-content { display: flex; justify-content: space-between; align-items: center; width: 100%; }
-                .sticky-bar .sticky-left { display: flex; flex-direction: column; align-items: flex-start; gap: 0.2rem; }
+                
+                /* Mobile Layout Fixes */
+                .sticky-bar .sticky-content { 
+                    display: flex; 
+                    justify-content: space-between; 
+                    align-items: center; 
+                    width: 100%; 
+                }
+                .sticky-bar .sticky-left { 
+                    display: flex; 
+                    flex-direction: row; /* Force row to keep dot next to text */
+                    align-items: center; 
+                    gap: 0.8rem; 
+                }
+                .sticky-bar .sticky-text {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: flex-start;
+                }
+                /* Mobile typography adjustments */
+                .sticky-bar .sticky-title { font-size: 0.9rem; margin-bottom: 2px; }
+                .sticky-bar .sticky-action-text { 
+                    display: block; 
+                    border: none; 
+                    padding: 0; 
+                    font-size: 0.7rem; 
+                    line-height: 1;
+                    color: var(--text-secondary);
+                }
+                .sticky-bar .status-dot { margin-top: 2px; } /* Optical alignment */
             }
             
             /* Shared Styles */
