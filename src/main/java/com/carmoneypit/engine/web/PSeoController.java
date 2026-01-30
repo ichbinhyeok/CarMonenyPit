@@ -227,7 +227,11 @@ public class PSeoController {
   // --- Helper Methods ---
 
   private String normalize(String input) {
-    return input.toLowerCase().replaceAll("[^a-z0-9]", "");
+    if (input == null)
+      return "";
+    return input.toLowerCase()
+        .replaceAll("[^a-z0-9]+", "-")
+        .replaceAll("^-|-$", "");
   }
 
   private String generateSchema(CarModel car, Fault fault, ProfileViewModel profile,

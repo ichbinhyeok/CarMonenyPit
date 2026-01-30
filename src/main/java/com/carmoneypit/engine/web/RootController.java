@@ -130,6 +130,10 @@ public class RootController {
     }
 
     private String normalize(String input) {
-        return input.toLowerCase().replaceAll("[^a-z0-9]", "");
+        if (input == null)
+            return "";
+        return input.toLowerCase()
+                .replaceAll("[^a-z0-9]+", "-") // Replace non-alphanumeric with hyphen
+                .replaceAll("^-|-$", ""); // Remove leading/trailing hyphens
     }
 }

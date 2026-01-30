@@ -228,15 +228,15 @@ public class VerdictPresenter {
 
         switch (state) {
             case TIME_BOMB:
-                return "https://www.peddle.com/instant-offer";
+                return "https://www.peddle.com/instant-offer?utm_source=automoneypit&utm_medium=referral&utm_campaign=verdict_tool";
             case STABLE:
                 // TODO: Replace with real affiliate link after approval
                 if (isHighMileage)
-                    return "https://www.endurancewarranty.com/get-quote/";
-                return "https://repairpal.com/estimator";
+                    return "https://www.endurancewarranty.com/get-quote/?ref=automoneypit";
+                return "https://repairpal.com/estimator?utm_source=automoneypit";
             case BORDERLINE:
             default:
-                return "https://www.kbb.com/";
+                return "https://www.kbb.com/?utm_source=automoneypit";
         }
     }
 }
