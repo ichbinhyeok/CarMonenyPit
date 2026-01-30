@@ -11,6 +11,45 @@
     ogTitle = "Fix It or Sell It? Get Your Verdict in 30 Seconds",
     ogDescription = "Got a repair quote? Find out if it makes financial sense to fix your car or sell it.",
     ogImage = "https://automoneypit.com/static/og-image.png",
+    schemaJson = """
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "Organization",
+                "name": "AutoMoneyPit",
+                "url": "https://automoneypit.com",
+                "logo": "https://automoneypit.com/static/og-image.png",
+                "description": "Data-driven car repair decision calculator. Analyze repair costs vs vehicle value to make smart financial decisions.",
+                "sameAs": []
+            },
+            {
+                "@type": "WebSite",
+                "name": "AutoMoneyPit",
+                "url": "https://automoneypit.com",
+                "description": "Free car repair decision calculator - should you fix it or sell it?",
+                "potentialAction": {
+                    "@type": "SearchAction",
+                    "target": "https://automoneypit.com/models?q={search_term_string}",
+                    "query-input": "required name=search_term_string"
+                }
+            },
+            {
+                "@type": "WebApplication",
+                "name": "AutoMoneyPit Car Repair Calculator",
+                "url": "https://automoneypit.com/",
+                "description": "Free tool to analyze if your car repair is worth it based on market data and depreciation curves.",
+                "applicationCategory": "FinanceApplication",
+                "operatingSystem": "Web Browser",
+                "offers": {
+                    "@type": "Offer",
+                    "price": "0",
+                    "priceCurrency": "USD"
+                }
+            }
+        ]
+    }
+    """,
     extraStyles = @`
         <style>
             .hero-section {
@@ -241,7 +280,7 @@
                     </div>
                 </div>
 
-                <form hx-post="/analyze" hx-target="#form-container" hx-swap="outerHTML show:window:top" hx-push-url="false" class="form-grid-modern">
+                <form hx-post="/analyze" hx-target="#form-container" hx-swap="outerHTML show:#form-container:top" hx-push-url="false" class="form-grid-modern">
                     <input type="hidden" name="situation" id="situationInput" value="quote">
                     
                     <!-- Row 1: Year (First!) -->
@@ -398,5 +437,117 @@
                 </div>
             </div>
         </div>
+
+        <!-- Popular Searches Section (pSEO Internal Linking) -->
+        <div style="max-width: 1000px; margin: 0 auto 6rem; padding: 0 1rem;">
+            <div style="text-align: center; margin-bottom: 2.5rem;">
+                <h2 style="font-size: 1.75rem; font-weight: 800; color: #0f172a; margin-bottom: 0.75rem;">Popular Repair Decisions</h2>
+                <p style="font-size: 1rem; color: #64748b;">See what other owners are analyzing right now</p>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem;">
+                <a href="/should-i-fix/2018-toyota-camry" class="popular-link">
+                    <span class="popular-emoji">🚗</span>
+                    <div class="popular-text">
+                        <span class="popular-title">Should I fix my 2018 Toyota Camry?</span>
+                        <span class="popular-meta">High search volume</span>
+                    </div>
+                    <span class="popular-arrow">→</span>
+                </a>
+                
+                <a href="/should-i-fix/2017-honda-accord" class="popular-link">
+                    <span class="popular-emoji">🚙</span>
+                    <div class="popular-text">
+                        <span class="popular-title">Should I fix my 2017 Honda Accord?</span>
+                        <span class="popular-meta">Popular this week</span>
+                    </div>
+                    <span class="popular-arrow">→</span>
+                </a>
+                
+                <a href="/should-i-fix/2016-ford-f150" class="popular-link">
+                    <span class="popular-emoji">🛻</span>
+                    <div class="popular-text">
+                        <span class="popular-title">Should I fix my 2016 Ford F-150?</span>
+                        <span class="popular-meta">Trending</span>
+                    </div>
+                    <span class="popular-arrow">→</span>
+                </a>
+                
+                <a href="/should-i-fix/2015-chevrolet-silverado" class="popular-link">
+                    <span class="popular-emoji">🚚</span>
+                    <div class="popular-text">
+                        <span class="popular-title">Should I fix my 2015 Chevy Silverado?</span>
+                        <span class="popular-meta">High engagement</span>
+                    </div>
+                    <span class="popular-arrow">→</span>
+                </a>
+                
+                <a href="/should-i-fix/2019-nissan-altima" class="popular-link">
+                    <span class="popular-emoji">🚗</span>
+                    <div class="popular-text">
+                        <span class="popular-title">Should I fix my 2019 Nissan Altima?</span>
+                        <span class="popular-meta">Rising searches</span>
+                    </div>
+                    <span class="popular-arrow">→</span>
+                </a>
+                
+                <a href="/models" class="popular-link" style="background: linear-gradient(135deg, #eff6ff, #f0fdf4);">
+                    <span class="popular-emoji">📊</span>
+                    <div class="popular-text">
+                        <span class="popular-title">Browse All Models</span>
+                        <span class="popular-meta">50+ brands, 500+ models</span>
+                    </div>
+                    <span class="popular-arrow">→</span>
+                </a>
+            </div>
+        </div>
+
+        <style>
+            .popular-link {
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+                padding: 1.25rem 1.5rem;
+                background: #f8fafc;
+                border: 1px solid #e2e8f0;
+                border-radius: 16px;
+                text-decoration: none;
+                transition: all 0.3s ease;
+            }
+            .popular-link:hover {
+                background: #fff;
+                border-color: #3b82f6;
+                transform: translateY(-2px);
+                box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            }
+            .popular-emoji {
+                font-size: 1.5rem;
+            }
+            .popular-text {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                gap: 0.25rem;
+            }
+            .popular-title {
+                font-size: 0.95rem;
+                font-weight: 700;
+                color: #0f172a;
+            }
+            .popular-meta {
+                font-size: 0.75rem;
+                color: #22c55e;
+                font-weight: 600;
+            }
+            .popular-arrow {
+                font-size: 1.25rem;
+                color: #94a3b8;
+                transition: transform 0.2s, color 0.2s;
+            }
+            .popular-link:hover .popular-arrow {
+                transform: translateX(4px);
+                color: #3b82f6;
+            }
+        </style>
     `
 )

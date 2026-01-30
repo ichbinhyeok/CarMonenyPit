@@ -55,11 +55,17 @@ public class PSeoController {
       return "redirect:/models/" + brand + "/" + model;
     }
 
-    String targetKeyword = faultSlug.replace("-", " ").toLowerCase();
+    String targetKeyword = faultSlug.replace("-", " ").toLowerCase().trim();
     Optional<Fault> faultOpt = faultsOpt.get().faults().stream()
         .filter(f -> {
-          String comp = f.component().toLowerCase();
-          return comp.contains(targetKeyword) || targetKeyword.contains(comp);
+          // Normalize component the same way as slug generation
+          String normalizedComp = f.component().toLowerCase()
+              .replaceAll("[^a-z0-9 ]", "")
+              .replaceAll("\\s+", " ")
+              .trim();
+          return normalizedComp.equals(targetKeyword) ||
+              normalizedComp.contains(targetKeyword) ||
+              targetKeyword.contains(normalizedComp);
         })
         .findFirst();
 
@@ -229,22 +235,25 @@ public class PSeoController {
     long marketValue = profile != null ? profile.market().jan2026AvgPrice() : 0;
     int switchingCost = 2500 + (Math.abs(car.id().hashCode()) % 1000);
 
+    // Note: Using WebApplication schema instead of Product to avoid Google Shopping
+    // indexing
+    // This site is a vehicle repair analysis tool, NOT a shopping site
     return "{" +
         "\"@context\": \"https://schema.org\"," +
         "\"@graph\": [" +
         "{" +
-        "\"@type\": \"Product\"," +
-        "\"name\": \"" + car.brand() + " " + car.model() + " (" + car.generation() + ")\"," +
-        "\"description\": \"Data-driven analysis of " + car.model() + " reliability and value.\"," +
-        "\"brand\": {" +
-        "\"@type\": \"Brand\"," +
-        "\"name\": \"" + car.brand() + "\"" +
-        "}," +
+        "\"@type\": \"WebApplication\"," +
+        "\"name\": \"AutoMoneyPit - " + car.brand() + " " + car.model() + " Analysis\"," +
+        "\"description\": \"Data-driven repair cost vs market value analysis tool for " + car.brand() + " "
+        + car.model() + " (" + car.generation() + ") owners.\"," +
+        "\"url\": \"https://automoneypit.com/verdict/" + brandSlug + "/" + modelSlug + "/" + faultSlug + "\"," +
+        "\"image\": \"https://automoneypit.com/static/og-image.png\"," +
+        "\"applicationCategory\": \"FinanceApplication\"," +
+        "\"operatingSystem\": \"Web Browser\"," +
         "\"offers\": {" +
         "\"@type\": \"Offer\"," +
-        "\"price\": \"" + marketValue + "\"," +
-        "\"priceCurrency\": \"USD\"," +
-        "\"availability\": \"https://schema.org/InStock\"" +
+        "\"price\": \"0\"," +
+        "\"priceCurrency\": \"USD\"" +
         "}" +
         "}," +
         "{" +
