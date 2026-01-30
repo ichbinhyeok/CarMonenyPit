@@ -177,11 +177,14 @@ public class VerdictPresenter {
         boolean isAccident = input.isQuoteEstimated() && (controls != null
                 && controls.mobilityStatus() == com.carmoneypit.engine.api.InputModels.MobilityStatus.NEEDS_TOW);
         boolean hasQuote = !input.isQuoteEstimated();
+        boolean isHighMileage = input.mileage() > 80000;
 
         switch (state) {
             case TIME_BOMB:
                 return "Get Instant Cash Offer";
             case STABLE:
+                if (isHighMileage)
+                    return "Protect with Extended Warranty";
                 if (hasQuote)
                     return "Verify Fair Repair Price";
                 if (isAccident)
@@ -199,11 +202,14 @@ public class VerdictPresenter {
         boolean isAccident = input.isQuoteEstimated() && (controls != null
                 && controls.mobilityStatus() == com.carmoneypit.engine.api.InputModels.MobilityStatus.NEEDS_TOW);
         boolean hasQuote = !input.isQuoteEstimated();
+        boolean isHighMileage = input.mileage() > 80000;
 
         switch (state) {
             case TIME_BOMB:
                 return "Stop the bleeding. See exactly what your vehicle is worth in its current condition (even if broken).";
             case STABLE:
+                if (isHighMileage)
+                    return "Your car is worth keeping, but high-mileage repairs can add up. Protect yourself from unexpected breakdowns.";
                 if (hasQuote)
                     return "Ensure you aren't being overcharged. Compare your quote against the national average for this specific repair.";
                 if (isAccident)
@@ -218,10 +224,15 @@ public class VerdictPresenter {
     }
 
     public String getLeadUrl(VerdictState state, EngineInput input, SimulationControls controls) {
+        boolean isHighMileage = input.mileage() > 80000;
+
         switch (state) {
             case TIME_BOMB:
                 return "https://www.peddle.com/instant-offer";
             case STABLE:
+                // TODO: Replace with real affiliate link after approval
+                if (isHighMileage)
+                    return "https://www.endurancewarranty.com/get-quote/";
                 return "https://repairpal.com/estimator";
             case BORDERLINE:
             default:
