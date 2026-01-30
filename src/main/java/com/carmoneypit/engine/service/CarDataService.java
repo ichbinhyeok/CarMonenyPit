@@ -100,6 +100,7 @@ public class CarDataService {
         String normalizedBrand = normalize(brandSlug);
         return carModels.stream()
                 .filter(c -> normalize(c.brand()).equals(normalizedBrand))
+                .sorted((c1, c2) -> c1.model().compareToIgnoreCase(c2.model()))
                 .toList();
     }
 
