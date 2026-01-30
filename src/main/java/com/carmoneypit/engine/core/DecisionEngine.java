@@ -20,7 +20,7 @@ public class DecisionEngine {
     private final CostOfInactionCalculator costOfInactionCalculator;
     private final ValuationService valuationService;
 
-    // --- Actuarial Constants & Thresholds ---
+    // --- Calculation Constants & Thresholds ---
     private static final double SIGNIFICANCE_MARGIN = 500.0;
     private static final int BASE_CONFIDENCE_GENERIC = 60;
     private static final int BOOST_MODEL_DATA = 25;

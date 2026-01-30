@@ -1,5 +1,5 @@
 @template.layout(
-    title = "Methodology | The Actuarial Logic | CarMoneyPit",
+    title = "Methodology | The Data-Driven Logic | CarMoneyPit",
     content = @`
         <div style="max-width: 1000px; margin: 4rem auto; padding: 1rem;">
             <header style="text-align: center; margin-bottom: 5rem;">
@@ -10,7 +10,7 @@
                     The Math of<br><span style="color: #3b82f6;">Regret Minimization.</span>
                 </h1>
                 <p style="font-size: 1.25rem; color: #64748b; max-width: 700px; margin: 0 auto; line-height: 1.6; font-weight: 500;">
-                    We don't provide opinions. We provide actuarial diagnostics by calculating the financial friction of every possible path.
+                    We don't provide opinions. We provide data-driven analysis by calculating the financial friction of every possible path.
                 </p>
             </header>
 
@@ -55,7 +55,7 @@
                 </div>
             </section>
 
-            <!-- Key Actuarial Constants -->
+            <!-- Key Calculation Constants -->
             <section style="margin-bottom: 6rem;">
                 <h2 style="font-size: 2rem; font-weight: 800; margin-bottom: 3rem; text-align: center; letter-spacing: -0.02em;">Calibration Benchmarks</h2>
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">

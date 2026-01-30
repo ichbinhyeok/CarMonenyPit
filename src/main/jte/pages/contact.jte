@@ -6,7 +6,7 @@
             <h1 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem; color: #0f172a;">Get in Touch</h1>
             <p style="font-size: 1.1rem; color: #64748b; line-height: 1.6; margin-bottom: 2.5rem;">
                 Have questions about our analysis or need assistance with your vehicle decision? 
-                Our team of actuarial analysts and automotive experts is here to help.
+                Our team of data analysts and automotive experts is here to help.
             </p>
             
             <div style="background: #f8fafc; padding: 2.5rem; border-radius: 16px; border: 1px solid #e2e8f0;">

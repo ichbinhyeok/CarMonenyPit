@@ -5,7 +5,12 @@
 @param Long prefillQuote = null
 
 @template.layout(
-    title = "Auto Money Pit | Market Liquidation Value Analysis",
+    title = "Fix It or Sell It? | Free Car Repair Decision Calculator",
+    description = "Should you fix your car or sell it? Our free calculator analyzes repair costs vs car value to give you a data-driven verdict in 30 seconds.",
+    canonical = "https://automoneypit.com/",
+    ogTitle = "Fix It or Sell It? Get Your Verdict in 30 Seconds",
+    ogDescription = "Got a repair quote? Find out if it makes financial sense to fix your car or sell it.",
+    ogImage = "https://automoneypit.com/static/og-image.png",
     extraStyles = @`
         <style>
             .hero-section {
@@ -375,13 +380,13 @@
             <div class="card info-card">
                 <div>
                     <div class="info-title">Market Data Correlated</div>
-                    <div class="info-desc">Cross-referenced against standardized actuarial grids and NADA/KBB market frameworks.</div>
+                    <div class="info-desc">Cross-referenced against NADA/KBB market data and historical repair trends.</div>
                 </div>
             </div>
 
             <div class="card info-card" style="background: linear-gradient(135deg, #0066ff05, #6366f108);">
                 <div>
-                    <div class="info-title">Actuarial Precision</div>
+                    <div class="info-title">Data-Driven Precision</div>
                     <div class="info-desc">Not a guess. A specialized decision framework that balances repair cost vs. equity bleed.</div>
                 </div>
             </div>

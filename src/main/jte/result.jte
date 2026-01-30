@@ -400,7 +400,7 @@
                     <!-- Receipt Mode: Static Summary -->
                     <div style="text-align: center; padding: 2rem;">
                         <h3 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 1rem;">Is your car a Money Pit too?</h3>
-                        <p style="color: var(--text-secondary); margin-bottom: 2rem;">Run your own precision actuarial diagnostic in 30 seconds.</p>
+                        <p style="color: var(--text-secondary); margin-bottom: 2rem;">Run your own data-driven analysis in 30 seconds.</p>
                         <a href="/" style="background: var(--futurist-blue); color: #fff; padding: 1rem 2rem; border-radius: 16px; text-decoration: none; font-weight: 800; font-size: 1.1rem; display: inline-block;">
                             Run My Own Diagnostic
                         </a>
@@ -534,7 +534,7 @@
                 </p>
             </div>
             <p style="margin-bottom: 1rem;">
-                Our actuarial engine calculated a <strong>Cost of Inaction</strong> that exceeds your repair quote.
+                Our analysis engine calculated a <strong>Cost of Inaction</strong> that exceeds your repair quote.
                 The <strong>Retention Exposure</strong> (visible in the breakdown) indicates that holding this asset requires taking on disproportionate risk.
             </p>
             <form method="dialog">

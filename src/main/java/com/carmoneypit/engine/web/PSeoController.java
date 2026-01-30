@@ -235,7 +235,7 @@ public class PSeoController {
         "{" +
         "\"@type\": \"Product\"," +
         "\"name\": \"" + car.brand() + " " + car.model() + " (" + car.generation() + ")\"," +
-        "\"description\": \"Actuarial analysis of " + car.model() + " reliability and value.\"," +
+        "\"description\": \"Data-driven analysis of " + car.model() + " reliability and value.\"," +
         "\"brand\": {" +
         "\"@type\": \"Brand\"," +
         "\"name\": \"" + car.brand() + "\"" +

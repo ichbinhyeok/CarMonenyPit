@@ -4,7 +4,7 @@
         <div style="max-width: 1000px; margin: 4rem auto; padding: 1rem;">
             <header style="text-align: center; margin-bottom: 5rem;">
                 <h1 style="font-size: 3rem; font-weight: 800; color: #0f172a; margin-bottom: 1.5rem;">Stop Guessing. Start Calculating.</h1>
-                    CarMoneyPit was founded on a simple premise: vehicle repair decisions should be informed by actuarial logic and financial frameworks, not just emotion.
+                    CarMoneyPit was founded on a simple premise: vehicle repair decisions should be informed by data-driven logic and financial frameworks, not just emotion.
             </header>
 
             <section style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 3rem; margin-bottom: 6rem;">
@@ -30,7 +30,7 @@
             </section>
 
             <section style="background: #0f172a; color: #fff; padding: 4rem; border-radius: 32px; margin-bottom: 6rem;">
-                <h2 style="font-size: 2rem; font-weight: 800; margin-bottom: 3rem; text-align: center;">Actuarial Methodology</h2>
+                <h2 style="font-size: 2rem; font-weight: 800; margin-bottom: 3rem; text-align: center;">Our Methodology</h2>
                 <div style="max-width: 850px; margin: 0 auto; display: grid; gap: 2.5rem;">
                     
                     <div style="background: rgba(255,255,255,0.05); padding: 2rem; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1);">

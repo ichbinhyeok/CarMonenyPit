@@ -52,7 +52,7 @@
 
         <header style="text-align: center; margin-bottom: 3rem;">
             <div style="display: inline-flex; align-items: center; gap: 0.5rem; background: #f0fdf4; border: 1px solid #bbf7d0; padding: 0.5rem 1rem; border-radius: 99px; color: #166534; font-size: 0.75rem; font-weight: 700; margin-bottom: 1.5rem;">
-                <span style="font-size: 0.9rem;">✓</span> ACTUARIAL ALGORITHM APPLIED
+                <span style="font-size: 0.9rem;">✓</span> DATA-DRIVEN ANALYSIS APPLIED
             </div>
             <div style="font-size: 0.8rem; color: #d91b1b; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 0.75rem;">
                 Market Analysis for ${car.brand()} Owners
@@ -175,7 +175,7 @@
                 Many ${car.brand()} owners fall into the trap of thinking, "I've already spent so much maintenance, I have to keep it." This is financially dangerous.
              </p>
              <p style="font-size: 1.05rem; color: #444; line-height: 1.6;">
-                CarMoneyPit was founded on a simple premise: vehicle repair decisions should be informed by actuarial logic and financial frameworks, not just emotion.
+                CarMoneyPit was founded on a simple premise: vehicle repair decisions should be informed by data-driven logic and financial frameworks, not just emotion.
                 Our data suggests that if a repair costs more than 50% of your vehicle's current estimated market value, or if your total monthly repair average exceeds a new car payment, it may be time to exit.
                 Always consult with a certified mechanic and financial advisor for personalized advice.
              </p>

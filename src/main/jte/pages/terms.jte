@@ -7,7 +7,7 @@
             
             <h2 style="font-size: 1.5rem; color: #0f172a; margin-top: 2.5rem; margin-bottom: 1rem;">1. Nature of Service</h2>
             <p style="margin-bottom: 1rem;">
-                CarMoneyPit provides an automated financial assessment tool for vehicle owners. The "verdicts" and projections generated are based on statistical models and actuarial frameworks for informational purposes.
+                CarMoneyPit provides an automated financial assessment tool for vehicle owners. The "verdicts" and projections generated are based on statistical models and data-driven frameworks for informational purposes.
             </p>
             
             <h2 style="font-size: 1.5rem; color: #0f172a; margin-top: 2.5rem; margin-bottom: 1rem;">2. Not Mechanical Advice</h2>
