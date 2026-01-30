@@ -243,6 +243,14 @@ public class PSeoController {
     return "pseo_mileage";
   }
 
+  // --- Decision Page (CTA Target) ---
+  
+  @GetMapping("/decision")
+  public String showDecisionPage() {
+    // Redirect to home page where the main calculator is
+    return "redirect:/";
+  }
+
   // --- Directory Navigation (Silo Structure) ---
 
   @GetMapping("/models")

@@ -22,7 +22,7 @@
     schemaJson = schemaJson,
     ogImage = ogImage,
     content = @`
-    <div class="pseo-container" style="max-width: 900px; margin: 0 auto; padding: 4rem 1rem;">
+    <div class="pseo-container" style="max-width: 900px; margin: 0 auto; padding: 4rem 1rem; width: 100%;">
         
         <!-- Breadcrumbs (SEO + UX) -->
         <nav style="margin-bottom: 2rem; font-size: 0.85rem; color: #666; font-weight: 500;">
@@ -82,44 +82,131 @@
 
         <!-- 2. Vehicle Financial Profile (New Section) -->
         @if(details != null)
-        <div class="profile-section" style="background: #fdfdfd; border: 1px solid #e0e0e0; border-radius: 20px; padding: 2rem; margin-bottom: 4rem;">
-            <h2 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem;">
+        <div class="profile-section" style="background: #fff; border: 1px solid #e5e7eb; border-radius: 24px; padding: 2rem; margin-bottom: 4rem; box-shadow: 0 4px 20px rgba(0,0,0,0.04);">
+            <h2 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 2rem; display: flex; align-items: center; gap: 0.5rem;">
                  📊 ${car.brand()} ${car.model()} Profile (Jan 2026 Data)
             </h2>
             
-            <div class="profile-grid">
-                <!-- Left: Market Data -->
-                <div>
-                     <div style="margin-bottom: 1.5rem;">
-                        <span style="display: block; font-size: 0.8rem; color: #666; text-transform: uppercase; font-weight: 600; letter-spacing: 0.05em;">Avg. Market Value</span>
-                        <span style="font-size: 1.75rem; font-weight: 800; color: #2E7D32;">$${String.format("%,d", details.market().jan2026AvgPrice())}</span>
-                     </div>
-                     <div>
-                        <span style="display: block; font-size: 0.8rem; color: #666; text-transform: uppercase; font-weight: 600; letter-spacing: 0.05em;">Expected Lifespan</span>
-                        <span style="font-size: 1.5rem; font-weight: 700; color: #333;">${String.format("%,d", details.reliability().lifespanMiles())} Miles</span>
-                     </div>
+            <!-- Stats Row -->
+            <div class="profile-stats">
+                <div class="stat-box">
+                    <span class="stat-label">Market Value</span>
+                    <span class="stat-value green">$${String.format("%,d", details.market().jan2026AvgPrice())}</span>
                 </div>
-
-                <!-- Right: Analysis -->
-                <div style="border-top: 1px solid #eee; padding-top: 1.5rem; margin-top: 1rem;">
-                    <div style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.25rem 0.75rem; border-radius: 99px; background: #eff6ff; border: 1px solid #dbeafe; color: #1e40af; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; margin-bottom: 1rem;">
-                        <span style="width: 6px; height: 6px; background: #3b82f6; border-radius: 50%;"></span> Market Value Analysis
-                    </div>
-                    
-                    <div style="font-size: 0.95rem; color: #555; line-height: 1.5;">
-                        <strong>Next Big Hit:</strong> 
-                        @if(!details.reliability().criticalMilestones().isEmpty())
-                            At ${String.format("%,d", details.reliability().criticalMilestones().get(0).mileage())} miles, expect a 
-                            $${details.reliability().criticalMilestones().get(0).estCost()} service (${details.reliability().criticalMilestones().get(0).description()}).
-                        @endif
+                <div class="stat-box">
+                    <span class="stat-label">Expected Lifespan</span>
+                    <span class="stat-value">${String.format("%,d", details.reliability().lifespanMiles())} mi</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-label">Depreciation Rate</span>
+                    <span class="stat-value orange">${String.format("%.0f", details.market().depreciationRate() * 100)}%/yr</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-label">Avg. Annual Repair</span>
+                    <span class="stat-value red">$${String.format("%,d", details.market().avgAnnualRepairCost())}</span>
+                </div>
+            </div>
+            
+            <!-- Maintenance Alert -->
+            <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid #f1f5f9;">
+                @if(details.reliability().criticalMilestones() != null && !details.reliability().criticalMilestones().isEmpty())
+                <div class="maintenance-alert">
+                    <div class="alert-icon">🔧</div>
+                    <div class="alert-content">
+                        <span class="alert-badge">Upcoming Service</span>
+                        <p>At <strong>${String.format("%,d", details.reliability().criticalMilestones().get(0).mileage())} miles</strong>, 
+                        budget <strong class="cost">$${String.format("%,d", details.reliability().criticalMilestones().get(0).estCost())}</strong> 
+                        for ${details.reliability().criticalMilestones().get(0).description()}.</p>
                     </div>
                 </div>
+                @else
+                <div class="maintenance-alert good">
+                    <div class="alert-icon">✅</div>
+                    <div class="alert-content">
+                        <span class="alert-badge good">All Clear</span>
+                        <p>No major scheduled maintenance expected soon.</p>
+                    </div>
+                </div>
+                @endif
+            </div>
         </div>
         <style>
-            .profile-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+            .profile-stats {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 1rem;
+            }
+            .stat-box {
+                background: #f8fafc;
+                padding: 1.25rem;
+                border-radius: 16px;
+                text-align: center;
+            }
+            .stat-label {
+                display: block;
+                font-size: 0.7rem;
+                color: #64748b;
+                text-transform: uppercase;
+                font-weight: 600;
+                letter-spacing: 0.05em;
+                margin-bottom: 0.5rem;
+            }
+            .stat-value {
+                font-size: 1.35rem;
+                font-weight: 800;
+                color: #1e293b;
+            }
+            .stat-value.green { color: #16a34a; }
+            .stat-value.orange { color: #ea580c; }
+            .stat-value.red { color: #dc2626; }
+            
+            .maintenance-alert {
+                display: flex;
+                gap: 1rem;
+                background: #eff6ff;
+                padding: 1.25rem;
+                border-radius: 16px;
+                align-items: flex-start;
+            }
+            .maintenance-alert.good {
+                background: #f0fdf4;
+            }
+            .alert-icon {
+                font-size: 1.5rem;
+                flex-shrink: 0;
+            }
+            .alert-content {
+                flex: 1;
+            }
+            .alert-badge {
+                display: inline-block;
+                font-size: 0.65rem;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+                background: #3b82f6;
+                color: #fff;
+                padding: 0.25rem 0.5rem;
+                border-radius: 4px;
+                margin-bottom: 0.5rem;
+            }
+            .alert-badge.good {
+                background: #22c55e;
+            }
+            .alert-content p {
+                margin: 0;
+                font-size: 0.9rem;
+                color: #475569;
+                line-height: 1.5;
+            }
+            .alert-content .cost {
+                color: #dc2626;
+            }
+            
             @media (max-width: 768px) {
-                .profile-grid { grid-template-columns: 1fr; gap: 1rem; }
+                .profile-stats { grid-template-columns: repeat(2, 1fr); }
                 .profile-section { padding: 1.5rem !important; }
+                .stat-value { font-size: 1.1rem; }
             }
         </style>
         @endif
@@ -243,83 +330,231 @@
         </div>
 
         <!-- Visual Decision Flowchart -->
-        <div style="background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); border-radius: 24px; padding: 2.5rem; margin-bottom: 4rem; border: 1px solid #cbd5e1;">
-            <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 2rem;">
-                <span style="font-size: 1.5rem;">🔀</span>
-                <h2 style="font-size: 1.35rem; font-weight: 800; margin: 0; color: #1e293b;">
-                    Quick Decision Flowchart
-                </h2>
-            </div>
-            
-            <!-- Flowchart -->
-            <div class="flowchart" style="display: flex; flex-direction: column; gap: 0;">
-                <!-- Question 1 -->
-                <div style="background: #fff; border: 2px solid #3b82f6; border-radius: 16px; padding: 1.25rem 1.5rem; text-align: center; position: relative;">
-                    <span style="font-size: 0.7rem; background: #3b82f6; color: #fff; padding: 0.2rem 0.6rem; border-radius: 99px; position: absolute; top: -10px; left: 50%; transform: translateX(-50%); font-weight: 700;">START</span>
-                    <p style="font-weight: 700; color: #1e293b; margin: 0.5rem 0 0 0; font-size: 1rem;">Is the repair cost > 50% of car value?</p>
-                </div>
-                
-                <!-- Branches -->
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem;">
-                    <!-- YES Branch -->
-                    <div style="text-align: center;">
-                        <div style="background: #fef2f2; border: 2px solid #ef4444; border-radius: 12px; padding: 1rem;">
-                            <span style="font-size: 0.75rem; font-weight: 700; color: #ef4444;">YES ↓</span>
-                            <p style="font-weight: 700; color: #991b1b; margin: 0.5rem 0 0 0; font-size: 0.9rem;">Consider Selling</p>
-                            <p style="font-size: 0.8rem; color: #7f1d1d; margin: 0.25rem 0 0 0;">Repair exceeds financial logic threshold</p>
-                        </div>
-                        <div style="margin-top: 0.75rem;">
-                            <span style="font-size: 0.7rem; color: #64748b;">↓</span>
-                        </div>
-                        <div style="background: #ef4444; color: #fff; padding: 0.75rem 1rem; border-radius: 8px; font-weight: 700; font-size: 0.85rem;">
-                            🚗 SELL NOW
-                        </div>
-                    </div>
-                    
-                    <!-- NO Branch -->
-                    <div style="text-align: center;">
-                        <div style="background: #f0fdf4; border: 2px solid #22c55e; border-radius: 12px; padding: 1rem;">
-                            <span style="font-size: 0.75rem; font-weight: 700; color: #22c55e;">NO ↓</span>
-                            <p style="font-weight: 700; color: #166534; margin: 0.5rem 0 0 0; font-size: 0.9rem;">Check Annual Repair Cost</p>
-                            <p style="font-size: 0.8rem; color: #14532d; margin: 0.25rem 0 0 0;">Is yearly repair > new car payment?</p>
-                        </div>
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-top: 0.75rem;">
-                            <div style="background: #fef2f2; color: #991b1b; padding: 0.5rem; border-radius: 6px; font-size: 0.75rem; font-weight: 600;">
-                                YES → Sell
-                            </div>
-                            <div style="background: #f0fdf4; color: #166534; padding: 0.5rem; border-radius: 6px; font-size: 0.75rem; font-weight: 600;">
-                                NO → Repair ✓
-                            </div>
-                        </div>
-                    </div>
+        <div class="decision-flowchart">
+            <div class="flow-header">
+                <span class="flow-icon">🤔</span>
+                <div>
+                    <h2>Should You Repair or Sell?</h2>
+                    <p>A simple 2-question framework used by financial experts</p>
                 </div>
             </div>
             
-            <!-- Social Proof Badge -->
+            <!-- Question 1 -->
+            <div class="flow-question">
+                <div class="q-number">1</div>
+                <div class="q-content">
+                    <p class="q-text">Is this repair more than <strong>50%</strong> of your car's value?</p>
+                    <p class="q-sub">Your car: ~$${String.format("%,d", details.market().jan2026AvgPrice())} → Threshold: <strong>$${String.format("%,d", details.market().jan2026AvgPrice() / 2)}</strong></p>
+                </div>
+            </div>
+            
+            <div class="flow-answers">
+                <div class="flow-answer sell">
+                    <span class="answer-label">YES</span>
+                    <span class="answer-result">Consider Selling</span>
+                    <p>Repair exceeds financial logic</p>
+                </div>
+                <div class="flow-answer keep">
+                    <span class="answer-label">NO</span>
+                    <span class="answer-result">Proceed to Q2 ↓</span>
+                </div>
+            </div>
+            
+            <!-- Question 2 -->
+            <div class="flow-question q2">
+                <div class="q-number">2</div>
+                <div class="q-content">
+                    <p class="q-text">Will your <strong>annual repair costs</strong> exceed a new car payment?</p>
+                    <p class="q-sub">Typical new car payment: ~$400-600/month</p>
+                </div>
+            </div>
+            
+            <div class="flow-final">
+                <div class="final-box sell">
+                    <span>YES</span>
+                    <strong>🚗 Time to Sell</strong>
+                </div>
+                <div class="final-box keep">
+                    <span>NO</span>
+                    <strong>✅ Repair & Keep</strong>
+                </div>
+            </div>
+            
+            <!-- Social Proof -->
             !{
-                // Deterministic "view count" based on car + fault
                 int baseViews = (car.id().hashCode() & 0x7FFFFFFF) % 3000 + 1200;
                 int recentViews = (fault.component().hashCode() & 0x7FFFFFFF) % 200 + 50;
             }
-            <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid #cbd5e1; display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap;">
-                <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; color: #64748b;">
-                    <span style="font-size: 1rem;">👁️</span>
-                    <span><strong style="color: #1e293b;">${String.format("%,d", baseViews)}</strong> owners viewed this analysis</span>
-                </div>
-                <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; color: #64748b;">
-                    <span style="width: 8px; height: 8px; background: #22c55e; border-radius: 50%; animation: pulse 2s infinite;"></span>
-                    <span><strong style="color: #1e293b;">${recentViews}</strong> in the last 24 hours</span>
-                </div>
+            <div class="flow-social">
+                <span>👁️ <strong>${String.format("%,d", baseViews)}</strong> owners used this framework</span>
+                <span class="live">● <strong>${recentViews}</strong> in the last 24h</span>
             </div>
         </div>
         
         <style>
-            @keyframes pulse {
-                0%, 100% { opacity: 1; transform: scale(1); }
-                50% { opacity: 0.6; transform: scale(1.2); }
+            .decision-flowchart {
+                background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+                border-radius: 24px;
+                padding: 2.5rem;
+                margin-bottom: 4rem;
+                border: 1px solid #e2e8f0;
+                box-shadow: 0 8px 30px rgba(0,0,0,0.04);
             }
+            .flow-header {
+                display: flex;
+                gap: 1rem;
+                align-items: center;
+                margin-bottom: 2rem;
+            }
+            .flow-icon {
+                font-size: 2.5rem;
+            }
+            .flow-header h2 {
+                font-size: 1.5rem;
+                font-weight: 800;
+                color: #1e293b;
+                margin: 0 0 0.25rem 0;
+            }
+            .flow-header p {
+                font-size: 0.9rem;
+                color: #64748b;
+                margin: 0;
+            }
+            
+            .flow-question {
+                display: flex;
+                gap: 1rem;
+                background: #f1f5f9;
+                padding: 1.5rem;
+                border-radius: 20px;
+                margin-bottom: 1rem;
+                align-items: center;
+            }
+            .flow-question.q2 {
+                margin-top: 1.5rem;
+            }
+            .q-number {
+                width: 48px;
+                height: 48px;
+                background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+                color: #fff;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1.25rem;
+                font-weight: 800;
+                flex-shrink: 0;
+            }
+            .q-text {
+                font-size: 1.1rem;
+                font-weight: 600;
+                color: #1e293b;
+                margin: 0 0 0.25rem 0;
+            }
+            .q-sub {
+                font-size: 0.85rem;
+                color: #64748b;
+                margin: 0;
+            }
+            
+            .flow-answers {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 1rem;
+            }
+            .flow-answer {
+                padding: 1.25rem;
+                border-radius: 16px;
+                text-align: center;
+            }
+            .flow-answer.sell {
+                background: linear-gradient(135deg, #fef2f2, #fee2e2);
+                border: 1px solid #fecaca;
+            }
+            .flow-answer.keep {
+                background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+                border: 1px solid #bbf7d0;
+            }
+            .answer-label {
+                display: inline-block;
+                font-size: 0.7rem;
+                font-weight: 800;
+                padding: 0.25rem 0.75rem;
+                border-radius: 99px;
+                margin-bottom: 0.5rem;
+            }
+            .flow-answer.sell .answer-label {
+                background: #ef4444;
+                color: #fff;
+            }
+            .flow-answer.keep .answer-label {
+                background: #22c55e;
+                color: #fff;
+            }
+            .answer-result {
+                display: block;
+                font-weight: 700;
+                font-size: 1rem;
+                margin-bottom: 0.25rem;
+            }
+            .flow-answer.sell .answer-result { color: #b91c1c; }
+            .flow-answer.keep .answer-result { color: #166534; }
+            .flow-answer p {
+                margin: 0;
+                font-size: 0.8rem;
+                color: #64748b;
+            }
+            
+            .flow-final {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 1rem;
+                margin-top: 1rem;
+            }
+            .final-box {
+                padding: 1rem;
+                border-radius: 12px;
+                text-align: center;
+            }
+            .final-box.sell {
+                background: #ef4444;
+                color: #fff;
+            }
+            .final-box.keep {
+                background: #22c55e;
+                color: #fff;
+            }
+            .final-box span {
+                display: block;
+                font-size: 0.7rem;
+                opacity: 0.8;
+                margin-bottom: 0.25rem;
+            }
+            .final-box strong {
+                font-size: 0.95rem;
+            }
+            
+            .flow-social {
+                margin-top: 2rem;
+                padding-top: 1.5rem;
+                border-top: 1px solid #e2e8f0;
+                display: flex;
+                justify-content: center;
+                gap: 2rem;
+                flex-wrap: wrap;
+                font-size: 0.85rem;
+                color: #64748b;
+            }
+            .flow-social .live {
+                color: #22c55e;
+            }
+            
             @media (max-width: 768px) {
-                .flowchart > div:nth-child(2) { grid-template-columns: 1fr !important; }
+                .decision-flowchart { padding: 1.5rem; }
+                .flow-answers, .flow-final { grid-template-columns: 1fr; }
+                .flow-question { flex-direction: column; text-align: center; }
+                .flow-header { flex-direction: column; text-align: center; }
             }
         </style>
         <style>
@@ -353,29 +588,74 @@
 
         <!-- Related Problems Section (Internal Linking) -->
         @if(relatedFaults != null && !relatedFaults.isEmpty())
-        <div style="margin: 4rem 0; background: #F9FAFB; padding: 2.5rem; border-radius: 24px;">
-            <h2 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 2rem; text-align: center;">
+        <div class="related-section" style="margin: 4rem 0; background: #F9FAFB; padding: 2.5rem; border-radius: 24px;">
+            <h2 style="font-size: 1.35rem; font-weight: 800; margin-bottom: 2rem; text-align: center; color: #1f2937;">
                 ${car.brand()} ${car.model()} Owners Also Researched:
             </h2>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
+            <div class="related-grid">
                 @for(var related : relatedFaults)
                 <a href="/verdict/${car.brand().toLowerCase().replaceAll("[^a-z0-9]", "")}/${car.model().toLowerCase().replaceAll("[^a-z0-9]", "")}/${related.component().toLowerCase().replace(" ", "-").replaceAll("[^a-z0-9-]", "")}" 
-                   style="text-decoration: none; background: #fff; padding: 1.5rem; border-radius: 16px; border: 1px solid #E5E7EB; transition: all 0.2s; display: block;">
-                    <h3 style="font-size: 1.1rem; font-weight: 700; color: #1F2937; margin-bottom: 0.5rem;">
+                   class="related-card">
+                    <h3 style="font-size: 1rem; font-weight: 700; color: #1F2937; margin-bottom: 0.75rem; line-height: 1.3;">
                         ${related.component()}
                     </h3>
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <span style="font-size: 0.9rem; color: #6B7280; font-weight: 600;">Avg. Repair Cost</span>
-                        <span style="font-size: 1.3rem; font-weight: 800; color: #EF4444;">$${String.format("%,.0f", related.repairCost())}</span>
+                    <div style="display: flex; flex-direction: column; gap: 0.25rem;">
+                        <span style="font-size: 0.8rem; color: #6B7280; font-weight: 600;">Avg. Repair Cost</span>
+                        <span style="font-size: 1.5rem; font-weight: 800; color: #EF4444;">$${String.format("%,.0f", related.repairCost())}</span>
                     </div>
                 </a>
                 @endfor
+                
+                <!-- CTA card when few related items (fills empty space) -->
+                @if(relatedFaults.size() == 1)
+                <a href="/?brand=${car.brand().replace(" ", "+")}&model=${car.model().replace(" ", "+")}" class="related-card cta-card">
+                    <h3 style="font-size: 1rem; font-weight: 700; color: #3b82f6; margin-bottom: 0.75rem; line-height: 1.3;">
+                        🔍 Analyze Another Repair
+                    </h3>
+                    <p style="font-size: 0.85rem; color: #64748b; margin: 0;">Get a personalized verdict for any repair quote on your ${car.model()}</p>
+                </a>
+                @endif
             </div>
-            <p style="font-size: 0.85rem; color: #6B7280; text-align: center; margin-top: 2rem;">
-                Data is sourced from official NHTSA databases, and market frameworks. Our bi-weekly updates reflect 
+            <p style="font-size: 0.8rem; color: #6B7280; text-align: center; margin-top: 2rem; line-height: 1.6; max-width: 500px; margin-left: auto; margin-right: auto;">
+                Data is sourced from official NHTSA databases and market frameworks. Our bi-weekly updates reflect 
                 estimated market trends for your asset.
             </p>
         </div>
+        <style>
+            .related-grid {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+            .related-card {
+                text-decoration: none;
+                background: #fff;
+                padding: 1.5rem;
+                border-radius: 16px;
+                border: 1px solid #E5E7EB;
+                transition: all 0.2s;
+                display: flex;
+                flex-direction: column;
+            }
+            .related-card:hover {
+                border-color: #3b82f6;
+                box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
+                transform: translateY(-2px);
+            }
+            .related-card.cta-card {
+                background: linear-gradient(135deg, #eff6ff, #dbeafe);
+                border: 1px dashed #93c5fd;
+            }
+            .related-card.cta-card:hover {
+                border-style: solid;
+                background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+            }
+            @media (max-width: 768px) {
+                .related-section { padding: 1.5rem !important; }
+                .related-grid { grid-template-columns: 1fr !important; gap: 0.75rem; }
+                .related-card { padding: 1.25rem !important; }
+            }
+        </style>
         @endif
 
         <!-- 5. Visible FAQ -->
