@@ -30,24 +30,35 @@
             </section>
 
             <section style="background: #0f172a; color: #fff; padding: 4rem; border-radius: 32px; margin-bottom: 6rem;">
-                <h2 style="font-size: 2rem; font-weight: 800; margin-bottom: 2rem; text-align: center;">Expertise & Methodology</h2>
-                <div style="max-width: 800px; margin: 0 auto;">
-                    <div class="bg-white rounded-2xl p-8 border border-slate-100 shadow-sm relative overflow-hidden group hover:border-blue-100 transition-colors">
-                <div class="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-                </div>
-                <h3 class="text-xl font-bold text-slate-900 mb-3 flex items-center gap-2">
-                    <span class="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center text-blue-600 overflow-hidden">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-                    </span>
-                    Liquidation Valuation
-                </h3>
-                <p class="text-slate-600 leading-relaxed mb-4">
-                    The core of the engine. We apply simplified market liquidation models to determine the "Financial Death" of a vehicle.
-                </p>
-            </div>
-                    <p style="opacity: 0.8; line-height: 1.8;">
-                        Data is sourced from official databases and market frameworks. We update our market projections regularly to reflect estimated trends for your asset.
+                <h2 style="font-size: 2rem; font-weight: 800; margin-bottom: 3rem; text-align: center;">Actuarial Methodology</h2>
+                <div style="max-width: 850px; margin: 0 auto; display: grid; gap: 2.5rem;">
+                    
+                    <div style="background: rgba(255,255,255,0.05); padding: 2rem; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1);">
+                        <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem; color: #3b82f6;">01. The Regret Matrix (RF vs RM)</h3>
+                        <p style="opacity: 0.8; line-height: 1.6; font-size: 0.95rem;">
+                            Our engine doesn't just look at a repair bill. it compares the <strong>Regret of Fixing (RF)</strong> against the <strong>Regret of Moving (RM)</strong>. 
+                            If the cost of transaction friction and new asset depreciation outweighs the repair pain, the engine signals a "Sustain" verdict.
+                        </p>
+                    </div>
+
+                    <div style="background: rgba(255,255,255,0.05); padding: 2rem; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1);">
+                        <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem; color: #3b82f6;">02. Replacement Asset Burn</h3>
+                        <p style="opacity: 0.8; line-height: 1.6; font-size: 0.95rem;">
+                            Most owners forget the "hidden tax" of buying a new car. The moment a replacement vehicle leaves the lot, it loses ~12% of its value. 
+                            We factor this <strong>Asset Burn</strong> into every "Move" decision to prevent premature liquidation of reliable assets.
+                        </p>
+                    </div>
+
+                    <div style="background: rgba(255,255,255,0.05); padding: 2rem; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1);">
+                        <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem; color: #3b82f6;">03. Repair Amortization</h3>
+                        <p style="opacity: 0.8; line-height: 1.6; font-size: 0.95rem;">
+                            A $1,500 repair is an investment. If that repair grants you 3 more years of utility, the amortized cost is only $500/year. 
+                            Our algorithm calculates this <strong>Amortization Benefit</strong> based on your intended retention horizon.
+                        </p>
+                    </div>
+
+                    <p style="text-align: center; opacity: 0.6; font-size: 0.85rem; margin-top: 1rem;">
+                        Data is sourced from official NHTSA safety databases, regional market indices, and longitudinal reliability studies.
                     </p>
                 </div>
             </section>

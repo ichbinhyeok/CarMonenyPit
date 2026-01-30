@@ -395,8 +395,8 @@
                         </button>
                     @endif
                 </div>
-                @endif
-            </section>
+
+                @if(viewMode.equals("RECEIPT"))
                     <!-- Receipt Mode: Static Summary -->
                     <div style="text-align: center; padding: 2rem;">
                         <h3 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 1rem;">Is your car a Money Pit too?</h3>
