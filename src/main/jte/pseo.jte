@@ -432,6 +432,9 @@
         <section class="related-links">
             <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 1rem; color: #64748b;">Related Searches</h3>
             
+            <a href="/verdict/${prefillBrand.toLowerCase().replaceAll("[^a-z0-9]", "")}/${prefillModel.toLowerCase().replaceAll("[^a-z0-9]", "")}/100000-miles" class="related-link">
+                <span>📍</span> ${prefillBrand} ${prefillModel} at 100K miles - worth keeping?
+            </a>
             <a href="/models/${prefillBrand.toLowerCase().replaceAll("[^a-z0-9]", "")}" class="related-link">
                 <span>📊</span> Browse all ${prefillBrand} models
             </a>

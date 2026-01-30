@@ -672,8 +672,36 @@
             <div style="margin-bottom: 2rem;">
                 <h3 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 0.5rem;">How much does it cost to fix?</h3>
                 <p style="color: #555; line-height: 1.6;">
-                    The average market rate for a ${fault.component()} replacement on a ${car.brand()} ${car.model()} is approximately <strong>$${String.format("%,.0f", fault.repairCost())}</strong>.
+                    The average market rate for a ${fault.component()} replacement on a ${car.brand()} ${car.model()} is approximately <strong>${'$'}${String.format("%,.0f", fault.repairCost())}</strong>.
                 </p>
+            </div>
+        </div>
+
+        <!-- Mileage Analysis Links -->
+        <div style="margin-bottom: 3rem; background: linear-gradient(135deg, #f0f9ff, #e0f2fe); padding: 2rem; border-radius: 20px; border: 1px solid #bae6fd;">
+            <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 1.25rem; color: #0369a1; display: flex; align-items: center; gap: 0.5rem;">
+                <span>📍</span> Mileage-Based Analysis
+            </h3>
+            <p style="font-size: 0.9rem; color: #64748b; margin-bottom: 1.25rem; line-height: 1.6;">
+                Your car's mileage significantly impacts this repair decision. See what to expect at different stages:
+            </p>
+            <div style="display: flex; flex-wrap: wrap; gap: 0.75rem;">
+                <a href="/verdict/${car.brand().toLowerCase().replaceAll("[^a-z0-9]", "")}/${car.model().toLowerCase().replaceAll("[^a-z0-9]", "")}/75000-miles" 
+                   style="text-decoration: none; background: #fff; padding: 0.6rem 1rem; border-radius: 10px; font-size: 0.85rem; font-weight: 600; color: #0369a1; border: 1px solid #bae6fd; transition: all 0.2s;">
+                    75K miles
+                </a>
+                <a href="/verdict/${car.brand().toLowerCase().replaceAll("[^a-z0-9]", "")}/${car.model().toLowerCase().replaceAll("[^a-z0-9]", "")}/100000-miles" 
+                   style="text-decoration: none; background: #fff; padding: 0.6rem 1rem; border-radius: 10px; font-size: 0.85rem; font-weight: 600; color: #0369a1; border: 1px solid #bae6fd; transition: all 0.2s;">
+                    100K miles
+                </a>
+                <a href="/verdict/${car.brand().toLowerCase().replaceAll("[^a-z0-9]", "")}/${car.model().toLowerCase().replaceAll("[^a-z0-9]", "")}/150000-miles" 
+                   style="text-decoration: none; background: #fff; padding: 0.6rem 1rem; border-radius: 10px; font-size: 0.85rem; font-weight: 600; color: #0369a1; border: 1px solid #bae6fd; transition: all 0.2s;">
+                    150K miles
+                </a>
+                <a href="/verdict/${car.brand().toLowerCase().replaceAll("[^a-z0-9]", "")}/${car.model().toLowerCase().replaceAll("[^a-z0-9]", "")}/200000-miles" 
+                   style="text-decoration: none; background: #fff; padding: 0.6rem 1rem; border-radius: 10px; font-size: 0.85rem; font-weight: 600; color: #0369a1; border: 1px solid #bae6fd; transition: all 0.2s;">
+                    200K miles
+                </a>
             </div>
         </div>
 
