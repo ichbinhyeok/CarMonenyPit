@@ -1,3 +1,4 @@
+@import com.carmoneypit.engine.service.CarDataService.MajorFaults
 @param String seoTitle
 @param String seoDescription
 @param Integer prefillYear
@@ -5,6 +6,7 @@
 @param String prefillModel
 @param Boolean isPseoPage = false
 @param String pseoSlug = ""
+@param MajorFaults majorFaults = null
 
 @template.layout(
     title = seoTitle,
@@ -163,6 +165,12 @@
                 margin-bottom: 1.5rem;
                 color: #0f172a;
             }
+            .content-section h3 {
+                font-size: 1.25rem;
+                font-weight: 700;
+                margin: 2rem 0 1rem;
+                color: #1e293b;
+            }
             .content-section p {
                 font-size: 1rem;
                 color: #475569;
@@ -180,6 +188,38 @@
                 font-weight: 700;
                 color: #1e40af;
                 margin-bottom: 0.5rem;
+            }
+            .fault-warning-box {
+                background: #fff1f2;
+                border: 1px solid #fecdd3;
+                border-radius: 12px;
+                padding: 1.5rem;
+                margin: 1.5rem 0;
+            }
+            .fault-item {
+                border-bottom: 1px solid #e2e8f0;
+                padding-bottom: 1rem;
+                margin-bottom: 1rem;
+            }
+            .fault-item:last-child {
+                border-bottom: none;
+                padding-bottom: 0;
+                margin-bottom: 0;
+            }
+            .fault-name {
+                font-weight: 700;
+                color: #991b1b;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            .fault-cost {
+                background: #fff;
+                padding: 0.25rem 0.5rem;
+                border-radius: 6px;
+                font-size: 0.85rem;
+                color: #ef4444;
+                border: 1px solid #fecdd3;
             }
             .faq-section {
                 max-width: 700px;
@@ -348,10 +388,45 @@
             <h2>Understanding ${prefillYear} ${prefillBrand} ${prefillModel} Repair Costs</h2>
             
             <p>
-                The ${prefillYear} ${prefillBrand} ${prefillModel} is known for its reliability, but like any vehicle 
-                with several years of use, repairs become increasingly common. The key question is: when does 
-                repairing become financially unwise?
+                The ${prefillYear} ${prefillBrand} ${prefillModel} is generally a reliable vehicle, but as it ages, specific mechanical patterns emerge. 
+                Instead of guessing, we use data from actual repair databases.
             </p>
+
+            @if(majorFaults != null && !majorFaults.faults().isEmpty())
+                <div class="fault-warning-box">
+                    <h3 style="color: #991b1b; margin-top: 0; font-size: 1.1rem;">⚠️ Known High-Cost Failures for ${prefillModel}</h3>
+                    <p style="font-size: 0.9rem; color: #7f1d1d; margin-bottom: 1rem;">
+                        Our data indicates these specific issues have a high occurrence rate for this model generation:
+                    </p>
+                    
+                    @for(var fault : majorFaults.faults())
+                        <div class="fault-item">
+                            <div class="fault-name">
+                                ${fault.component()}
+                                <span class="fault-cost">Avg: ~$${(int)fault.repairCost()}</span>
+                            </div>
+                            <p style="font-size: 0.9rem; margin: 0.5rem 0 0 0; color: #4b5563;">
+                                <strong>Symptoms:</strong> ${fault.symptoms()}
+                            </p>
+                            @if(fault.avgFailureMileage() > 0)
+                                <p style="font-size: 0.85rem; margin: 0.25rem 0 0 0; color: #64748b;">
+                                    Typically occurs around ${fault.avgFailureMileage()} miles
+                                </p>
+                            @endif
+                        </div>
+                    @endfor
+                </div>
+                
+                <p>
+                    If you are facing one of the repairs listed above (especially <strong>${majorFaults.faults().get(0).component()}</strong>), 
+                    caution is advised. These are often "gateway repairs" that signal the vehicle is reaching the end of its economic life.
+                </p>
+            @else
+                <p>
+                    A ${prefillYear} model is now ${2026 - prefillYear} years old. At this age, common maintenance items 
+                    like timing belts, water pumps, and suspension components may need attention.
+                </p>
+            @endif
             
             <div class="info-box">
                 <div class="info-box-title">📊 The 50% Rule</div>
@@ -361,13 +436,6 @@
                     with other factors specific to your ${prefillModel}.
                 </p>
             </div>
-            
-            <p>
-                A ${prefillYear} model is now ${2026 - prefillYear} years old. At this age, common maintenance items 
-                like timing belts, water pumps, and suspension components may need attention. The decision 
-                to repair or sell depends on your specific mileage, the repair cost, and how long you plan 
-                to keep the vehicle.
-            </p>
             
             <h2>Factors We Consider</h2>
             
@@ -401,10 +469,22 @@
             <div class="faq-item">
                 <div class="faq-question">What are common repairs for the ${prefillBrand} ${prefillModel}?</div>
                 <div class="faq-answer">
-                    Common repairs vary by model year and mileage. For vehicles in the ${prefillYear} range, 
-                    typical issues may include suspension components, brake system wear, and depending on 
-                    mileage, potential transmission or engine-related maintenance. Enter your details above 
-                    for a personalized assessment.
+                    @if(majorFaults != null && !majorFaults.faults().isEmpty())
+                        For the ${prefillYear} ${prefillModel}, owners frequently report issues with the 
+                        <strong>${majorFaults.faults().get(0).component()}</strong> (approx. $${(int)majorFaults.faults().get(0).repairCost()}) 
+                        and 
+                        @if(majorFaults.faults().size() > 1)
+                            <strong>${majorFaults.faults().get(1).component()}</strong>.
+                        @else
+                            suspension components.
+                        @endif
+                        These repairs can be costly relative to the vehicle's value.
+                    @else
+                        Common repairs vary by model year and mileage. For vehicles in the ${prefillYear} range, 
+                        typical issues may include suspension components, brake system wear, and depending on 
+                        mileage, potential transmission or engine-related maintenance. Enter your details above 
+                        for a personalized assessment.
+                    @endif
                 </div>
             </div>
             

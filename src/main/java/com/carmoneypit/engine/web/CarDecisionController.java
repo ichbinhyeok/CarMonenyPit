@@ -1,5 +1,6 @@
 package com.carmoneypit.engine.web;
 
+import com.carmoneypit.engine.service.CarDataService;
 import com.carmoneypit.engine.api.InputModels.CarBrand;
 import com.carmoneypit.engine.api.InputModels.EngineInput;
 import com.carmoneypit.engine.api.InputModels.SimulationControls;
@@ -34,13 +35,14 @@ public class CarDecisionController {
 
         private final DecisionEngine decisionEngine;
         private final VerdictPresenter presenter;
-        private final ValuationService valuationService;
+        private final CarDataService carDataService; // Add dependency
 
         public CarDecisionController(DecisionEngine decisionEngine, VerdictPresenter presenter,
-                        ValuationService valuationService) {
+                        ValuationService valuationService, CarDataService carDataService) {
                 this.decisionEngine = decisionEngine;
                 this.presenter = presenter;
                 this.valuationService = valuationService;
+                this.carDataService = carDataService;
         }
 
         @GetMapping("/")
@@ -63,7 +65,7 @@ public class CarDecisionController {
 
         @GetMapping("/api/models")
         public String getModelsByBrand(@RequestParam("brand") String brand, Model model) {
-                var models = valuationService.getModelsByBrand(brand);
+                var models = carDataService.getModelsByBrand(brand); // Use carDataService directly
                 model.addAttribute("models", models);
                 return "fragments/model_options";
         }
@@ -95,6 +97,22 @@ public class CarDecisionController {
 
                         if (brand == null) {
                                 return "redirect:/";
+                        }
+                        
+                        // Find matching CarModel to get ID
+                        // We iterate to find a model that matches the slug
+                        var carModelOpt = carDataService.getAllModels().stream()
+                            .filter(m -> m.brand().equalsIgnoreCase(brand.name()) && 
+                                         m.model().equalsIgnoreCase(modelSlug))
+                            .findFirst();
+
+                        if (carModelOpt.isPresent()) {
+                            var carModel = carModelOpt.get();
+                            // Fetch specific faults
+                            var faultsOpt = carDataService.findFaultsByModelId(carModel.id());
+                            if (faultsOpt.isPresent()) {
+                                model.addAttribute("majorFaults", faultsOpt.get());
+                            }
                         }
 
                         // SEO Meta - Optimized for CTR
