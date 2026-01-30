@@ -1,5 +1,5 @@
 # Build stage
-FROM bellsoft/liberica-openjdk-alpine:17 AS build
+FROM bellsoft/liberica-openjdk-alpine:21 AS build
 WORKDIR /app
 
 # Copy gradle wrapper and build files
@@ -21,7 +21,7 @@ COPY src src
 RUN ./gradlew bootJar -x test --no-daemon
 
 # Runtime stage
-FROM bellsoft/liberica-openjre-alpine:17
+FROM bellsoft/liberica-openjre-alpine:21
 WORKDIR /app
 
 # Copy the built JAR from the build stage
