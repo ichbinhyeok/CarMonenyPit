@@ -1,6 +1,7 @@
 @import com.carmoneypit.engine.api.InputModels.VehicleType
 @import com.carmoneypit.engine.api.InputModels.CarBrand
 
+@param int year = 2018
 @param VehicleType vehicleType
 @param CarBrand brand
 @param long mileage
@@ -15,7 +16,7 @@
      hx-trigger="load delay:2800ms" 
      hx-target="body" 
      hx-swap="innerHTML show:window:top"
-     hx-vals='{"vehicleType": "${vehicleType}", "brand": "${brand}", "model": "${modelName}", "mileage": ${mileage}, "repairQuoteUsd": ${repairQuoteUsd}, "currentValueUsd": ${currentValueUsd}, "isValueEstimated": ${isValueEstimated}, "isQuoteEstimated": ${isQuoteEstimated}}'>
+     hx-vals='{"vehicleType": "${vehicleType}", "brand": "${brand}", "model": "${modelName}", "year": ${year}, "mileage": ${mileage}, "repairQuoteUsd": ${repairQuoteUsd}, "currentValueUsd": ${currentValueUsd}, "isValueEstimated": ${isValueEstimated}, "isQuoteEstimated": ${isQuoteEstimated}}'>
     
     <div class="scan-visual">
         <div class="pulse-ring"></div>

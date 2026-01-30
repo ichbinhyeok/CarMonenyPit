@@ -286,6 +286,81 @@
                  .verdict-actions { flex-direction: column; }
                  .verdict-actions button { width: 100%; }
             }
+            /* --- Regret Comparison Chart --- */
+            .regret-dashboard { 
+                grid-column: span 12; 
+                display: flex; 
+                flex-direction: column; 
+                gap: 2rem; 
+                padding: 3rem;
+                background: linear-gradient(145deg, #ffffff, #f8fafc);
+                border: 1px solid #e2e8f0;
+            }
+            .dashboard-header { text-align: center; margin-bottom: 1rem; }
+            .dashboard-header h2 { font-size: 1.75rem; font-weight: 800; letter-spacing: -0.03em; color: #0f172a; }
+            .dashboard-header p { color: #64748b; font-size: 1rem; margin-top: 0.5rem; }
+
+            .comparison-grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 3rem;
+                position: relative;
+            }
+            .comparison-grid::after {
+                content: 'VS';
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                background: #fff;
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 0.75rem;
+                font-weight: 900;
+                color: #94a3b8;
+                border: 1px solid #e2e8f0;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+                z-index: 2;
+            }
+
+            .regret-bar-container { display: flex; flex-direction: column; gap: 1rem; }
+            .regret-label { display: flex; justify-content: space-between; font-weight: 800; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; }
+            .label-stay { color: #10b981; }
+            .label-move { color: #6366f1; }
+            
+            .bar-outer { 
+                height: 48px; 
+                background: #f1f5f9; 
+                border-radius: 12px; 
+                overflow: hidden; 
+                position: relative;
+                border: 1px solid rgba(0,0,0,0.05);
+            }
+            .bar-inner { 
+                height: 100%; 
+                transition: width 1s cubic-bezier(0.16, 1, 0.3, 1);
+                display: flex;
+                align-items: center;
+                padding-right: 1rem;
+                justify-content: flex-end;
+                font-weight: 800;
+                color: #fff;
+                font-size: 1.1rem;
+            }
+            .bar-stay { background: linear-gradient(90deg, #10b981, #34d399); }
+            .bar-move { background: linear-gradient(90deg, #6366f1, #818cf8); }
+
+            .regret-description { font-size: 0.85rem; color: #64748b; line-height: 1.5; font-weight: 500; }
+
+            @media (max-width: 768px) {
+                .comparison-grid { grid-template-columns: 1fr; gap: 2rem; }
+                .comparison-grid::after { display: none; }
+                .regret-dashboard { padding: 1.5rem; }
+            }
         </style>
 
         @template.fragments.sticky_bar(result = result, verdictTitle = verdictTitle, verdictExplanation = verdictExplanation, verdictAction = verdictAction, verdictCss = verdictCss, leadLabel = leadLabel, leadDescription = leadDescription, leadUrl = leadUrl, isValueEstimated = isValueEstimated, oob = false)
@@ -320,11 +395,8 @@
                         </button>
                     @endif
                 </div>
+                @endif
             </section>
-
-            <!-- Simulation Parameters -->
-            <section class="bento-card sim-cell">
-                @if(viewMode.equals("RECEIPT"))
                     <!-- Receipt Mode: Static Summary -->
                     <div style="text-align: center; padding: 2rem;">
                         <h3 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 1rem;">Is your car a Money Pit too?</h3>

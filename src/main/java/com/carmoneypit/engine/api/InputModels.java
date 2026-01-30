@@ -5,6 +5,7 @@ public class InputModels {
             String model,
             VehicleType vehicleType,
             CarBrand brand,
+            int year,
             long mileage,
             long repairQuoteUsd,
             long currentValueUsd,

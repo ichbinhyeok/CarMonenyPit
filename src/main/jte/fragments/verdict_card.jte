@@ -116,6 +116,84 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        /* --- Regret Comparison Chart --- */
+        .regret-dashboard { 
+            grid-column: span 12; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 2rem; 
+            padding: 2.5rem;
+            background: linear-gradient(145deg, #ffffff, #f8fafc);
+            border: 1px solid #e2e8f0;
+            border-radius: 32px;
+            margin-bottom: 2rem;
+        }
+        .dashboard-header { text-align: center; margin-bottom: 1rem; }
+        .dashboard-header h2 { font-size: 1.5rem; font-weight: 800; letter-spacing: -0.03em; color: #0f172a; margin: 0; }
+        .dashboard-header p { color: #64748b; font-size: 0.9rem; margin-top: 0.25rem; }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2.5rem;
+            position: relative;
+        }
+        .comparison-grid::after {
+            content: 'VS';
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background: #fff;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 900;
+            color: #94a3b8;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            z-index: 2;
+        }
+
+        .regret-bar-container { display: flex; flex-direction: column; gap: 0.75rem; }
+        .regret-label { display: flex; justify-content: space-between; font-weight: 800; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; }
+        .label-stay { color: #10b981; }
+        .label-move { color: #6366f1; }
+        
+        .bar-outer { 
+            height: 40px; 
+            background: #f1f5f9; 
+            border-radius: 10px; 
+            overflow: hidden; 
+            position: relative;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        .bar-inner { 
+            height: 100%; 
+            transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            align-items: center;
+            padding-right: 1rem;
+            justify-content: flex-end;
+            font-weight: 800;
+            color: #fff;
+            font-size: 1rem;
+        }
+        .bar-stay { background: linear-gradient(90deg, #10b981, #34d399); }
+        .bar-move { background: linear-gradient(90deg, #6366f1, #818cf8); }
+
+        .regret-description { font-size: 0.8rem; color: #64748b; line-height: 1.5; font-weight: 500; margin: 0; }
+
+        @media (max-width: 768px) {
+            .comparison-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+            .comparison-grid::after { display: none; }
+            .regret-dashboard { padding: 1.5rem; }
+        }
     </style>
 
     <!-- Main Verdict Hero -->
@@ -190,6 +268,48 @@
                 <p style="font-size: 0.8rem; margin: 0; color: var(--text-secondary); font-weight: 600;">
                     ${result.confidence()}% signal based on ${result.confidence() >= 85 ? "model-specific metadata." : "brand-level diagnostics."}
                 </p>
+            </div>
+        </div>
+
+        <!-- Regret Comparison Dashboard: Reactive Matrix -->
+        <div class="regret-dashboard">
+            <div class="dashboard-header">
+                <h2>The Decision Matrix</h2>
+                <p>Comparing path-specific actuarial regret values.</p>
+            </div>
+
+            <div class="comparison-grid">
+                <!-- Path: Fix -->
+                <div class="regret-bar-container">
+                    <div class="regret-label label-stay">
+                        <span>REGRET OF FIXING (RF)</span>
+                        <span>$${String.format("%,.0f", result.stayTotal())}</span>
+                    </div>
+                    <div class="bar-outer">
+                        <div class="bar-inner bar-stay" style="width: ${Math.min(100, (result.stayTotal() / Math.max(result.stayTotal(), result.moveTotal())) * 100)}%">
+                            $${String.format("%,.0f", result.stayTotal())}
+                        </div>
+                    </div>
+                    <p class="regret-description">
+                        Repair cost + future breakdown risk + "stress tax".
+                    </p>
+                </div>
+
+                <!-- Path: Move -->
+                <div class="regret-bar-container">
+                    <div class="regret-label label-move">
+                        <span>REGRET OF MOVING (RM)</span>
+                        <span>$${String.format("%,.0f", result.moveTotal())}</span>
+                    </div>
+                    <div class="bar-outer">
+                        <div class="bar-inner bar-move" style="width: ${Math.min(100, (result.moveTotal() / Math.max(result.stayTotal(), result.moveTotal())) * 100)}%">
+                            $${String.format("%,.0f", result.moveTotal())}
+                        </div>
+                    </div>
+                    <p class="regret-description">
+                        Transaction fees + depreciation + liquidation loss.
+                    </p>
+                </div>
             </div>
         </div>
     </div>

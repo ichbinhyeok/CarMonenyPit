@@ -159,12 +159,6 @@ public class VerdictPresenter {
         }
     }
 
-    // Overload for backward compatibility if needed, though we should update
-    // callers
-    public String getLawyerExplanation(VerdictState state) {
-        return getLawyerExplanation(state, null);
-    }
-
     public String getActionPlan(VerdictState state) {
         return switch (state) {
             case TIME_BOMB -> "Review immediate exit strategy to mitigate estimated capital loss.";

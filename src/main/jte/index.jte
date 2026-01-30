@@ -213,6 +213,11 @@
                     </div>
 
                     <div class="input-group">
+                        <label>Vehicle Year</label>
+                        <input type="number" name="year" placeholder="2018" min="1990" max="2026" required>
+                    </div>
+
+                    <div class="input-group">
                         <label>Mileage</label>
                         <input type="number" name="mileage" placeholder="120,000" required>
                     </div>

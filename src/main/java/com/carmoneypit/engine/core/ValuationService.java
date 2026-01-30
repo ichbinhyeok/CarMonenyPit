@@ -24,12 +24,12 @@ public class ValuationService {
     private final com.carmoneypit.engine.service.CarDataService carDataService;
     private Map<CarBrand, CarBrandData> brandDataMap = new HashMap<>();
 
-    // --- Asset Value Benchmarks ---
-    private static final long BASE_SEDAN = 18_000;
-    private static final long BASE_SUV = 24_000;
-    private static final long BASE_TRUCK = 32_000;
-    private static final long BASE_LUXURY = 28_000;
-    private static final long BASE_PERFORMANCE = 35_000;
+    // --- Asset Value Benchmarks (2026 MSRP Proxy) ---
+    private static final long BASE_SEDAN = 32_000;
+    private static final long BASE_SUV = 38_000;
+    private static final long BASE_TRUCK = 55_000;
+    private static final long BASE_LUXURY = 65_000;
+    private static final long BASE_PERFORMANCE = 85_000;
     private static final long SCRAP_VALUE = 500;
 
     // --- Heuristic Factors ---
@@ -37,12 +37,11 @@ public class ValuationService {
     private static final double FACTOR_DEPRECIATION_LEASER = 0.85; // Luxury Cliff
     private static final double FACTOR_WORKHORSE_TRUCK = 1.20; // Truck value retention
 
-    private static final double DECAY_DEFAULT = 0.90;
-    private static final double DECAY_FLAT = 0.94;
-    private static final double DECAY_STEEP = 0.88;
-    private static final double DECAY_CLIFF_LOW = 0.90;
-    private static final double DECAY_CLIFF_HIGH = 0.85;
-    private static final double DECAY_REAL_DATA_SOFTEN = 0.92;
+    // --- Depreciation Curves (Retention Rates) ---
+    private static final double RETENTION_FLAT = 0.94; // Toyota, Lexus fits here
+    private static final double RETENTION_NORMAL = 0.88; // Ford, Chevy
+    private static final double RETENTION_STEEP = 0.85; // Nissan, Hyundai
+    private static final double RETENTION_CLIFF = 0.80; // BMW, Land Rover
 
     private static final double UNCERTAINTY_PENALTY_RATE = 0.60;
     private static final double DEFERRED_MAINTENANCE_RATE = 0.40;
@@ -81,59 +80,65 @@ public class ValuationService {
         }
     }
 
-    public long estimateValue(CarBrand brand, String modelName, VehicleType type, long mileage) {
-        long basePrice;
-        Optional<com.carmoneypit.engine.service.CarDataService.ModelMarket> marketData = (modelName != null)
-                ? getMarketData(modelName)
-                : Optional.empty();
+    public long estimateValue(CarBrand brand, String modelName, VehicleType type, int year, long mileage) {
+        // 1. Determine Base MSRP
+        long msrp = getBasePrice(type);
 
-        boolean usingRealMarketData = false;
-        if (marketData.isPresent()) {
-            basePrice = marketData.get().jan2026AvgPrice();
-            usingRealMarketData = true;
-        } else {
-            basePrice = getBasePrice(type);
-        }
-
+        // Boost MSRP based on Brand Segment
         CarBrandData data = brandDataMap.get(brand);
-        double brandFactor = 1.0;
 
-        if (!usingRealMarketData && data != null) {
-            if ("KEEPER".equals(data.segment))
-                brandFactor = FACTOR_LOYALTY_KEEPER;
-            else if ("LEASER".equals(data.segment))
-                brandFactor = FACTOR_DEPRECIATION_LEASER;
-            else if ("WORKHORSE".equals(data.segment) && type == VehicleType.TRUCK_VAN)
-                brandFactor = FACTOR_WORKHORSE_TRUCK;
-        }
+        // 2. Calculate Age
+        int currentYear = 2026;
+        int age = Math.max(1, currentYear - year); // Min 1 year old
 
-        // 2. Mileage Decay Curve
-        double decayRate = DECAY_DEFAULT;
+        // 3. Determine Retention Rate (Depreciation Curve)
+        double retentionRate = RETENTION_NORMAL;
         if (data != null) {
             switch (data.depreciationCurve) {
-                case "FLAT" -> decayRate = DECAY_FLAT;
-                case "STEEP" -> decayRate = DECAY_STEEP;
-                case "CLIFF" -> decayRate = mileage > 50000 ? DECAY_CLIFF_HIGH : DECAY_CLIFF_LOW;
-                default -> {
-                    if (usingRealMarketData)
-                        decayRate = DECAY_REAL_DATA_SOFTEN;
-                }
+                case "FLAT" -> retentionRate = RETENTION_FLAT;
+                case "STEEP" -> retentionRate = RETENTION_STEEP;
+                case "CLIFF" -> retentionRate = RETENTION_CLIFF;
+                default -> retentionRate = RETENTION_NORMAL;
             }
         }
 
-        double timeUnits = (double) mileage / 12000.0; // Normalized years
-        double estimatedValue = basePrice * brandFactor * Math.pow(decayRate, timeUnits);
+        // 4. Calculate Age-Based Value
+        double baseValue = msrp * Math.pow(retentionRate, age);
 
-        // 3. Repair Debt Deduction (Uncertainty Penalty)
+        // 5. Mileage Adjuster (The "Usage" Factor)
+        // Standard usage: 12,000 miles / year
+        double expectedMileage = age * 12_000.0;
+        double usageRatio = (double) mileage / Math.max(1, expectedMileage);
+
+        // Formula: Adjuster = 1.0 + (1.0 - Ratio) * 0.15
+        // Example: Ratio 0.5 (Half usage) -> 1.0 + 0.5*0.15 = 1.075 (+7.5%)
+        // Example: Ratio 2.0 (Double usage) -> 1.0 - 1.0*0.15 = 0.85 (-15%)
+        double mileageAdjuster = 1.0 + (1.0 - usageRatio) * 0.15;
+
+        // Cap the adjuster to avoid extreme multipliers (Safe Range: 0.5x to 1.25x)
+        mileageAdjuster = Math.max(0.5, Math.min(1.25, mileageAdjuster));
+
+        // 6. Final Calculation with Brand Heuristics
+        double brandFactor = 1.0;
+        if (data != null) {
+            if ("KEEPER".equals(data.segment))
+                brandFactor = 1.10; // Extra loyalty bump
+            if ("CULT".equals(data.segment))
+                brandFactor = 1.15; // Jeep/Subaru hold value insanely well
+        }
+
+        double finalValue = baseValue * mileageAdjuster * brandFactor;
+
+        // 7. Repair Debt (If known major issues based on mileage)
         if (data != null && data.majorIssues != null) {
             for (CarBrandData.MajorIssue issue : data.majorIssues) {
                 if (mileage > issue.mileage) {
-                    estimatedValue -= (issue.cost * UNCERTAINTY_PENALTY_RATE);
+                    finalValue -= (issue.cost * UNCERTAINTY_PENALTY_RATE);
                 }
             }
         }
 
-        return Math.max((long) estimatedValue, SCRAP_VALUE);
+        return Math.max((long) finalValue, SCRAP_VALUE);
     }
 
     public long estimateRepairCost(CarBrand brand, VehicleType type, long mileage) {
@@ -172,7 +177,7 @@ public class ValuationService {
         return Math.max(estimatedCost, 250);
     }
 
-    private long getBasePrice(VehicleType type) {
+    public long getBasePrice(VehicleType type) {
         return switch (type) {
             case SUV -> BASE_SUV;
             case TRUCK_VAN -> BASE_TRUCK;

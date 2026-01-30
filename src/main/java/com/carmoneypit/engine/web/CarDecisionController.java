@@ -46,6 +46,7 @@ public class CarDecisionController {
         public String index(
                         @RequestParam(value = "brand", required = false) String brandParam,
                         @RequestParam(value = "model", required = false) String modelParam,
+                        @RequestParam(value = "year", required = false) Integer yearParam,
                         @RequestParam(value = "repairQuoteUsd", required = false) Long repairQuoteParam,
                         @RequestParam(value = "pSEO", required = false) Boolean fromPSEO,
                         Model model) {
@@ -53,6 +54,7 @@ public class CarDecisionController {
                 if (brandParam != null && fromPSEO != null && fromPSEO) {
                         model.addAttribute("prefillBrand", brandParam);
                         model.addAttribute("prefillModel", modelParam);
+                        model.addAttribute("prefillYear", yearParam);
                         model.addAttribute("prefillQuote", repairQuoteParam);
                 }
                 return "index"; // Renders src/main/jte/index.jte
@@ -81,6 +83,7 @@ public class CarDecisionController {
         public String analyzeLoading(
                         @RequestParam("brand") CarBrand brand,
                         @RequestParam(value = "model", required = false) String carModel,
+                        @RequestParam(value = "year", defaultValue = "2018") int year,
                         @RequestParam(value = "vehicleType", required = false) VehicleType vehicleType,
                         @RequestParam("mileage") long mileage,
                         @RequestParam(value = "repairQuoteUsd", required = false) Long repairQuoteUsd,
@@ -92,7 +95,7 @@ public class CarDecisionController {
 
                 long effectiveValue = (currentValueUsd != null && currentValueUsd > 0)
                                 ? currentValueUsd
-                                : valuationService.estimateValue(brand, carModel, effectiveType, mileage);
+                                : valuationService.estimateValue(brand, carModel, effectiveType, year, mileage);
                 boolean isEstimated = (currentValueUsd == null || currentValueUsd <= 0);
 
                 long effectiveRepairQuote = (repairQuoteUsd != null && repairQuoteUsd > 0)
@@ -101,6 +104,7 @@ public class CarDecisionController {
 
                 model.addAttribute("brand", brand);
                 model.addAttribute("modelName", carModel != null ? carModel : "Other");
+                model.addAttribute("year", year);
                 model.addAttribute("vehicleType", effectiveType);
                 model.addAttribute("mileage", mileage);
                 model.addAttribute("repairQuoteUsd", effectiveRepairQuote);
@@ -140,6 +144,7 @@ public class CarDecisionController {
         public String analyzeFinal(
                         @RequestParam("brand") CarBrand brand,
                         @RequestParam(value = "model", required = false) String carModel,
+                        @RequestParam(value = "year", defaultValue = "2018") int year,
                         @RequestParam(value = "vehicleType", required = false) VehicleType vehicleType,
                         @RequestParam("mileage") long mileage,
                         @RequestParam(value = "repairQuoteUsd", required = false) Long repairQuoteUsd,
@@ -154,7 +159,7 @@ public class CarDecisionController {
 
                 long effectiveValue = (currentValueUsd != null && currentValueUsd > 0)
                                 ? currentValueUsd
-                                : valuationService.estimateValue(brand, carModel, effectiveType, mileage);
+                                : valuationService.estimateValue(brand, carModel, effectiveType, year, mileage);
                 boolean finalIsEstimated = isValueEstimated || (currentValueUsd == null || currentValueUsd <= 0);
 
                 long effectiveRepairQuote = (repairQuoteUsd != null && repairQuoteUsd > 0)
@@ -164,6 +169,7 @@ public class CarDecisionController {
                                 || (repairQuoteUsd == null || repairQuoteUsd <= 0);
 
                 EngineInput input = new EngineInput(carModel != null ? carModel : "Other", effectiveType, brand,
+                                year,
                                 mileage,
                                 effectiveRepairQuote, effectiveValue,
                                 finalIsQuoteEstimated, finalIsEstimated);
@@ -202,6 +208,7 @@ public class CarDecisionController {
         @PostMapping("/simulate")
         public String simulate(
                         @RequestParam(value = "model", required = false) String carModel,
+                        @RequestParam(value = "year", defaultValue = "2018") int year,
                         @RequestParam("vehicleType") VehicleType vehicleType,
                         @RequestParam("brand") com.carmoneypit.engine.api.InputModels.CarBrand brand,
                         @RequestParam("mileage") long mileage,
@@ -213,7 +220,8 @@ public class CarDecisionController {
                         @RequestParam(value = "retentionHorizon", required = false) com.carmoneypit.engine.api.InputModels.RetentionHorizon retentionHorizon,
                         @RequestParam(value = "isValueEstimated", defaultValue = "false") boolean isValueEstimated,
                         Model model) {
-                EngineInput input = new EngineInput(carModel != null ? carModel : "Other", vehicleType, brand, mileage,
+                EngineInput input = new EngineInput(carModel != null ? carModel : "Other", vehicleType, brand, year,
+                                mileage,
                                 repairQuoteUsd, currentValueUsd,
                                 false, isValueEstimated);
                 SimulationControls controls = new SimulationControls(failureSeverity, mobilityStatus, hassleTolerance,

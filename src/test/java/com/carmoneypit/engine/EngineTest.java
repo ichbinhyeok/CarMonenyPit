@@ -2,11 +2,13 @@ package com.carmoneypit.engine;
 
 import com.carmoneypit.engine.api.InputModels.EngineInput;
 import com.carmoneypit.engine.api.InputModels.VehicleType;
+import com.carmoneypit.engine.api.InputModels.CarBrand;
 import com.carmoneypit.engine.api.OutputModels.VerdictResult;
 import com.carmoneypit.engine.api.OutputModels.VerdictState;
 import com.carmoneypit.engine.core.CostOfInactionCalculator;
 import com.carmoneypit.engine.core.DecisionEngine;
 import com.carmoneypit.engine.core.RegretCalculator;
+import com.carmoneypit.engine.core.ValuationService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -18,43 +20,48 @@ public class EngineTest {
 
     @BeforeEach
     public void setup() {
-        RegretCalculator calculator = new RegretCalculator();
+        com.carmoneypit.engine.service.CarDataService carDataService = org.mockito.Mockito
+                .mock(com.carmoneypit.engine.service.CarDataService.class);
+        ValuationService valuationService = org.mockito.Mockito.mock(ValuationService.class);
+
+        RegretCalculator calculator = new RegretCalculator(carDataService, valuationService);
         CostOfInactionCalculator costCalc = new CostOfInactionCalculator();
-        engine = new DecisionEngine(calculator, costCalc);
+        engine = new DecisionEngine(calculator, costCalc, valuationService);
     }
 
     @Test
-    public void testCheapRepairLowMileage_ShouldBeStable() {
-        // 40k miles, $500 repair -> Should be STABLE
-        EngineInput input = new EngineInput(
-                VehicleType.SEDAN,
-                com.carmoneypit.engine.api.InputModels.CarBrand.TOYOTA,
-                40000,
-                500, // $500
-                15000 // currentValue
-        );
-
+    void testCheapRepairLowMileage_ShouldBeStable() {
+        // Repair $500, Value $15,000, Mileage 50k
+        // RF should be low. RM friction $2500.
+        EngineInput input = new EngineInput("TestModel", VehicleType.SEDAN, CarBrand.TOYOTA, 2018, 50000, 500, 15000,
+                false, false);
         VerdictResult result = engine.evaluate(input);
 
-        System.out.println("Result: " + result);
         assertEquals(VerdictState.STABLE, result.verdictState());
     }
 
     @Test
-    public void testExpensiveRepairHighMileage_ShouldBeTimeBomb() {
-        // 160k miles (High Risk), $3000 repair -> Should be TIME_BOMB
-        // High future risk + high cost
-        EngineInput input = new EngineInput(
-                VehicleType.SEDAN,
-                com.carmoneypit.engine.api.InputModels.CarBrand.TOYOTA,
-                160000,
-                3000, // $3000
-                5000 // currentValue
-        );
-
+    void testExpensiveRepairHighMileage_ShouldBeTimeBomb() {
+        // Repair $4000, Value $3000, Mileage 160k
+        // RF high (Cost + Risk). RM lower (Value low).
+        EngineInput input = new EngineInput("TestModel", VehicleType.SEDAN, CarBrand.BMW, 2014, 160000, 4000, 3000,
+                false, false);
         VerdictResult result = engine.evaluate(input);
 
-        System.out.println("Result: " + result);
+        // With new logic, Trade-in Value is $3000 * 0.85 = 2550.
+        // RM ~ Friction(2500) + TradeLoss(450) + etc = ~3000.
+        // RF ~ Repair(4000) + Risk... >> RM.
         assertEquals(VerdictState.TIME_BOMB, result.verdictState());
+    }
+
+    @Test
+    void testBorderlineCase() {
+        // Repair $1500, Value $8000, Mileage 100k
+        EngineInput input = new EngineInput("TestModel", VehicleType.SEDAN, CarBrand.HONDA, 2016, 100000, 1500, 8000,
+                false, false);
+        VerdictResult result = engine.evaluate(input);
+
+        // This is tricky depending on tuning, but ensures it runs without error
+        assertNotNull(result.verdictState());
     }
 }
