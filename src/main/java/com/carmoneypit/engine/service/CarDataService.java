@@ -115,7 +115,7 @@ public class CarDataService {
         return input == null ? "" : input.toLowerCase().replaceAll("[^a-z0-9]", "");
     }
 
-    // --- Data Records ---
+    // --- Data Records (Updated) ---
 
     public record CarModel(
             String id,
@@ -133,7 +133,14 @@ public class CarDataService {
             @com.fasterxml.jackson.annotation.JsonProperty("best_years") List<Integer> bestYears,
             @com.fasterxml.jackson.annotation.JsonProperty("worst_years") List<Integer> worstYears,
             @com.fasterxml.jackson.annotation.JsonProperty("common_trouble_spots") List<String> commonTroubleSpots,
-            @com.fasterxml.jackson.annotation.JsonProperty("critical_milestones") List<Milestone> criticalMilestones) {
+            @com.fasterxml.jackson.annotation.JsonProperty("critical_milestones") List<Milestone> criticalMilestones,
+            @com.fasterxml.jackson.annotation.JsonProperty("mileage_logic_text") Map<String, String> mileageLogicText) {
+            
+            // Constructor for Jackson (handles missing field)
+            public ModelReliability(String modelId, int score, int lifespanMiles, List<Integer> bestYears, 
+                                  List<Integer> worstYears, List<String> commonTroubleSpots, List<Milestone> criticalMilestones) {
+                this(modelId, score, lifespanMiles, bestYears, worstYears, commonTroubleSpots, criticalMilestones, null);
+            }
     }
 
     public record Milestone(
@@ -147,7 +154,12 @@ public class CarDataService {
             @com.fasterxml.jackson.annotation.JsonProperty("jan_2026_avg_price") int jan2026AvgPrice,
             @com.fasterxml.jackson.annotation.JsonProperty("depreciation_rate") double depreciationRate,
             @com.fasterxml.jackson.annotation.JsonProperty("avg_annual_repair_cost") int avgAnnualRepairCost,
-            @com.fasterxml.jackson.annotation.JsonProperty("depreciation_outlook") String depreciationOutlook) {
+            @com.fasterxml.jackson.annotation.JsonProperty("depreciation_outlook") String depreciationOutlook,
+            @com.fasterxml.jackson.annotation.JsonProperty("common_junk_value") Integer commonJunkValue) {
+
+            public ModelMarket(String modelId, int jan2026AvgPrice, double depreciationRate, int avgAnnualRepairCost, String depreciationOutlook) {
+                this(modelId, jan2026AvgPrice, depreciationRate, avgAnnualRepairCost, depreciationOutlook, 500); // Default $500 junk value
+            }
     }
 
     public record MajorFaults(
@@ -159,6 +171,12 @@ public class CarDataService {
             String component,
             String symptoms,
             @com.fasterxml.jackson.annotation.JsonProperty("repairCost") double repairCost,
-            @com.fasterxml.jackson.annotation.JsonProperty("verdictImplication") String verdictImplication) {
+            @com.fasterxml.jackson.annotation.JsonProperty("verdictImplication") String verdictImplication,
+            @com.fasterxml.jackson.annotation.JsonProperty("occurrence_rate") double occurrenceRate,
+            @com.fasterxml.jackson.annotation.JsonProperty("avg_failure_mileage") int avgFailureMileage) {
+
+            public Fault(String component, String symptoms, double repairCost, String verdictImplication) {
+                this(component, symptoms, repairCost, verdictImplication, 0.0, 0);
+            }
     }
 }

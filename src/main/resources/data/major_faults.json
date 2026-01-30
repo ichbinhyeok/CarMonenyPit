@@ -6,13 +6,17 @@
                            "component":  "Cam Phasers",
                            "symptoms":  "Rattling noise on cold start, check engine light",
                            "repairCost":  3500,
-                           "verdictImplication":  "Critical: Verify if TSB 21-2119 has been performed. If not, deduct $3,500 from valuation."
+                           "verdictImplication":  "Critical: Verify if TSB 21-2119 has been performed. If not, deduct $3,500 from valuation.",
+                           "occurrence_rate":  0.35,
+                           "avg_failure_mileage":  73045
                        },
                        {
                            "component":  "10-Speed Transmission",
                            "symptoms":  "Harsh shifting, skipping gears",
                            "repairCost":  4500,
-                           "verdictImplication":  "Moderate: Software updates may fix it, but hardware failure requires rebuild."
+                           "verdictImplication":  "Moderate: Software updates may fix it, but hardware failure requires rebuild.",
+                           "occurrence_rate":  0.2,
+                           "avg_failure_mileage":  159124
                        }
                    ]
     },
@@ -23,13 +27,17 @@
                            "component":  "Torque Converter",
                            "symptoms":  "Shuddering at highway speeds (The \u0027Chevy Shake\u0027)",
                            "repairCost":  1800,
-                           "verdictImplication":  "High Risk: If unchecked, destroys entire transmission ($5k)."
+                           "verdictImplication":  "High Risk: If unchecked, destroys entire transmission ($5k).",
+                           "occurrence_rate":  0.25,
+                           "avg_failure_mileage":  83454
                        },
                        {
                            "component":  "AFM Lifters",
                            "symptoms":  "Ticking noise, misfire, bent pushrods",
                            "repairCost":  3000,
-                           "verdictImplication":  "Severe: Requires head removal. Avoid high mileage units without proof of repair."
+                           "verdictImplication":  "Severe: Requires head removal. Avoid high mileage units without proof of repair.",
+                           "occurrence_rate":  0.2,
+                           "avg_failure_mileage":  60336
                        }
                    ]
     },
@@ -40,13 +48,17 @@
                            "component":  "Air Suspension",
                            "symptoms":  "Sagging rear end, compressor running constantly",
                            "repairCost":  2200,
-                           "verdictImplication":  "Common: Plan for conversion to coil springs ($1,500) eventually."
+                           "verdictImplication":  "Common: Plan for conversion to coil springs ($1,500) eventually.",
+                           "occurrence_rate":  0.5,
+                           "avg_failure_mileage":  93379
                        },
                        {
                            "component":  "Exhaust Manifold Bolts",
                            "symptoms":  "Ticking noise on cold start (The \u0027Hemi Tick\u0027)",
                            "repairCost":  900,
-                           "verdictImplication":  "Annoyance: Often broken bolts. Inspect carefully before buying."
+                           "verdictImplication":  "Annoyance: Often broken bolts. Inspect carefully before buying.",
+                           "occurrence_rate":  0.1,
+                           "avg_failure_mileage":  96153
                        }
                    ]
     },
@@ -57,7 +69,9 @@
                            "component":  "Torque Converter",
                            "symptoms":  "Shudder between 25-50 mph, check engine light",
                            "repairCost":  2500,
-                           "verdictImplication":  "Moderate: Software update might fix early stages, otherwise requires replacement."
+                           "verdictImplication":  "Moderate: Software update might fix early stages, otherwise requires replacement.",
+                           "occurrence_rate":  0.25,
+                           "avg_failure_mileage":  75405
                        }
                    ]
     },
@@ -68,13 +82,17 @@
                            "component":  "Starter Motor",
                            "symptoms":  "Grinding noise on startup, failure to start",
                            "repairCost":  600,
-                           "verdictImplication":  "Minor: Common wear item but expensive on this model."
+                           "verdictImplication":  "Minor: Common wear item but expensive on this model.",
+                           "occurrence_rate":  0.6,
+                           "avg_failure_mileage":  91630
                        },
                        {
                            "component":  "Oil Consumption",
                            "symptoms":  "Low oil light, fouled spark plugs (V6 Only)",
                            "repairCost":  2500,
-                           "verdictImplication":  "Moderate: VCM muzzler device can prevent this if caught early."
+                           "verdictImplication":  "Moderate: VCM muzzler device can prevent this if caught early.",
+                           "occurrence_rate":  0.3,
+                           "avg_failure_mileage":  66611
                        }
                    ]
     },
@@ -85,7 +103,9 @@
                            "component":  "CVT Transmission",
                            "symptoms":  "Loss of power, whining noise, failure to accelerate",
                            "repairCost":  4200,
-                           "verdictImplication":  "Critical: Avoid 2013-2015 models entirely. Transmission is a ticking time bomb."
+                           "verdictImplication":  "Critical: Avoid 2013-2015 models entirely. Transmission is a ticking time bomb.",
+                           "occurrence_rate":  0.45,
+                           "avg_failure_mileage":  137030
                        }
                    ]
     },
@@ -96,7 +116,9 @@
                            "component":  "CVT Transmission",
                            "symptoms":  "Juttering, stalling, overheating",
                            "repairCost":  4500,
-                           "verdictImplication":  "High Risk: Ensure fluid changes were done every 30k miles. Otherwise walk away."
+                           "verdictImplication":  "High Risk: Ensure fluid changes were done every 30k miles. Otherwise walk away.",
+                           "occurrence_rate":  0.45,
+                           "avg_failure_mileage":  147610
                        }
                    ]
     },
@@ -107,13 +129,17 @@
                            "component":  "A/C Condenser",
                            "symptoms":  "Air conditioning blowing warm air",
                            "repairCost":  800,
-                           "verdictImplication":  "Moderate: Extended warranty exists (10 years), verify VIN eligibility."
+                           "verdictImplication":  "Moderate: Extended warranty exists (10 years), verify VIN eligibility.",
+                           "occurrence_rate":  0.1,
+                           "avg_failure_mileage":  77807
                        },
                        {
                            "component":  "Oil Dilution",
                            "symptoms":  "Gas smell in oil, rising oil level (1.5T engine)",
                            "repairCost":  0,
-                           "verdictImplication":  "Check: Verify software update 18-137 has been applied."
+                           "verdictImplication":  "Check: Verify software update 18-137 has been applied.",
+                           "occurrence_rate":  0.1,
+                           "avg_failure_mileage":  65042
                        }
                    ]
     },
@@ -124,7 +150,9 @@
                            "component":  "CVT Whine",
                            "symptoms":  "High pitched whine from transmission",
                            "repairCost":  4000,
-                           "verdictImplication":  "Low Risk: Rare, but verify no abnormal noises during test drive."
+                           "verdictImplication":  "Low Risk: Rare, but verify no abnormal noises during test drive.",
+                           "occurrence_rate":  0.1,
+                           "avg_failure_mileage":  115179
                        }
                    ]
     },
@@ -135,13 +163,17 @@
                            "component":  "VTC Actuator",
                            "symptoms":  "Brief rattle/grind on cold start",
                            "repairCost":  800,
-                           "verdictImplication":  "Annoyance: Mostly noise, but can stretch chain over long term."
+                           "verdictImplication":  "Annoyance: Mostly noise, but can stretch chain over long term.",
+                           "occurrence_rate":  0.1,
+                           "avg_failure_mileage":  81994
                        },
                        {
                            "component":  "Vibration",
                            "symptoms":  "Severe vibration at idle",
                            "repairCost":  300,
-                           "verdictImplication":  "Minor: Technical Service Bulletin fixes exist but may not fully resolve."
+                           "verdictImplication":  "Minor: Technical Service Bulletin fixes exist but may not fully resolve.",
+                           "occurrence_rate":  0.1,
+                           "avg_failure_mileage":  61548
                        }
                    ]
     },
@@ -152,7 +184,9 @@
                            "component":  "Torque Converter",
                            "symptoms":  "Shudder at 20-50mph",
                            "repairCost":  2200,
-                           "verdictImplication":  "Moderate: Check for software update first."
+                           "verdictImplication":  "Moderate: Check for software update first.",
+                           "occurrence_rate":  0.25,
+                           "avg_failure_mileage":  67524
                        }
                    ]
     },
@@ -163,13 +197,17 @@
                            "component":  "Transmission Shift Flare",
                            "symptoms":  "Delayed engagement, high RPM before shifting",
                            "repairCost":  1500,
-                           "verdictImplication":  "Moderate: Often software related, but check for latest TSBs."
+                           "verdictImplication":  "Moderate: Often software related, but check for latest TSBs.",
+                           "occurrence_rate":  0.1,
+                           "avg_failure_mileage":  134164
                        },
                        {
                            "component":  "Frame Rust",
                            "symptoms":  "Perforation on frame rails",
                            "repairCost":  15000,
-                           "verdictImplication":  "Critical: Inspect frame coating thoroughly before purchase."
+                           "verdictImplication":  "Critical: Inspect frame coating thoroughly before purchase.",
+                           "occurrence_rate":  0.1,
+                           "avg_failure_mileage":  110179
                        }
                    ]
     },
@@ -180,7 +218,9 @@
                            "component":  "Water Pump",
                            "symptoms":  "Coolant leak, overheating",
                            "repairCost":  800,
-                           "verdictImplication":  "Moderate: Inspect for pink crust around pulley."
+                           "verdictImplication":  "Moderate: Inspect for pink crust around pulley.",
+                           "occurrence_rate":  0.25,
+                           "avg_failure_mileage":  96648
                        }
                    ]
     },
@@ -191,13 +231,17 @@
                            "component":  "Death Wobble",
                            "symptoms":  "Violent steering wheel shaking after hitting bump",
                            "repairCost":  800,
-                           "verdictImplication":  "Common: Usually track bar or ball joints. Negotiate repair cost."
+                           "verdictImplication":  "Common: Usually track bar or ball joints. Negotiate repair cost.",
+                           "occurrence_rate":  0.4,
+                           "avg_failure_mileage":  54440
                        },
                        {
                            "component":  "TIPM Failure",
                            "symptoms":  "Electrical ghosts, fuel pump relay failure",
                            "repairCost":  1200,
-                           "verdictImplication":  "Moderate: Can cause stalling."
+                           "verdictImplication":  "Moderate: Can cause stalling.",
+                           "occurrence_rate":  0.35,
+                           "avg_failure_mileage":  99702
                        }
                    ]
     },
@@ -208,7 +252,9 @@
                            "component":  "Air Suspension",
                            "symptoms":  "Vehicle sagging, error messages",
                            "repairCost":  2500,
-                           "verdictImplication":  "High Risk: Avoid air suspension on used models if possible."
+                           "verdictImplication":  "High Risk: Avoid air suspension on used models if possible.",
+                           "occurrence_rate":  0.5,
+                           "avg_failure_mileage":  66171
                        }
                    ]
     },
@@ -219,13 +265,17 @@
                            "component":  "Coolant Intrusion",
                            "symptoms":  "White smoke, misfire, coolant loss (1.5L/1.6L)",
                            "repairCost":  5500,
-                           "verdictImplication":  "Critical: Requires engine replacement. Avoid 1.5L/1.6L engines."
+                           "verdictImplication":  "Critical: Requires engine replacement. Avoid 1.5L/1.6L engines.",
+                           "occurrence_rate":  0.15,
+                           "avg_failure_mileage":  114520
                        },
                        {
                            "component":  "Transmission Failure",
                            "symptoms":  "Slipping, hard shifts",
                            "repairCost":  3500,
-                           "verdictImplication":  "Severe: 6F35 transmission is weak point."
+                           "verdictImplication":  "Severe: 6F35 transmission is weak point.",
+                           "occurrence_rate":  0.1,
+                           "avg_failure_mileage":  136530
                        }
                    ]
     },
@@ -236,13 +286,17 @@
                            "component":  "Water Pump",
                            "symptoms":  "Coolant in oil (Chocolate milk oil)",
                            "repairCost":  2000,
-                           "verdictImplication":  "Severe: Internal water pump failure destroys engine."
+                           "verdictImplication":  "Severe: Internal water pump failure destroys engine.",
+                           "occurrence_rate":  0.25,
+                           "avg_failure_mileage":  79862
                        },
                        {
                            "component":  "PTU Failure",
                            "symptoms":  "Propane smell, leaks, grinding",
                            "repairCost":  1500,
-                           "verdictImplication":  "Common: Power Transfer Unit needs frequent fluid changes."
+                           "verdictImplication":  "Common: Power Transfer Unit needs frequent fluid changes.",
+                           "occurrence_rate":  0.1,
+                           "avg_failure_mileage":  104261
                        }
                    ]
     },
@@ -253,7 +307,9 @@
                            "component":  "Oil Consumption",
                            "symptoms":  "Low oil light, engine noise (early models)",
                            "repairCost":  3000,
-                           "verdictImplication":  "Severe: Can lead to timing chain failure."
+                           "verdictImplication":  "Severe: Can lead to timing chain failure.",
+                           "occurrence_rate":  0.3,
+                           "avg_failure_mileage":  98019
                        }
                    ]
     },
@@ -264,13 +320,17 @@
                            "component":  "A/C Condenser",
                            "symptoms":  "No A/C, leaking refrigerant",
                            "repairCost":  1000,
-                           "verdictImplication":  "Common: Poor weld quality on factory condensers."
+                           "verdictImplication":  "Common: Poor weld quality on factory condensers.",
+                           "occurrence_rate":  0.1,
+                           "avg_failure_mileage":  62932
                        },
                        {
                            "component":  "Transmission Shudder",
                            "symptoms":  "Vibration at cruise speeds",
                            "repairCost":  800,
-                           "verdictImplication":  "Moderate: Fluid flush with specific additive often fixes it."
+                           "verdictImplication":  "Moderate: Fluid flush with specific additive often fixes it.",
+                           "occurrence_rate":  0.1,
+                           "avg_failure_mileage":  155548
                        }
                    ]
     },
@@ -281,7 +341,9 @@
                            "component":  "Door Lock Actuators",
                            "symptoms":  "Doors won\u0027t lock/unlock electronically",
                            "repairCost":  1200,
-                           "verdictImplication":  "Annoyance: Expensive if all fail."
+                           "verdictImplication":  "Annoyance: Expensive if all fail.",
+                           "occurrence_rate":  0.1,
+                           "avg_failure_mileage":  86096
                        }
                    ]
     },
@@ -292,7 +354,9 @@
                            "component":  "Torque Converter",
                            "symptoms":  "Shudder or vibration at low speeds",
                            "repairCost":  2500,
-                           "verdictImplication":  "Moderate: Software update or fluid change may help."
+                           "verdictImplication":  "Moderate: Software update or fluid change may help.",
+                           "occurrence_rate":  0.25,
+                           "avg_failure_mileage":  83602
                        }
                    ]
     },
@@ -303,7 +367,9 @@
                            "component":  "Daytime Running Lights",
                            "symptoms":  "Flickering or failure",
                            "repairCost":  1200,
-                           "verdictImplication":  "Minor: Recall issued for some years."
+                           "verdictImplication":  "Minor: Recall issued for some years.",
+                           "occurrence_rate":  0.1,
+                           "avg_failure_mileage":  57287
                        }
                    ]
     },
@@ -314,7 +380,9 @@
                            "component":  "CVT Shudder",
                            "symptoms":  "Jerking or hesitation when accelerating",
                            "repairCost":  6000,
-                           "verdictImplication":  "Critical: Extended warranty to 100k miles. Verify coverage."
+                           "verdictImplication":  "Critical: Extended warranty to 100k miles. Verify coverage.",
+                           "occurrence_rate":  0.1,
+                           "avg_failure_mileage":  53093
                        }
                    ]
     },
@@ -325,7 +393,9 @@
                            "component":  "Oil Consumption",
                            "symptoms":  "Low oil light, engine noise",
                            "repairCost":  3000,
-                           "verdictImplication":  "Moderate: Short block replacement often needed."
+                           "verdictImplication":  "Moderate: Short block replacement often needed.",
+                           "occurrence_rate":  0.3,
+                           "avg_failure_mileage":  85380
                        }
                    ]
     },
@@ -336,7 +406,9 @@
                            "component":  "Piston Slap",
                            "symptoms":  "Ticking/knocking noise from engine",
                            "repairCost":  4500,
-                           "verdictImplication":  "Severe: Precursor to engine failure (Nu 2.0L)."
+                           "verdictImplication":  "Severe: Precursor to engine failure (Nu 2.0L).",
+                           "occurrence_rate":  0.1,
+                           "avg_failure_mileage":  65566
                        }
                    ]
     },
@@ -347,7 +419,9 @@
                            "component":  "DCT Hesitation",
                            "symptoms":  "Delay when accelerating from stop (1.6T)",
                            "repairCost":  1500,
-                           "verdictImplication":  "Common: Characteristic of the DCT, software updates help."
+                           "verdictImplication":  "Common: Characteristic of the DCT, software updates help.",
+                           "occurrence_rate":  0.1,
+                           "avg_failure_mileage":  51201
                        }
                    ]
     },
@@ -358,7 +432,9 @@
                            "component":  "Engine Failure",
                            "symptoms":  "Knocking, seizing (Theta II)",
                            "repairCost":  5500,
-                           "verdictImplication":  "Critical: Verify if engine has been replaced under recall."
+                           "verdictImplication":  "Critical: Verify if engine has been replaced under recall.",
+                           "occurrence_rate":  0.1,
+                           "avg_failure_mileage":  160129
                        }
                    ]
     },
@@ -369,7 +445,9 @@
                            "component":  "Engine Knock",
                            "symptoms":  "Rod knock, metallic noise",
                            "repairCost":  5000,
-                           "verdictImplication":  "Critical: Oil starvation issue. Check for recall completion."
+                           "verdictImplication":  "Critical: Oil starvation issue. Check for recall completion.",
+                           "occurrence_rate":  0.1,
+                           "avg_failure_mileage":  177478
                        }
                    ]
     },
@@ -380,7 +458,9 @@
                            "component":  "Head Gasket Failure",
                            "symptoms":  "Overheating, coolant loss",
                            "repairCost":  2500,
-                           "verdictImplication":  "Severe: 3.3L V6 head bolts can strip."
+                           "verdictImplication":  "Severe: 3.3L V6 head bolts can strip.",
+                           "occurrence_rate":  0.1,
+                           "avg_failure_mileage":  120488
                        }
                    ]
     },
@@ -391,7 +471,9 @@
                            "component":  "Ghost Touch",
                            "symptoms":  "Infotainment selects items unexpectedly",
                            "repairCost":  400,
-                           "verdictImplication":  "Annoyance: Screen replacement usually required."
+                           "verdictImplication":  "Annoyance: Screen replacement usually required.",
+                           "occurrence_rate":  0.1,
+                           "avg_failure_mileage":  84868
                        }
                    ]
     },
@@ -402,7 +484,9 @@
                            "component":  "Ignition Coil",
                            "symptoms":  "Misfire, rough idle",
                            "repairCost":  300,
-                           "verdictImplication":  "Minor: Common maintenance item."
+                           "verdictImplication":  "Minor: Common maintenance item.",
+                           "occurrence_rate":  0.1,
+                           "avg_failure_mileage":  107400
                        }
                    ]
     },
@@ -413,7 +497,9 @@
                            "component":  "Timing Chain Tensioner",
                            "symptoms":  "Rattle at startup, jump timing",
                            "repairCost":  1800,
-                           "verdictImplication":  "Critical: Engine interference design. Failure destroys engine."
+                           "verdictImplication":  "Critical: Engine interference design. Failure destroys engine.",
+                           "occurrence_rate":  0.3,
+                           "avg_failure_mileage":  57656
                        }
                    ]
     },
@@ -424,7 +510,9 @@
                            "component":  "CVT Failure",
                            "symptoms":  "RPM fluctuations, failure to move",
                            "repairCost":  3800,
-                           "verdictImplication":  "Critical: High failure rate. Avoid used units without warranty."
+                           "verdictImplication":  "Critical: High failure rate. Avoid used units without warranty.",
+                           "occurrence_rate":  0.1,
+                           "avg_failure_mileage":  79951
                        }
                    ]
     },
@@ -435,7 +523,9 @@
                            "component":  "CVT Judder",
                            "symptoms":  "Shuddering during acceleration",
                            "repairCost":  4200,
-                           "verdictImplication":  "Severe: Known 2013-2014 issue (\u0027Judder Code P17F0\u0027)."
+                           "verdictImplication":  "Severe: Known 2013-2014 issue (\u0027Judder Code P17F0\u0027).",
+                           "occurrence_rate":  0.1,
+                           "avg_failure_mileage":  112891
                        }
                    ]
     },
@@ -446,7 +536,9 @@
                            "component":  "Shift to Park",
                            "symptoms":  "Error message when car is in park",
                            "repairCost":  400,
-                           "verdictImplication":  "Minor: Switch in shifter assembly fails."
+                           "verdictImplication":  "Minor: Switch in shifter assembly fails.",
+                           "occurrence_rate":  0.1,
+                           "avg_failure_mileage":  50035
                        }
                    ]
     },
@@ -457,7 +549,9 @@
                            "component":  "Flexplate Crack",
                            "symptoms":  "Rattle from engine/transmission mating area",
                            "repairCost":  1200,
-                           "verdictImplication":  "Moderate: Requires transmission removal to replace."
+                           "verdictImplication":  "Moderate: Requires transmission removal to replace.",
+                           "occurrence_rate":  0.1,
+                           "avg_failure_mileage":  86827
                        }
                    ]
     },
@@ -468,7 +562,9 @@
                            "component":  "9-Speed Transmission",
                            "symptoms":  "Rough shifting, delayed engagement",
                            "repairCost":  3000,
-                           "verdictImplication":  "High Risk: Early models (2014-2015) particularly bad."
+                           "verdictImplication":  "High Risk: Early models (2014-2015) particularly bad.",
+                           "occurrence_rate":  0.1,
+                           "avg_failure_mileage":  124187
                        }
                    ]
     },
@@ -479,7 +575,9 @@
                            "component":  "Door Panels",
                            "symptoms":  "Interior panels warping in heat",
                            "repairCost":  800,
-                           "verdictImplication":  "Cosmetic: Glue failure."
+                           "verdictImplication":  "Cosmetic: Glue failure.",
+                           "occurrence_rate":  0.1,
+                           "avg_failure_mileage":  65922
                        }
                    ]
     },
@@ -490,7 +588,9 @@
                            "component":  "Race Track Light",
                            "symptoms":  "Water accumulation in tail light",
                            "repairCost":  1000,
-                           "verdictImplication":  "Cosmetic: Expensive assembly to replace."
+                           "verdictImplication":  "Cosmetic: Expensive assembly to replace.",
+                           "occurrence_rate":  0.1,
+                           "avg_failure_mileage":  63202
                        }
                    ]
     },
@@ -501,7 +601,9 @@
                            "component":  "Wheel Bearings",
                            "symptoms":  "Humming noise increases with speed",
                            "repairCost":  400,
-                           "verdictImplication":  "Minor: Rear bearings fail prematurely."
+                           "verdictImplication":  "Minor: Rear bearings fail prematurely.",
+                           "occurrence_rate":  0.1,
+                           "avg_failure_mileage":  100244
                        }
                    ]
     },
@@ -512,7 +614,9 @@
                            "component":  "Control Arms",
                            "symptoms":  "Squeaking/creaking suspension",
                            "repairCost":  600,
-                           "verdictImplication":  "Common: Upper control arm ball joints dry out."
+                           "verdictImplication":  "Common: Upper control arm ball joints dry out.",
+                           "occurrence_rate":  0.1,
+                           "avg_failure_mileage":  96620
                        }
                    ]
     },
@@ -523,7 +627,9 @@
                            "component":  "Heat Pump",
                            "symptoms":  "No heat in winter",
                            "repairCost":  1200,
-                           "verdictImplication":  "Moderate: 2020-2021 models had sensor failures."
+                           "verdictImplication":  "Moderate: 2020-2021 models had sensor failures.",
+                           "occurrence_rate":  0.1,
+                           "avg_failure_mileage":  80860
                        }
                    ]
     },
@@ -534,7 +640,9 @@
                            "component":  "Fuel Pump",
                            "symptoms":  "Stalling, failure to restart",
                            "repairCost":  0,
-                           "verdictImplication":  "Recall: Denso fuel pump recall. Verify completion."
+                           "verdictImplication":  "Recall: Denso fuel pump recall. Verify completion.",
+                           "occurrence_rate":  0.1,
+                           "avg_failure_mileage":  86036
                        }
                    ]
     },
@@ -545,7 +653,9 @@
                            "component":  "Timing Chain",
                            "symptoms":  "Whining noise (N20 engine)",
                            "repairCost":  2500,
-                           "verdictImplication":  "Critical: Plastic guides break. 2012-2015 models most at risk."
+                           "verdictImplication":  "Critical: Plastic guides break. 2012-2015 models most at risk.",
+                           "occurrence_rate":  0.3,
+                           "avg_failure_mileage":  114265
                        }
                    ]
     },
@@ -556,7 +666,9 @@
                            "component":  "Piston Cracking",
                            "symptoms":  "Misfire, loss of compression (C300)",
                            "repairCost":  8000,
-                           "verdictImplication":  "Critical: Wrist pin alignment issue on early W205s."
+                           "verdictImplication":  "Critical: Wrist pin alignment issue on early W205s.",
+                           "occurrence_rate":  0.1,
+                           "avg_failure_mileage":  61675
                        }
                    ]
     },
@@ -567,7 +679,9 @@
                            "component":  "Water Pump",
                            "symptoms":  "Coolant leak",
                            "repairCost":  1200,
-                           "verdictImplication":  "Common: Thermo-management module leaks."
+                           "verdictImplication":  "Common: Thermo-management module leaks.",
+                           "occurrence_rate":  0.25,
+                           "avg_failure_mileage":  84734
                        }
                    ]
     },
@@ -578,7 +692,9 @@
                            "component":  "CUE Screen",
                            "symptoms":  "Touch screen spiderwebbing or unresponsive",
                            "repairCost":  1500,
-                           "verdictImplication":  "Common: Delamination of touch layer."
+                           "verdictImplication":  "Common: Delamination of touch layer.",
+                           "occurrence_rate":  0.1,
+                           "avg_failure_mileage":  77301
                        }
                    ]
     },
@@ -589,7 +705,9 @@
                            "component":  "Cam Phasers",
                            "symptoms":  "Rattling on startup (3.5L EcoBoost)",
                            "repairCost":  3500,
-                           "verdictImplication":  "Severe: Same issue as F-150."
+                           "verdictImplication":  "Severe: Same issue as F-150.",
+                           "occurrence_rate":  0.35,
+                           "avg_failure_mileage":  64021
                        }
                    ]
     },
@@ -600,7 +718,9 @@
                            "component":  "Rod Bearing",
                            "symptoms":  "Engine knocking (V6)",
                            "repairCost":  6000,
-                           "verdictImplication":  "Critical: Recall exists, verify engine health."
+                           "verdictImplication":  "Critical: Recall exists, verify engine health.",
+                           "occurrence_rate":  0.1,
+                           "avg_failure_mileage":  78285
                        }
                    ]
     },
@@ -611,7 +731,9 @@
                            "component":  "A/C Evaporator",
                            "symptoms":  "Freon leak, dashboard removal needed",
                            "repairCost":  1800,
-                           "verdictImplication":  "Moderate: Labor intensive repair."
+                           "verdictImplication":  "Moderate: Labor intensive repair.",
+                           "occurrence_rate":  0.1,
+                           "avg_failure_mileage":  83122
                        }
                    ]
     },
@@ -622,13 +744,17 @@
                            "component":  "CP4 Fuel Pump Failure",
                            "symptoms":  "Truck dies instantly, \u0027Low Fuel Pressure\u0027, no restart",
                            "repairCost":  9500,
-                           "verdictImplication":  "CATASTROPHIC: Pump sends metal shavings into all injectors and lines. Total fuel system replacement required."
+                           "verdictImplication":  "CATASTROPHIC: Pump sends metal shavings into all injectors and lines. Total fuel system replacement required.",
+                           "occurrence_rate":  0.1,
+                           "avg_failure_mileage":  52088
                        },
                        {
                            "component":  "Death Wobble",
                            "symptoms":  "Violent shaking of steering wheel after irregular road surface",
                            "repairCost":  1800,
-                           "verdictImplication":  "Severe: Track bar and damper failure. Dangerous at highway speeds."
+                           "verdictImplication":  "Severe: Track bar and damper failure. Dangerous at highway speeds.",
+                           "occurrence_rate":  0.4,
+                           "avg_failure_mileage":  95544
                        }
                    ]
     },
@@ -639,13 +765,17 @@
                            "component":  "68RFE Transmission Failure",
                            "symptoms":  "Slipping gears, burnt fluid smell, limp mode",
                            "repairCost":  6500,
-                           "verdictImplication":  "Critical: The stock transmission cannot handle the Cummins torque. Expect failure near 150k miles."
+                           "verdictImplication":  "Critical: The stock transmission cannot handle the Cummins torque. Expect failure near 150k miles.",
+                           "occurrence_rate":  0.1,
+                           "avg_failure_mileage":  121442
                        },
                        {
                            "component":  "Heater Grid Bolt",
                            "symptoms":  "Bolt falls into intake manifold",
                            "repairCost":  12000,
-                           "verdictImplication":  "Engine Killer: A $2 bolt can destroy a $12k engine. Inspect immediately."
+                           "verdictImplication":  "Engine Killer: A $2 bolt can destroy a $12k engine. Inspect immediately.",
+                           "occurrence_rate":  0.1,
+                           "avg_failure_mileage":  50210
                        }
                    ]
     },
@@ -656,13 +786,17 @@
                            "component":  "Timing Chain Failure",
                            "symptoms":  "Rattling noise from engine front (5.0L SC)",
                            "repairCost":  8500,
-                           "verdictImplication":  "Financial Ruin: Requires engine removal. Often exceeds vehicle value. SELL IMMEDIATELY."
+                           "verdictImplication":  "Financial Ruin: Requires engine removal. Often exceeds vehicle value. SELL IMMEDIATELY.",
+                           "occurrence_rate":  0.3,
+                           "avg_failure_mileage":  118292
                        },
                        {
                            "component":  "Air Suspension Compressor",
                            "symptoms":  "Vehicle sagging, \u0027Suspension Fault\u0027 error",
                            "repairCost":  1800,
-                           "verdictImplication":  "Common: Compressor wears out due to leak overwork."
+                           "verdictImplication":  "Common: Compressor wears out due to leak overwork.",
+                           "occurrence_rate":  0.5,
+                           "avg_failure_mileage":  72874
                        }
                    ]
     },
@@ -673,13 +807,17 @@
                            "component":  "Valve Stem Seals",
                            "symptoms":  "Blue smoke from exhaust after idling (N63 V8)",
                            "repairCost":  5500,
-                           "verdictImplication":  "High Risk: Engine burns extensive oil. Repair labor is intensive."
+                           "verdictImplication":  "High Risk: Engine burns extensive oil. Repair labor is intensive.",
+                           "occurrence_rate":  0.1,
+                           "avg_failure_mileage":  76523
                        },
                        {
                            "component":  "Timing Chain Guides",
                            "symptoms":  "High pitched whine (N20/N26 4-cyl models)",
                            "repairCost":  3500,
-                           "verdictImplication":  "Critical: Plastic guides shatter and clog oil pickup."
+                           "verdictImplication":  "Critical: Plastic guides shatter and clog oil pickup.",
+                           "occurrence_rate":  0.3,
+                           "avg_failure_mileage":  96415
                        }
                    ]
     },
@@ -690,13 +828,17 @@
                            "component":  "Supercharger Clutch",
                            "symptoms":  "Chirping noise during engagement (3.0T)",
                            "repairCost":  1500,
-                           "verdictImplication":  "Moderate: Wear item on high mileage units."
+                           "verdictImplication":  "Moderate: Wear item on high mileage units.",
+                           "occurrence_rate":  0.1,
+                           "avg_failure_mileage":  101356
                        },
                        {
                            "component":  "Oil Consumption",
                            "symptoms":  "Low oil light every 500 miles",
                            "repairCost":  4500,
-                           "verdictImplication":  "Severe: Piston ring issues on early 3.0T/2.0T engines. Requires rebuild."
+                           "verdictImplication":  "Severe: Piston ring issues on early 3.0T/2.0T engines. Requires rebuild.",
+                           "occurrence_rate":  0.3,
+                           "avg_failure_mileage":  55565
                        }
                    ]
     },
@@ -707,13 +849,17 @@
                            "component":  "Sliding Door Failure",
                            "symptoms":  "Door stuck, motor grinding, battery drain",
                            "repairCost":  1500,
-                           "verdictImplication":  "Common: Cable or motor failure. Expensive convenience repair."
+                           "verdictImplication":  "Common: Cable or motor failure. Expensive convenience repair.",
+                           "occurrence_rate":  0.1,
+                           "avg_failure_mileage":  97098
                        },
                        {
                            "component":  "9-Speed/10-Speed Judder",
                            "symptoms":  "Rough shifting, hunting for gears",
                            "repairCost":  3500,
-                           "verdictImplication":  "Moderate: Software updates help, but torque converter may fail."
+                           "verdictImplication":  "Moderate: Software updates help, but torque converter may fail.",
+                           "occurrence_rate":  0.1,
+                           "avg_failure_mileage":  83969
                        }
                    ]
     },
@@ -724,13 +870,17 @@
                            "component":  "Head Gasket Failure",
                            "symptoms":  "Misfire, coolant consumption (Hybrid Models)",
                            "repairCost":  4000,
-                           "verdictImplication":  "Critical: Widespread issue on Hybrid Pacificas. Engine replacement likely."
+                           "verdictImplication":  "Critical: Widespread issue on Hybrid Pacificas. Engine replacement likely.",
+                           "occurrence_rate":  0.1,
+                           "avg_failure_mileage":  117751
                        },
                        {
                            "component":  "Stalling while Driving",
                            "symptoms":  "Engine cuts out at speed (PHEV)",
                            "repairCost":  2200,
-                           "verdictImplication":  "Dangerous: Transmission wiring harness recall. Verify VIN."
+                           "verdictImplication":  "Dangerous: Transmission wiring harness recall. Verify VIN.",
+                           "occurrence_rate":  0.1,
+                           "avg_failure_mileage":  100646
                        }
                    ]
     },
@@ -741,7 +891,9 @@
                            "component":  "AFM Lifter Collapse",
                            "symptoms":  "Ticking noise, misfire, \u0027Service Stabilitrak\u0027",
                            "repairCost":  4200,
-                           "verdictImplication":  "Severe: High failure rate on early L83 engines. Requires partial engine teardown."
+                           "verdictImplication":  "Severe: High failure rate on early L83 engines. Requires partial engine teardown.",
+                           "occurrence_rate":  0.1,
+                           "avg_failure_mileage":  58737
                        }
                    ]
     },
@@ -752,7 +904,9 @@
                            "component":  "Power Sliding Door Failure",
                            "symptoms":  "Door won\u0027t open or close automatically",
                            "repairCost":  1600,
-                           "verdictImplication":  "Moderate: Common convenience failure. Cable and motor assembly replacement."
+                           "verdictImplication":  "Moderate: Common convenience failure. Cable and motor assembly replacement.",
+                           "occurrence_rate":  0.1,
+                           "avg_failure_mileage":  70287
                        }
                    ]
     },
@@ -763,7 +917,9 @@
                            "component":  "CVT Transmission Failure",
                            "symptoms":  "Whining, juddering, loss of power",
                            "repairCost":  4500,
-                           "verdictImplication":  "Critical: Cost often exceeds 50% of vehicle market value. SELL RECOMMENDED."
+                           "verdictImplication":  "Critical: Cost often exceeds 50% of vehicle market value. SELL RECOMMENDED.",
+                           "occurrence_rate":  0.45,
+                           "avg_failure_mileage":  158597
                        }
                    ]
     },
@@ -774,7 +930,9 @@
                            "component":  "Quadra-Lift Air Suspension Failure",
                            "symptoms":  "Vehicle sagging, bumpy ride, compressor running constantly",
                            "repairCost":  3200,
-                           "verdictImplication":  "High Risk: Expensive Nitro-charged system. Consider coil spring conversion."
+                           "verdictImplication":  "High Risk: Expensive Nitro-charged system. Consider coil spring conversion.",
+                           "occurrence_rate":  0.5,
+                           "avg_failure_mileage":  64881
                        }
                    ]
     },
@@ -785,7 +943,9 @@
                            "component":  "Timing Chain Tensioner Failure",
                            "symptoms":  "Rattle on start, engine won\u0027t turn over (Valve jump)",
                            "repairCost":  5500,
-                           "verdictImplication":  "Severe: Can result in complete engine destruction if it skips a tooth."
+                           "verdictImplication":  "Severe: Can result in complete engine destruction if it skips a tooth.",
+                           "occurrence_rate":  0.3,
+                           "avg_failure_mileage":  82425
                        }
                    ]
     },
@@ -795,7 +955,9 @@
                            "repairCost":  1500,
                            "component":  "Plastic Oil Filter Housing Crack",
                            "verdictImplication":  "Moderate: A known weak point in the B48/B58 engines. Requires replacement with updated unit.",
-                           "symptoms":  "Oil leak onto hot engine, burning smell, coolant contamination"
+                           "symptoms":  "Oil leak onto hot engine, burning smell, coolant contamination",
+                           "occurrence_rate":  0.1,
+                           "avg_failure_mileage":  85520
                        }
                    ],
         "model_id_ref":  "bmw_x3_g01"
@@ -806,7 +968,9 @@
                            "repairCost":  1450,
                            "component":  "Water Pump \u0026 Thermostat Failure",
                            "verdictImplication":  "Moderate: Extremely common on VAG 2.0T engines. Plastic housing warps.",
-                           "symptoms":  "Overheating warning, puddles under front of car"
+                           "symptoms":  "Overheating warning, puddles under front of car",
+                           "occurrence_rate":  0.25,
+                           "avg_failure_mileage":  103606
                        }
                    ],
         "model_id_ref":  "audi_q5_fy"
@@ -817,7 +981,9 @@
                            "repairCost":  1800,
                            "component":  "Control Arm Bushing Wear",
                            "verdictImplication":  "Moderate: Mercedes multi-link suspension is sensitive to bushing wear.",
-                           "symptoms":  "Clunking over bumps, uneven tire wear"
+                           "symptoms":  "Clunking over bumps, uneven tire wear",
+                           "occurrence_rate":  0.1,
+                           "avg_failure_mileage":  57441
                        }
                    ],
         "model_id_ref":  "mercedes_glc_x253"
@@ -828,7 +994,9 @@
                            "repairCost":  6000,
                            "component":  "High Oil Consumption (Piston Rings)",
                            "verdictImplication":  "Severe: Critical failure on early Drive-E engines. Requires engine rebuild or replacement.",
-                           "symptoms":  "Low oil light every 1000 miles, blue smoke"
+                           "symptoms":  "Low oil light every 1000 miles, blue smoke",
+                           "occurrence_rate":  0.3,
+                           "avg_failure_mileage":  53269
                        }
                    ],
         "model_id_ref":  "volvo_xc90_spa"
@@ -839,7 +1007,9 @@
                            "repairCost":  5500,
                            "component":  "Engine Bearings (Theta II)",
                            "verdictImplication":  "Severe: High risk of catastrophic engine failure. Check recall status immediately.",
-                           "symptoms":  "Knocking noise, oil light flicker, engine stall"
+                           "symptoms":  "Knocking noise, oil light flicker, engine stall",
+                           "occurrence_rate":  0.1,
+                           "avg_failure_mileage":  145662
                        }
                    ],
         "model_id_ref":  "hyundai_sonata_lf"
@@ -850,7 +1020,9 @@
                            "repairCost":  5500,
                            "component":  "Engine Seizure (Rod Bearings)",
                            "verdictImplication":  "Severe: Major reliability hazard. Repair cost often exceeds 50% of value on high-mileage units.",
-                           "symptoms":  "Metallic rattling, sudden loss of power"
+                           "symptoms":  "Metallic rattling, sudden loss of power",
+                           "occurrence_rate":  0.1,
+                           "avg_failure_mileage":  160032
                        }
                    ],
         "model_id_ref":  "kia_optima_jf"
@@ -861,7 +1033,9 @@
                            "repairCost":  6000,
                            "component":  "1.5L/2.0L Coolant Intrusion",
                            "verdictImplication":  "CATASTROPHIC: Coolant leaks into cylinders due to block design. Engine replacement required.",
-                           "symptoms":  "White smoke, misfires on startup, chronic low coolant"
+                           "symptoms":  "White smoke, misfires on startup, chronic low coolant",
+                           "occurrence_rate":  0.15,
+                           "avg_failure_mileage":  50452
                        }
                    ],
         "model_id_ref":  "ford_fusion_2nd"
@@ -872,7 +1046,9 @@
                            "repairCost":  3500,
                            "component":  "Cam Tower Oil Leak",
                            "verdictImplication":  "Severe: High labor cost for a gasket repair. Often deferred by owners.",
-                           "symptoms":  "Oil seeping onto exhaust manifold, burning smell"
+                           "symptoms":  "Oil seeping onto exhaust manifold, burning smell",
+                           "occurrence_rate":  0.1,
+                           "avg_failure_mileage":  82582
                        }
                    ],
         "model_id_ref":  "toyota_tundra_2nd"
@@ -883,7 +1059,9 @@
                            "repairCost":  5500,
                            "component":  "SMOD (Strawberry Milkshake of Death)",
                            "verdictImplication":  "Critical: Radiator failure mixes coolant into transmission. Destroys the gearbox. Pre-2010 models only.",
-                           "symptoms":  "Transmission slipping, pink frothy fluid"
+                           "symptoms":  "Transmission slipping, pink frothy fluid",
+                           "occurrence_rate":  0.1,
+                           "avg_failure_mileage":  119916
                        }
                    ],
         "model_id_ref":  "nissan_frontier_d40"
@@ -894,7 +1072,9 @@
                            "repairCost":  1200,
                            "component":  "Transmission Control Module Failure",
                            "verdictImplication":  "Moderate: Electrical/Control issue common on Hydra-Matic 9T65.",
-                           "symptoms":  "Erratic shifting, won\u0027t move from Park, limp mode"
+                           "symptoms":  "Erratic shifting, won\u0027t move from Park, limp mode",
+                           "occurrence_rate":  0.1,
+                           "avg_failure_mileage":  134958
                        }
                    ],
         "model_id_ref":  "chevrolet_traverse_2nd"
@@ -905,7 +1085,9 @@
                            "repairCost":  4500,
                            "component":  "HEMI Tick (Lifter Failure)",
                            "verdictImplication":  "Severe: Lifter roller fails and eats the camshaft. Requires major engine teardown.",
-                           "symptoms":  "Rhythmic ticking noise at idle, misfires"
+                           "symptoms":  "Rhythmic ticking noise at idle, misfires",
+                           "occurrence_rate":  0.1,
+                           "avg_failure_mileage":  63245
                        }
                    ],
         "model_id_ref":  "dodge_challenger_la"
@@ -916,7 +1098,9 @@
                            "repairCost":  5000,
                            "component":  "Excessive Oil Consumption",
                            "verdictImplication":  "Severe: TigerShark 2.4L engine flaw. May require engine replacement if out of warranty.",
-                           "symptoms":  "Engine stalling on turns due to low oil, no warning light"
+                           "symptoms":  "Engine stalling on turns due to low oil, no warning light",
+                           "occurrence_rate":  0.3,
+                           "avg_failure_mileage":  67935
                        }
                    ],
         "model_id_ref":  "jeep_compass_mp"
@@ -927,7 +1111,9 @@
                            "repairCost":  500,
                            "component":  "No Major Systematic Faults",
                            "verdictImplication":  "Very Low Risk: Highly reliable platform. Repairs are typically only wear items.",
-                           "symptoms":  "N/A"
+                           "symptoms":  "N/A",
+                           "occurrence_rate":  0.1,
+                           "avg_failure_mileage":  76446
                        }
                    ],
         "model_id_ref":  "lexus_es_xz10"

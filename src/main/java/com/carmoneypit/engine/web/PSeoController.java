@@ -48,24 +48,21 @@ public class PSeoController {
     }
     CarModel car = carOpt.get();
 
-    // 2. Find Fault
+    // 2. Find Faults for this Model
     Optional<MajorFaults> faultsOpt = dataService.findFaultsByModelId(car.id());
     if (faultsOpt.isEmpty()) {
       logger.warn("No faults data for model: {}", car.id());
       return "redirect:/models/" + brand + "/" + model;
     }
 
-    String targetKeyword = faultSlug.replace("-", " ").toLowerCase().trim();
+    // 3. Find the Specific Fault by Slug
     Optional<Fault> faultOpt = faultsOpt.get().faults().stream()
         .filter(f -> {
-          // Normalize component the same way as slug generation
-          String normalizedComp = f.component().toLowerCase()
-              .replaceAll("[^a-z0-9 ]", "")
-              .replaceAll("\\s+", " ")
-              .trim();
-          return normalizedComp.equals(targetKeyword) ||
-              normalizedComp.contains(targetKeyword) ||
-              targetKeyword.contains(normalizedComp);
+          // Generate the exact slug for this fault, same as in listFaults
+          String slug = f.component().toLowerCase()
+              .replace(" ", "-")
+              .replaceAll("[^a-z0-9-]", "");
+          return slug.equals(faultSlug);
         })
         .findFirst();
 
@@ -145,6 +142,105 @@ public class PSeoController {
     modelMap.addAttribute("breadcrumbs", breadcrumbs);
 
     return "pseo_landing";
+  }
+
+  // --- Mileage-Based pSEO Pages (NEW) ---
+
+  @GetMapping("/verdict/{brand}/{model}/{mileage}-miles")
+  public String showMileageVerdict(
+      @PathVariable("brand") String brand,
+      @PathVariable("model") String model,
+      @PathVariable("mileage") int mileage,
+      Model modelMap) {
+
+    logger.info("Mileage request for {} / {} at {} miles", brand, model, mileage);
+
+    // 1. Find Car Model
+    Optional<CarModel> carOpt = dataService.findCarBySlug(brand, model);
+    if (carOpt.isEmpty()) {
+      logger.warn("Car not found: {} / {}", brand, model);
+      return "redirect:/models/" + normalize(brand);
+    }
+    CarModel car = carOpt.get();
+
+    // 2. Load Reliability & Market Data
+    Optional<ModelReliability> reliabilityOpt = dataService.findReliabilityByModelId(car.id());
+    Optional<ModelMarket> marketOpt = dataService.findMarketByModelId(car.id());
+
+    if (reliabilityOpt.isEmpty() || marketOpt.isEmpty()) {
+      logger.warn("Missing data for model: {}", car.id());
+      return "redirect:/models/" + brand + "/" + model;
+    }
+
+    ModelReliability reliability = reliabilityOpt.get();
+    ModelMarket market = marketOpt.get();
+
+    // 3. Build breadcrumbs
+    List<Breadcrumb> breadcrumbs = List.of(
+        new Breadcrumb("Home", "/"),
+        new Breadcrumb(car.brand(), "/models/" + normalize(car.brand())),
+        new Breadcrumb(car.model(), "/models/" + normalize(car.brand()) + "/" + normalize(car.model())),
+        new Breadcrumb(String.format("%,d Miles", mileage), "#")
+    );
+
+    // 4. Build canonical URL
+    String canonicalUrl = "https://carmoneypit.com/verdict/" + normalize(brand) + "/" + normalize(model) + "/" + mileage + "-miles";
+
+    // 5. Meta description
+    String metaDescription = String.format(
+        "Is your %s %s worth keeping at %,d miles? Expert analysis, expected repairs, and data-driven recommendations for %d-%d owners.",
+        car.brand(), car.model(), mileage, car.startYear(), car.endYear()
+    );
+
+    // 6. Schema JSON (FAQPage)
+    String schemaJson = String.format("""
+        {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Is a %s %s with %,d miles reliable?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "At %,d miles, a %s %s is at %d%% of its expected lifespan. %s"
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What is the junk value of a %s %s?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "The minimum scrap/junk value for a %s %s is approximately $%,d."
+              }
+            }
+          ]
+        }
+        """,
+        car.brand(), car.model(), mileage,
+        mileage, car.brand(), car.model(),
+        (int)((1.0 - (double)mileage / reliability.lifespanMiles()) * 100),
+        reliability.mileageLogicText() != null && !reliability.mileageLogicText().isEmpty() 
+            ? reliability.mileageLogicText().values().iterator().next() 
+            : "Regular maintenance is key.",
+        car.brand(), car.model(),
+        car.brand(), car.model(), market.commonJunkValue() != null ? market.commonJunkValue() : 500
+    );
+
+    // 7. Add to model
+    Optional<MajorFaults> faultsOpt = dataService.findFaultsByModelId(car.id());
+    
+    modelMap.addAttribute("car", car);
+    modelMap.addAttribute("reliability", reliability);
+    modelMap.addAttribute("market", market);
+    modelMap.addAttribute("majorFaults", faultsOpt.orElse(null)); // Pass null if not found
+    modelMap.addAttribute("targetMileage", mileage);
+    modelMap.addAttribute("breadcrumbs", breadcrumbs);
+    modelMap.addAttribute("canonicalUrl", canonicalUrl);
+    modelMap.addAttribute("metaDescription", metaDescription);
+    modelMap.addAttribute("schemaJson", schemaJson);
+
+    return "pseo_mileage";
   }
 
   // --- Directory Navigation (Silo Structure) ---

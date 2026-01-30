@@ -33,7 +33,12 @@
                                         "description":  "Timing Chain Tensioners (EcoBoost)",
                                         "est_cost":  3000
                                     }
-                                ]
+                                ],
+        "mileage_logic_text":  {
+                                   "100000":  "The \u0027danger zone\u0027 for the 3.5L EcoBoost. If you hear a cold start rattle, it\u0027s likely Cam Phasers (,000+).",
+                                   "150000":  "At 150k miles, the 10-speed transmission becomes volatile. Fluid flush is mandatory.",
+                                   "200000":  "You are in \u0027Bonus Time\u0027. Major failure exceeds vehicle value. Do not invest heavily."
+                               }
     },
     {
         "model_id":  "chevrolet_silverado_k2xx",
@@ -64,7 +69,12 @@
                                         "description":  "Transmission Rebuild Risk (6L80)",
                                         "est_cost":  4500
                                     }
-                                ]
+                                ],
+        "mileage_logic_text":  {
+                                   "100000":  "AFM (Active Fuel Management) lifter failure risk begins. Listen for ticking noise at idle. Disabling AFM can prevent catastrophic failure.",
+                                   "150000":  "The 6L80 transmission is the weak link. Expect torque converter shudder. Fluid flush with Mobil1 Synthetic LV ATF HP may extend life.",
+                                   "200000":  "If the truck has survived this long without major issues, it\u0027s a keeper. Budget for suspension refresh."
+                               }
     },
     {
         "model_id":  "ram_1500_ds",
@@ -95,7 +105,12 @@
                                         "description":  "Air Suspension Conversion (if equipped)",
                                         "est_cost":  1500
                                     }
-                                ]
+                                ],
+        "mileage_logic_text":  {
+                                   "80000":  "Check for the \u0027Hemi Tick\u0027 (exhaust manifold bolt failure). If present, repair before it causes further damage.",
+                                   "180000":  "TIPM (Totally Integrated Power Module) electrical issues become common. Sell if you see random electrical gremlins.",
+                                   "120000":  "Air suspension (if equipped) is living on borrowed time. Budget ,500 for coil spring conversion."
+                               }
     },
     {
         "model_id":  "toyota_camry_xv50",
@@ -125,7 +140,12 @@
                                         "description":  "Water Pump \u0026 Drive Belt",
                                         "est_cost":  600
                                     }
-                                ]
+                                ],
+        "mileage_logic_text":  {
+                                   "100000":  "Robust platform. Torque converter shudder may appear; fluid service () often fixes it.",
+                                   "250000":  "Engine is fine, but suspension bushings are likely shot. Repair only if keeping for 3+ years.",
+                                   "180000":  "Check water pump and alternator. Only these prevent it from reaching 300k miles."
+                               }
     },
     {
         "model_id":  "honda_accord_cr",
@@ -156,7 +176,12 @@
                                         "description":  "Spark Plugs (I4)",
                                         "est_cost":  250
                                     }
-                                ]
+                                ],
+        "mileage_logic_text":  {
+                                   "80000":  "Starter failure risk is high. If V6, install \u0027VCM Muzzler\u0027 to stop oil consumption.",
+                                   "150000":  "CVT/Auto transmission is the limit. If shifting smooth, keep driving. If slipping, sell.",
+                                   "200000":  "Exceptional longevity. Major repairs are rare if maintained."
+                               }
     },
     {
         "model_id":  "nissan_altima_l33",
@@ -186,7 +211,12 @@
                                         "description":  "CVT Replacement Risk Zone",
                                         "est_cost":  4200
                                     }
-                                ]
+                                ],
+        "mileage_logic_text":  {
+                                   "100000":  "You are now in the CVT danger zone. Any whining or hesitation means imminent failure.",
+                                   "120000":  "CVT replacement cost (,200) often exceeds vehicle value. Sell before it fails.",
+                                   "60000":  "CVT fluid service is MANDATORY. If skipped, transmission failure is almost guaranteed."
+                               }
     },
     {
         "model_id":  "nissan_rogue_t32",
@@ -217,7 +247,12 @@
                                         "description":  "CVT Replacement Risk Zone",
                                         "est_cost":  4500
                                     }
-                                ]
+                                ],
+        "mileage_logic_text":  {
+                                   "100000":  "The \u0027JATCO Cliff\u0027. CVT failure probability spikes \u003e40%. A ,500 repair on a ,000 car is unwise.",
+                                   "140000":  "Sell immediately if any whining noise appears. Residual value drops near scrap levels.",
+                                   "60000":  "If CVT fluid wasn\u0027t changed at 30k/60k, the transmission is on borrowed time."
+                               }
     },
     {
         "model_id":  "honda_civic_fc",
@@ -243,7 +278,12 @@
                                         "description":  "Spark Plugs \u0026 CVT Fluid",
                                         "est_cost":  400
                                     }
-                                ]
+                                ],
+        "mileage_logic_text":  {
+                                   "100000":  "A/C condenser may leak. Extended warranty covers this if eligible. Verify VIN.",
+                                   "150000":  "CVT fluid should be changed by now. If shifting is smooth, expect long life.",
+                                   "60000":  "1.5T engine oil dilution issue. Check if software update 18-137 was applied. Change oil more frequently."
+                               }
     },
     {
         "model_id":  "toyota_corolla_e170",
@@ -267,7 +307,12 @@
                                         "description":  "Water Pump \u0026 Serpentine Belt",
                                         "est_cost":  500
                                     }
-                                ]
+                                ],
+        "mileage_logic_text":  {
+                                   "100000":  "Arguably the most reliable car in this mileage bracket. Just do spark plugs and coolant flush.",
+                                   "250000":  "The transmission may whine slightly but will likely outlast your patience. Keep driving.",
+                                   "180000":  "Check rear suspension bushings. Common wear item at this point."
+                               }
     },
     {
         "model_id":  "honda_crv_rm",
@@ -297,7 +342,12 @@
                                         "description":  "Starter Motor Failure Risk",
                                         "est_cost":  600
                                     }
-                                ]
+                                ],
+        "mileage_logic_text":  {
+                                   "80000":  "VTC actuator \u0027grinding on cold start\u0027 is common. Annoying but not immediately dangerous. Will stretch timing chain over time.",
+                                   "180000":  "Check all motor mounts. Vibration at idle often indicates worn mounts, not engine issues.",
+                                   "120000":  "Starter motor failure is imminent if not already replaced. OEM Honda starter recommended."
+                               }
     },
     {
         "model_id":  "toyota_rav4_xa40",
@@ -322,7 +372,12 @@
                                         "description":  "Spark Plugs \u0026 Coolant",
                                         "est_cost":  400
                                     }
-                                ]
+                                ],
+        "mileage_logic_text":  {
+                                   "100000":  "Torque converter shudder may appear. Often fixed with transmission fluid change (). Don\u0027t ignore it.",
+                                   "150000":  "Check water pump for pink residue. Replace proactively to avoid overheating.",
+                                   "200000":  "Bulletproof platform. If maintained, expect another 100k miles. Only replace wear items."
+                               }
     },
     {
         "model_id":  "toyota_tacoma_n300",
@@ -353,7 +408,12 @@
                                         "description":  "Clutch Replacement (Manual)",
                                         "est_cost":  1800
                                     }
-                                ]
+                                ],
+        "mileage_logic_text":  {
+                                   "100000":  "Transmission shift flare is common. Software update helps but doesn\u0027t fully fix. Live with it or go manual.",
+                                   "150000":  "INSPECT THE FRAME. Rust is the Tacoma killer, not mechanicals. If frame is solid, keep forever.",
+                                   "250000":  "The 3.5L V6 is just getting broken in. These trucks regularly hit 300k+ with basic maintenance."
+                               }
     },
     {
         "model_id":  "toyota_highlander_xu50",
@@ -383,7 +443,12 @@
                                         "description":  "Water Pump Replacement",
                                         "est_cost":  800
                                     }
-                                ]
+                                ],
+        "mileage_logic_text":  {
+                                   "100000":  "Water pump is the primary failure point. Replace proactively at 100k to avoid stranding.",
+                                   "150000":  "Check sunroof drains for clogs. Water intrusion can cause expensive electrical damage.",
+                                   "200000":  "Transmission is the limiting factor. If it shifts clean, this SUV has another 100k in it."
+                               }
     },
     {
         "model_id":  "jeep_wrangler_jk",
@@ -415,7 +480,12 @@
                                         "description":  "Transmission Service",
                                         "est_cost":  400
                                     }
-                                ]
+                                ],
+        "mileage_logic_text":  {
+                                   "80000":  "Death Wobble starts here. Replace track bar, ball joints, and steering stabilizer.",
+                                   "180000":  "The 3.6L Pentastar is solid. Keep on Jeeping - these hold value exceptionally well.",
+                                   "120000":  "TIPM (electrical module) failure causes random stalling. Common and expensive."
+                               }
     },
     {
         "model_id":  "jeep_grand_cherokee_wk2",
@@ -447,7 +517,12 @@
                                         "description":  "Air Suspension Repair",
                                         "est_cost":  1200
                                     }
-                                ]
+                                ],
+        "mileage_logic_text":  {
+                                   "100000":  "Quadra-Lift air suspension leaks common. Convert to coil springs (,500) rather than fixing (+).",
+                                   "180000":  "TIPM electrical gremlins expected. Sell if electronics act up.",
+                                   "140000":  "Pentastar 3.6L may develop \u0027Tick\u0027 (rocker arms). Listen carefully."
+                               }
     },
     {
         "model_id":  "ford_escape_c520",
@@ -478,7 +553,12 @@
                                         "description":  "Coolant System Inspection",
                                         "est_cost":  150
                                     }
-                                ]
+                                ],
+        "mileage_logic_text":  {
+                                   "100000":  "6F35 transmission is the Achilles heel. If slipping occurs, repair cost often exceeds vehicle value.",
+                                   "140000":  "If you\u0027ve made it this far without major issues, you got lucky. Don\u0027t push your luck further.",
+                                   "60000":  "1.5L/1.6L EcoBoost engines have coolant intrusion risk. Watch for white smoke. Avoid if possible."
+                               }
     },
     {
         "model_id":  "ford_explorer_u502",
@@ -510,7 +590,12 @@
                                         "description":  "Transmission Service",
                                         "est_cost":  400
                                     }
-                                ]
+                                ],
+        "mileage_logic_text":  {
+                                   "80000":  "CRITICAL: Check oil for \u0027chocolate milk\u0027 appearance. Internal water pump failure destroys engine.",
+                                   "120000":  "PTU (Power Transfer Unit) needs fluid change every 30k. If ignored, expect grinding and failure.",
+                                   "160000":  "Transmission shudder is common. Flush with Mercon ULV may help, but plan for eventual rebuild."
+                               }
     },
     {
         "model_id":  "chevrolet_equinox_3rd",
@@ -565,7 +650,12 @@
                                         "description":  "Transmission Rebuild Risk",
                                         "est_cost":  4500
                                     }
-                                ]
+                                ],
+        "mileage_logic_text":  {
+                                   "100000":  "Identical AFM lifter issue as Silverado. Consider AFM delete if rebuilding.",
+                                   "150000":  "A/C condenser failure is common. Budget for replacement.",
+                                   "200000":  "Transmission shudder fix: Use factory-approved friction modifier additive."
+                               }
     },
     {
         "model_id":  "toyota_4runner_n280",
@@ -597,7 +687,12 @@
                                         "description":  "Transmission Fluid Change",
                                         "est_cost":  300
                                     }
-                                ]
+                                ],
+        "mileage_logic_text":  {
+                                   "100000":  "Exhaust manifold leak is common. Listen for ticking on cold start. Not urgent but annoying.",
+                                   "250000":  "The 4.0L V6 is legendary for longevity. These regularly exceed 300k miles.",
+                                   "180000":  "Air injection pump recall - verify VIN coverage. Check engine light may appear."
+                               }
     },
     {
         "model_id":  "honda_pilot_yf3",
@@ -652,7 +747,12 @@
                                         "description":  "Spark Plugs \u0026 Transmission Fluid",
                                         "est_cost":  400
                                     }
-                                ]
+                                ],
+        "mileage_logic_text":  {
+                                   "80000":  "Check for daytime running light recall. LED failure is common but covered.",
+                                   "180000":  "These engines easily reach 200k+ with proper care. Excellent long-term value.",
+                                   "120000":  "SKYACTIV engine is remarkably reliable. Just do regular maintenance."
+                               }
     },
     {
         "model_id":  "subaru_outback_bs",
@@ -682,7 +782,12 @@
                                         "description":  "Spark Plugs",
                                         "est_cost":  300
                                     }
-                                ]
+                                ],
+        "mileage_logic_text":  {
+                                   "100000":  "Check oil consumption. The FA series engines are known for burning oil between changes.",
+                                   "150000":  "CVT extended warranty (100k miles) may have expired. Budget for potential replacement ().",
+                                   "60000":  "CVT fluid change is MANDATORY. Skipping this leads to premature CVT failure."
+                               }
     },
     {
         "model_id":  "subaru_forester_sj",
@@ -712,7 +817,12 @@
                                         "description":  "Spark Plugs",
                                         "est_cost":  300
                                     }
-                                ]
+                                ],
+        "mileage_logic_text":  {
+                                   "100000":  "FB20 engine oil consumption varies. Monitor oil level every 1000 miles.",
+                                   "150000":  "Head gasket issues of older Subarus are mostly resolved, but check for coolant smell.",
+                                   "60000":  "Same CVT as Outback. Fluid change is critical. Use only Subaru CVT fluid."
+                               }
     },
     {
         "model_id":  "hyundai_elantra_ad",
@@ -771,7 +881,12 @@
                                         "description":  "Spark Plugs",
                                         "est_cost":  300
                                     }
-                                ]
+                                ],
+        "mileage_logic_text":  {
+                                   "100000":  "Dual-clutch (DCT) hesitation from stop is characteristic, not a defect. Software updates help.",
+                                   "150000":  "If engine hasn\u0027t failed by now and you have service records, you\u0027re likely in the clear.",
+                                   "60000":  "Theta II engine recall: Verify if your VIN was covered and if engine was replaced. Critical safety issue."
+                               }
     },
     {
         "model_id":  "hyundai_santa_fe_dm",
@@ -823,7 +938,12 @@
                                         "description":  "Spark Plugs \u0026 Transmission Service",
                                         "est_cost":  400
                                     }
-                                ]
+                                ],
+        "mileage_logic_text":  {
+                                   "100000":  "Oil starvation issue causes rod knock. Listen for metallic engine noise at startup.",
+                                   "140000":  "If maintained properly and no engine issues, these are surprisingly reliable.",
+                                   "60000":  "Same Theta II engine risk as Tucson. Check recall status immediately."
+                               }
     },
     {
         "model_id":  "kia_sorento_um",

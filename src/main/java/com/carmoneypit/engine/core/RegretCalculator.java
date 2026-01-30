@@ -252,7 +252,9 @@ public class RegretCalculator {
         if (input.mileage() > MILEAGE_THRHESOLD)
             basePain *= MILEAGE_STRESS_GROWTH;
 
-        double dividend = -(basePain * FRESH_START_MULTIPLIER);
+        // Cap basePain to prevent extreme values from skewing results
+        double cappedPain = Math.min(basePain, 5000.0);
+        double dividend = -(cappedPain * FRESH_START_MULTIPLIER);
         items.add(new FinancialLineItem("Peace of Mind Dividend", dividend,
                 "Emotional utility gain from transitioning to a more reliable replacement asset.", ItemCategory.MOVE));
         totalScore += dividend;

@@ -282,13 +282,11 @@
                 <!-- Path: Fix -->
                 <div class="regret-bar-container">
                     <div class="regret-label label-stay">
-                        <span>🔧 KEEP & FIX</span>
+                        <span>🔧 COST TO KEEP</span>
                         <span>$${String.format("%,.0f", result.stayTotal())}</span>
                     </div>
                     <div class="bar-outer">
-                        <div class="bar-inner bar-stay" style="width: ${Math.min(100, (result.stayTotal() / Math.max(result.stayTotal(), result.moveTotal())) * 100)}%">
-                            $${String.format("%,.0f", result.stayTotal())}
-                        </div>
+                        <div class="bar-inner bar-stay" style="width: ${Math.max(15, Math.min(100, (result.stayTotal() / Math.max(result.stayTotal(), result.moveTotal())) * 100))}%"></div>
                     </div>
                     <p class="regret-description">
                         Repair + future breakdown risk + depreciation while you own it.
@@ -298,13 +296,11 @@
                 <!-- Path: Move -->
                 <div class="regret-bar-container">
                     <div class="regret-label label-move">
-                        <span>💰 SELL NOW</span>
+                        <span>💰 COST TO SELL</span>
                         <span>$${String.format("%,.0f", result.moveTotal())}</span>
                     </div>
                     <div class="bar-outer">
-                        <div class="bar-inner bar-move" style="width: ${Math.min(100, (result.moveTotal() / Math.max(result.stayTotal(), result.moveTotal())) * 100)}%">
-                            $${String.format("%,.0f", result.moveTotal())}
-                        </div>
+                        <div class="bar-inner bar-move" style="width: ${Math.max(15, Math.min(100, (result.moveTotal() / Math.max(result.stayTotal(), result.moveTotal())) * 100))}%"></div>
                     </div>
                     <p class="regret-description">
                         Selling fees + depreciation loss + replacement costs.
