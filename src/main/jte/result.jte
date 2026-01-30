@@ -62,25 +62,50 @@
             .verdict-sustain { border-top: 6px solid var(--green-safe); }
             .verdict-risk_alert { border-top: 6px solid var(--orange-warn); }
 
-            /* Sim Lab Layout */
+            /* Sim Lab Layout - Improved */
             .sim-grid-revamped { 
                 display: grid; 
-                grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); 
-                gap: 1.5rem; 
+                grid-template-columns: repeat(2, 1fr); 
+                gap: 1.25rem; 
                 margin-top: 2rem; 
             }
-            .sim-column { display: flex; flex-direction: column; gap: 1.5rem; }
+            
+            .sim-column { 
+                background: #f8fafc;
+                border-radius: 16px;
+                padding: 1.25rem;
+                border: 1px solid #e2e8f0;
+            }
+            
+            .sim-column h4 {
+                color: var(--text-secondary); 
+                text-transform: uppercase; 
+                font-size: 0.7rem; 
+                letter-spacing: 0.08em; 
+                margin: 0 0 1rem 0;
+                font-weight: 700;
+            }
             
             .sim-item { display: flex; flex-direction: column; min-width: 0; }
-            .sim-item label { display: block; font-size: 0.75rem; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; margin-bottom: 0.75rem; letter-spacing: 0.05em; }
+            .sim-item label { 
+                display: block; 
+                font-size: 0.7rem; 
+                font-weight: 700; 
+                color: var(--text-secondary); 
+                text-transform: uppercase; 
+                margin-bottom: 0.5rem; 
+                letter-spacing: 0.04em; 
+            }
+            .sim-item + .sim-item { margin-top: 1rem; }
 
             .pill-group {
                 display: flex;
-                background: #f1f5f9;
-                padding: 4px;
-                border-radius: 12px;
-                gap: 4px;
+                background: #fff;
+                padding: 3px;
+                border-radius: 10px;
+                gap: 3px;
                 width: 100%;
+                border: 1px solid #e2e8f0;
             }
 
             .pill { 
@@ -94,44 +119,48 @@
             
             .pill span {
                 display: block;
-                padding: 0.6rem 0.5rem;
+                padding: 0.5rem 0.4rem;
                 text-align: center;
-                font-size: 0.75rem;
+                font-size: 0.7rem;
                 font-weight: 700;
-                border-radius: 8px;
+                border-radius: 7px;
                 transition: all 0.2s;
-                color: #64748b;
+                color: #94a3b8;
                 background: transparent;
-                border: 1px solid transparent;
             }
             
             .pill input:checked + span { 
-                background: #fff !important; 
-                color: #0f172a !important; 
-                box-shadow: 0 2px 8px rgba(0,0,0,0.05) !important; 
-                border-color: rgba(0,0,0,0.05);
+                background: #0f172a !important; 
+                color: #fff !important; 
+                box-shadow: 0 2px 6px rgba(0,0,0,0.15) !important; 
             }
 
-            /* Vertical Pills for Severity */
-            .vertical-pills { display: flex; flex-direction: column; gap: 0.5rem; }
+            /* Compact Horizontal Pills for Severity */
+            .severity-pills { 
+                display: flex; 
+                flex-direction: column;
+                gap: 0.4rem; 
+            }
             .pill-row { cursor: pointer; display: block; }
             .pill-row input { display: none; }
             .pill-text {
                 display: block;
-                padding: 0.8rem 1rem;
-                background: #f8fafc;
+                padding: 0.6rem 0.8rem;
+                background: #fff;
                 border: 1px solid #e2e8f0;
-                border-radius: 12px;
-                font-size: 0.85rem;
+                border-radius: 8px;
+                font-size: 0.75rem;
                 font-weight: 600;
-                color: #475569;
-                transition: all 0.2s;
+                color: #64748b;
+                transition: all 0.15s;
+            }
+            .pill-row:hover .pill-text {
+                border-color: #cbd5e1;
             }
             .pill-row input:checked + .pill-text {
-                background: #eff6ff;
-                border-color: var(--futurist-blue);
-                color: var(--futurist-blue);
-                box-shadow: 0 0 0 1px var(--futurist-blue);
+                background: #0f172a;
+                border-color: #0f172a;
+                color: #fff;
             }
 
             /* Slider Styling */
@@ -179,23 +208,29 @@
                 letter-spacing: 0.05em;
             }
 
-            /* Modal Styles */
+            /* Modal Styles - Centered */
             dialog {
                 border: none;
                 border-radius: 24px;
                 padding: 2.5rem;
-                max-width: 600px;
+                max-width: 500px;
                 width: 90%;
                 box-shadow: 0 20px 50px rgba(0,0,0,0.2);
                 background: #fff;
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                margin: 0;
             }
             dialog::backdrop {
                 background: rgba(0,0,0,0.5);
                 backdrop-filter: blur(4px);
             }
 
-            @media (max-width: 1024px) {
-                .sim-grid-revamped { grid-template-columns: 1fr; gap: 1.5rem; }
+            @media (max-width: 768px) {
+                .sim-grid-revamped { grid-template-columns: 1fr; gap: 1rem; }
+                .sim-column { padding: 1rem; }
             }
 
             /* --- UI Constants --- */
@@ -422,88 +457,88 @@
 
                         <div class="sim-grid-revamped">
                             
-                            <!-- Column 1: Asset Reality -->
+                            <!-- Card 1: Asset Reality -->
                             <div class="sim-column">
-                                <h4 style="color:var(--text-secondary); text-transform:uppercase; font-size: 0.75rem; letter-spacing:0.1em; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.5rem;">Asset Reality</h4>
+                                <h4>📊 Asset Reality</h4>
                                 
                                 <div class="sim-item">
                                     <label style="display: flex; justify-content: space-between; align-items: center;">
                                         Market Value
                                         @if(isValueEstimated)
-                                            <span class="est-badge" style="background: #fbbf24; color: #fff; padding: 2px 6px; border-radius: 4px; font-size: 0.6rem; margin-left:8px;">ESTIMATED</span>
+                                            <span style="background: #f59e0b; color: #fff; padding: 2px 6px; border-radius: 4px; font-size: 0.55rem; font-weight: 800;">EST</span>
                                         @endif
                                     </label>
                                     <div style="position: relative;">
-                                        <span style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-secondary); font-weight: 700;">$</span>
+                                        <span style="position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%); color: #94a3b8; font-weight: 700; font-size: 0.9rem;">$</span>
                                         <input type="number" name="currentValueUsd" value="${input.currentValueUsd()}"
-                                               style="width: 100%; padding: 0.8rem 1rem 0.8rem 2.5rem; border-radius: 12px; border: 1px solid #e2e8f0; font-weight: 700; font-size: 1rem;"
+                                               style="width: 100%; padding: 0.65rem 0.75rem 0.65rem 1.75rem; border-radius: 8px; border: 1px solid #e2e8f0; font-weight: 700; font-size: 0.95rem; background: #fff;"
                                                oninput="document.getElementById('isEstInput').value = 'false';">
                                     </div>
                                 </div>
 
                                 <div class="sim-item">
-                                    <label>Current Mobility</label>
+                                    <label>Mobility Status</label>
                                     <div class="pill-group">
                                         @for(MobilityStatus val : MobilityStatus.values())
                                             <label class="pill">
                                                 <input type="radio" name="mobilityStatus" value="${val}" checked="${val == controls.mobilityStatus()}">
-                                                <span>${val == MobilityStatus.NEEDS_TOW ? "Offline / Tow" : "Drivable"}</span>
+                                                <span>${val == MobilityStatus.NEEDS_TOW ? "🚫 Tow" : "✓ Drivable"}</span>
                                             </label>
                                         @endfor
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- Column 2: Diagnosis -->
+                            <!-- Card 2: Diagnosis -->
                             <div class="sim-column">
-                                <h4 style="color:var(--text-secondary); text-transform:uppercase; font-size: 0.75rem; letter-spacing:0.1em; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.5rem;">Diagnosis</h4>
+                                <h4>🔧 Diagnosis</h4>
                                 
                                 <div class="sim-item">
                                     <label>Failure Severity</label>
-                                    <div class="vertical-pills">
+                                    <div class="severity-pills">
                                          @for(FailureSeverity val : FailureSeverity.values())
                                             <label class="pill-row">
                                                 <input type="radio" name="failureSeverity" value="${val}" checked="${val == controls.failureSeverity()}">
-                                                <span class="pill-text">${val == FailureSeverity.ENGINE_TRANSMISSION ? "Critical (Engine/Trans)" : (val == FailureSeverity.SUSPENSION_BRAKES ? "Major (Suspension/Brakes)" : "General Wear")}</span>
+                                                <span class="pill-text">${val == FailureSeverity.ENGINE_TRANSMISSION ? "🔴 Critical" : (val == FailureSeverity.SUSPENSION_BRAKES ? "🟠 Major" : "🟢 General")}</span>
                                             </label>
                                         @endfor
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- Column 3: Strategy & Willingness -->
+                            <!-- Card 3: Retention -->
                             <div class="sim-column">
-                                <h4 style="color:var(--text-secondary); text-transform:uppercase; font-size: 0.75rem; letter-spacing:0.1em; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.5rem;">Strategy</h4>
-
-                                <div style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.25rem 0.75rem; border-radius: 9999px; background-color: #eff6ff; border: 1px solid #dbeafe; color: #1d4ed8; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1rem;">
-                                    <span style="width: 0.5rem; height: 0.5rem; border-radius: 50%; background-color: #2563eb;"></span>
-                                    Market Liquidation Analysis
-                                </div>
+                                <h4>📅 Retention Plan</h4>
+                                
                                 <div class="sim-item">
-                                    <label>Target Retention</label>
+                                    <label>How long do you plan to keep it?</label>
                                     <div class="pill-group">
                                         <label class="pill"><input type="radio" name="retentionHorizon" value="MONTHS_6" checked="${controls.retentionHorizon() == RetentionHorizon.MONTHS_6}"><span>6 Mo</span></label>
                                         <label class="pill"><input type="radio" name="retentionHorizon" value="YEARS_1" checked="${controls.retentionHorizon() == RetentionHorizon.YEARS_1}"><span>1 Yr</span></label>
                                         <label class="pill"><input type="radio" name="retentionHorizon" value="YEARS_3" checked="${controls.retentionHorizon() == RetentionHorizon.YEARS_3}"><span>3+ Yrs</span></label>
                                     </div>
                                 </div>
+                            </div>
 
-                                <div class="sim-item" style="margin-top: 1.5rem;">
-                                    <label>Willingness to Walk Away</label>
+                            <!-- Card 4: Willingness -->
+                            <div class="sim-column">
+                                <h4>🚗 Switching Willingness</h4>
+                                
+                                <div class="sim-item">
+                                    <label>Ready to move on?</label>
                                     <div class="slider-container">
                                         <input type="range" min="0" max="2" step="1"
                                             value="${controls.hassleTolerance() == HassleTolerance.HATE_SWITCHING ? 0 : (controls.hassleTolerance() == HassleTolerance.WANT_NEW_CAR ? 2 : 1)}"
                                             onchange="updateTolerance(this.value)">
                                         <div class="slider-labels">
-                                            <span>Low</span>
+                                            <span>Love it</span>
                                             <span>Neutral</span>
-                                            <span>High</span>
+                                            <span>Want new</span>
                                         </div>
                                     </div>
                                     <input type="hidden" name="hassleTolerance" id="hassleToleranceInput" value="${controls.hassleTolerance()}">
                                 </div>
                             </div>
-
                         </div>
                     </form>
                     
@@ -523,22 +558,45 @@
             </section>
         </main>
 
-        <!-- Strawman Explanation Modal -->
-        <dialog id="explanation-modal">
-            <h3 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 1rem;">Why this verdict?</h3>
-            <div style="background: #fff5f5; border-left: 4px solid #fc8181; padding: 1rem; margin-bottom: 1.5rem;">
-                <h4 style="color: #c53030; font-size: 0.9rem; font-weight: 800; margin-bottom: 0.5rem;">THE STRAWMAN ARGUMENT</h4>
-                <p style="font-size: 0.95rem; line-height: 1.5;">
-                    "Sure, you strictly <strong>can</strong> repair it. But notice the <strong>Asset Bleed</strong>. 
-                    Even if you fix it perfectly, depreciation will erase that value in less than 8 months."
-                </p>
-            </div>
-            <p style="margin-bottom: 1rem;">
-                Our analysis engine calculated a <strong>Cost of Inaction</strong> that exceeds your repair quote.
-                The <strong>Retention Exposure</strong> (visible in the breakdown) indicates that holding this asset requires taking on disproportionate risk.
+        <!-- Dynamic Explanation Modal -->
+        <dialog id="explanation-modal" style="max-width: 500px;">
+            <h3 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 1.5rem;">Why this verdict?</h3>
+            
+            @if(result.verdictState().name().equals("TIME_BOMB"))
+                <div style="background: #fef2f2; border-left: 4px solid #ef4444; padding: 1rem; margin-bottom: 1.5rem; border-radius: 0 8px 8px 0;">
+                    <h4 style="color: #dc2626; font-size: 0.85rem; font-weight: 800; margin-bottom: 0.5rem;">💸 ASSET BLEED DETECTED</h4>
+                    <p style="font-size: 0.95rem; line-height: 1.5; color: #7f1d1d; margin: 0;">
+                        Your repair cost is high relative to the vehicle's remaining value. 
+                        Even if repaired, depreciation will likely erase that investment within months.
+                    </p>
+                </div>
+            @elseif(result.verdictState().name().equals("STABLE"))
+                <div style="background: #f0fdf4; border-left: 4px solid #22c55e; padding: 1rem; margin-bottom: 1.5rem; border-radius: 0 8px 8px 0;">
+                    <h4 style="color: #16a34a; font-size: 0.85rem; font-weight: 800; margin-bottom: 0.5rem;">✅ REPAIR MAKES SENSE</h4>
+                    <p style="font-size: 0.95rem; line-height: 1.5; color: #14532d; margin: 0;">
+                        The repair cost is reasonable compared to your vehicle's value. 
+                        Fixing it now should give you more reliable transportation at lower cost than switching.
+                    </p>
+                </div>
+            @else
+                <div style="background: #fffbeb; border-left: 4px solid #f59e0b; padding: 1rem; margin-bottom: 1.5rem; border-radius: 0 8px 8px 0;">
+                    <h4 style="color: #d97706; font-size: 0.85rem; font-weight: 800; margin-bottom: 0.5rem;">⚖️ BORDERLINE DECISION</h4>
+                    <p style="font-size: 0.95rem; line-height: 1.5; color: #78350f; margin: 0;">
+                        This is a close call. The numbers don't strongly favor either option. 
+                        Your personal preference and financial situation should guide this decision.
+                    </p>
+                </div>
+            @endif
+            
+            <p style="margin-bottom: 1.5rem; color: #475569; font-size: 0.95rem; line-height: 1.6;">
+                Our analysis considers your vehicle's market value, repair costs, depreciation rate, 
+                and switching costs to calculate the most financially sensible path forward.
             </p>
+            
             <form method="dialog">
-                <button>I Understand</button>
+                <button style="width: 100%; padding: 0.875rem 1.5rem; background: #0f172a; color: #fff; border: none; border-radius: 12px; font-size: 1rem; font-weight: 700; cursor: pointer; transition: all 0.2s;" 
+                        onmouseover="this.style.background='#1e293b'" 
+                        onmouseout="this.style.background='#0f172a'">Got it</button>
             </form>
         </dialog>
 

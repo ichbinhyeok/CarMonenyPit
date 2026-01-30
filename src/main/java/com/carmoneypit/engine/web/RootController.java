@@ -63,7 +63,10 @@ public class RootController {
         xml.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
         xml.append("<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n");
 
-        String today = LocalDate.now().format(DateTimeFormatter.ISO_DATE);
+        // Update sitemap monthly (1st day of current month) to align with market data
+        // updates
+        // This avoids SEO penalties for changing dates daily without content changes
+        String today = LocalDate.now().withDayOfMonth(1).format(DateTimeFormatter.ISO_DATE);
         String baseUrl = "https://automoneypit.com";
 
         // Static Pages

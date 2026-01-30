@@ -261,12 +261,12 @@
 
             <!-- 3. Diagnostic Confidence -->
             <div class="insight-card">
-                <div class="insight-label">Model Confidence</div>
+                <div class="insight-label">Data Quality</div>
                 <div class="insight-val" style="color: ${result.confidence() >= 85 ? "#10b981" : (result.confidence() >= 70 ? "#f59e0b" : "#64748b")};">
-                    ${result.confidence() >= 90 ? "SIGNIFICANT" : (result.confidence() >= 75 ? "HIGH" : "MODERATE")}
+                    ${result.confidence() >= 90 ? "STRONG" : (result.confidence() >= 75 ? "GOOD" : "FAIR")}
                 </div>
                 <p style="font-size: 0.8rem; margin: 0; color: var(--text-secondary); font-weight: 600;">
-                    ${result.confidence()}% signal based on ${result.confidence() >= 85 ? "model-specific trends." : "brand-level data."}
+                    Based on ${result.confidence() >= 85 ? "model-specific market data." : "brand-level historical trends."}
                 </p>
             </div>
         </div>
@@ -274,15 +274,15 @@
         <!-- Decision Matrix -->
         <div class="regret-dashboard">
             <div class="dashboard-header">
-                <h2>The Path Matrix</h2>
-                <p>Weighting cost-of-fix against replacement overhead.</p>
+                <h2>Cost Comparison</h2>
+                <p>Total projected costs for each path. <strong style="color: #ef4444;">Lower is better.</strong></p>
             </div>
 
             <div class="comparison-grid">
                 <!-- Path: Fix -->
                 <div class="regret-bar-container">
                     <div class="regret-label label-stay">
-                        <span>NET SCORE: SUSTAIN</span>
+                        <span>🔧 KEEP & FIX</span>
                         <span>$${String.format("%,.0f", result.stayTotal())}</span>
                     </div>
                     <div class="bar-outer">
@@ -291,14 +291,14 @@
                         </div>
                     </div>
                     <p class="regret-description">
-                        Repair cost + next breakdown risk + reliability tax.
+                        Repair + future breakdown risk + depreciation while you own it.
                     </p>
                 </div>
 
                 <!-- Path: Move -->
                 <div class="regret-bar-container">
                     <div class="regret-label label-move">
-                        <span>NET SCORE: LIQUIDATE</span>
+                        <span>💰 SELL NOW</span>
                         <span>$${String.format("%,.0f", result.moveTotal())}</span>
                     </div>
                     <div class="bar-outer">
@@ -307,9 +307,16 @@
                         </div>
                     </div>
                     <p class="regret-description">
-                        Transaction fees + depreciation + margin loss.
+                        Selling fees + depreciation loss + replacement costs.
                     </p>
                 </div>
+            </div>
+            
+            <!-- Winner Indicator -->
+            <div style="text-align: center; margin-top: 1.5rem; padding: 1rem; background: ${result.stayTotal() > result.moveTotal() ? "#fef2f2" : "#f0fdf4"}; border-radius: 12px;">
+                <span style="font-size: 0.8rem; font-weight: 700; color: ${result.stayTotal() > result.moveTotal() ? "#dc2626" : "#16a34a"};">
+                    ${result.stayTotal() > result.moveTotal() ? "💡 Selling costs less — consider letting go" : "💡 Fixing costs less — worth keeping"}
+                </span>
             </div>
         </div>
     </div>
@@ -473,7 +480,7 @@
                         </div>
                         <div>
                             <span style="font-size: 0.6rem; font-weight: 800; color: #94a3b8; text-transform: uppercase;">Confidence</span>
-                            <div style="font-size: 0.7rem; font-weight: 700; color: #1e293b;">${result.confidence()}%</div>
+                            <div style="font-size: 0.7rem; font-weight: 700; color: ${result.confidence() >= 85 ? "#10b981" : (result.confidence() >= 70 ? "#f59e0b" : "#64748b")};">${result.confidence() >= 90 ? "Very High" : (result.confidence() >= 75 ? "High" : "Moderate")}</div>
                         </div>
                     </div>
 
