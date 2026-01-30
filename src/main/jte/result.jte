@@ -412,7 +412,7 @@
                         Adjust variables to see if the verdict holds up under pressure.
                     </p>
                     
-                    <form hx-post="/simulate" hx-target="#verdict-card" hx-trigger="change, submit" hx-swap="outerHTML" onsubmit="event.preventDefault(); return false;">
+                    <form hx-post="/simulate" hx-target="#verdict-card" hx-trigger="change delay:300ms, submit" hx-swap="outerHTML" hx-sync="this:replace" hx-indicator="#sim-loading" onsubmit="event.preventDefault(); return false;">
                         <input type="hidden" name="brand" value="${input.brand()}">
                         <input type="hidden" name="model" value="${input.model()}">
                         <input type="hidden" name="vehicleType" value="${input.vehicleType()}">
@@ -493,7 +493,7 @@
                                     <div class="slider-container">
                                         <input type="range" min="0" max="2" step="1"
                                             value="${controls.hassleTolerance() == HassleTolerance.HATE_SWITCHING ? 0 : (controls.hassleTolerance() == HassleTolerance.WANT_NEW_CAR ? 2 : 1)}"
-                                            oninput="updateTolerance(this.value)">
+                                            onchange="updateTolerance(this.value)">
                                         <div class="slider-labels">
                                             <span>Low</span>
                                             <span>Neutral</span>
@@ -549,13 +549,19 @@
             const StickyBarController = {
                 bar: null,
                 threshold: 50,
+                initialized: false,
                 
                 init() {
                     this.bar = document.getElementById('sticky-verdict-bar');
                     if (!this.bar) return;
 
                     this.hoist();
-                    this.bindEvents();
+                    
+                    if (!this.initialized) {
+                        this.bindEvents();
+                        this.initialized = true;
+                    }
+
                     this.update();
                     
                     // Fail-safe retries for dynamic loads

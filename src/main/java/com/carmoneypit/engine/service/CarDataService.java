@@ -8,7 +8,10 @@ import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * Service responsible for loading and providing access to car data.
@@ -20,22 +23,39 @@ public class CarDataService {
     private static final Logger logger = LoggerFactory.getLogger(CarDataService.class);
 
     private final List<CarModel> carModels;
-    private final List<ModelReliability> reliabilityData;
-    private final List<ModelMarket> marketData;
-    private final List<MajorFaults> faultsData;
+    private final Map<String, CarModel> carModelsMap; // Key: "brand|model" (normalized)
+
+    private final Map<String, ModelReliability> reliabilityMap;
+    private final Map<String, ModelMarket> marketMap;
+    private final Map<String, MajorFaults> faultsMap;
 
     public CarDataService(ObjectMapper objectMapper) {
         this.carModels = loadJson(objectMapper, "/data/car_models.json", new TypeReference<>() {
         });
-        this.reliabilityData = loadJson(objectMapper, "/data/model_reliability.json", new TypeReference<>() {
+        var reliabilityData = loadJson(objectMapper, "/data/model_reliability.json", new TypeReference<List<ModelReliability>>() {
         });
-        this.marketData = loadJson(objectMapper, "/data/model_market.json", new TypeReference<>() {
+        var marketData = loadJson(objectMapper, "/data/model_market.json", new TypeReference<List<ModelMarket>>() {
         });
-        this.faultsData = loadJson(objectMapper, "/data/major_faults.json", new TypeReference<>() {
+        var faultsData = loadJson(objectMapper, "/data/major_faults.json", new TypeReference<List<MajorFaults>>() {
         });
 
-        logger.info("Loaded {} car models, {} reliability profiles, {} market profiles, {} fault profiles",
-                carModels.size(), reliabilityData.size(), marketData.size(), faultsData.size());
+        // Initialize Lookup Maps
+        this.carModelsMap = carModels.stream()
+                .collect(Collectors.toMap(
+                        c -> makeKey(c.brand(), c.model()),
+                        Function.identity(),
+                        (existing, replacement) -> existing));
+
+        this.reliabilityMap = reliabilityData.stream()
+                .collect(Collectors.toMap(ModelReliability::modelId, Function.identity(), (a, b) -> a));
+
+        this.marketMap = marketData.stream()
+                .collect(Collectors.toMap(ModelMarket::modelId, Function.identity(), (a, b) -> a));
+
+        this.faultsMap = faultsData.stream()
+                .collect(Collectors.toMap(MajorFaults::modelIdRef, Function.identity(), (a, b) -> a));
+
+        logger.info("Loaded {} car models", carModels.size());
     }
 
     private <T> List<T> loadJson(ObjectMapper mapper, String path, TypeReference<List<T>> typeRef) {
@@ -53,28 +73,19 @@ public class CarDataService {
     // --- Query Methods ---
 
     public Optional<CarModel> findCarBySlug(String brandSlug, String modelSlug) {
-        return carModels.stream()
-                .filter(c -> normalize(c.brand()).equals(normalize(brandSlug)) &&
-                        normalize(c.model()).equals(normalize(modelSlug)))
-                .findFirst();
+        return Optional.ofNullable(carModelsMap.get(makeKey(brandSlug, modelSlug)));
     }
 
     public Optional<MajorFaults> findFaultsByModelId(String modelId) {
-        return faultsData.stream()
-                .filter(f -> f.modelIdRef().equals(modelId))
-                .findFirst();
+        return Optional.ofNullable(faultsMap.get(modelId));
     }
 
     public Optional<ModelReliability> findReliabilityByModelId(String modelId) {
-        return reliabilityData.stream()
-                .filter(r -> r.modelId().equals(modelId))
-                .findFirst();
+        return Optional.ofNullable(reliabilityMap.get(modelId));
     }
 
     public Optional<ModelMarket> findMarketByModelId(String modelId) {
-        return marketData.stream()
-                .filter(m -> m.modelId().equals(modelId))
-                .findFirst();
+        return Optional.ofNullable(marketMap.get(modelId));
     }
 
     public List<String> getAllBrands() {
@@ -86,8 +97,9 @@ public class CarDataService {
     }
 
     public List<CarModel> getModelsByBrand(String brandSlug) {
+        String normalizedBrand = normalize(brandSlug);
         return carModels.stream()
-                .filter(c -> normalize(c.brand()).equals(normalize(brandSlug)))
+                .filter(c -> normalize(c.brand()).equals(normalizedBrand))
                 .toList();
     }
 
@@ -95,8 +107,12 @@ public class CarDataService {
         return carModels;
     }
 
+    private String makeKey(String brand, String model) {
+        return normalize(brand) + "|" + normalize(model);
+    }
+
     private String normalize(String input) {
-        return input.toLowerCase().replaceAll("[^a-z0-9]", "");
+        return input == null ? "" : input.toLowerCase().replaceAll("[^a-z0-9]", "");
     }
 
     // --- Data Records ---
