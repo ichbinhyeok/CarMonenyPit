@@ -368,3 +368,79 @@ Identify and stop the process that's listening on port 8080 or configure this ap
 2026-01-30T19:22:32.625+09:00  INFO 11476 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
 2026-01-30T19:22:32.626+09:00  INFO 11476 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
 2026-01-30T19:22:42.417+09:00  WARN 11476 --- [http-nio-8080-exec-9] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'POST' is not supported]
+2026-01-30T19:27:41.384+09:00  INFO 15868 --- [main] com.carmoneypit.CarMoneyPitApplication   : Starting CarMoneyPitApplication using Java 21.0.9 with PID 15868 (C:\Users\Administrator\CarMonenyPit\build\classes\java\main started by Administrator in C:\Users\Administrator\CarMonenyPit)
+2026-01-30T19:27:41.385+09:00  INFO 15868 --- [main] com.carmoneypit.CarMoneyPitApplication   : No active profile set, falling back to 1 default profile: "default"
+2026-01-30T19:27:41.991+09:00  INFO 15868 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-01-30T19:27:42.002+09:00  INFO 15868 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-01-30T19:27:42.003+09:00  INFO 15868 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.50]
+2026-01-30T19:27:42.038+09:00  INFO 15868 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-01-30T19:27:42.039+09:00  INFO 15868 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 622 ms
+2026-01-30T19:27:42.175+09:00  INFO 15868 --- [main] c.c.engine.service.CarDataService        : Loaded 75 car models
+2026-01-30T19:27:42.284+09:00  WARN 15868 --- [main] o.s.w.s.resource.ResourceHandlerUtils    : Appended trailing slash to static resource location: classpath:/static/favicon.ico/
+2026-01-30T19:27:42.284+09:00  WARN 15868 --- [main] o.s.w.s.resource.ResourceHandlerUtils    : Appended trailing slash to static resource location: classpath:/static/favicon.png/
+2026-01-30T19:27:42.374+09:00  INFO 15868 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2026-01-30T19:27:42.379+09:00  INFO 15868 --- [main] com.carmoneypit.CarMoneyPitApplication   : Started CarMoneyPitApplication in 1.333 seconds (process running for 1.578)
+2026-01-30T19:28:44.395+09:00  INFO 15868 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-01-30T19:28:44.396+09:00  INFO 15868 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-01-30T19:28:44.397+09:00  INFO 15868 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-01-30T19:29:06.953+09:00  WARN 15868 --- [http-nio-8080-exec-5] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'POST' is not supported]
+2026-01-30T20:20:59.168+09:00  INFO 8352 --- [Test worker] c.c.CarMoneyPitApplicationTests          : Starting CarMoneyPitApplicationTests using Java 21.0.9 with PID 8352 (started by Administrator in C:\Users\Administrator\CarMonenyPit)
+2026-01-30T20:20:59.169+09:00  INFO 8352 --- [Test worker] c.c.CarMoneyPitApplicationTests          : No active profile set, falling back to 1 default profile: "default"
+2026-01-30T20:20:59.806+09:00  INFO 8352 --- [Test worker] c.c.engine.service.CarDataService        : Loaded 75 car models
+2026-01-30T20:20:59.988+09:00  WARN 8352 --- [Test worker] o.s.w.s.resource.ResourceHandlerUtils    : Appended trailing slash to static resource location: classpath:/static/favicon.ico/
+2026-01-30T20:20:59.988+09:00  WARN 8352 --- [Test worker] o.s.w.s.resource.ResourceHandlerUtils    : Appended trailing slash to static resource location: classpath:/static/favicon.png/
+2026-01-30T20:21:00.078+09:00  INFO 8352 --- [Test worker] c.c.CarMoneyPitApplicationTests          : Started CarMoneyPitApplicationTests in 1.101 seconds (process running for 1.867)
+2026-01-30T20:21:00.818+09:00  INFO 8352 --- [Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.carmoneypit.engine.web.WebLayerTest]: WebLayerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-01-30T20:21:00.884+09:00  INFO 8352 --- [Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.carmoneypit.CarMoneyPitApplication for test class com.carmoneypit.engine.web.WebLayerTest
+2026-01-30T20:21:00.931+09:00  INFO 8352 --- [Test worker] c.carmoneypit.engine.web.WebLayerTest    : Starting WebLayerTest using Java 21.0.9 with PID 8352 (started by Administrator in C:\Users\Administrator\CarMonenyPit)
+2026-01-30T20:21:00.932+09:00  INFO 8352 --- [Test worker] c.carmoneypit.engine.web.WebLayerTest    : No active profile set, falling back to 1 default profile: "default"
+2026-01-30T20:21:01.271+09:00  WARN 8352 --- [Test worker] o.s.w.s.resource.ResourceHandlerUtils    : Appended trailing slash to static resource location: classpath:/static/favicon.ico/
+2026-01-30T20:21:01.272+09:00  WARN 8352 --- [Test worker] o.s.w.s.resource.ResourceHandlerUtils    : Appended trailing slash to static resource location: classpath:/static/favicon.png/
+2026-01-30T20:21:01.307+09:00  INFO 8352 --- [Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-01-30T20:21:01.308+09:00  INFO 8352 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-01-30T20:21:01.309+09:00  INFO 8352 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2026-01-30T20:21:01.325+09:00  INFO 8352 --- [Test worker] c.carmoneypit.engine.web.WebLayerTest    : Started WebLayerTest in 0.433 seconds (process running for 3.114)
+2026-01-30T20:43:56.908+09:00  INFO 12808 --- [Test worker] c.c.CarMoneyPitApplicationTests          : Starting CarMoneyPitApplicationTests using Java 21.0.9 with PID 12808 (started by Administrator in C:\Users\Administrator\CarMonenyPit)
+2026-01-30T20:43:56.910+09:00  INFO 12808 --- [Test worker] c.c.CarMoneyPitApplicationTests          : No active profile set, falling back to 1 default profile: "default"
+2026-01-30T20:43:57.695+09:00  INFO 12808 --- [Test worker] c.c.engine.service.CarDataService        : Loaded 75 car models
+2026-01-30T20:43:57.948+09:00  WARN 12808 --- [Test worker] o.s.w.s.resource.ResourceHandlerUtils    : Appended trailing slash to static resource location: classpath:/static/favicon.ico/
+2026-01-30T20:43:57.949+09:00  WARN 12808 --- [Test worker] o.s.w.s.resource.ResourceHandlerUtils    : Appended trailing slash to static resource location: classpath:/static/favicon.png/
+2026-01-30T20:43:58.075+09:00  INFO 12808 --- [Test worker] c.c.CarMoneyPitApplicationTests          : Started CarMoneyPitApplicationTests in 1.439 seconds (process running for 2.529)
+2026-01-30T20:43:59.120+09:00  INFO 12808 --- [Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.carmoneypit.engine.web.WebLayerTest]: WebLayerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-01-30T20:43:59.208+09:00  INFO 12808 --- [Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.carmoneypit.CarMoneyPitApplication for test class com.carmoneypit.engine.web.WebLayerTest
+2026-01-30T20:43:59.285+09:00  INFO 12808 --- [Test worker] c.carmoneypit.engine.web.WebLayerTest    : Starting WebLayerTest using Java 21.0.9 with PID 12808 (started by Administrator in C:\Users\Administrator\CarMonenyPit)
+2026-01-30T20:43:59.286+09:00  INFO 12808 --- [Test worker] c.carmoneypit.engine.web.WebLayerTest    : No active profile set, falling back to 1 default profile: "default"
+2026-01-30T20:43:59.782+09:00  WARN 12808 --- [Test worker] o.s.w.s.resource.ResourceHandlerUtils    : Appended trailing slash to static resource location: classpath:/static/favicon.ico/
+2026-01-30T20:43:59.784+09:00  WARN 12808 --- [Test worker] o.s.w.s.resource.ResourceHandlerUtils    : Appended trailing slash to static resource location: classpath:/static/favicon.png/
+2026-01-30T20:43:59.836+09:00  INFO 12808 --- [Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-01-30T20:43:59.836+09:00  INFO 12808 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-01-30T20:43:59.837+09:00  INFO 12808 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2026-01-30T20:43:59.857+09:00  INFO 12808 --- [Test worker] c.carmoneypit.engine.web.WebLayerTest    : Started WebLayerTest in 0.641 seconds (process running for 4.312)
+2026-01-30T20:44:52.387+09:00  INFO 13120 --- [main] com.carmoneypit.CarMoneyPitApplication   : Starting CarMoneyPitApplication using Java 21.0.9 with PID 13120 (C:\Users\Administrator\CarMonenyPit\build\classes\java\main started by Administrator in C:\Users\Administrator\CarMonenyPit)
+2026-01-30T20:44:52.389+09:00  INFO 13120 --- [main] com.carmoneypit.CarMoneyPitApplication   : No active profile set, falling back to 1 default profile: "default"
+2026-01-30T20:44:53.024+09:00  INFO 13120 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-01-30T20:44:53.038+09:00  INFO 13120 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-01-30T20:44:53.038+09:00  INFO 13120 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.50]
+2026-01-30T20:44:53.072+09:00  INFO 13120 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-01-30T20:44:53.072+09:00  INFO 13120 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 648 ms
+2026-01-30T20:44:53.211+09:00  INFO 13120 --- [main] c.c.engine.service.CarDataService        : Loaded 75 car models
+2026-01-30T20:44:53.317+09:00  WARN 13120 --- [main] o.s.w.s.resource.ResourceHandlerUtils    : Appended trailing slash to static resource location: classpath:/static/favicon.ico/
+2026-01-30T20:44:53.317+09:00  WARN 13120 --- [main] o.s.w.s.resource.ResourceHandlerUtils    : Appended trailing slash to static resource location: classpath:/static/favicon.png/
+2026-01-30T20:44:53.395+09:00  WARN 13120 --- [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'
+2026-01-30T20:44:53.410+09:00  INFO 13120 --- [main] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2026-01-30T20:44:53.425+09:00 ERROR 13120 --- [main] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 8080 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 8080 or configure this application to listen on another port.
+

@@ -84,10 +84,6 @@ public class VerdictPresenter {
         if (str == null || str.length() == 0) {
             return str;
         }
-        // Fallback for legacy tokens (non-GZIP, plain Base64)
-        // Check if it's likely GZIP (GZIP header is 0x1f8b, but Base64 makes it hard to
-        // peek directly without decoding)
-        // So we try strict GZIP decode, if fail, try legacy plain Base64 decode.
         byte[] bytes = Base64.getUrlDecoder().decode(str);
 
         try (java.io.ByteArrayInputStream in = new java.io.ByteArrayInputStream(bytes);
@@ -102,15 +98,14 @@ public class VerdictPresenter {
             }
             return sb.toString();
         } catch (java.util.zip.ZipException e) {
-            // Not in GZIP format, assume legacy plain Base64 JSON
             return new String(bytes, StandardCharsets.UTF_8);
         }
     }
 
     public String getViralOgTitle(VerdictState state) {
         return switch (state) {
-            case TIME_BOMB -> "Statistical signal of significant financial bleed relative to market benchmarks.";
-            case STABLE -> "Maintenance profile suggests asset stability within normal actuarial parameters.";
+            case TIME_BOMB -> "Statistical analysis signals higher financial utility in liquidation than repair.";
+            case STABLE -> "Maintenance profile suggests asset stability within normal operating parameters.";
             case BORDERLINE ->
                 "Market data indicates an inflection point. Retention viability is sensitive to service pricing.";
             default -> "Estimated AutoMoneyPit Diagnostic Result";
@@ -119,16 +114,16 @@ public class VerdictPresenter {
 
     public String getVerdictTitle(VerdictState state) {
         return switch (state) {
-            case TIME_BOMB -> "Estimated LIQUIDATE";
-            case STABLE -> "Estimated SUSTAIN";
-            case BORDERLINE -> "Estimated RISK_ALERT";
-            default -> "Estimated SCAN_FAILURE";
+            case TIME_BOMB -> "Sell It.";
+            case STABLE -> "Fix It.";
+            case BORDERLINE -> "It's Close.";
+            default -> "Needs Review";
         };
     }
 
-    private static final String NARRATIVE_TIME_BOMB = "DECISION_AUDIT: Our market data model suggests your asset is entering a rapid depreciation phase relative to national benchmarks.%s Projected maintenance overhead vs current equity indicates a high-variance risk. Authorizing large repairs at this stage is statistically inefficient for capital preservation. Strategic liquidation is advised via optimized exit-ramp.";
-    private static final String NARRATIVE_STABLE = "VALIDATED: Maintenance appears to be a sound investment. The %s platform remains statistically efficient for your current usage window based on our data. Authorizing repair is likely to preserve capital better than entering the high-friction replacement market.";
-    private static final String NARRATIVE_BORDERLINE = "CAUTION: Correlation shift detected.%s Your asset is entering a high-variance risk window. Proceeding with repair may be speculative. We suggest securing a 15%% discount on services or considering an exit.";
+    private static final String NARRATIVE_TIME_BOMB = "Based on the numbers, this repair doesn't make financial sense.%s At this point, your car is likely to cost you more in repairs than it's worth. The smart move is to get a few offers and see what you can get for it.";
+    private static final String NARRATIVE_STABLE = "Good news: fixing your %s looks like the right call. The repair cost is reasonable compared to your car's value, and you should get plenty more miles out of it. Go ahead and get it fixed.";
+    private static final String NARRATIVE_BORDERLINE = "Honestly, this one's a coin flip.%s The numbers are close enough that it could go either way. My advice: get a second quote on the repair. If you can knock a few hundred off, it tips toward fixing. If not, selling might be smarter.";
 
     public String getLawyerExplanation(VerdictState state, EngineInput input) {
         Optional<CarBrandData> brandData = (input != null) ? valuationService.getBrandData(input.brand())
@@ -140,7 +135,7 @@ public class VerdictPresenter {
                 String brandRisk = "";
                 if (brandData.isPresent() && !brandData.get().majorIssues.isEmpty()) {
                     brandRisk = String.format(
-                            " Statistical signal for %s detected: %s issues peak at this mileage.",
+                            " Statistical trends for %s detected: %s issues frequently peak at this mileage.",
                             brandName, brandData.get().majorIssues.get(0).part);
                 }
                 return String.format(NARRATIVE_TIME_BOMB, brandRisk);
@@ -152,7 +147,7 @@ public class VerdictPresenter {
             default:
                 String issueWarning = "";
                 if (brandData.isPresent() && !brandData.get().majorIssues.isEmpty()) {
-                    issueWarning = String.format(" Potential %s vulnerability: %s. ", brandName,
+                    issueWarning = String.format(" Potential %s lifecycle bottleneck: %s. ", brandName,
                             brandData.get().majorIssues.get(0).part);
                 }
                 return String.format(NARRATIVE_BORDERLINE, issueWarning);
@@ -161,26 +156,24 @@ public class VerdictPresenter {
 
     public String getActionPlan(VerdictState state) {
         return switch (state) {
-            case TIME_BOMB -> "Review immediate exit strategy to mitigate estimated capital loss.";
-            case STABLE -> "Authorize specific service. Execute maintenance hold followed by strategic review.";
-            case BORDERLINE -> "Request line-item repair audit. Pivot based on actual localized service quotes.";
+            case TIME_BOMB -> "Get offers from Peddle, CarMax, or local dealers this week.";
+            case STABLE -> "Approve the repair. Your car should serve you well for years to come.";
+            case BORDERLINE -> "Get a second repair quote. If it's lower, fix it. If not, consider selling.";
             default ->
-                "Negotiate a 15% service discount to offset risk variance. If unsuccessful, abort repair and exit.";
+                "Try negotiating a lower repair price. If they won't budge, selling might be better.";
         };
     }
 
     public String getCssClass(VerdictState state) {
         return switch (state) {
-            case TIME_BOMB -> "verdict-liquidate"; // Switched from terminate to match result.jte
+            case TIME_BOMB -> "verdict-liquidate";
             case STABLE -> "verdict-sustain";
-            case BORDERLINE -> "verdict-risk_alert"; // Switched from probation to match result.jte
+            case BORDERLINE -> "verdict-risk_alert";
             default -> "verdict-unknown";
         };
     }
 
     public String getLeadLabel(VerdictState state, EngineInput input, SimulationControls controls) {
-        boolean isWorrier = input.isQuoteEstimated() && (controls == null
-                || controls.mobilityStatus() == com.carmoneypit.engine.api.InputModels.MobilityStatus.DRIVABLE);
         boolean isAccident = input.isQuoteEstimated() && (controls != null
                 && controls.mobilityStatus() == com.carmoneypit.engine.api.InputModels.MobilityStatus.NEEDS_TOW);
         boolean hasQuote = !input.isQuoteEstimated();
@@ -203,8 +196,6 @@ public class VerdictPresenter {
     }
 
     public String getLeadDescription(VerdictState state, EngineInput input, SimulationControls controls) {
-        boolean isWorrier = input.isQuoteEstimated() && (controls == null
-                || controls.mobilityStatus() == com.carmoneypit.engine.api.InputModels.MobilityStatus.DRIVABLE);
         boolean isAccident = input.isQuoteEstimated() && (controls != null
                 && controls.mobilityStatus() == com.carmoneypit.engine.api.InputModels.MobilityStatus.NEEDS_TOW);
         boolean hasQuote = !input.isQuoteEstimated();
@@ -216,38 +207,24 @@ public class VerdictPresenter {
                 if (hasQuote)
                     return "Ensure you aren't being overcharged. Compare your quote against the national average for this specific repair.";
                 if (isAccident)
-                    return "Don't guess on damage. Connect with a certified facility to get an accurate, professional assessment.";
-                return "Your car is worth keeping. Find a trusted local mechanic to perform this repair at a fair price.";
+                    return "Don't guess on damage. Connect with a certified facility to get an accurate assessment.";
+                return "Your car is worth keeping. Find a trusted mechanic to perform this repair at a fair price.";
             case BORDERLINE:
             default:
                 if (hasQuote)
-                    return "This repair is risky. Get a second opinion to confirm the diagnosis before committing capital.";
-                return "The decision is close. Check the current private party value to see if repairing makes financial sense.";
+                    return "This repair is risky. Get a second opinion to confirm the diagnosis before committing.";
+                return "The decision is close. Check the current private party value to see if repairing makes sense.";
         }
     }
 
     public String getLeadUrl(VerdictState state, EngineInput input, SimulationControls controls) {
-        String brand = (input != null && input.brand() != null) ? input.brand().name() : "";
-        String model = (input != null && input.model() != null) ? input.model() : "";
-
-        // URL Encoding helper (basic)
-        String encodedBrand = brand.replace(" ", "-").toLowerCase();
-        String encodedModel = model.replace(" ", "-").toLowerCase();
-
         switch (state) {
             case TIME_BOMB:
-                // Direct to Peddle (Instant Cash Offer) - High Intent for "Junk/Sell"
-                // Ideally we would pass vehicle params if they supported query strings,
-                // but linking to the landing page is the best UX for now.
                 return "https://www.peddle.com/instant-offer";
-
             case STABLE:
-                // Direct to RepairPal (Fair Price Estimator) - High Trust for "Fix"
                 return "https://repairpal.com/estimator";
-
             case BORDERLINE:
             default:
-                // Fallback: Check value on KBB or similar, or generic RepairPal
                 return "https://www.kbb.com/";
         }
     }

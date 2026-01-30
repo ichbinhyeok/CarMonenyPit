@@ -25,62 +25,77 @@
 <div class="receipt-container">
     <div class="receipt-paper">
         <div class="receipt-header">
-            <div class="receipt-logo">2026_ACTUARIAL_HUD</div>
-            <div class="receipt-title">DECISION AUDIT</div>
-            <div class="receipt-date">CORRELATION_ID: ${java.util.UUID.randomUUID().toString().substring(0, 8).toUpperCase()}</div>
+            <div class="receipt-title">Cost Breakdown</div>
+            <div class="receipt-subtitle">Click any item to see how we calculated it</div>
         </div>
         
-        <!-- SECTION 1: STAY -->
-        <div class="receipt-divider">STAY_PATH_LIABILITY // [A]</div>
+        <!-- SECTION 1: IF YOU FIX IT -->
+        <div class="receipt-section-label">If You Fix It</div>
         <div class="receipt-items">
             @for(FinancialLineItem item : stayItems)
-                <div class="receipt-item">
+                <div class="receipt-item expandable" onclick="this.classList.toggle('expanded')">
                     <div class="item-main">
-                        <span class="item-label">${item.label().toUpperCase()}</span>
-                        <span class="item-amount" style="${item.amount() < 0 ? "color: #10b981;" : ""}">$${String.format("%,.0f", Math.round(item.amount() / 100.0) * 100.0)}</span>
+                        <span class="item-label">${item.label()}</span>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <span class="item-amount" style="${item.amount() < 0 ? "color: #10b981;" : ""}">$${String.format("%,.0f", Math.round(item.amount() / 100.0) * 100.0)}</span>
+                            <span class="expand-icon">▼</span>
+                        </div>
                     </div>
-                    <div class="item-sub">>> ${item.description()}</div>
+                    <div class="item-explanation">${item.description()}</div>
                 </div>
             @endfor
-            <div class="receipt-item total-row" style="border-top: 1px solid #000; padding-top: 0.5rem; margin-top: 0.5rem;">
-                <div class="item-main" style="color: #d91b1b;">
-                    <span class="item-label" style="font-weight: 900;">EST. RETENTION COST</span>
-                    <span class="item-amount" style="font-weight: 900;">$${String.format("%,.0f", Math.round(stayTotal / 100.0) * 100.0)}</span>
+            <div class="receipt-item total-row">
+                <div class="item-main">
+                    <span class="item-label" style="font-weight: 800;">Total Cost to Keep</span>
+                    <span class="item-amount" style="font-weight: 800; color: #dc2626;">$${String.format("%,.0f", Math.round(stayTotal / 100.0) * 100.0)}</span>
                 </div>
             </div>
         </div>
 
-        <!-- SECTION 2: MOVE -->
-        <div class="receipt-divider">EXIT_PATH_FRICTION // [B]</div>
+        <div class="section-divider"></div>
+
+        <!-- SECTION 2: IF YOU SELL IT -->
+        <div class="receipt-section-label">If You Sell It</div>
         <div class="receipt-items">
             @for(FinancialLineItem item : moveItems)
-                <div class="receipt-item">
+                <div class="receipt-item expandable" onclick="this.classList.toggle('expanded')">
                     <div class="item-main">
-                        <span class="item-label">${item.label().toUpperCase()}</span>
-                        <span class="item-amount" style="${item.amount() < 0 ? "color: #10b981;" : ""}">$${String.format("%,.0f", Math.round(item.amount() / 100.0) * 100.0)}</span>
+                        <span class="item-label">${item.label()}</span>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <span class="item-amount" style="${item.amount() < 0 ? "color: #10b981;" : ""}">$${String.format("%,.0f", Math.round(item.amount() / 100.0) * 100.0)}</span>
+                            <span class="expand-icon">▼</span>
+                        </div>
                     </div>
-                    <div class="item-sub">>> ${item.description()}</div>
+                    <div class="item-explanation">${item.description()}</div>
                 </div>
             @endfor
-            <div class="receipt-item total-row" style="border-top: 1px solid #000; padding-top: 0.5rem; margin-top: 0.5rem;">
-                <div class="item-main" style="color: #1a1a1a;">
-                    <span class="item-label" style="font-weight: 900;">EST. SWITCHING COST</span>
-                    <span class="item-amount" style="font-weight: 900;">$${String.format("%,.0f", Math.round(moveTotal / 100.0) * 100.0)}</span>
+            <div class="receipt-item total-row">
+                <div class="item-main">
+                    <span class="item-label" style="font-weight: 800;">Total Cost to Switch</span>
+                    <span class="item-amount" style="font-weight: 800; color: #6366f1;">$${String.format("%,.0f", Math.round(moveTotal / 100.0) * 100.0)}</span>
                 </div>
             </div>
         </div>
         
-        <div class="receipt-divider" style="opacity: 0.6;">--------------------------------</div>
+        <div class="section-divider"></div>
         
-        <div class="receipt-footer">
-            <div class="footer-msg">SUMMARY VERDICT</div>
-            <div class="footer-warning" style="font-size: 0.8rem; font-weight: 800; color: ${stayTotal > moveTotal ? "#d91b1b" : "#10b981"};">
-                ${stayTotal > moveTotal ? "RETENTION_LIABILITY_EXCEEDED" : "RETENTION_JUSTIFIED"}
-            </div>
-            <div class="barcode">|| |||| ||| ||||| || ||| ||</div>
-            <div style="margin-top: 1rem; font-size: 0.6rem; opacity: 0.5; text-align: center;">
-                * All figures are actuarial estimates based on market data.
-            </div>
+        <!-- BOTTOM LINE -->
+        <div class="receipt-conclusion">
+            @if(stayTotal > moveTotal)
+                <div class="conclusion-badge" style="background: #fef2f2; color: #dc2626;">
+                    Fixing costs $${String.format("%,.0f", stayTotal - moveTotal)} more
+                </div>
+                <p class="conclusion-text">Based on these numbers, selling looks like the smarter financial move.</p>
+            @else
+                <div class="conclusion-badge" style="background: #f0fdf4; color: #16a34a;">
+                    Selling costs $${String.format("%,.0f", moveTotal - stayTotal)} more
+                </div>
+                <p class="conclusion-text">Based on these numbers, fixing your car makes more sense.</p>
+            @endif
+        </div>
+        
+        <div class="receipt-disclaimer">
+            * All figures are estimates based on market data and historical patterns.
         </div>
     </div>
 </div>
@@ -89,37 +104,21 @@
     .receipt-container {
         display: flex;
         justify-content: center;
-        padding: 2rem 0;
-        filter: drop-shadow(0 20px 40px rgba(0,0,0,0.15));
+        padding: 1rem 0;
     }
 
     .receipt-paper {
-        background: #fdfdfb;
+        background: #fff;
         width: 100%;
-        max-width: 400px;
-        padding: 2.5rem 1.5rem;
-        font-family: 'Courier New', Courier, monospace;
-        color: #1a1a1a;
-        position: relative;
-        border-radius: 2px;
-        box-shadow: inset 0 0 50px rgba(0,0,0,0.02);
-        border: 1px solid rgba(0,0,0,0.08); /* Added subtle border for contrast */
+        max-width: 420px;
+        padding: 2rem;
+        border-radius: 24px;
+        border: 1px solid #e2e8f0;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.06);
     }
 
     @media (max-width: 480px) {
         .receipt-paper { padding: 1.5rem 1rem; }
-        .receipt-title { font-size: 1.1rem; }
-    }
-
-    .receipt-paper::after {
-        content: "";
-        position: absolute;
-        bottom: -10px;
-        left: 0;
-        width: 100%;
-        height: 10px;
-        background: radial-gradient(circle, transparent, transparent 50%, #fdfdfb 50%, #fdfdfb) 0 0 / 20px 20px;
-        background-repeat: repeat-x;
     }
 
     .receipt-header {
@@ -127,81 +126,129 @@
         margin-bottom: 1.5rem;
     }
 
-    .receipt-logo {
-        font-size: 0.75rem;
-        font-weight: 900;
-        letter-spacing: 0.1em;
-        margin-bottom: 0.25rem;
-    }
-
     .receipt-title {
         font-size: 1.25rem;
-        font-weight: 900;
-        margin-bottom: 0.5rem;
+        font-weight: 800;
+        color: #0f172a;
     }
 
-    .receipt-date {
+    .receipt-subtitle {
+        font-size: 0.8rem;
+        color: #64748b;
+        margin-top: 0.25rem;
+    }
+
+    .receipt-section-label {
         font-size: 0.7rem;
-        opacity: 0.6;
-    }
-
-    .receipt-divider {
-        text-align: center;
-        letter-spacing: -2px;
-        color: #9ca3af; /* clearer grey color instead of opacity */
-        margin: 1rem 0;
-        user-select: none;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: #94a3b8;
+        margin-bottom: 0.75rem;
+        padding-left: 0.25rem;
     }
 
     .receipt-items {
         display: flex;
         flex-direction: column;
-        gap: 1.25rem;
+        gap: 0.5rem;
     }
 
     .receipt-item {
-        display: flex;
-        flex-direction: column;
+        padding: 0.75rem 1rem;
+        background: #f8fafc;
+        border-radius: 12px;
+        transition: all 0.2s ease;
+    }
+
+    .receipt-item.expandable {
+        cursor: pointer;
+    }
+
+    .receipt-item.expandable:hover {
+        background: #f1f5f9;
+    }
+
+    .receipt-item.total-row {
+        background: transparent;
+        border-top: 2px solid #e2e8f0;
+        border-radius: 0;
+        margin-top: 0.5rem;
+        padding-top: 1rem;
     }
 
     .item-main {
         display: flex;
         justify-content: space-between;
-        font-weight: 700;
+        align-items: center;
+        font-weight: 600;
         font-size: 0.95rem;
+        color: #1e293b;
     }
 
     .item-amount {
-        color: #d91b1b;
+        color: #dc2626;
+        font-weight: 700;
     }
 
-    .item-sub {
-        font-size: 0.8rem; /* Increased from 0.7rem (~11px -> ~13px) */
-        color: #555555;    /* Solid dark grey, removed opacity */
-        margin-top: 0.35rem;
-        line-height: 1.4;
-    }
-
-    .receipt-footer {
-        margin-top: 2rem;
-        text-align: center;
-    }
-
-    .footer-msg {
-        font-weight: 900;
-        font-size: 0.8rem;
-        margin-bottom: 0.25rem;
-    }
-
-    .footer-warning {
+    .expand-icon {
         font-size: 0.6rem;
-        opacity: 0.7;
-        margin-bottom: 1rem;
+        color: #94a3b8;
+        transition: transform 0.2s;
     }
 
-    .barcode {
-        font-size: 1.2rem;
-        letter-spacing: 0.1em;
-        opacity: 0.3;
+    .receipt-item.expanded .expand-icon {
+        transform: rotate(180deg);
+    }
+
+    .item-explanation {
+        font-size: 0.8rem;
+        color: #64748b;
+        line-height: 1.5;
+        margin-top: 0;
+        max-height: 0;
+        overflow: hidden;
+        transition: all 0.2s ease;
+    }
+
+    .receipt-item.expanded .item-explanation {
+        margin-top: 0.75rem;
+        max-height: 100px;
+        padding-top: 0.75rem;
+        border-top: 1px dashed #e2e8f0;
+    }
+
+    .section-divider {
+        height: 1px;
+        background: #e2e8f0;
+        margin: 1.5rem 0;
+    }
+
+    .receipt-conclusion {
+        text-align: center;
+        padding: 1rem;
+    }
+
+    .conclusion-badge {
+        display: inline-block;
+        padding: 0.5rem 1rem;
+        border-radius: 100px;
+        font-weight: 800;
+        font-size: 0.9rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .conclusion-text {
+        font-size: 0.85rem;
+        color: #64748b;
+        margin: 0;
+    }
+
+    .receipt-disclaimer {
+        font-size: 0.7rem;
+        color: #94a3b8;
+        text-align: center;
+        margin-top: 1.5rem;
     }
 </style>
+

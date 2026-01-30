@@ -173,24 +173,96 @@
     content = @`
         <section class="hero-section">
             <div class="hero-badge">
-                <span style="font-size: 1.1rem;">🛡️</span> Data-Driven Financial Logic
+                <span style="font-size: 1.1rem;">🔧</span> 30-Second Decision Tool
             </div>
-            <h1 class="hero-title">Your Asset Is<br>Hemorrhaging.</h1>
+            <h1 class="hero-title">Fix It or<br>Sell It?</h1>
             <p class="hero-subtitle">
-                Stop guessing. Connect your vehicle data to our global actuarial grid for a definitive financial verdict in 30 seconds.
+                Got a repair quote that made you gasp? Let's find out if it's worth it — or if you should cut your losses.
             </p>
 
+            <!-- Situation Selection Cards -->
+            <div class="situation-cards" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2.5rem; max-width: 700px; margin-left: auto; margin-right: auto;">
+                <button type="button" class="situation-card active" data-situation="quote" onclick="selectSituation(this, 'quote')">
+                    <span style="font-size: 2rem; margin-bottom: 0.5rem;">💰</span>
+                    <span style="font-weight: 700; font-size: 0.85rem;">I got a repair quote</span>
+                </button>
+                <button type="button" class="situation-card" data-situation="breakdown" onclick="selectSituation(this, 'breakdown')">
+                    <span style="font-size: 2rem; margin-bottom: 0.5rem;">🔧</span>
+                    <span style="font-weight: 700; font-size: 0.85rem;">My car broke down</span>
+                </button>
+                <button type="button" class="situation-card" data-situation="old" onclick="selectSituation(this, 'old')">
+                    <span style="font-size: 2rem; margin-bottom: 0.5rem;">⏰</span>
+                    <span style="font-weight: 700; font-size: 0.85rem;">My car is getting old</span>
+                </button>
+            </div>
+
+            <style>
+                .situation-card {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    padding: 1.25rem 1rem;
+                    background: #f8fafc;
+                    border: 2px solid #e2e8f0;
+                    border-radius: 20px;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                    text-align: center;
+                }
+                .situation-card:hover {
+                    border-color: #94a3b8;
+                    transform: translateY(-2px);
+                }
+                .situation-card.active {
+                    background: #eff6ff;
+                    border-color: #3b82f6;
+                    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+                }
+                @media (max-width: 600px) {
+                    .situation-cards { grid-template-columns: 1fr !important; }
+                }
+            </style>
+
             <article class="modern-form-container" id="form-container">
+                <!-- Progress Indicator -->
+                <div style="margin-bottom: 2rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                        <span style="font-size: 0.75rem; font-weight: 700; color: var(--text-secondary);">YOUR VEHICLE</span>
+                        <span style="font-size: 0.75rem; font-weight: 600; color: #3b82f6;">Step 1 of 2</span>
+                    </div>
+                    <div style="height: 4px; background: #e2e8f0; border-radius: 100px; overflow: hidden;">
+                        <div style="width: 50%; height: 100%; background: linear-gradient(90deg, #3b82f6, #60a5fa); border-radius: 100px;"></div>
+                    </div>
+                </div>
+
                 <form hx-post="/analyze" hx-target="#form-container" hx-swap="outerHTML show:window:top" hx-push-url="false" class="form-grid-modern">
+                    <input type="hidden" name="situation" id="situationInput" value="quote">
+                    
+                    <!-- Row 1: Year (First!) -->
                     <div class="input-group">
-                        <label>Manufacturer</label>
-                        <select name="brand" 
+                        <label>Vehicle Year</label>
+                        <select name="year" id="year-select" required>
+                            <option value="">Select year...</option>
+                            @for(int y = 2026; y >= 1995; y--)
+                                <option value="${y}">${y}</option>
+                            @endfor
+                            <option value="1994">1994 or older</option>
+                        </select>
+                    </div>
+
+                    <!-- Row 2: Brand -->
+                    <div class="input-group">
+                        <label>Brand</label>
+                        <select name="brand" id="brand-select"
                                 hx-get="/api/models" 
                                 hx-target="#model-select" 
                                 hx-swap="innerHTML"
-                                hx-trigger="change, load"
+                                hx-trigger="change"
+                                hx-include="#year-select"
                                 hx-indicator=".integrity-dot"
                                 required>
+                            <option value="">Select brand...</option>
                             @for(CarBrand brand : CarBrand.values())
                                 @if(prefillBrand != null && brand.name().equals(prefillBrand))
                                     <option value="${brand}" selected>${brand}</option>
@@ -201,28 +273,35 @@
                         </select>
                     </div>
 
+                    <!-- Row 3: Model -->
                     <div class="input-group">
-                        <label>Vehicle Model</label>
+                        <label>Model</label>
                         <select name="model" id="model-select" required>
                             @if(prefillModel != null)
                                 <option value="${prefillModel}" selected>${prefillModel}</option>
                             @else
-                                <option value="">Select a brand first</option>
+                                <option value="">Select brand first...</option>
                             @endif
                         </select>
                     </div>
 
-                    <div class="input-group">
-                        <label>Vehicle Year</label>
-                        <input type="number" name="year" placeholder="2018" min="1990" max="2026" required>
-                    </div>
-
+                    <!-- Row 4: Mileage (Range Dropdown) -->
                     <div class="input-group">
                         <label>Mileage</label>
-                        <input type="number" name="mileage" placeholder="120,000" required>
+                        <select name="mileage" id="mileage-select" required>
+                            <option value="">Select range...</option>
+                            <option value="25000">Under 30,000 miles</option>
+                            <option value="45000">30,000 – 60,000 miles</option>
+                            <option value="75000">60,000 – 90,000 miles</option>
+                            <option value="105000">90,000 – 120,000 miles</option>
+                            <option value="135000">120,000 – 150,000 miles</option>
+                            <option value="175000">150,000 – 200,000 miles</option>
+                            <option value="225000">200,000+ miles</option>
+                        </select>
                     </div>
 
-                    <div class="input-group">
+                    <!-- Row 5: Repair Quote (Conditional based on situation) -->
+                    <div class="input-group" id="quote-section">
                         <div style="display: flex; justify-content: space-between; align-items: center;">
                             <label>Repair Quote ($)</label>
                             <label style="display: flex; align-items: center; gap: 4px; font-size: 0.7rem; cursor: pointer; text-transform: none; color: var(--text-secondary); font-weight: 600;">
@@ -231,21 +310,21 @@
                             </label>
                         </div>
                         @if(prefillQuote != null)
-                            <input type="number" id="repairQuoteInput" name="repairQuoteUsd" placeholder="1,500" value="${prefillQuote}" required>
+                            <input type="number" id="repairQuoteInput" name="repairQuoteUsd" placeholder="e.g. 2500" value="${prefillQuote}" required>
                         @else
-                            <input type="number" id="repairQuoteInput" name="repairQuoteUsd" placeholder="1,500" required>
+                            <input type="number" id="repairQuoteInput" name="repairQuoteUsd" placeholder="e.g. 2500" required>
                         @endif
                         <input type="hidden" id="isQuoteMissing" name="isQuoteMissing" value="false">
                     </div>
 
                     <div class="analyze-footer">
                         <button type="submit" class="btn-cinematic">
-                            Run Market Analysis <span>→</span>
+                            Get My Verdict <span>→</span>
                         </button>
                         
                         <div class="market-integrity">
                             <span class="integrity-dot"></span>
-                            MARKET: GLOBAL DATA SYNC // [Updated Bi-weekly]
+                            Powered by market data & historical patterns
                         </div>
                     </div>
                 </form>
@@ -257,13 +336,34 @@
                             input.value = '';
                             input.disabled = true;
                             input.required = false;
-                            input.placeholder = "Auto-Estimating...";
+                            input.placeholder = "We'll estimate for you...";
                             hidden.value = "true";
                         } else {
                             input.disabled = false;
                             input.required = true;
-                            input.placeholder = "1500";
+                            input.placeholder = "e.g. 2500";
                             hidden.value = "false";
+                        }
+                    }
+
+                    function selectSituation(btn, situation) {
+                        // Update active state
+                        document.querySelectorAll('.situation-card').forEach(c => c.classList.remove('active'));
+                        btn.classList.add('active');
+                        document.getElementById('situationInput').value = situation;
+
+                        // Adjust form based on situation
+                        const quoteSection = document.getElementById('quote-section');
+                        const noQuoteToggle = document.getElementById('noQuoteToggle');
+                        
+                        if (situation === 'quote') {
+                            quoteSection.style.display = 'flex';
+                            noQuoteToggle.checked = false;
+                            toggleQuoteInput(noQuoteToggle);
+                        } else if (situation === 'breakdown' || situation === 'old') {
+                            // Auto-check "no quote" for these situations
+                            noQuoteToggle.checked = true;
+                            toggleQuoteInput(noQuoteToggle);
                         }
                     }
                 </script>
