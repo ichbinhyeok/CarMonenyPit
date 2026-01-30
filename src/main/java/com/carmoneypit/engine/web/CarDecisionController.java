@@ -84,7 +84,7 @@ public class CarDecisionController {
                 try {
                         int year = Integer.parseInt(parts[0]);
                         String brandSlug = parts[1].toUpperCase();
-                        String modelSlug = parts.length > 2 ? formatModelName(parts[2]) : "";
+                        String modelSlug = parts.length > 2 ? parts[2] : "";
 
                         // Find matching brand
                         CarBrand brand = null;
@@ -98,21 +98,28 @@ public class CarDecisionController {
                         if (brand == null) {
                                 return "redirect:/";
                         }
-                        
+
                         // Find matching CarModel to get ID
-                        // We iterate to find a model that matches the slug
+                        // We iterate to find a model that matches the slug using fuzzy matching
+                        // (normalization)
+                        String normalizedSlugModel = modelSlug.toLowerCase().replaceAll("[^a-z0-9]", "");
+
                         var carModelOpt = carDataService.getAllModels().stream()
-                            .filter(m -> m.brand().equalsIgnoreCase(brand.name()) && 
-                                         m.model().equalsIgnoreCase(modelSlug))
-                            .findFirst();
+                                        .filter(m -> m.brand().equalsIgnoreCase(brand.name()))
+                                        .filter(m -> m.model().toLowerCase().replaceAll("[^a-z0-9]", "")
+                                                        .equals(normalizedSlugModel))
+                                        .findFirst();
 
                         if (carModelOpt.isPresent()) {
-                            var carModel = carModelOpt.get();
-                            // Fetch specific faults
-                            var faultsOpt = carDataService.findFaultsByModelId(carModel.id());
-                            if (faultsOpt.isPresent()) {
-                                model.addAttribute("majorFaults", faultsOpt.get());
-                            }
+                                var carModel = carModelOpt.get();
+                                // If we found a model, use its official display name instead of the slug
+                                modelSlug = carModel.model();
+
+                                // Fetch specific faults
+                                var faultsOpt = carDataService.findFaultsByModelId(carModel.id());
+                                if (faultsOpt.isPresent()) {
+                                        model.addAttribute("majorFaults", faultsOpt.get());
+                                }
                         }
 
                         // SEO Meta - Optimized for CTR

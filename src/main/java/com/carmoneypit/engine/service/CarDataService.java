@@ -32,8 +32,9 @@ public class CarDataService {
     public CarDataService(ObjectMapper objectMapper) {
         this.carModels = loadJson(objectMapper, "/data/car_models.json", new TypeReference<>() {
         });
-        var reliabilityData = loadJson(objectMapper, "/data/model_reliability.json", new TypeReference<List<ModelReliability>>() {
-        });
+        var reliabilityData = loadJson(objectMapper, "/data/model_reliability.json",
+                new TypeReference<List<ModelReliability>>() {
+                });
         var marketData = loadJson(objectMapper, "/data/model_market.json", new TypeReference<List<ModelMarket>>() {
         });
         var faultsData = loadJson(objectMapper, "/data/major_faults.json", new TypeReference<List<MajorFaults>>() {
@@ -100,7 +101,7 @@ public class CarDataService {
         String normalizedBrand = normalize(brandSlug);
         return carModels.stream()
                 .filter(c -> normalize(c.brand()).equals(normalizedBrand))
-                .sorted((c1, c2) -> c1.model().compareToIgnoreCase(c2.model()))
+                .sorted((c1, c2) -> String.CASE_INSENSITIVE_ORDER.compare(c1.model(), c2.model()))
                 .toList();
     }
 
@@ -136,12 +137,12 @@ public class CarDataService {
             @com.fasterxml.jackson.annotation.JsonProperty("common_trouble_spots") List<String> commonTroubleSpots,
             @com.fasterxml.jackson.annotation.JsonProperty("critical_milestones") List<Milestone> criticalMilestones,
             @com.fasterxml.jackson.annotation.JsonProperty("mileage_logic_text") Map<String, String> mileageLogicText) {
-            
-            // Constructor for Jackson (handles missing field)
-            public ModelReliability(String modelId, int score, int lifespanMiles, List<Integer> bestYears, 
-                                  List<Integer> worstYears, List<String> commonTroubleSpots, List<Milestone> criticalMilestones) {
-                this(modelId, score, lifespanMiles, bestYears, worstYears, commonTroubleSpots, criticalMilestones, null);
-            }
+
+        // Constructor for Jackson (handles missing field)
+        public ModelReliability(String modelId, int score, int lifespanMiles, List<Integer> bestYears,
+                List<Integer> worstYears, List<String> commonTroubleSpots, List<Milestone> criticalMilestones) {
+            this(modelId, score, lifespanMiles, bestYears, worstYears, commonTroubleSpots, criticalMilestones, null);
+        }
     }
 
     public record Milestone(
@@ -158,9 +159,13 @@ public class CarDataService {
             @com.fasterxml.jackson.annotation.JsonProperty("depreciation_outlook") String depreciationOutlook,
             @com.fasterxml.jackson.annotation.JsonProperty("common_junk_value") Integer commonJunkValue) {
 
-            public ModelMarket(String modelId, int jan2026AvgPrice, double depreciationRate, int avgAnnualRepairCost, String depreciationOutlook) {
-                this(modelId, jan2026AvgPrice, depreciationRate, avgAnnualRepairCost, depreciationOutlook, 500); // Default $500 junk value
-            }
+        public ModelMarket(String modelId, int jan2026AvgPrice, double depreciationRate, int avgAnnualRepairCost,
+                String depreciationOutlook) {
+            this(modelId, jan2026AvgPrice, depreciationRate, avgAnnualRepairCost, depreciationOutlook, 500); // Default
+                                                                                                             // $500
+                                                                                                             // junk
+                                                                                                             // value
+        }
     }
 
     public record MajorFaults(
@@ -176,8 +181,8 @@ public class CarDataService {
             @com.fasterxml.jackson.annotation.JsonProperty("occurrence_rate") double occurrenceRate,
             @com.fasterxml.jackson.annotation.JsonProperty("avg_failure_mileage") int avgFailureMileage) {
 
-            public Fault(String component, String symptoms, double repairCost, String verdictImplication) {
-                this(component, symptoms, repairCost, verdictImplication, 0.0, 0);
-            }
+        public Fault(String component, String symptoms, double repairCost, String verdictImplication) {
+            this(component, symptoms, repairCost, verdictImplication, 0.0, 0);
+        }
     }
 }
