@@ -115,6 +115,13 @@ public class RootController {
                 String pseoUrl = baseUrl + "/should-i-fix/" + year + "-" + brandSlug + "-" + modelSlug;
                 addUrl(xml, pseoUrl, today, "0.9");
             }
+            
+            // Mileage-based pSEO Pages - /verdict/{brand}/{model}/{mileage}-miles
+            int[] mileagePoints = {75000, 100000, 150000, 200000};
+            for (int mileage : mileagePoints) {
+                String mileageUrl = baseUrl + "/verdict/" + brandSlug + "/" + modelSlug + "/" + mileage + "-miles";
+                addUrl(xml, mileageUrl, today, "0.9");
+            }
         }
 
         xml.append("</urlset>");
