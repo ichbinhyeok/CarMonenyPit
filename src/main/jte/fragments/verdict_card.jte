@@ -236,15 +236,15 @@
 
         <!-- Strategic Insights Row -->
         <div class="strategic-insight-row">
-            <!-- 1. Peer Comparison -->
-            <div class="insight-card">
-                <div class="insight-label">Market Behavior</div>
-                <div class="insight-val">
+            <!-- 1. Peer Comparison (PROMINENT) -->
+            <div class="insight-card" style="background: linear-gradient(135deg, #fef2f2, #fef2f2); border: 2px solid #fecaca;">
+                <div class="insight-label" style="color: #dc2626;">What Others Did</div>
+                <div class="insight-val" style="color: #dc2626;">
                     ${result.peerData().sellPercentage()}% 
-                    <span style="font-size: 0.9rem; font-weight: 700; color: #ef4444;">SOLD</span>
+                    <span style="font-size: 0.9rem; font-weight: 700;">SOLD</span>
                 </div>
-                <p style="font-size: 0.8rem; margin: 0; color: var(--text-secondary); font-weight: 600;">
-                    of owners facing similar diagnostics choose to exit.
+                <p style="font-size: 0.85rem; margin: 0; color: #991b1b; font-weight: 600;">
+                    of owners in your situation chose to sell.
                 </p>
             </div>
 
@@ -355,28 +355,46 @@
             @if(verdictCss.contains("liquidate"))
                 <div style="border-top: 2px dashed #cbd5e0; padding-top: 2rem; margin-top: 2rem;">
                     <div style="font-size: 0.8rem; color: #718096; margin-bottom: 1rem;">
-                        ✓ Analysis Complete → Suggested Next Step:
+                        ✓ Analysis Complete → Your Action Plan:
+                    </div>
+                    
+                    <!-- Step-by-step Action Guide -->
+                    <div style="background: #f8fafc; border-radius: 24px; padding: 2rem; margin-bottom: 1.5rem;">
+                        <h4 style="font-size: 1rem; font-weight: 800; margin-bottom: 1.5rem;">What To Do Now</h4>
+                        
+                        <div style="display: flex; flex-direction: column; gap: 1rem;">
+                            <div style="display: flex; gap: 1rem; align-items: flex-start;">
+                                <div style="width: 28px; height: 28px; background: #3b82f6; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.8rem; flex-shrink: 0;">1</div>
+                                <div>
+                                    <div style="font-weight: 700;">Get 2-3 offers today</div>
+                                    <div style="font-size: 0.85rem; color: #64748b;">Peddle, CarMax, and local dealers</div>
+                                </div>
+                            </div>
+                            <div style="display: flex; gap: 1rem; align-items: flex-start;">
+                                <div style="width: 28px; height: 28px; background: #3b82f6; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.8rem; flex-shrink: 0;">2</div>
+                                <div>
+                                    <div style="font-weight: 700;">Compare offers vs repair cost</div>
+                                    <div style="font-size: 0.85rem; color: #64748b;">Best offer - repair cost = your decision</div>
+                                </div>
+                            </div>
+                            <div style="display: flex; gap: 1rem; align-items: flex-start;">
+                                <div style="width: 28px; height: 28px; background: #3b82f6; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.8rem; flex-shrink: 0;">3</div>
+                                <div>
+                                    <div style="font-weight: 700;">Take the best offer this week</div>
+                                    <div style="font-size: 0.85rem; color: #64748b;">Your car loses ~$${Math.round(result.assetBleedAmount() / 180)}/day in value</div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     
                     <div class="cta-card" style="background: linear-gradient(135deg, #1a1a1a 0%, #DC2626 100%); 
-                                 padding: 2.5rem; border-radius: 24px; color: #fff; 
+                                 padding: 2rem; border-radius: 24px; color: #fff; 
                                  box-shadow: 0 20px 60px rgba(220, 38, 38, 0.4);
                                  border: 2px solid rgba(239, 68, 68, 0.3);">
                         
-                        <div style="background: rgba(255,255,255,0.1); padding: 0.75rem; border-radius: 12px; margin-bottom: 1.5rem; text-align: center;">
-                            <span style="font-size: 0.75rem; opacity: 0.8;">⏱ ASSET DEPRECIATION ACTIVE</span>
-                            <div style="font-size: 1.5rem; font-weight: 900; margin-top: 0.25rem;">
-                                -$${Math.round(result.assetBleedAmount() / 180)}/day
-                            </div>
+                        <div style="text-align: center; margin-bottom: 1rem;">
+                            <span style="font-size: 0.8rem; opacity: 0.8;">START HERE →</span>
                         </div>
-                        
-                        <h4 class="cta-title" style="font-weight: 900; margin-bottom: 0.5rem; line-height: 1.1;">
-                            Verify Offer with a<br>Liquidation Specialist
-                        </h4>
-                        
-                        <p style="font-size: 1rem; opacity: 0.9; margin-bottom: 1.5rem;">
-                            Historical data suggests immediate exit maximizes remaining equity preservation for this risk profile.
-                        </p>
                         
                         <a href="${leadUrl}" 
                            style="display: block; background: #fff; color: #DC2626; 
@@ -385,6 +403,10 @@
                                   box-shadow: 0 0 30px rgba(255,255,255,0.3);">
                             ${leadLabel}
                         </a>
+                        
+                        <p style="font-size: 0.8rem; text-align: center; opacity: 0.7; margin: 1rem 0 0;">
+                            Free instant offer • No obligation
+                        </p>
                     </div>
                 </div>
             @else

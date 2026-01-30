@@ -21,10 +21,18 @@ public class InputModels {
     }
 
     public enum CarBrand {
-        TOYOTA, HONDA, LEXUS,
-        BMW, MERCEDES, AUDI, VOLKSWAGEN, PORSCHE, LAND_ROVER,
-        FORD, CHEVROLET, RAM, JEEP, TESLA,
-        HYUNDAI, KIA, NISSAN, SUBARU
+        // Japanese
+        TOYOTA, HONDA, LEXUS, NISSAN, SUBARU, MAZDA, ACURA, INFINITI,
+        // German
+        BMW, MERCEDES, AUDI, VOLKSWAGEN, PORSCHE,
+        // British
+        LAND_ROVER, MINI,
+        // American
+        FORD, CHEVROLET, RAM, JEEP, TESLA, DODGE, CHRYSLER, GMC, CADILLAC, LINCOLN, BUICK,
+        // Korean
+        HYUNDAI, KIA, GENESIS,
+        // Swedish
+        VOLVO
     }
 
     public enum VehicleType {

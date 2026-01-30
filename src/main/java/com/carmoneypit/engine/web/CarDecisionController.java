@@ -13,6 +13,7 @@ import com.carmoneypit.engine.core.ValuationService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -65,6 +66,63 @@ public class CarDecisionController {
                 var models = valuationService.getModelsByBrand(brand);
                 model.addAttribute("models", models);
                 return "fragments/model_options";
+        }
+
+        // ========== pSEO ROUTES ==========
+        // Format: /should-i-fix/{year}-{brand}-{model}
+        // Example: /should-i-fix/2018-toyota-camry
+        @GetMapping("/should-i-fix/{slug}")
+        public String pSeoLanding(@PathVariable("slug") String slug, Model model) {
+                // Parse slug: "2018-toyota-camry" -> year=2018, brand=TOYOTA, model=Camry
+                String[] parts = slug.split("-", 3);
+                if (parts.length < 2) {
+                        return "redirect:/";
+                }
+
+                try {
+                        int year = Integer.parseInt(parts[0]);
+                        String brandSlug = parts[1].toUpperCase();
+                        String modelSlug = parts.length > 2 ? formatModelName(parts[2]) : "";
+
+                        // Find matching brand
+                        CarBrand brand = null;
+                        for (CarBrand b : CarBrand.values()) {
+                                if (b.name().equals(brandSlug) || b.name().replace("_", "").equals(brandSlug)) {
+                                        brand = b;
+                                        break;
+                                }
+                        }
+
+                        if (brand == null) {
+                                return "redirect:/";
+                        }
+
+                        // SEO Meta
+                        String seoTitle = String.format("Should I Fix My %d %s %s? | Fix or Sell Calculator",
+                                        year, brand.name(), modelSlug);
+                        String seoDescription = String.format(
+                                        "Find out if it's worth fixing your %d %s %s or if you should sell it. Free calculator based on repair costs and market value.",
+                                        year, brand.name(), modelSlug);
+
+                        model.addAttribute("seoTitle", seoTitle);
+                        model.addAttribute("seoDescription", seoDescription);
+                        model.addAttribute("prefillYear", year);
+                        model.addAttribute("prefillBrand", brand.name());
+                        model.addAttribute("prefillModel", modelSlug);
+                        model.addAttribute("isPseoPage", true);
+                        model.addAttribute("pseoSlug", slug);
+
+                        return "pseo";
+                } catch (NumberFormatException e) {
+                        return "redirect:/";
+                }
+        }
+
+        private String formatModelName(String slug) {
+                // "camry" -> "Camry", "cr-v" -> "CR-V", "f-150" -> "F-150"
+                if (slug == null || slug.isEmpty())
+                        return "";
+                return slug.substring(0, 1).toUpperCase() + slug.substring(1).replace("-", " ");
         }
 
         @GetMapping(value = "/favicon.ico", produces = "image/x-icon")
