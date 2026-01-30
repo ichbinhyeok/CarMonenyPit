@@ -103,6 +103,15 @@ public class RootController {
                     addUrl(xml, verdictUrl, today, "1.0");
                 }
             }
+
+            // pSEO Pages - /should-i-fix/{year}-{brand}-{model}
+            // Generate for years within the model's production range
+            int startYear = car.startYear();
+            int endYear = car.endYear();
+            for (int year = startYear; year <= endYear; year++) {
+                String pseoUrl = baseUrl + "/should-i-fix/" + year + "-" + brandSlug + "-" + modelSlug;
+                addUrl(xml, pseoUrl, today, "0.9");
+            }
         }
 
         xml.append("</urlset>");
