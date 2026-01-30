@@ -448,20 +448,27 @@
                 <div style="margin-top: 1.5rem; padding: 1.5rem; background: #f8fafc; border-radius: 24px; border: 1px solid #e2e8f0; overflow: hidden;" id="methodology-section">
                     <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
                         <span style="font-size: 1.2rem;">📊</span>
-                        <h4 style="font-size: 0.9rem; font-weight: 800; color: #0f172a; margin: 0;">Statistical Model</h4>
+                        <h4 style="font-size: 0.9rem; font-weight: 800; color: #0f172a; margin: 0;">How We Calculate This</h4>
                     </div>
                     
-                    <p style="font-size: 0.8rem; color: #475569; line-height: 1.5; margin-bottom: 1.5rem;">
-                        Calibrated using historical brand reliability trends and current regional market indicators.
+                    <p style="font-size: 0.8rem; color: #475569; line-height: 1.5; margin-bottom: 1rem;">
+                        Our estimates are based on publicly available data from trusted automotive sources:
                     </p>
+                    
+                    <!-- Data Source Badges (E-E-A-T) -->
+                    <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem;">
+                        <span style="background: #dbeafe; color: #1e40af; padding: 0.25rem 0.75rem; border-radius: 99px; font-size: 0.7rem; font-weight: 700;">📘 NADA Guides</span>
+                        <span style="background: #dcfce7; color: #166534; padding: 0.25rem 0.75rem; border-radius: 99px; font-size: 0.7rem; font-weight: 700;">📗 Kelley Blue Book</span>
+                        <span style="background: #fef3c7; color: #92400e; padding: 0.25rem 0.75rem; border-radius: 99px; font-size: 0.7rem; font-weight: 700;">🛡️ NHTSA Data</span>
+                    </div>
 
                     <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1.5rem;">
                         <div>
-                            <span style="font-size: 0.6rem; font-weight: 800; color: #94a3b8; text-transform: uppercase;">Source</span>
-                            <div style="font-size: 0.7rem; font-weight: 700; color: #1e293b;">Market</div>
+                            <span style="font-size: 0.6rem; font-weight: 800; color: #94a3b8; text-transform: uppercase;">Value Source</span>
+                            <div style="font-size: 0.7rem; font-weight: 700; color: #1e293b;">Market Avg.</div>
                         </div>
                         <div>
-                            <span style="font-size: 0.6rem; font-weight: 800; color: #94a3b8; text-transform: uppercase;">Bench</span>
+                            <span style="font-size: 0.6rem; font-weight: 800; color: #94a3b8; text-transform: uppercase;">Reliability</span>
                             <div style="font-size: 0.7rem; font-weight: 700; color: #1e293b;">Historical</div>
                         </div>
                         <div>
@@ -471,8 +478,8 @@
                     </div>
 
                     <div style="padding-top: 0.75rem; border-top: 1px solid #e2e8f0; display: flex; align-items: center; justify-content: space-between;">
-                        <span style="color: #10b981; font-weight: 700; font-size: 0.7rem;">✓ MODEL_VALIDATED</span>
-                        <a href="/about" style="font-size: 0.7rem; font-weight: 700; color: #6366f1; text-decoration: none;">Methodology →</a>
+                        <span style="color: #64748b; font-size: 0.65rem;">Updated Jan 2026 • For informational purposes only</span>
+                        <a href="/methodology" style="font-size: 0.7rem; font-weight: 700; color: #6366f1; text-decoration: none;">Full Methodology →</a>
                     </div>
                 </div>
             </div>

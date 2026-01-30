@@ -97,11 +97,11 @@ public class CarDecisionController {
                                 return "redirect:/";
                         }
 
-                        // SEO Meta
-                        String seoTitle = String.format("Should I Fix My %d %s %s? | Fix or Sell Calculator",
+                        // SEO Meta - Optimized for CTR
+                        String seoTitle = String.format("%d %s %s: Fix or Sell? [Free 2026 Calculator]",
                                         year, brand.name(), modelSlug);
                         String seoDescription = String.format(
-                                        "Find out if it's worth fixing your %d %s %s or if you should sell it. Free calculator based on repair costs and market value.",
+                                        "Got a repair quote on your %d %s %s? Our free calculator tells you if fixing is worth it—based on NADA/KBB data. Takes 30 seconds.",
                                         year, brand.name(), modelSlug);
 
                         model.addAttribute("seoTitle", seoTitle);
