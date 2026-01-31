@@ -1,9 +1,8 @@
 @import com.carmoneypit.engine.api.InputModels.VehicleType
-@import com.carmoneypit.engine.api.InputModels.CarBrand
 
 @param int year = 2018
 @param VehicleType vehicleType
-@param CarBrand brand
+@param String brand
 @param long mileage
 @param long repairQuoteUsd
 @param long currentValueUsd

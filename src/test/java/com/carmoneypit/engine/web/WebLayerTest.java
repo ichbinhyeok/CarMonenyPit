@@ -5,10 +5,9 @@ import com.carmoneypit.engine.api.InputModels.SimulationControls;
 import com.carmoneypit.engine.api.OutputModels.VerdictResult;
 import com.carmoneypit.engine.api.OutputModels.VerdictState;
 import com.carmoneypit.engine.api.OutputModels.VisualizationHint;
-import com.carmoneypit.engine.api.OutputModels.PeerData;
-import com.carmoneypit.engine.api.OutputModels.EconomicContext;
 import com.carmoneypit.engine.core.DecisionEngine;
 import com.carmoneypit.engine.core.ValuationService;
+import com.carmoneypit.engine.service.CarDataService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -16,11 +15,11 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Collections;
+import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -43,8 +42,14 @@ public class WebLayerTest {
         @MockBean
         private ValuationService valuationService;
 
+        @MockBean
+        private CarDataService carDataService;
+
         @Test
         public void testIndexPage() throws Exception {
+                // Mock the getAllBrands method
+                given(carDataService.getAllBrands()).willReturn(List.of("TOYOTA", "HONDA", "BMW"));
+
                 mockMvc.perform(get("/"))
                                 .andExpect(status().isOk())
                                 .andExpect(view().name("index"));

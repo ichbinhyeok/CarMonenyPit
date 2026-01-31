@@ -446,6 +446,49 @@
             </div>
         </section>
 
+        <!-- Compare Similar Models Section -->
+        <section class="compare-section">
+            <h3>🔄 Compare Similar Models</h3>
+            <p class="compare-intro">See how other models in this segment compare at ${String.format("%,d", targetMileage)} miles:</p>
+            <div class="compare-links">
+                !{
+                    java.util.Map<String, String[]> similarModels = new java.util.HashMap<>();
+                    similarModels.put("F-150", new String[]{"chevrolet/silverado1500:Silverado 1500", "ram/1500:RAM 1500", "toyota/tundra:Tundra"});
+                    similarModels.put("Silverado 1500", new String[]{"ford/f150:F-150", "ram/1500:RAM 1500", "toyota/tundra:Tundra"});
+                    similarModels.put("1500", new String[]{"ford/f150:F-150", "chevrolet/silverado1500:Silverado 1500", "toyota/tundra:Tundra"});
+                    similarModels.put("Camry", new String[]{"honda/accord:Accord", "nissan/altima:Altima", "hyundai/sonata:Sonata"});
+                    similarModels.put("Accord", new String[]{"toyota/camry:Camry", "nissan/altima:Altima", "hyundai/sonata:Sonata"});
+                    similarModels.put("Civic", new String[]{"toyota/corolla:Corolla", "mazda/mazda3:Mazda3", "hyundai/elantra:Elantra"});
+                    similarModels.put("Corolla", new String[]{"honda/civic:Civic", "mazda/mazda3:Mazda3", "nissan/sentra:Sentra"});
+                    similarModels.put("CR-V", new String[]{"toyota/rav4:RAV4", "mazda/cx5:CX-5", "nissan/rogue:Rogue"});
+                    similarModels.put("RAV4", new String[]{"honda/crv:CR-V", "mazda/cx5:CX-5", "nissan/rogue:Rogue"});
+                    similarModels.put("Highlander", new String[]{"honda/pilot:Pilot", "ford/explorer:Explorer", "chevrolet/traverse:Traverse"});
+                    similarModels.put("Pilot", new String[]{"toyota/highlander:Highlander", "ford/explorer:Explorer", "chevrolet/traverse:Traverse"});
+                    similarModels.put("4Runner", new String[]{"jeep/grandcherokee:Grand Cherokee", "chevrolet/tahoe:Tahoe", "ford/bronco:Bronco"});
+                    similarModels.put("Wrangler", new String[]{"toyota/4runner:4Runner", "ford/bronco:Bronco", "jeep/gladiator:Gladiator"});
+                    similarModels.put("Palisade", new String[]{"kia/telluride:Telluride", "toyota/highlander:Highlander", "honda/pilot:Pilot"});
+                    similarModels.put("Telluride", new String[]{"hyundai/palisade:Palisade", "toyota/highlander:Highlander", "honda/pilot:Pilot"});
+                    String[] modelLinks = similarModels.getOrDefault(car.model(), new String[]{});
+                }
+                @if(modelLinks.length > 0)
+                    @for(String link : modelLinks)
+                        !{
+                            String[] parts = link.split(":");
+                            String url = parts[0];
+                            String name = parts[1];
+                        }
+                        <a href="/verdict/${url}/${targetMileage}-miles" class="compare-link">
+                            ${name} at ${String.format("%,d", targetMileage)} mi
+                        </a>
+                    @endfor
+                @else
+                    <a href="/models/${car.brand().toLowerCase().replaceAll("[^a-z0-9]", "")}" class="compare-link">
+                        Explore ${car.brand()} Models
+                    </a>
+                @endif
+            </div>
+        </section>
+
     </div>
 
     <style>
@@ -1036,6 +1079,47 @@
         .related-link:hover {
             border-color: #3b82f6;
             background: #f8fafc;
+        }
+
+        /* Compare Section */
+        .compare-section {
+            background: #f0fdf4;
+            padding: 1.5rem;
+            border-radius: 16px;
+            margin-top: 1.5rem;
+            border: 1px solid #bbf7d0;
+        }
+        .compare-section h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #166534;
+            margin-bottom: 0.75rem;
+        }
+        .compare-intro {
+            font-size: 0.85rem;
+            color: #64748b;
+            margin-bottom: 1rem;
+        }
+        .compare-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        .compare-link {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: #fff;
+            border: 1px solid #bbf7d0;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #166534;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+        }
+        .compare-link:hover {
+            background: #dcfce7;
+            border-color: #22c55e;
         }
 
         /* Responsive */

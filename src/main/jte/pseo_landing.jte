@@ -273,6 +273,36 @@
         </style>
         @endif
 
+        <!-- Common Trouble Spots Section (NEW) -->
+        @if(details != null && details.reliability().commonTroubleSpots() != null && !details.reliability().commonTroubleSpots().isEmpty())
+        <div class="trouble-spots-section" style="background: #fff; border: 1px solid #e5e7eb; border-radius: 24px; padding: 2rem; margin-bottom: 4rem;">
+            <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem;">
+                <span style="font-size: 1.5rem;">🔍</span>
+                <h2 style="font-size: 1.25rem; font-weight: 800; margin: 0; color: #1e293b;">
+                    Known Trouble Spots: ${car.brand()} ${car.model()}
+                </h2>
+            </div>
+            
+            <p style="font-size: 0.9rem; color: #64748b; margin-bottom: 1.5rem; line-height: 1.6;">
+                Based on owner reports and repair data, these are the most common problem areas for the ${car.brand()} ${car.model()} (${car.generation()}).
+            </p>
+            
+            <div class="trouble-spots-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem;">
+                @for(String spot : details.reliability().commonTroubleSpots())
+                <div class="trouble-spot-item" style="background: #f8fafc; padding: 1rem 1.25rem; border-radius: 12px; border-left: 4px solid #f59e0b; display: flex; align-items: center; gap: 0.75rem;">
+                    <span style="font-size: 1.25rem;">⚠️</span>
+                    <span style="font-weight: 600; color: #1e293b; font-size: 0.9rem;">${spot}</span>
+                </div>
+                @endfor
+            </div>
+            
+            <p style="font-size: 0.8rem; color: #94a3b8; margin-top: 1.5rem; line-height: 1.5;">
+                💡 <strong>Pro Tip:</strong> When inspecting a ${car.model()}, pay special attention to these areas. 
+                Always get a pre-purchase inspection that specifically checks these known trouble spots.
+            </p>
+        </div>
+        @endif
+
         <!-- 3. The Agitation (Symptoms & Risk) -->
         <div class="agitation-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 4rem;">
             <!-- Symptoms Card -->
@@ -702,6 +732,90 @@
                    style="text-decoration: none; background: #fff; padding: 0.6rem 1rem; border-radius: 10px; font-size: 0.85rem; font-weight: 600; color: #0369a1; border: 1px solid #bae6fd; transition: all 0.2s;">
                     200K miles
                 </a>
+            </div>
+        </div>
+
+        <!-- Compare Similar Models Section (SEO Internal Linking) -->
+        <div style="margin-bottom: 3rem; background: #f8fafc; padding: 2rem; border-radius: 20px; border: 1px solid #e2e8f0;">
+            <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 1.25rem; color: #334155; display: flex; align-items: center; gap: 0.5rem;">
+                <span>🔄</span> Compare Similar Models
+            </h3>
+            <p style="font-size: 0.9rem; color: #64748b; margin-bottom: 1.25rem; line-height: 1.6;">
+                Considering alternatives? See reliability data for competing models in the same segment:
+            </p>
+            <div style="display: flex; flex-wrap: wrap; gap: 0.75rem;">
+                !{
+                    // Define similar models based on vehicle type - inline so no need for controller changes
+                    java.util.Map<String, String[]> similarModels = new java.util.HashMap<>();
+                    
+                    // Trucks
+                    similarModels.put("F-150", new String[]{"chevrolet/silverado1500:Silverado 1500", "ram/1500:RAM 1500", "toyota/tundra:Tundra", "gmc/sierra1500:Sierra 1500"});
+                    similarModels.put("Silverado 1500", new String[]{"ford/f150:F-150", "ram/1500:RAM 1500", "toyota/tundra:Tundra", "gmc/sierra1500:Sierra 1500"});
+                    similarModels.put("1500", new String[]{"ford/f150:F-150", "chevrolet/silverado1500:Silverado 1500", "toyota/tundra:Tundra"});
+                    similarModels.put("Tundra", new String[]{"ford/f150:F-150", "chevrolet/silverado1500:Silverado 1500", "ram/1500:RAM 1500"});
+                    similarModels.put("Tacoma", new String[]{"chevrolet/colorado:Colorado", "ford/ranger:Ranger", "nissan/frontier:Frontier"});
+                    
+                    // Mid-size Sedans
+                    similarModels.put("Camry", new String[]{"honda/accord:Accord", "nissan/altima:Altima", "mazda/mazda6:Mazda6", "hyundai/sonata:Sonata"});
+                    similarModels.put("Accord", new String[]{"toyota/camry:Camry", "nissan/altima:Altima", "mazda/mazda6:Mazda6", "hyundai/sonata:Sonata"});
+                    similarModels.put("Altima", new String[]{"toyota/camry:Camry", "honda/accord:Accord", "hyundai/sonata:Sonata", "kia/optima:Optima"});
+                    similarModels.put("Sonata", new String[]{"toyota/camry:Camry", "honda/accord:Accord", "kia/optima:K5", "hyundai/elantra:Elantra"});
+                    
+                    // Compact Sedans
+                    similarModels.put("Civic", new String[]{"toyota/corolla:Corolla", "mazda/mazda3:Mazda3", "hyundai/elantra:Elantra", "volkswagen/jetta:Jetta"});
+                    similarModels.put("Corolla", new String[]{"honda/civic:Civic", "mazda/mazda3:Mazda3", "hyundai/elantra:Elantra", "nissan/sentra:Sentra"});
+                    similarModels.put("Elantra", new String[]{"honda/civic:Civic", "toyota/corolla:Corolla", "kia/forte:Forte", "mazda/mazda3:Mazda3"});
+                    
+                    // Compact SUVs
+                    similarModels.put("CR-V", new String[]{"toyota/rav4:RAV4", "mazda/cx5:CX-5", "nissan/rogue:Rogue", "subaru/forester:Forester"});
+                    similarModels.put("RAV4", new String[]{"honda/crv:CR-V", "mazda/cx5:CX-5", "nissan/rogue:Rogue", "subaru/forester:Forester"});
+                    similarModels.put("Rogue", new String[]{"toyota/rav4:RAV4", "honda/crv:CR-V", "mazda/cx5:CX-5", "hyundai/tucson:Tucson"});
+                    similarModels.put("CX-5", new String[]{"toyota/rav4:RAV4", "honda/crv:CR-V", "subaru/forester:Forester", "hyundai/tucson:Tucson"});
+                    similarModels.put("Forester", new String[]{"toyota/rav4:RAV4", "honda/crv:CR-V", "mazda/cx5:CX-5", "subaru/outback:Outback"});
+                    similarModels.put("Tucson", new String[]{"hyundai/santafe:Santa Fe", "kia/sportage:Sportage", "honda/crv:CR-V", "toyota/rav4:RAV4"});
+                    similarModels.put("Sportage", new String[]{"hyundai/tucson:Tucson", "kia/sorento:Sorento", "honda/crv:CR-V", "mazda/cx5:CX-5"});
+                    
+                    // Mid-size SUVs
+                    similarModels.put("Highlander", new String[]{"honda/pilot:Pilot", "chevrolet/traverse:Traverse", "ford/explorer:Explorer", "mazda/cx9:CX-9"});
+                    similarModels.put("Pilot", new String[]{"toyota/highlander:Highlander", "chevrolet/traverse:Traverse", "ford/explorer:Explorer", "acura/mdx:MDX"});
+                    similarModels.put("Explorer", new String[]{"toyota/highlander:Highlander", "honda/pilot:Pilot", "chevrolet/traverse:Traverse", "ford/edge:Edge"});
+                    similarModels.put("4Runner", new String[]{"toyota/highlander:Highlander", "jeep/grandcherokee:Grand Cherokee", "chevrolet/tahoe:Tahoe", "ford/bronco:Bronco"});
+                    similarModels.put("Grand Cherokee", new String[]{"toyota/4runner:4Runner", "ford/explorer:Explorer", "chevrolet/tahoe:Tahoe", "dodge/durango:Durango"});
+                    similarModels.put("Palisade", new String[]{"kia/telluride:Telluride", "toyota/highlander:Highlander", "honda/pilot:Pilot", "chevrolet/traverse:Traverse"});
+                    similarModels.put("Telluride", new String[]{"hyundai/palisade:Palisade", "toyota/highlander:Highlander", "honda/pilot:Pilot", "ford/explorer:Explorer"});
+                    
+                    // Luxury
+                    similarModels.put("3 Series", new String[]{"mercedes/cclass:C-Class", "audi/a4:A4", "lexus/is:IS", "genesis/g70:G70"});
+                    similarModels.put("C-Class", new String[]{"bmw/3series:3 Series", "audi/a4:A4", "lexus/es:ES", "genesis/g70:G70"});
+                    similarModels.put("A4", new String[]{"bmw/3series:3 Series", "mercedes/cclass:C-Class", "lexus/is:IS", "volvo/s60:S60"});
+                    similarModels.put("RX", new String[]{"bmw/x5:X5", "mercedes/glc:GLC", "audi/q5:Q5", "acura/mdx:MDX"});
+                    similarModels.put("X5", new String[]{"mercedes/gle:GLE", "audi/q7:Q7", "lexus/rx:RX", "porsche/cayenne:Cayenne"});
+                    
+                    // Jeeps
+                    similarModels.put("Wrangler", new String[]{"toyota/4runner:4Runner", "ford/bronco:Bronco", "jeep/gladiator:Gladiator"});
+                    similarModels.put("Gladiator", new String[]{"toyota/tacoma:Tacoma", "ford/ranger:Ranger", "jeep/wrangler:Wrangler"});
+                    
+                    // Default for models not in map
+                    String[] modelLinks = similarModels.getOrDefault(car.model(), new String[]{});
+                }
+                @if(modelLinks.length > 0)
+                    @for(String link : modelLinks)
+                        !{
+                            String[] parts = link.split(":");
+                            String url = parts[0];
+                            String name = parts[1];
+                        }
+                        <a href="/models/${url}" 
+                           style="text-decoration: none; background: #fff; padding: 0.6rem 1rem; border-radius: 10px; font-size: 0.85rem; font-weight: 600; color: #475569; border: 1px solid #e2e8f0; transition: all 0.2s;">
+                            ${name}
+                        </a>
+                    @endfor
+                @else
+                    <a href="/models/${car.brand().toLowerCase().replaceAll("[^a-z0-9]", "")}" 
+                       style="text-decoration: none; background: #fff; padding: 0.6rem 1rem; border-radius: 10px; font-size: 0.85rem; font-weight: 600; color: #475569; border: 1px solid #e2e8f0; transition: all 0.2s;">
+                        All ${car.brand()} Models
+                    </a>
+                @endif
             </div>
         </div>
 

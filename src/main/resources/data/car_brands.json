@@ -107,7 +107,7 @@
         "avg_new_monthly": 1100,
         "sell_stat_pct": 72
     },
-    "MERCEDES": {
+    "MERCEDES_BENZ": {
         "name": "Mercedes-Benz",
         "segment": "LEASER",
         "reliability_score": 4.5,
@@ -445,5 +445,317 @@
                 "risk_msg": "Plastic pipes glue unglures. Dump coolant everywhere."
             }
         ]
+    },
+    "GMC": {
+        "name": "GMC",
+        "segment": "WORKHORSE",
+        "reliability_score": 6.0,
+        "maintenance_cost_yearly": 744,
+        "depreciation_curve": "NORMAL",
+        "death_mileage": 200000,
+        "verdict_bias": "FIX",
+        "market_perception": "Chevrolet's fancy cousin. Same bones, nicer clothes.",
+        "major_issues": [
+            {
+                "mileage": 100000,
+                "part": "AFM Lifter Collapse",
+                "cost": 3000,
+                "risk_msg": "Same as Silverado - AFM system kills lifters. Consider AFM delete."
+            },
+            {
+                "mileage": 150000,
+                "part": "Transmission Shudder",
+                "cost": 4500,
+                "risk_msg": "6L80 torque converter shudder. Fluid flush or rebuild."
+            }
+        ],
+        "avg_switching_friction": 3500,
+        "avg_new_monthly": 850,
+        "sell_stat_pct": 40
+    },
+    "MAZDA": {
+        "name": "Mazda",
+        "segment": "KEEPER",
+        "reliability_score": 8.0,
+        "maintenance_cost_yearly": 462,
+        "depreciation_curve": "FLAT",
+        "death_mileage": 220000,
+        "verdict_bias": "FIX",
+        "market_perception": "The driver's Japanese brand. Zoom-Zoom with reliability.",
+        "major_issues": [
+            {
+                "mileage": 100000,
+                "part": "Spark Plugs & Transmission Fluid",
+                "cost": 400,
+                "risk_msg": "Standard maintenance. SKYACTIV engines are remarkably reliable."
+            }
+        ],
+        "avg_switching_friction": 2500,
+        "avg_new_monthly": 550,
+        "sell_stat_pct": 18
+    },
+    "DODGE": {
+        "name": "Dodge",
+        "segment": "PERFORMANCE",
+        "reliability_score": 7.0,
+        "maintenance_cost_yearly": 634,
+        "depreciation_curve": "NORMAL",
+        "death_mileage": 180000,
+        "verdict_bias": "FIX",
+        "market_perception": "Muscle car legacy. Last of the V8 warriors.",
+        "major_issues": [
+            {
+                "mileage": 100000,
+                "part": "Hemi Tick (Exhaust Manifold)",
+                "cost": 800,
+                "risk_msg": "Same as RAM. Manifold bolts break inside heads."
+            },
+            {
+                "mileage": 120000,
+                "part": "Transmission (ZF 8-Speed)",
+                "cost": 3500,
+                "risk_msg": "ZF 8HP may develop shudder. Fluid service critical."
+            }
+        ],
+        "avg_switching_friction": 3500,
+        "avg_new_monthly": 700,
+        "sell_stat_pct": 35
+    },
+    "CADILLAC": {
+        "name": "Cadillac",
+        "segment": "LEASER",
+        "reliability_score": 6.0,
+        "maintenance_cost_yearly": 783,
+        "depreciation_curve": "CLIFF",
+        "death_mileage": 150000,
+        "verdict_bias": "SELL",
+        "market_perception": "American luxury with American problems.",
+        "major_issues": [
+            {
+                "mileage": 80000,
+                "part": "CUE Infotainment System",
+                "cost": 1500,
+                "risk_msg": "Touchscreen delamination is epidemic. Aftermarket replacement available."
+            },
+            {
+                "mileage": 100000,
+                "part": "Timing Chain (3.6L V6)",
+                "cost": 2800,
+                "risk_msg": "Stretched timing chain causes rough running. Expensive repair."
+            }
+        ],
+        "avg_switching_friction": 4000,
+        "avg_new_monthly": 950,
+        "sell_stat_pct": 55
+    },
+    "LINCOLN": {
+        "name": "Lincoln",
+        "segment": "LEASER",
+        "reliability_score": 6.0,
+        "maintenance_cost_yearly": 879,
+        "depreciation_curve": "CLIFF",
+        "death_mileage": 160000,
+        "verdict_bias": "SELL",
+        "market_perception": "Ford's luxury arm. Better than Cadillac, worse than Lexus.",
+        "major_issues": [
+            {
+                "mileage": 80000,
+                "part": "Air Suspension",
+                "cost": 2500,
+                "risk_msg": "Navigator air bags leak. Convert to coils or pay every few years."
+            },
+            {
+                "mileage": 100000,
+                "part": "Turbo Failure (EcoBoost)",
+                "cost": 2200,
+                "risk_msg": "Twin-turbo systems have finite lifespan. Budget accordingly."
+            }
+        ],
+        "avg_switching_friction": 4200,
+        "avg_new_monthly": 1000,
+        "sell_stat_pct": 50
+    },
+    "ACURA": {
+        "name": "Acura",
+        "segment": "KEEPER",
+        "reliability_score": 8.0,
+        "maintenance_cost_yearly": 501,
+        "depreciation_curve": "FLAT",
+        "death_mileage": 250000,
+        "verdict_bias": "FIX",
+        "market_perception": "Honda in a suit. Luxury without the luxury repair bills.",
+        "major_issues": [
+            {
+                "mileage": 100000,
+                "part": "Timing Belt (V6)",
+                "cost": 1200,
+                "risk_msg": "Interference engine. Replace at 100k or risk catastrophic failure."
+            },
+            {
+                "mileage": 120000,
+                "part": "Power Steering Pump",
+                "cost": 650,
+                "risk_msg": "Whining at startup. Common wear item at higher mileage."
+            }
+        ],
+        "avg_switching_friction": 3000,
+        "avg_new_monthly": 700,
+        "sell_stat_pct": 20
+    },
+    "CHRYSLER": {
+        "name": "Chrysler",
+        "segment": "RISKY",
+        "reliability_score": 7.0,
+        "maintenance_cost_yearly": 608,
+        "depreciation_curve": "STEEP",
+        "death_mileage": 160000,
+        "verdict_bias": "SELL",
+        "market_perception": "The minivan brand. Pacifica or bust.",
+        "major_issues": [
+            {
+                "mileage": 80000,
+                "part": "Transmission (9-Speed)",
+                "cost": 4000,
+                "risk_msg": "ZF 9HP has harsh shifting. Software updates help but don't cure."
+            },
+            {
+                "mileage": 100000,
+                "part": "Electrical Gremlins",
+                "cost": 1500,
+                "risk_msg": "Various electrical issues common. Check all modules before buying."
+            }
+        ],
+        "avg_switching_friction": 3000,
+        "avg_new_monthly": 650,
+        "sell_stat_pct": 45
+    },
+    "VOLVO": {
+        "name": "Volvo",
+        "segment": "LEASER",
+        "reliability_score": 7.0,
+        "maintenance_cost_yearly": 769,
+        "depreciation_curve": "STEEP",
+        "death_mileage": 200000,
+        "verdict_bias": "SELL",
+        "market_perception": "Swedish safety tank. Complex systems, expensive repairs.",
+        "major_issues": [
+            {
+                "mileage": 80000,
+                "part": "PCV System Failure",
+                "cost": 800,
+                "risk_msg": "Oil consumption increases. Replace PCV system to fix."
+            },
+            {
+                "mileage": 100000,
+                "part": "Transmission (Aisin)",
+                "cost": 4500,
+                "risk_msg": "Aisin transmissions are solid but expensive when they fail."
+            }
+        ],
+        "avg_switching_friction": 3500,
+        "avg_new_monthly": 750,
+        "sell_stat_pct": 42
+    },
+    "INFINITI": {
+        "name": "Infiniti",
+        "segment": "RISKY",
+        "reliability_score": 7.0,
+        "maintenance_cost_yearly": 638,
+        "depreciation_curve": "STEEP",
+        "death_mileage": 180000,
+        "verdict_bias": "SELL",
+        "market_perception": "Nissan's luxury brand. VQ engines are bulletproof, CVTs are not.",
+        "major_issues": [
+            {
+                "mileage": 100000,
+                "part": "CVT Transmission (If Equipped)",
+                "cost": 4500,
+                "risk_msg": "JATCO CVT is the weak point. Avoid CVT-equipped models if possible."
+            },
+            {
+                "mileage": 80000,
+                "part": "Steering Rack",
+                "cost": 1800,
+                "risk_msg": "Power steering rack leaks are common on older models."
+            }
+        ],
+        "avg_switching_friction": 3200,
+        "avg_new_monthly": 700,
+        "sell_stat_pct": 48
+    },
+    "MINI": {
+        "name": "Mini",
+        "segment": "LEASER",
+        "reliability_score": 6.0,
+        "maintenance_cost_yearly": 846,
+        "depreciation_curve": "CLIFF",
+        "death_mileage": 130000,
+        "verdict_bias": "SELL",
+        "market_perception": "Fun to drive, not fun to fix. BMW parts, British engineering.",
+        "major_issues": [
+            {
+                "mileage": 70000,
+                "part": "Timing Chain",
+                "cost": 2500,
+                "risk_msg": "N14/N18 engines have timing chain stretch issues. Catastrophic if ignored."
+            },
+            {
+                "mileage": 80000,
+                "part": "Clutch (Manual)",
+                "cost": 1800,
+                "risk_msg": "Clutch wear is aggressive due to vehicle weight vs engine size."
+            }
+        ],
+        "avg_switching_friction": 2800,
+        "avg_new_monthly": 500,
+        "sell_stat_pct": 60
+    },
+    "BUICK": {
+        "name": "Buick",
+        "segment": "WORKHORSE",
+        "reliability_score": 7.0,
+        "maintenance_cost_yearly": 608,
+        "depreciation_curve": "NORMAL",
+        "death_mileage": 200000,
+        "verdict_bias": "FIX",
+        "market_perception": "Grandma's car. Quiet, comfortable, surprisingly reliable.",
+        "major_issues": [
+            {
+                "mileage": 100000,
+                "part": "Water Pump",
+                "cost": 700,
+                "risk_msg": "Internal water pump (timing cover) can leak coolant into oil."
+            },
+            {
+                "mileage": 120000,
+                "part": "Transmission (6T70/6T75)",
+                "cost": 3500,
+                "risk_msg": "GM's 6-speed can develop harsh shifts. Fluid changes extend life."
+            }
+        ],
+        "avg_switching_friction": 3000,
+        "avg_new_monthly": 600,
+        "sell_stat_pct": 35
+    },
+    "GENESIS": {
+        "name": "Genesis",
+        "segment": "KEEPER",
+        "reliability_score": 9.0,
+        "maintenance_cost_yearly": 524,
+        "depreciation_curve": "STEEP",
+        "death_mileage": 220000,
+        "verdict_bias": "FIX",
+        "market_perception": "Korean luxury done right. Lexus-level reliability, aggressive pricing.",
+        "major_issues": [
+            {
+                "mileage": 100000,
+                "part": "Timing Chain",
+                "cost": 1500,
+                "risk_msg": "Early Theta II engines had issues. Newer models are solid."
+            }
+        ],
+        "avg_switching_friction": 3200,
+        "avg_new_monthly": 850,
+        "sell_stat_pct": 22
     }
 }

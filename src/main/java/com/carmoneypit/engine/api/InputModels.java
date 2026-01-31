@@ -4,7 +4,7 @@ public class InputModels {
     public record EngineInput(
             String model,
             VehicleType vehicleType,
-            CarBrand brand,
+            String brand, // Changed from CarBrand enum to String
             int year,
             long mileage,
             long repairQuoteUsd,
@@ -20,20 +20,7 @@ public class InputModels {
             RetentionHorizon retentionHorizon) {
     }
 
-    public enum CarBrand {
-        // Japanese
-        TOYOTA, HONDA, LEXUS, NISSAN, SUBARU, MAZDA, ACURA, INFINITI,
-        // German
-        BMW, MERCEDES, AUDI, VOLKSWAGEN, PORSCHE,
-        // British
-        LAND_ROVER, MINI,
-        // American
-        FORD, CHEVROLET, RAM, JEEP, TESLA, DODGE, CHRYSLER, GMC, CADILLAC, LINCOLN, BUICK,
-        // Korean
-        HYUNDAI, KIA, GENESIS,
-        // Swedish
-        VOLVO
-    }
+    // CarBrand Enum REMOVED - now using String from car_brands.json
 
     public enum VehicleType {
         SEDAN, SUV, TRUCK_VAN, LUXURY, PERFORMANCE

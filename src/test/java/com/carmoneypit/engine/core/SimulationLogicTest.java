@@ -1,6 +1,5 @@
 package com.carmoneypit.engine.core;
 
-import com.carmoneypit.engine.api.InputModels.CarBrand;
 import com.carmoneypit.engine.api.InputModels.EngineInput;
 import com.carmoneypit.engine.api.InputModels.FailureSeverity;
 import com.carmoneypit.engine.api.InputModels.HassleTolerance;
@@ -8,7 +7,6 @@ import com.carmoneypit.engine.api.InputModels.MobilityStatus;
 import com.carmoneypit.engine.api.InputModels.SimulationControls;
 import com.carmoneypit.engine.api.InputModels.VehicleType;
 import com.carmoneypit.engine.api.OutputModels.VerdictResult;
-import com.carmoneypit.engine.api.OutputModels.VerdictState;
 import com.carmoneypit.engine.service.CarDataService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -47,7 +45,7 @@ public class SimulationLogicTest {
         return new EngineInput(
                 "TestModel",
                 VehicleType.SEDAN,
-                CarBrand.TOYOTA,
+                "TOYOTA", // Changed from CarBrand.TOYOTA to String
                 2018,
                 mileage,
                 quote,

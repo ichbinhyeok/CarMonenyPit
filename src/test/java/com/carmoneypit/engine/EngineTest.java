@@ -2,7 +2,6 @@ package com.carmoneypit.engine;
 
 import com.carmoneypit.engine.api.InputModels.EngineInput;
 import com.carmoneypit.engine.api.InputModels.VehicleType;
-import com.carmoneypit.engine.api.InputModels.CarBrand;
 import com.carmoneypit.engine.api.OutputModels.VerdictResult;
 import com.carmoneypit.engine.api.OutputModels.VerdictState;
 import com.carmoneypit.engine.core.CostOfInactionCalculator;
@@ -33,7 +32,7 @@ public class EngineTest {
     void testCheapRepairLowMileage_ShouldBeStable() {
         // Repair $500, Value $15,000, Mileage 50k
         // RF should be low. RM friction $2500.
-        EngineInput input = new EngineInput("TestModel", VehicleType.SEDAN, CarBrand.TOYOTA, 2018, 50000, 500, 15000,
+        EngineInput input = new EngineInput("TestModel", VehicleType.SEDAN, "TOYOTA", 2018, 50000, 500, 15000,
                 false, false);
         VerdictResult result = engine.evaluate(input);
 
@@ -44,7 +43,7 @@ public class EngineTest {
     void testExpensiveRepairHighMileage_ShouldBeTimeBomb() {
         // Repair $4000, Value $3000, Mileage 160k
         // RF high (Cost + Risk). RM lower (Value low).
-        EngineInput input = new EngineInput("TestModel", VehicleType.SEDAN, CarBrand.BMW, 2014, 160000, 4000, 3000,
+        EngineInput input = new EngineInput("TestModel", VehicleType.SEDAN, "BMW", 2014, 160000, 4000, 3000,
                 false, false);
         VerdictResult result = engine.evaluate(input);
 
@@ -57,7 +56,7 @@ public class EngineTest {
     @Test
     void testBorderlineCase() {
         // Repair $1500, Value $8000, Mileage 100k
-        EngineInput input = new EngineInput("TestModel", VehicleType.SEDAN, CarBrand.HONDA, 2016, 100000, 1500, 8000,
+        EngineInput input = new EngineInput("TestModel", VehicleType.SEDAN, "HONDA", 2016, 100000, 1500, 8000,
                 false, false);
         VerdictResult result = engine.evaluate(input);
 

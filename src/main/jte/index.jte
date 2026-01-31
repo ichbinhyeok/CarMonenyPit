@@ -1,5 +1,6 @@
 @import com.carmoneypit.engine.api.InputModels.VehicleType
-@import com.carmoneypit.engine.api.InputModels.CarBrand
+@import java.util.List
+@param List<String> allBrands = java.util.List.of()
 @param String prefillBrand = null
 @param String prefillModel = null
 @param Long prefillQuote = null
@@ -307,8 +308,8 @@
                                 hx-indicator=".integrity-dot"
                                 required>
                             <option value="">Select brand...</option>
-                            @for(CarBrand brand : CarBrand.values())
-                                @if(prefillBrand != null && brand.name().equals(prefillBrand))
+                            @for(String brand : allBrands)
+                                @if(prefillBrand != null && brand.equals(prefillBrand))
                                     <option value="${brand}" selected>${brand}</option>
                                 @else
                                     <option value="${brand}">${brand}</option>

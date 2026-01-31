@@ -1,6 +1,5 @@
 package com.carmoneypit.engine.core;
 
-import com.carmoneypit.engine.api.InputModels.CarBrand;
 import com.carmoneypit.engine.api.InputModels.VehicleType;
 import com.carmoneypit.engine.service.CarDataService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -29,7 +28,7 @@ class PricingLogicTest {
         // New logic should heavily depreciate it based on 16 years of age.
 
         long value = valuationService.estimateValue(
-                CarBrand.TOYOTA, "Camry", VehicleType.SEDAN, 2010, 20000);
+                "TOYOTA", "Camry", VehicleType.SEDAN, 2010, 20000);
 
         System.out.println("Garage Queen Value: $" + value);
 
@@ -50,7 +49,7 @@ class PricingLogicTest {
         // Heavy mileage penalty + Cliff depreciation.
 
         long value = valuationService.estimateValue(
-                CarBrand.BMW, "3 Series", VehicleType.SEDAN, 2023, 100000);
+                "BMW", "3 Series", VehicleType.SEDAN, 2023, 100000);
 
         System.out.println("Road Warrior Value: $" + value);
 
@@ -70,8 +69,8 @@ class PricingLogicTest {
         int year = 2021;
         long miles = 60000;
 
-        long toyotaValue = valuationService.estimateValue(CarBrand.TOYOTA, "Camry", VehicleType.SEDAN, year, miles);
-        long bmwValue = valuationService.estimateValue(CarBrand.BMW, "3 Series", VehicleType.SEDAN, year, miles);
+        long toyotaValue = valuationService.estimateValue("TOYOTA", "Camry", VehicleType.SEDAN, year, miles);
+        long bmwValue = valuationService.estimateValue("BMW", "3 Series", VehicleType.SEDAN, year, miles);
 
         System.out.println("Toyota Value (5y/60k): $" + toyotaValue);
         System.out.println("BMW Value (5y/60k): $" + bmwValue);

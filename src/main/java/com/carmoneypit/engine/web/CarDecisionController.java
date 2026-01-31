@@ -1,7 +1,10 @@
 package com.carmoneypit.engine.web;
 
+<<<<<<< HEAD
 import com.carmoneypit.engine.service.CarDataService;
 import com.carmoneypit.engine.api.InputModels.CarBrand;
+=======
+>>>>>>> 3f08322 (Enhance pSEO content, Refactor to JSON-based data, and Fix UI glitches)
 import com.carmoneypit.engine.api.InputModels.EngineInput;
 import com.carmoneypit.engine.api.InputModels.SimulationControls;
 import com.carmoneypit.engine.api.InputModels.VehicleType;
@@ -11,6 +14,7 @@ import com.carmoneypit.engine.api.InputModels.HassleTolerance;
 import com.carmoneypit.engine.api.OutputModels.VerdictResult;
 import com.carmoneypit.engine.core.DecisionEngine;
 import com.carmoneypit.engine.core.ValuationService;
+import com.carmoneypit.engine.service.CarDataService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,10 +27,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.List;
 
 @Controller
 public class CarDecisionController {
@@ -35,7 +40,12 @@ public class CarDecisionController {
 
         private final DecisionEngine decisionEngine;
         private final VerdictPresenter presenter;
+<<<<<<< HEAD
         private final CarDataService carDataService; // Add dependency
+=======
+        private final ValuationService valuationService;
+        private final CarDataService carDataService;
+>>>>>>> 3f08322 (Enhance pSEO content, Refactor to JSON-based data, and Fix UI glitches)
 
         public CarDecisionController(DecisionEngine decisionEngine, VerdictPresenter presenter,
                         ValuationService valuationService, CarDataService carDataService) {
@@ -53,6 +63,10 @@ public class CarDecisionController {
                         @RequestParam(value = "repairQuoteUsd", required = false) Long repairQuoteParam,
                         @RequestParam(value = "pSEO", required = false) Boolean fromPSEO,
                         Model model) {
+
+                // Provide all brands from JSON data to the template
+                List<String> allBrands = carDataService.getAllBrands();
+                model.addAttribute("allBrands", allBrands);
 
                 if (brandParam != null && fromPSEO != null && fromPSEO) {
                         model.addAttribute("prefillBrand", brandParam);
@@ -83,18 +97,24 @@ public class CarDecisionController {
 
                 try {
                         int year = Integer.parseInt(parts[0]);
+<<<<<<< HEAD
                         String brandSlug = parts[1].toUpperCase();
                         String modelSlug = parts.length > 2 ? parts[2] : "";
+=======
+                        String brandSlug = parts[1].toUpperCase().replace(" ", "_");
+                        String modelSlug = parts.length > 2 ? formatModelName(parts[2]) : "";
+>>>>>>> 3f08322 (Enhance pSEO content, Refactor to JSON-based data, and Fix UI glitches)
 
-                        // Find matching brand
-                        CarBrand brand = null;
-                        for (CarBrand b : CarBrand.values()) {
-                                if (b.name().equals(brandSlug) || b.name().replace("_", "").equals(brandSlug)) {
-                                        brand = b;
-                                        break;
+                        // Validate brand exists in loaded data
+                        if (!valuationService.isValidBrand(brandSlug)) {
+                                // Try alternate formats
+                                if (!valuationService.isValidBrand(brandSlug.replace("_", ""))) {
+                                        log.warn("Unknown brand in pSEO route: {}", brandSlug);
+                                        return "redirect:/";
                                 }
                         }
 
+<<<<<<< HEAD
                         if (brand == null) {
                                 return "redirect:/";
                         }
@@ -122,17 +142,19 @@ public class CarDecisionController {
                                 }
                         }
 
+=======
+>>>>>>> 3f08322 (Enhance pSEO content, Refactor to JSON-based data, and Fix UI glitches)
                         // SEO Meta - Optimized for CTR
                         String seoTitle = String.format("%d %s %s: Fix or Sell? [Free 2026 Calculator]",
-                                        year, brand.name(), modelSlug);
+                                        year, brandSlug, modelSlug);
                         String seoDescription = String.format(
                                         "Got a repair quote on your %d %s %s? Our free calculator tells you if fixing is worth it—based on NADA/KBB data. Takes 30 seconds.",
-                                        year, brand.name(), modelSlug);
+                                        year, brandSlug, modelSlug);
 
                         model.addAttribute("seoTitle", seoTitle);
                         model.addAttribute("seoDescription", seoDescription);
                         model.addAttribute("prefillYear", year);
-                        model.addAttribute("prefillBrand", brand.name());
+                        model.addAttribute("prefillBrand", brandSlug);
                         model.addAttribute("prefillModel", modelSlug);
                         model.addAttribute("isPseoPage", true);
                         model.addAttribute("pseoSlug", slug);
@@ -164,7 +186,7 @@ public class CarDecisionController {
 
         @PostMapping("/analyze")
         public String analyzeLoading(
-                        @RequestParam("brand") CarBrand brand,
+                        @RequestParam("brand") String brand, // Changed from CarBrand to String
                         @RequestParam(value = "model", required = false) String carModel,
                         @RequestParam(value = "year", defaultValue = "2018") int year,
                         @RequestParam(value = "vehicleType", required = false) VehicleType vehicleType,
@@ -225,7 +247,7 @@ public class CarDecisionController {
 
         @RequestMapping(value = "/analyze-final", method = { RequestMethod.GET, RequestMethod.POST })
         public String analyzeFinal(
-                        @RequestParam("brand") CarBrand brand,
+                        @RequestParam("brand") String brand, // Changed from CarBrand to String
                         @RequestParam(value = "model", required = false) String carModel,
                         @RequestParam(value = "year", defaultValue = "2018") int year,
                         @RequestParam(value = "vehicleType", required = false) VehicleType vehicleType,
@@ -293,7 +315,7 @@ public class CarDecisionController {
                         @RequestParam(value = "model", required = false) String carModel,
                         @RequestParam(value = "year", defaultValue = "2018") int year,
                         @RequestParam("vehicleType") VehicleType vehicleType,
-                        @RequestParam("brand") com.carmoneypit.engine.api.InputModels.CarBrand brand,
+                        @RequestParam("brand") String brand, // Changed from CarBrand to String
                         @RequestParam("mileage") long mileage,
                         @RequestParam("repairQuoteUsd") long repairQuoteUsd,
                         @RequestParam("currentValueUsd") long currentValueUsd,

@@ -128,7 +128,7 @@ public class VerdictPresenter {
     public String getLawyerExplanation(VerdictState state, EngineInput input) {
         Optional<CarBrandData> brandData = (input != null) ? valuationService.getBrandData(input.brand())
                 : Optional.empty();
-        String brandName = (input != null && input.brand() != null) ? input.brand().name() : "Vehicle";
+        String brandName = (input != null && input.brand() != null) ? input.brand() : "Vehicle";
 
         switch (state) {
             case TIME_BOMB:

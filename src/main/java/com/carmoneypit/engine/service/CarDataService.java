@@ -93,8 +93,32 @@ public class CarDataService {
         return carModels.stream()
                 .map(CarModel::brand)
                 .distinct()
+                .map(this::toTitleCase)
                 .sorted()
                 .toList();
+    }
+
+    private String toTitleCase(String input) {
+        if (input == null || input.isEmpty())
+            return input;
+
+        // Handle special cases
+        if (input.equalsIgnoreCase("BMW") || input.equalsIgnoreCase("GMC"))
+            return input.toUpperCase();
+        if (input.equalsIgnoreCase("VW") || input.equalsIgnoreCase("Volkswagen"))
+            return "Volkswagen";
+
+        String[] words = input.toLowerCase().split("[\\s-]");
+        StringBuilder sb = new StringBuilder();
+        for (String word : words) {
+            if (!word.isEmpty()) {
+                if (sb.length() > 0)
+                    sb.append(" ");
+                sb.append(Character.toUpperCase(word.charAt(0)));
+                sb.append(word.substring(1));
+            }
+        }
+        return sb.toString();
     }
 
     public List<CarModel> getModelsByBrand(String brandSlug) {
