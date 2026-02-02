@@ -59,10 +59,10 @@ public class CarDecisionController {
                 List<String> allBrands = carDataService.getAllBrands();
                 model.addAttribute("allBrands", allBrands);
 
-                if (brandParam != null && fromPSEO != null && fromPSEO) {
+                // Prefill form if brand parameter is provided (no longer requires pSEO=true)
+                if (brandParam != null) {
                         model.addAttribute("prefillBrand", brandParam);
                         model.addAttribute("prefillModel", modelParam);
-                        model.addAttribute("prefillYear", yearParam);
                         model.addAttribute("prefillQuote", repairQuoteParam);
                 }
                 return "index"; // Renders src/main/jte/index.jte

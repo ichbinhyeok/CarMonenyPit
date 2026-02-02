@@ -8,12 +8,45 @@
 @param String pseoSlug = ""
 @param MajorFaults majorFaults = null
 
+!{var faqSchema = """
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How much is my %d %s %s worth?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The value of a %d %s varies significantly based on mileage and condition. For a %d-year-old vehicle, expect depreciation to have reduced the value by 50-70%% from the original MSRP. Use our calculator for a market-based estimate."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Should I fix my %d %s %s or sell it?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "As a rule of thumb, if a repair costs more than 50%% of your vehicle's current value, it's often financially wiser to sell. Our calculator analyzes your specific repair quote against market value to give you a data-driven verdict."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What are common repairs for the %s %s?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Common repairs vary by mileage. Typical issues for this model may include suspension components, brake system wear, and depending on mileage, potential transmission or engine-related maintenance."
+      }
+    }
+  ]
+}
+""".formatted(prefillYear, prefillBrand, prefillModel, prefillYear, prefillModel, 2026 - prefillYear, prefillYear, prefillBrand, prefillModel, prefillBrand, prefillModel);}
 @template.layout(
     title = seoTitle,
     description = seoDescription,
     canonical = "https://automoneypit.com/should-i-fix/" + pseoSlug,
     ogTitle = seoTitle,
     ogDescription = seoDescription,
+    schemaJson = faqSchema,
     extraStyles = @`
         <style>
             .pseo-hero {
