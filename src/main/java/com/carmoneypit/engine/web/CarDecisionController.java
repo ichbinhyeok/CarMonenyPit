@@ -1,10 +1,5 @@
 package com.carmoneypit.engine.web;
 
-<<<<<<< HEAD
-import com.carmoneypit.engine.service.CarDataService;
-import com.carmoneypit.engine.api.InputModels.CarBrand;
-=======
->>>>>>> 3f08322 (Enhance pSEO content, Refactor to JSON-based data, and Fix UI glitches)
 import com.carmoneypit.engine.api.InputModels.EngineInput;
 import com.carmoneypit.engine.api.InputModels.SimulationControls;
 import com.carmoneypit.engine.api.InputModels.VehicleType;
@@ -40,12 +35,8 @@ public class CarDecisionController {
 
         private final DecisionEngine decisionEngine;
         private final VerdictPresenter presenter;
-<<<<<<< HEAD
-        private final CarDataService carDataService; // Add dependency
-=======
         private final ValuationService valuationService;
         private final CarDataService carDataService;
->>>>>>> 3f08322 (Enhance pSEO content, Refactor to JSON-based data, and Fix UI glitches)
 
         public CarDecisionController(DecisionEngine decisionEngine, VerdictPresenter presenter,
                         ValuationService valuationService, CarDataService carDataService) {
@@ -97,13 +88,8 @@ public class CarDecisionController {
 
                 try {
                         int year = Integer.parseInt(parts[0]);
-<<<<<<< HEAD
-                        String brandSlug = parts[1].toUpperCase();
-                        String modelSlug = parts.length > 2 ? parts[2] : "";
-=======
                         String brandSlug = parts[1].toUpperCase().replace(" ", "_");
                         String modelSlug = parts.length > 2 ? formatModelName(parts[2]) : "";
->>>>>>> 3f08322 (Enhance pSEO content, Refactor to JSON-based data, and Fix UI glitches)
 
                         // Validate brand exists in loaded data
                         if (!valuationService.isValidBrand(brandSlug)) {
@@ -114,18 +100,13 @@ public class CarDecisionController {
                                 }
                         }
 
-<<<<<<< HEAD
-                        if (brand == null) {
-                                return "redirect:/";
-                        }
-
                         // Find matching CarModel to get ID
                         // We iterate to find a model that matches the slug using fuzzy matching
                         // (normalization)
                         String normalizedSlugModel = modelSlug.toLowerCase().replaceAll("[^a-z0-9]", "");
 
                         var carModelOpt = carDataService.getAllModels().stream()
-                                        .filter(m -> m.brand().equalsIgnoreCase(brand.name()))
+                                        .filter(m -> m.brand().equalsIgnoreCase(brandSlug))
                                         .filter(m -> m.model().toLowerCase().replaceAll("[^a-z0-9]", "")
                                                         .equals(normalizedSlugModel))
                                         .findFirst();
@@ -141,9 +122,6 @@ public class CarDecisionController {
                                         model.addAttribute("majorFaults", faultsOpt.get());
                                 }
                         }
-
-=======
->>>>>>> 3f08322 (Enhance pSEO content, Refactor to JSON-based data, and Fix UI glitches)
                         // SEO Meta - Optimized for CTR
                         String seoTitle = String.format("%d %s %s: Fix or Sell? [Free 2026 Calculator]",
                                         year, brandSlug, modelSlug);
