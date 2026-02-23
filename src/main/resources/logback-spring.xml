@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>debug.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>debug.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>14</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="LEADS_CSV" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>leads.csv</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>leads.%d{yyyy-MM-dd}.csv</fileNamePattern>
+            <maxHistory>365</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <!-- Formats: timestamp(UTC default via XXX if configured but GMT is safer),%msg -->
+            <!-- Note: %msg will contain "event_type,page_type,verdict_type,brand,model,detail,referrer_path,placement" -->
+            <pattern>%d{yyyy-MM-dd'T'HH:mm:ssXXX, Asia/Seoul},%msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Dedicated logger for leads without prepending log levels to the pattern -->
+    <logger name="CSV_LEAD_LOGGER" level="INFO" additivity="false">
+        <appender-ref ref="LEADS_CSV" />
+    </logger>
+
+    <root level="INFO">
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="FILE" />
+    </root>
+</configuration>

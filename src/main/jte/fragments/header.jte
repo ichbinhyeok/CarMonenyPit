@@ -13,78 +13,6 @@
         flex-direction: column;
     }
 
-    /* Live Ticker Styles */
-    .live-ticker-bar {
-        background: #000;
-        color: #fff;
-        height: 32px;
-        display: flex;
-        align-items: center;
-        overflow: hidden;
-        font-size: 0.7rem;
-        font-weight: 700;
-        position: relative;
-        transition: height 0.3s;
-    }
-    @media (max-width: 768px) {
-        .live-ticker-bar { height: 24px; font-size: 0.65rem; }
-    }
-
-    .live-label {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        padding: 0 1rem;
-        height: 100%;
-        background: #000;
-        z-index: 10;
-        box-shadow: 5px 0 10px rgba(0,0,0,0.5);
-        white-space: nowrap;
-    }
-    @media (max-width: 768px) {
-        .live-label span:not(.live-dot) { display: none; }
-        .live-label { padding: 0 0.5rem; }
-    }
-
-    .live-dot {
-        width: 6px;
-        height: 6px;
-        background: #10B981;
-        border-radius: 50%;
-        animation: pulse 2s infinite;
-    }
-
-    .ticker-track {
-        flex: 1;
-        overflow: hidden;
-        display: flex;
-        mask-image: linear-gradient(to right, transparent, black 20px, black 95%, transparent);
-        -webkit-mask-image: linear-gradient(to right, transparent, black 20px, black 95%, transparent);
-    }
-
-    .ticker-content {
-        display: flex;
-        gap: 4rem;
-        padding-left: 2rem;
-        white-space: nowrap;
-        animation: ticker 40s linear infinite;
-    }
-
-    .ticker-content span {
-        opacity: 0.9;
-    }
-
-    @keyframes ticker {
-        0% { transform: translateX(0); }
-        100% { transform: translateX(-50%); }
-    }
-
-    @keyframes pulse {
-        0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
-        70% { box-shadow: 0 0 0 4px rgba(16, 185, 129, 0); }
-        100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
-    }
-
     .header-content {
         width: 100%;
         max-width: 1400px;
@@ -92,7 +20,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 1rem 2rem; /* Reduced padding since we added the top bar */
+        padding: 1rem 2rem;
     }
 
     .logo {
@@ -123,70 +51,45 @@
         background: linear-gradient(90deg, #0066ff, #6366f1);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-        -webkit-text-fill-color: transparent; 
     }
 
-    .sys-status {
-        font-size: 0.7rem;
-        font-weight: 800;
-        color: var(--text-secondary);
+    .header-nav {
         display: flex;
         align-items: center;
-        gap: 0.5rem;
-        letter-spacing: 0.1em;
-        opacity: 0.7;
+        gap: 1.5rem;
     }
 
-    .status-dot {
-        width: 6px;
-        height: 6px;
-        background: #10b981;
-        border-radius: 50%;
-        box-shadow: 0 0 8px #10b981;
+    .header-nav a {
+        text-decoration: none;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--text-secondary);
+        transition: color 0.2s;
+    }
+
+    .header-nav a:hover {
+        color: var(--text-main);
     }
 
     @media (max-width: 768px) {
-        .header-content { padding: 0.5rem 1rem; }
+        .header-content { padding: 0.75rem 1rem; }
         .logo-text { font-size: 1rem; }
         .logo-icon { padding: 2px 6px; font-size: 0.6rem; }
-        .live-ticker-bar { display: flex; }
+        .header-nav a { font-size: 0.75rem; }
+        .header-nav { gap: 1rem; }
     }
 </style>
 
 <header class="main-header">
-    <div class="live-ticker-bar">
-        <div class="live-label">
-            <span class="live-dot"></span>
-            LIVE SYSTEM ACTIVITY
-        </div>
-        <div class="ticker-track">
-            <div class="ticker-content">
-                <span>⚡ Live Analysis: Ford F-150 (TX) - CAM_PHASER_DETECTED</span>
-                <span>⚡ Live Analysis: Honda Accord (CA) - VCM_VIBRATION</span>
-                <span>✓ Verdict: Jeep Wrangler (FL) - FINANCIAL_BLEED_CONFIRMED</span>
-                <span>⚡ Live Analysis: Toyota Camry (NY) - TRANSMISSION_SLIP</span>
-                <span>✓ Verdict: Chevrolet Silverado (OH) - ASSET_RETAINED</span>
-                <span>⚡ Live Analysis: BMW 3-Series (GA) - WATER_PUMP_FAILURE</span>
-                <!-- Duplicate for seamless loop -->
-                <span>⚡ Live Analysis: Ford F-150 (TX) - CAM_PHASER_DETECTED</span>
-                <span>⚡ Live Analysis: Honda Accord (CA) - VCM_VIBRATION</span>
-                <span>✓ Verdict: Jeep Wrangler (FL) - FINANCIAL_BLEED_CONFIRMED</span>
-                <span>⚡ Live Analysis: Toyota Camry (NY) - TRANSMISSION_SLIP</span>
-                <span>✓ Verdict: Chevrolet Silverado (OH) - ASSET_RETAINED</span>
-                <span>⚡ Live Analysis: BMW 3-Series (GA) - WATER_PUMP_FAILURE</span>
-            </div>
-        </div>
-    </div>
     <div class="header-content">
         <a href="/" class="logo">
             <span class="logo-icon">PIT</span>
             <span class="logo-text">AutoMoney<span>Pit</span></span>
         </a>
         <nav class="header-nav">
-            <span class="sys-status">
-                <span class="status-dot"></span>
-                SYSTEM_ACTIVE_v4.2
-            </span>
+            <a href="/models">Models</a>
+            <a href="/methodology">Methodology</a>
+            <a href="/about">About</a>
         </nav>
     </div>
 </header>

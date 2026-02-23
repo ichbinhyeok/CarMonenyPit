@@ -1,10 +1,10 @@
 @template.layout(
-    title = "About Us | CarMoneyPit",
+    title = "About Us | AutoMoneyPit",
     content = @`
         <div style="max-width: 1000px; margin: 4rem auto; padding: 1rem;">
             <header style="text-align: center; margin-bottom: 5rem;">
                 <h1 style="font-size: 3rem; font-weight: 800; color: #0f172a; margin-bottom: 1.5rem;">Stop Guessing. Start Calculating.</h1>
-                    CarMoneyPit was founded on a simple premise: vehicle repair decisions should be informed by data-driven logic and financial frameworks, not just emotion.
+                    AutoMoneyPit was founded on a simple premise: vehicle repair decisions should be informed by data-driven logic and financial frameworks, not just emotion.
             </header>
 
             <section style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 3rem; margin-bottom: 6rem;">

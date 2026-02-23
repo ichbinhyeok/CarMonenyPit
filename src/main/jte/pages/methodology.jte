@@ -1,5 +1,5 @@
 @template.layout(
-    title = "Methodology | The Data-Driven Logic | CarMoneyPit",
+    title = "Methodology | The Data-Driven Logic | AutoMoneyPit",
     content = @`
         <div style="max-width: 1000px; margin: 4rem auto; padding: 1rem;">
             <header style="text-align: center; margin-bottom: 5rem;">

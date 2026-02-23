@@ -90,7 +90,7 @@
             flex-direction: column;
             position: relative;
             overflow-x: hidden;
-            padding-top: 5.5rem; /* Reduced after slimming header */
+            padding-top: 4.5rem; /* Adjusted after removing ticker bar */
         }
 
         /* Sophisticated Mesh Background */
@@ -112,7 +112,7 @@
         /* --- Responsive Foundations --- */
         @media (max-width: 768px) {
             body {
-                padding-top: 4.5rem;
+                padding-top: 3.5rem;
             }
             main {
                 padding: 1rem !important;
@@ -185,7 +185,7 @@
     @endif
 </head>
 <body>
-    <!-- Live Pulse Ticker (Social Proof) -->
+
 
     <div class="mesh-container"></div>
     
@@ -218,5 +218,19 @@
             </div>
         </div>
     </footer>
+    
+    <!-- CTA Tracking with GA4 sendBeacon -->
+    <script>
+        document.addEventListener('click', function(e) {
+            var cta = e.target.closest('a[href^="/lead"]');
+            if (cta) {
+                gtag('event', 'cta_click', {
+                    'event_category': 'monetization',
+                    'event_label': cta.href,
+                    'transport_type': 'beacon'
+                });
+            }
+        });
+    </script>
 </body>
 </html>

@@ -1,5 +1,5 @@
 @template.layout(
-    title = "Privacy Policy | CarMoneyPit",
+    title = "Privacy Policy | AutoMoneyPit",
     content = @`
         <section style="max-width: 900px; margin: 4rem auto; padding: 2rem; color: #334155; line-height: 1.8;">
             <h1 style="font-size: 2.5rem; color: #0f172a; margin-bottom: 2rem;">Privacy Policy</h1>
@@ -7,7 +7,7 @@
             
             <h2 style="font-size: 1.5rem; color: #0f172a; margin-top: 2.5rem; margin-bottom: 1rem;">1. Information We Collect</h2>
             <p style="margin-bottom: 1rem;">
-                CarMoneyPit is designed to be a high-privacy tool. We collect vehicle data (make, model, mileage) and repair quote information to provide your financial analysis. 
+                AutoMoneyPit is designed to be a high-privacy tool. We collect vehicle data (make, model, mileage) and repair quote information to provide your financial analysis. 
             </p>
             
             <h2 style="font-size: 1.5rem; color: #0f172a; margin-top: 2.5rem; margin-bottom: 1rem;">2. Use of Data</h2>

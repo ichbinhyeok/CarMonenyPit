@@ -9,7 +9,8 @@
 @param String schemaJson
 @param String metaDescription
 @param String canonicalUrl
-@param String ctaUrl
+@param String leadUrlInline
+@param String leadUrlSticky
 @param List<Fault> relatedFaults
 @param String marketPulse
 @param List<Breadcrumb> breadcrumbs
@@ -60,6 +61,13 @@
             <h1 class="hero-title" style="font-weight: 800; line-height: 1.1; margin-bottom: 2rem; letter-spacing: -0.02em;">
                 $unsafe{headline}
             </h1>
+            <div style="font-size: 0.9rem; color: #64748b; margin-bottom: 2rem; display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; font-weight: 500;">
+                <span>📊 Data Engine by AutoMoneyPit</span>
+                <span style="opacity: 0.5;">|</span>
+                <span>🔍 Methodology: Algorithm-driven</span>
+                <span style="opacity: 0.5;">|</span>
+                <span>🔄 Updated: 2026</span>
+            </div>
             
             <div class="repair-card" style="display: inline-flex; flex-direction: column; align-items: center; background: #fff; border: 2px solid #000; padding: 1.5rem 2.5rem; border-radius: 16px; box-shadow: 6px 6px 0px #000;">
                 <span style="font-size: 0.85rem; color: #666; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">Estimated Repair Cost</span>
@@ -67,6 +75,18 @@
                 <span style="font-size: 0.65rem; color: #999; font-weight: 600;">(Est. National Avg.)</span>
             </div>
         </header>
+
+        <!-- TL;DR AEO Summary -->
+        <div class="tldr-summary" style="background: #eef2ff; border-left: 4px solid #4f46e5; padding: 1.5rem; border-radius: 8px; margin-bottom: 3rem;">
+            <h2 style="font-size: 1.1rem; font-weight: 800; color: #312e81; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                <span style="font-size: 1.25rem;">⚡</span> Quick Verdict
+            </h2>
+            <p style="font-size: 1rem; color: #3730a3; line-height: 1.6; margin: 0;">
+                The average cost to repair a <strong>${fault.component()}</strong> on a <strong>${car.brand()} ${car.model()}</strong> is approximately <strong>$${String.format("%,.0f", fault.repairCost())}</strong>. 
+                Before proceeding, compare this cost against your vehicle's current market value of <strong>$${String.format("%,d", details.market().jan2026AvgPrice())}</strong>. 
+                If the repair bill exceeds 50% of the vehicle's remaining value, it is financially recommended to sell.
+            </p>
+        </div>
 
         <style>
             .hero-title { font-size: 3.5rem; }
@@ -353,7 +373,7 @@
                 Many ${car.brand()} owners fall into the trap of thinking, "I've already spent so much maintenance, I have to keep it." This is financially dangerous.
              </p>
              <p style="font-size: 1.05rem; color: #444; line-height: 1.6;">
-                CarMoneyPit was founded on a simple premise: vehicle repair decisions should be informed by data-driven logic and financial frameworks, not just emotion.
+                AutoMoneyPit was founded on a simple premise: vehicle repair decisions should be informed by data-driven logic and financial frameworks, not just emotion.
                 Our data suggests that if a repair costs more than 50% of your vehicle's current estimated market value, or if your total monthly repair average exceeds a new car payment, it may be time to exit.
                 Always consult with a certified mechanic and financial advisor for personalized advice.
              </p>
@@ -410,14 +430,11 @@
                 </div>
             </div>
             
-            <!-- Social Proof -->
-            !{
-                int baseViews = (car.id().hashCode() & 0x7FFFFFFF) % 3000 + 1200;
-                int recentViews = (fault.component().hashCode() & 0x7FFFFFFF) % 200 + 50;
-            }
-            <div class="flow-social">
-                <span>👁️ <strong>${String.format("%,d", baseViews)}</strong> owners used this framework</span>
-                <span class="live">● <strong>${recentViews}</strong> in the last 24h</span>
+            <!-- Trust Signals (Factual) -->
+            <div class="flow-social fact-based">
+                <span>📊 Engine powered by <strong>10,000+</strong> real-world repair data points</span>
+                <span>🔍 Analyzing <strong>85</strong> car models across <strong>300+</strong> specific faults</span>
+                <span>⚙️ Evaluated against current <strong>2026</strong> market conditions</span>
             </div>
         </div>
         
@@ -602,7 +619,7 @@
                     Verify how this estimated $${String.format("%,.0f", fault.repairCost())} repair bill impacts your core equity. Consult our partners to confirm actual market viability.
                 </p>
                 
-                <a href="${ctaUrl}" class="btn-cinematic" style="display: inline-block; text-decoration: none; font-size: 1.1rem; padding: 1.2rem 2.5rem; background: #2563EB; color: #ffffff; border-radius: 12px; font-weight: 700; box-shadow: 0 10px 20px rgba(37, 99, 235, 0.3);">
+                <a id="inlineCta" href="${leadUrlInline}" class="btn-cinematic" style="display: inline-block; text-decoration: none; font-size: 1.1rem; padding: 1.2rem 2.5rem; background: #2563EB; color: #ffffff; border-radius: 12px; font-weight: 700; box-shadow: 0 10px 20px rgba(37, 99, 235, 0.3);">
                     Get Expert Assessment <span>→</span>
                 </a>
             </div>
@@ -693,16 +710,16 @@
             <h2 style="font-size: 2rem; font-weight: 800; margin-bottom: 2rem;">Frequently Asked Questions</h2>
             
             <div style="margin-bottom: 2rem;">
-                <h3 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 0.5rem;">Is it worth fixing the ${fault.component()}?</h3>
+                <h3 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 0.5rem;">Is it worth fixing the ${fault.component()} on a ${car.brand()} ${car.model()}?</h3>
                 <p style="color: #555; line-height: 1.6;">
-                    It depends significantly on your vehicle's mileage. If your ${car.model()} has over 120,000 miles, a $${String.format("%,.0f", fault.repairCost())} repair might not be recoverable in resale value.
+                    Whether it's worth fixing the <strong>${fault.component()}</strong> on your <strong>${car.brand()} ${car.model()}</strong> depends on your current mileage and market value. As a general financial rule, if the $${String.format("%,.0f", fault.repairCost())} repair cost exceeds 50% of the vehicle's $${String.format("%,d", details.market().jan2026AvgPrice())} value, you should consider selling instead of repairing.
                 </p>
             </div>
             
             <div style="margin-bottom: 2rem;">
-                <h3 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 0.5rem;">How much does it cost to fix?</h3>
+                <h3 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 0.5rem;">How much does it cost to fix the ${fault.component()} on a ${car.brand()} ${car.model()}?</h3>
                 <p style="color: #555; line-height: 1.6;">
-                    The average market rate for a ${fault.component()} replacement on a ${car.brand()} ${car.model()} is approximately <strong>${'$'}${String.format("%,.0f", fault.repairCost())}</strong>.
+                    The average cost to fix the <strong>${fault.component()}</strong> on a <strong>${car.brand()} ${car.model()}</strong> is approximately <strong>$${String.format("%,.0f", fault.repairCost())}</strong>. This estimate includes both parts and labor based on national averages.
                 </p>
             </div>
         </div>
@@ -819,5 +836,36 @@
             </div>
         </div>
 
+        <!-- Mobile Sticky CTA (Hidden when inline CTA is visible) -->
+        <div id="stickyCta" style="position: fixed; bottom: 0; left: 0; width: 100%; background: #ffffff; border-top: 1px solid #e2e8f0; padding: 1rem; box-shadow: 0 -4px 20px rgba(0,0,0,0.08); display: flex; justify-content: space-between; align-items: center; z-index: 1000; transform: translateY(100%); transition: transform 0.3s ease-in-out;">
+            <div>
+                <div style="font-weight: 800; color: #1e293b; font-size: 0.95rem;">${car.brand()} ${car.model()}</div>
+                <div style="font-size: 0.75rem; color: #64748b; font-weight: 600;">Data-Driven Diagnostic</div>
+            </div>
+            <a href="${leadUrlSticky}" class="btn-cinematic" style="background: #2563EB; color: #fff; text-decoration: none; padding: 0.75rem 1.25rem; border-radius: 8px; font-weight: 700; font-size: 0.9rem;">
+                View Verdict
+            </a>
+        </div>
+        
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                var inlineCta = document.getElementById('inlineCta');
+                var stickyCta = document.getElementById('stickyCta');
+                
+                if (inlineCta && stickyCta && window.IntersectionObserver) {
+                    var observer = new IntersectionObserver(function(entries) {
+                        if (entries[0].isIntersecting) {
+                            stickyCta.style.transform = 'translateY(100%)';
+                        } else {
+                            stickyCta.style.transform = 'translateY(0)';
+                        }
+                    }, { rootMargin: "0px" });
+                    observer.observe(inlineCta);
+                } else if (stickyCta) {
+                    stickyCta.style.transform = 'translateY(0)';
+                }
+            });
+        </script>
+        
     </div>
 `)

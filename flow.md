@@ -1,4 +1,4 @@
-# CarMoneyPit – User Decision Flow (v.1)
+# AutoMoneyPit – User Decision Flow (v.1)
 
 ## 목적
 이 Flow는 자동차 수리 vs 손절 판단을 위한 **Regret-based Decision Flow**다.  

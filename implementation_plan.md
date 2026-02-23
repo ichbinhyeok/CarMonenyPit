@@ -1,4 +1,4 @@
-# CarMoneyPit 종합 구현 마스터 플랜 (Final)
+# AutoMoneyPit 종합 구현 마스터 플랜 (Final)
 
 ## 1. 프로젝트 정체성 & 톤앤매너
 ### Identity: "차량 의사결정 지원 도구 (Decision Support Engine)"

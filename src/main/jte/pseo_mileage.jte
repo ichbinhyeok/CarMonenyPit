@@ -17,6 +17,8 @@
 @param String canonicalUrl
 @param String metaDescription
 @param String schemaJson
+@param String leadUrlInline
+@param String leadUrlSticky
 
 !{
     // Calculate lifespan percentage
@@ -44,7 +46,7 @@
     }
     
     // Calculate estimated current value (depreciation based on mileage)
-    final double mileageDepreciation = 1 - (targetMileage * 0.00003); // ~3% per 10k miles
+    final double mileageDepreciation = Math.max(0.15, 1.0 - (targetMileage * 0.000003)); // ~3% per 10k miles, floor at 15%
     final int estimatedValue = (int) Math.max(market.commonJunkValue(), market.jan2026AvgPrice() * mileageDepreciation);
     
     // Find high-risk faults that occur around this mileage
@@ -118,12 +120,36 @@
                 Is Your ${car.brand()} ${car.model()} Worth Keeping<br>
                 at <span class="highlight">${String.format("%,d", targetMileage)} Miles</span>?
             </h1>
+            <div style="font-size: 0.9rem; color: #64748b; margin-bottom: 2rem; display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; font-weight: 500;">
+                <span>📊 Data Engine by AutoMoneyPit</span>
+                <span style="opacity: 0.5;">|</span>
+                <span>🔍 Methodology: Algorithm-driven</span>
+                <span style="opacity: 0.5;">|</span>
+                <span>🔄 Updated: 2026</span>
+            </div>
             
             <p class="hero-subtitle">
                 Data-driven analysis for ${car.brand()} ${car.model()} (${car.startYear()}-${car.endYear()}) owners.
                 We analyzed depreciation curves, failure patterns, and market data to answer your question.
             </p>
         </header>
+
+        <!-- TL;DR AEO Summary -->
+        <div class="tldr-summary" style="background: #eef2ff; border-left: 4px solid #4f46e5; padding: 1.5rem; border-radius: 8px; margin-bottom: 3rem;">
+            <h2 style="font-size: 1.1rem; font-weight: 800; color: #312e81; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                <span style="font-size: 1.25rem;">⚡</span> Quick Verdict
+            </h2>
+            <p style="font-size: 1rem; color: #3730a3; line-height: 1.6; margin: 0;">
+                A <strong>${car.brand()} ${car.model()}</strong> at <strong>${String.format("%,d", targetMileage)} miles</strong> is worth approximately <strong>$${String.format("%,d", estimatedValue)}</strong> and has consumed <strong>${String.format("%.0f", lifespanPercent)}%</strong> of its expected lifespan. 
+                @if(lifespanPercent >= 75)
+                Because of its high risk zone, major repairs exceeding $${String.format("%,d", estimatedValue / 2)} are not financially recommended.
+                @elseif(lifespanPercent >= 50)
+                It is approaching widespread component failures; calculate repair costs carefully against market value.
+                @else
+                It still has significant useful life remaining, making most standard repairs worthwhile.
+                @endif
+            </p>
+        </div>
 
         <!-- Main Analysis Card -->
         <section class="analysis-card">
@@ -359,7 +385,7 @@
                     Have a specific repair quote? Our free calculator analyzes your exact situation — 
                     your mileage, your repair cost, current market value — and tells you whether to fix or sell.
                 </p>
-                <a href="/?brand=${car.brand().replace(" ", "+")}&model=${car.model().replace(" ", "+")}&mileage=${targetMileage}" class="cta-button">
+                <a id="inlineCta" href="${leadUrlInline}" class="cta-button">
                     <span>Get My Verdict</span>
                     <span class="arrow">→</span>
                 </a>
@@ -374,15 +400,14 @@
             <div class="faq-item">
                 <h3>Is a ${car.brand()} ${car.model()} with ${String.format("%,d", targetMileage)} miles reliable?</h3>
                 <p>
-                    At ${String.format("%,d", targetMileage)} miles, your ${car.model()} is at ${String.format("%.0f", lifespanPercent)}% of its 
-                    expected ${String.format("%,d", lifespanMiles)}-mile lifespan. 
+                    Yes, a <strong>${car.brand()} ${car.model()}</strong> with <strong>${String.format("%,d", targetMileage)} miles</strong> is generally considered 
                     @if(lifespanPercent < 50)
-                    This is still in the reliable zone with ${remainingPercent}% of useful life remaining. Regular maintenance is key.
+                    reliable, as it retains ${remainingPercent}% of its lifespan.
                     @elseif(lifespanPercent < 75)
-                    Reliability depends heavily on maintenance history. Inspect key components like 
-                    ${reliability.commonTroubleSpots() != null && !reliability.commonTroubleSpots().isEmpty() ? reliability.commonTroubleSpots().get(0) : "transmission and engine"} before committing to expensive repairs.
+                    moderately reliable, though dependent on maintenance. Inspect key components like 
+                    ${reliability.commonTroubleSpots() != null && !reliability.commonTroubleSpots().isEmpty() ? reliability.commonTroubleSpots().get(0) : "the transmission and engine"}.
                     @else
-                    At this mileage, reliability is unpredictable. Many ${car.model()} owners experience significant repairs past this point.
+                    unreliable, as it has exceeded ${String.format("%.0f", lifespanPercent)}% of its expected lifespan. Expect significant repairs past this point.
                     @endif
                 </p>
             </div>
@@ -415,10 +440,7 @@
             <div class="faq-item">
                 <h3>Should I sell my ${car.model()} or keep repairing it?</h3>
                 <p>
-                    This depends on your specific repair quote. As a general rule: if any single repair exceeds 
-                    50% of your vehicle's value ($${String.format("%,d", estimatedValue / 2)}), or if your annual repair costs 
-                    exceed a new car payment (~$400/month), it's time to sell. Use our free calculator above 
-                    with your exact numbers for a personalized recommendation.
+                    You should sell your <strong>${car.model()}</strong> if any single repair exceeds 50% of your vehicle's value (<strong>$${String.format("%,d", estimatedValue / 2)}</strong>), or if your annual repair costs exceed a new car payment (~$400/month). Otherwise, keep repairing it.
                 </p>
             </div>
         </section>
@@ -488,6 +510,38 @@
                 @endif
             </div>
         </section>
+
+        <!-- Mobile Sticky CTA (Hidden when inline CTA is visible) -->
+        <div id="stickyCta" style="position: fixed; bottom: 0; left: 0; width: 100%; background: #ffffff; border-top: 1px solid #e2e8f0; padding: 1rem; box-shadow: 0 -4px 20px rgba(0,0,0,0.08); display: flex; justify-content: space-between; align-items: center; z-index: 1000; transform: translateY(100%); transition: transform 0.3s ease-in-out;">
+            <div>
+                <div style="font-weight: 800; color: #1e293b; font-size: 0.95rem;">${car.brand()} ${car.model()}</div>
+                <div style="font-size: 0.75rem; color: #64748b; font-weight: 600;">Mileage Valuation</div>
+            </div>
+            <a href="${leadUrlSticky}" class="cta-button" style="padding: 0.75rem 1.25rem; font-size: 0.9rem;">
+                View Verdict
+            </a>
+        </div>
+        
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                var inlineCta = document.getElementById('inlineCta');
+                var stickyCta = document.getElementById('stickyCta');
+                
+                if (inlineCta && stickyCta && window.IntersectionObserver) {
+                    var observer = new IntersectionObserver(function(entries) {
+                        if (entries[0].isIntersecting) {
+                            stickyCta.style.transform = 'translateY(100%)';
+                        } else {
+                            stickyCta.style.transform = 'translateY(0)';
+                        }
+                    }, { rootMargin: "0px" });
+                    observer.observe(inlineCta);
+                } else if (stickyCta) {
+                    // Fallback
+                    stickyCta.style.transform = 'translateY(0)';
+                }
+            });
+        </script>
 
     </div>
 

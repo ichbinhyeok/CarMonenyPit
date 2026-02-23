@@ -5,10 +5,12 @@ import com.carmoneypit.engine.service.CarDataService.*;
 import com.carmoneypit.engine.service.MarketPulseService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import jakarta.servlet.http.HttpServletResponse;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,6 +28,9 @@ public class PSeoController {
   private final CarDataService dataService;
   private final MarketPulseService marketPulseService;
 
+  @Value("${app.baseUrl:https://automoneypit.com}")
+  private String baseUrl;
+
   public PSeoController(CarDataService dataService, MarketPulseService marketPulseService) {
     this.dataService = dataService;
     this.marketPulseService = marketPulseService;
@@ -36,15 +41,17 @@ public class PSeoController {
       @PathVariable("brand") String brand,
       @PathVariable("model") String model,
       @PathVariable("faultSlug") String faultSlug,
-      Model modelMap) {
+      Model modelMap,
+      HttpServletResponse response) {
 
+    response.setHeader("Cache-Control", "public, max-age=86400");
     logger.info("Request for {} / {} / {}", brand, model, faultSlug);
 
     // 1. Find Car Model
     Optional<CarModel> carOpt = dataService.findCarBySlug(brand, model);
     if (carOpt.isEmpty()) {
       logger.warn("Car not found: {} / {}", brand, model);
-      return "redirect:/models/" + normalize(brand);
+      throw new ResourceNotFoundException("Car model not found");
     }
     CarModel car = carOpt.get();
 
@@ -52,7 +59,7 @@ public class PSeoController {
     Optional<MajorFaults> faultsOpt = dataService.findFaultsByModelId(car.id());
     if (faultsOpt.isEmpty()) {
       logger.warn("No faults data for model: {}", car.id());
-      return "redirect:/models/" + brand + "/" + model;
+      throw new ResourceNotFoundException("No faults found for model");
     }
 
     // 3. Find the Specific Fault by Slug
@@ -68,7 +75,7 @@ public class PSeoController {
 
     if (faultOpt.isEmpty()) {
       logger.warn("Fault not found: {}", faultSlug);
-      return "redirect:/models/" + brand + "/" + model;
+      throw new ResourceNotFoundException("Fault not found");
     }
     Fault fault = faultOpt.get();
 
@@ -88,21 +95,23 @@ public class PSeoController {
     // 5. Generate SEO Assets
     String schemaJson = generateSchema(car, fault, profile, brand, model, faultSlug);
 
-    // Enhanced Meta Description with social proof (Truthful & SEO Safe)
-    // Enhanced Meta Description with social proof (Truthful & SEO Safe)
-    // Enhanced Meta Description with social proof (Truthful & SEO Safe)
     String metaDescription = "Experiencing " + fault.symptoms().toLowerCase() + "? Is a $"
         + String.format("%,d", Math.round(fault.repairCost())) + " " + fault.component() +
         " repair worth it on your " + car.brand() + " " + car.model()
         + "? We analyzed market data and depreciation curves to give you a clear financial verdict.";
 
-    String canonicalUrl = "https://automoneypit.com/verdict/" + brand + "/" + model + "/" + faultSlug;
+    String canonicalUrl = baseUrl + "/verdict/" + brand + "/" + model + "/" + faultSlug;
 
-    // Pre-fill CTA URL for main page
-    String ctaUrl = "/?brand=" + car.brand().replace(" ", "+") +
-        "&model=" + car.model().replace(" ", "+") +
-        "&repairQuoteUsd=" + Math.round(fault.repairCost()) +
-        "&pSEO=true";
+    // 6. Generate Social Assets (Dynamic Receipt)
+    long marketValue = profile != null ? profile.market().jan2026AvgPrice() : 0;
+    double repairCost = fault.repairCost();
+    boolean isSell = repairCost > (marketValue * 0.5);
+    String verdictType = isSell ? "SELL" : "FIX";
+    String verdictText = isSell ? "VERDICT: SELL" : "VERDICT: CAUTION";
+
+    // Build tracking URLs
+    String leadUrlInline = "/lead?page_type=pseo_fault&verdict_type=" + verdictType + "&brand=" + normalize(car.brand()) + "&model=" + normalize(car.model()) + "&detail=" + faultSlug + "&placement=inline";
+    String leadUrlSticky = "/lead?page_type=pseo_fault&verdict_type=" + verdictType + "&brand=" + normalize(car.brand()) + "&model=" + normalize(car.model()) + "&detail=" + faultSlug + "&placement=sticky";
 
     // Related faults for internal linking
     List<Fault> relatedFaults = faultsOpt.get().faults().stream()
@@ -110,16 +119,7 @@ public class PSeoController {
         .limit(3)
         .toList();
 
-    // 6. Generate Social Assets (Dynamic Receipt)
-    long marketValue = profile != null ? profile.market().jan2026AvgPrice() : 0;
-    double repairCost = fault.repairCost();
-    boolean isSell = repairCost > (marketValue * 0.5);
-    String verdictText = isSell ? "VERDICT: SELL" : "VERDICT: CAUTION";
-
-    String ogText = car.brand() + " " + car.model() + "%0ARepair: $" + String.format("%,d", Math.round(repairCost)) +
-        "%0AValue: $" + String.format("%,d", marketValue) + "%0A%0A" + verdictText;
-
-    String ogImage = "https://placehold.co/1200x630/1e293b/ffffff?text=" + ogText.replace(" ", "%20") + "&font=oswald";
+    String ogImage = baseUrl + "/img/og-default.png"; // Replaced external placeholder with internal static OG image
 
     // 7. Breadcrumbs (Clickable)
     List<Breadcrumb> breadcrumbs = List.of(
@@ -135,7 +135,8 @@ public class PSeoController {
     modelMap.addAttribute("schemaJson", schemaJson);
     modelMap.addAttribute("metaDescription", metaDescription);
     modelMap.addAttribute("canonicalUrl", canonicalUrl);
-    modelMap.addAttribute("ctaUrl", ctaUrl);
+    modelMap.addAttribute("leadUrlInline", leadUrlInline);
+    modelMap.addAttribute("leadUrlSticky", leadUrlSticky);
     modelMap.addAttribute("relatedFaults", relatedFaults);
     modelMap.addAttribute("marketPulse", marketPulseService.generateBiweeklyInsight(car, fault));
     modelMap.addAttribute("ogImage", ogImage);
@@ -147,19 +148,39 @@ public class PSeoController {
   // --- Mileage-Based pSEO Pages (NEW) ---
 
   @GetMapping("/verdict/{brand}/{model}/{mileage}-miles")
-  public String showMileageVerdict(
+  public Object showMileageVerdict(
       @PathVariable("brand") String brand,
       @PathVariable("model") String model,
       @PathVariable("mileage") int mileage,
-      Model modelMap) {
+      Model modelMap,
+      HttpServletResponse response) {
 
+    // 1. Mileage Bucketing 301 Redirect Logic (Crawl Optimization)
+    List<Integer> allowedBuckets = List.of(50000, 75000, 100000, 125000, 150000, 175000, 200000);
+    if (!allowedBuckets.contains(mileage)) {
+      int closestBucket = allowedBuckets.get(0);
+      int minDiff = Math.abs(mileage - closestBucket);
+      for (int bucket : allowedBuckets) {
+        int diff = Math.abs(mileage - bucket);
+        if (diff < minDiff || (diff == minDiff && bucket > closestBucket)) {
+          minDiff = diff;
+          closestBucket = bucket;
+        }
+      }
+      String redirectUrl = baseUrl + "/verdict/" + normalize(brand) + "/" + normalize(model) + "/" + closestBucket + "-miles";
+      org.springframework.web.servlet.view.RedirectView rv = new org.springframework.web.servlet.view.RedirectView(redirectUrl);
+      rv.setStatusCode(org.springframework.http.HttpStatus.MOVED_PERMANENTLY);
+      return rv;
+    }
+
+    response.setHeader("Cache-Control", "public, max-age=86400");
     logger.info("Mileage request for {} / {} at {} miles", brand, model, mileage);
 
     // 1. Find Car Model
     Optional<CarModel> carOpt = dataService.findCarBySlug(brand, model);
     if (carOpt.isEmpty()) {
       logger.warn("Car not found: {} / {}", brand, model);
-      return "redirect:/models/" + normalize(brand);
+      throw new ResourceNotFoundException("Car model not found");
     }
     CarModel car = carOpt.get();
 
@@ -169,7 +190,7 @@ public class PSeoController {
 
     if (reliabilityOpt.isEmpty() || marketOpt.isEmpty()) {
       logger.warn("Missing data for model: {}", car.id());
-      return "redirect:/models/" + brand + "/" + model;
+      throw new ResourceNotFoundException("Reliability or Market data not found for model");
     }
 
     ModelReliability reliability = reliabilityOpt.get();
@@ -184,7 +205,7 @@ public class PSeoController {
     );
 
     // 4. Build canonical URL
-    String canonicalUrl = "https://carmoneypit.com/verdict/" + normalize(brand) + "/" + normalize(model) + "/" + mileage + "-miles";
+    String canonicalUrl = baseUrl + "/verdict/" + normalize(brand) + "/" + normalize(model) + "/" + mileage + "-miles";
 
     // 5. Meta description
     String metaDescription = String.format(
@@ -227,7 +248,13 @@ public class PSeoController {
         car.brand(), car.model(), market.commonJunkValue() != null ? market.commonJunkValue() : 500
     );
 
-    // 7. Add to model
+    // Build Tracking URLs
+    double lifespanPercent = Math.min(100.0, (double) mileage / reliability.lifespanMiles() * 100);
+    String verdictType = lifespanPercent >= 50.0 ? "SELL" : "FIX";
+    String leadUrlInline = "/lead?page_type=pseo_mileage&verdict_type=" + verdictType + "&brand=" + normalize(car.brand()) + "&model=" + normalize(car.model()) + "&detail=" + mileage + "k&placement=inline";
+    String leadUrlSticky = "/lead?page_type=pseo_mileage&verdict_type=" + verdictType + "&brand=" + normalize(car.brand()) + "&model=" + normalize(car.model()) + "&detail=" + mileage + "k&placement=sticky";
+
+    // Load faults data
     Optional<MajorFaults> faultsOpt = dataService.findFaultsByModelId(car.id());
     
     modelMap.addAttribute("car", car);
@@ -239,6 +266,8 @@ public class PSeoController {
     modelMap.addAttribute("canonicalUrl", canonicalUrl);
     modelMap.addAttribute("metaDescription", metaDescription);
     modelMap.addAttribute("schemaJson", schemaJson);
+    modelMap.addAttribute("leadUrlInline", leadUrlInline);
+    modelMap.addAttribute("leadUrlSticky", leadUrlSticky);
 
     return "pseo_mileage";
   }
@@ -254,12 +283,15 @@ public class PSeoController {
   // --- Directory Navigation (Silo Structure) ---
 
   @GetMapping("/models")
-  public String listBrands(Model modelMap) {
+  public String listBrands(Model modelMap, HttpServletResponse response) {
+    response.setHeader("Cache-Control", "public, max-age=86400");
     List<java.util.Map.Entry<String, String>> brands = dataService.getAllBrands().stream()
         .map(brand -> java.util.Map.entry(brand, "/models/" + normalize(brand)))
         .toList();
 
-    modelMap.addAttribute("title", "Car Brands");
+    modelMap.addAttribute("title", "Car Brands - AutoMoneyPit");
+    modelMap.addAttribute("metaDescription", "Browse common repair costs and market value insights by car brand. See data-driven verdicts on whether to fix or sell.");
+    modelMap.addAttribute("canonicalUrl", baseUrl + "/models");
     modelMap.addAttribute("breadcrumbs", List.of("Models")); // Keep simple for directory for now
     modelMap.addAttribute("items", brands);
     return "pages/directory_list";
@@ -271,11 +303,12 @@ public class PSeoController {
   }
 
   @GetMapping("/models/{brandSlug}")
-  public String listModels(@PathVariable("brandSlug") String brandSlug, Model modelMap) {
+  public String listModels(@PathVariable("brandSlug") String brandSlug, Model modelMap, HttpServletResponse response) {
+    response.setHeader("Cache-Control", "public, max-age=86400");
     List<CarModel> models = dataService.getModelsByBrand(brandSlug);
 
     if (models.isEmpty()) {
-      return "redirect:/models";
+      throw new ResourceNotFoundException("Brand not found");
     }
 
     List<java.util.Map.Entry<String, String>> modelLinks = models.stream()
@@ -285,7 +318,9 @@ public class PSeoController {
         .distinct()
         .toList();
 
-    modelMap.addAttribute("title", "Models for " + brandSlug.toUpperCase());
+    modelMap.addAttribute("title", "Models for " + brandSlug.toUpperCase() + " - AutoMoneyPit");
+    modelMap.addAttribute("metaDescription", "Explore specific models from " + brandSlug.toUpperCase() + ". Find the most common repairs, costs, and value preservation data.");
+    modelMap.addAttribute("canonicalUrl", baseUrl + "/models/" + brandSlug);
     modelMap.addAttribute("breadcrumbs", List.of("Models", brandSlug));
     modelMap.addAttribute("items", modelLinks);
     return "pages/directory_list";
@@ -293,10 +328,11 @@ public class PSeoController {
 
   @GetMapping("/models/{brandSlug}/{modelSlug}")
   public String listFaults(@PathVariable("brandSlug") String brandSlug, @PathVariable("modelSlug") String modelSlug,
-      Model modelMap) {
+      Model modelMap, HttpServletResponse response) {
+    response.setHeader("Cache-Control", "public, max-age=86400");
     Optional<CarModel> carOpt = dataService.findCarBySlug(brandSlug, modelSlug);
     if (carOpt.isEmpty()) {
-      return "redirect:/models/" + brandSlug;
+      throw new ResourceNotFoundException("Model not found");
     }
     CarModel car = carOpt.get();
 
@@ -322,7 +358,9 @@ public class PSeoController {
               "/?vehicleType=" + brandSlug + "&model=" + modelSlug));
     }
 
-    modelMap.addAttribute("title", "Common Problems: " + car.brand() + " " + car.model());
+    modelMap.addAttribute("title", "Common Problems: " + car.brand() + " " + car.model() + " - AutoMoneyPit");
+    modelMap.addAttribute("metaDescription", "See the most expensive common repairs for the " + car.brand() + " " + car.model() + " and decide whether to fix them or sell your vehicle.");
+    modelMap.addAttribute("canonicalUrl", baseUrl + "/models/" + brandSlug + "/" + modelSlug);
     modelMap.addAttribute("breadcrumbs", List.of("Models", brandSlug, modelSlug));
     modelMap.addAttribute("items", faultLinks);
     return "pages/directory_list";
@@ -354,8 +392,8 @@ public class PSeoController {
         "\"name\": \"AutoMoneyPit - " + car.brand() + " " + car.model() + " Analysis\"," +
         "\"description\": \"Data-driven repair cost vs market value analysis tool for " + car.brand() + " "
         + car.model() + " (" + car.generation() + ") owners.\"," +
-        "\"url\": \"https://automoneypit.com/verdict/" + brandSlug + "/" + modelSlug + "/" + faultSlug + "\"," +
-        "\"image\": \"https://automoneypit.com/static/og-image.png\"," +
+        "\"url\": \"" + baseUrl + "/verdict/" + brandSlug + "/" + modelSlug + "/" + faultSlug + "\"," +
+        "\"image\": \"" + baseUrl + "/img/og-default.png\"," +
         "\"applicationCategory\": \"FinanceApplication\"," +
         "\"operatingSystem\": \"Web Browser\"," +
         "\"offers\": {" +
@@ -429,25 +467,25 @@ public class PSeoController {
         "\"@type\": \"ListItem\"," +
         "\"position\": 1," +
         "\"name\": \"Models\"," +
-        "\"item\": \"https://automoneypit.com/models\"" +
+        "\"item\": \"" + baseUrl + "/models\"" +
         "}," +
         "{" +
         "\"@type\": \"ListItem\"," +
         "\"position\": 2," +
         "\"name\": \"" + car.brand() + "\"," +
-        "\"item\": \"https://automoneypit.com/models/" + brandSlug + "\"" +
+        "\"item\": \"" + baseUrl + "/models/" + brandSlug + "\"" +
         "}," +
         "{" +
         "\"@type\": \"ListItem\"," +
         "\"position\": 3," +
         "\"name\": \"" + car.model() + "\"," +
-        "\"item\": \"https://automoneypit.com/models/" + brandSlug + "/" + modelSlug + "\"" +
+        "\"item\": \"" + baseUrl + "/models/" + brandSlug + "/" + modelSlug + "\"" +
         "}," +
         "{" +
         "\"@type\": \"ListItem\"," +
         "\"position\": 4," +
         "\"name\": \"" + fault.component() + " Analysis\"," +
-        "\"item\": \"https://automoneypit.com/verdict/" + brandSlug + "/" + modelSlug + "/" + faultSlug + "\"" +
+        "\"item\": \"" + baseUrl + "/verdict/" + brandSlug + "/" + modelSlug + "/" + faultSlug + "\"" +
         "}" +
         "]" +
         "}" +

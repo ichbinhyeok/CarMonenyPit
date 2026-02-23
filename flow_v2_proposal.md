@@ -1,4 +1,4 @@
-# CarMoneyPit – User Decision Flow (v.2 Proposal)
+# AutoMoneyPit – User Decision Flow (v.2 Proposal)
 
 ## 변경 핵심
 v1은 "입력 -> 결과"의 단순 구조였습니다.

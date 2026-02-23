@@ -108,7 +108,7 @@ public class CarDataService {
         if (input.equalsIgnoreCase("VW") || input.equalsIgnoreCase("Volkswagen"))
             return "Volkswagen";
 
-        String[] words = input.toLowerCase().split("[\\s-]");
+        String[] words = input.toLowerCase().split("[\\s-_]");
         StringBuilder sb = new StringBuilder();
         for (String word : words) {
             if (!word.isEmpty()) {

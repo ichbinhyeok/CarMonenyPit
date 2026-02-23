@@ -1,4 +1,4 @@
-# CarMoneyPit 프로젝트 평가 보고서 (2026.02 최신화)
+# AutoMoneyPit 프로젝트 평가 보고서 (2026.02 최신화)
 
 ## 1. 요약 (Executive Summary)
 
