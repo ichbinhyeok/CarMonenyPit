@@ -119,7 +119,7 @@ public class PSeoController {
         .limit(3)
         .toList();
 
-    String ogImage = baseUrl + "/img/og-default.png"; // Replaced external placeholder with internal static OG image
+    String ogImage = baseUrl + "/og-image.png"; // Replaced external placeholder with internal static OG image
 
     // 7. Breadcrumbs (Clickable)
     List<Breadcrumb> breadcrumbs = List.of(
@@ -393,7 +393,7 @@ public class PSeoController {
         "\"description\": \"Data-driven repair cost vs market value analysis tool for " + car.brand() + " "
         + car.model() + " (" + car.generation() + ") owners.\"," +
         "\"url\": \"" + baseUrl + "/verdict/" + brandSlug + "/" + modelSlug + "/" + faultSlug + "\"," +
-        "\"image\": \"" + baseUrl + "/img/og-default.png\"," +
+        "\"image\": \"" + baseUrl + "/og-image.png\"," +
         "\"applicationCategory\": \"FinanceApplication\"," +
         "\"operatingSystem\": \"Web Browser\"," +
         "\"offers\": {" +

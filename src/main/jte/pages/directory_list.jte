@@ -1,8 +1,14 @@
 @param String title
+@param String metaDescription = null
+@param String canonicalUrl = null
 @param java.util.List<String> breadcrumbs
 @param java.util.List<java.util.Map.Entry<String, String>> items
 
-@template.layout(content = @`
+@template.layout(
+    title = title,
+    description = metaDescription,
+    canonical = canonicalUrl,
+    content = @`
     <div class="static-page-container" style="max-width: 800px; margin: 0 auto; padding: 4rem 1rem;">
         
         <!-- Breadcrumbs -->
