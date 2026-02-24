@@ -3,6 +3,7 @@ package com.carmoneypit.engine.web;
 import com.carmoneypit.engine.api.OutputModels.VerdictState;
 import com.carmoneypit.engine.api.InputModels.EngineInput;
 import com.carmoneypit.engine.api.InputModels.SimulationControls;
+import com.carmoneypit.engine.config.PartnerRoutingConfig;
 import com.carmoneypit.engine.core.ValuationService;
 import com.carmoneypit.engine.data.CarBrandData;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -17,10 +18,13 @@ public class VerdictPresenter {
 
     private final ObjectMapper objectMapper;
     private final ValuationService valuationService;
+    private final PartnerRoutingConfig routingConfig;
 
-    public VerdictPresenter(ObjectMapper objectMapper, ValuationService valuationService) {
+    public VerdictPresenter(ObjectMapper objectMapper, ValuationService valuationService,
+            PartnerRoutingConfig routingConfig) {
         this.objectMapper = objectMapper;
         this.valuationService = valuationService;
+        this.routingConfig = routingConfig;
     }
 
     /**
@@ -224,19 +228,25 @@ public class VerdictPresenter {
     }
 
     public String getLeadUrl(VerdictState state, EngineInput input, SimulationControls controls) {
+        if (routingConfig.isApprovalPending()) {
+            // Routing to local Waitlist/Newsletter/Lead Generation form
+            return routingConfig.getWaitlistUrl() +
+                    "?verdict=" + state.name() +
+                    "&brand=" + input.brand().replace(" ", "+");
+        }
+
         boolean isHighMileage = input.mileage() > 80000;
 
         switch (state) {
             case TIME_BOMB:
-                return "https://www.peddle.com/instant-offer?utm_source=automoneypit&utm_medium=referral&utm_campaign=verdict_tool";
+                return routingConfig.getSellPartnerUrl();
             case STABLE:
-                // TODO: Replace with real affiliate link after approval
                 if (isHighMileage)
-                    return "https://www.endurancewarranty.com/get-quote/?ref=automoneypit";
-                return "https://repairpal.com/estimator?utm_source=automoneypit";
+                    return routingConfig.getWarrantyPartnerUrl();
+                return routingConfig.getRepairPartnerUrl();
             case BORDERLINE:
             default:
-                return "https://www.kbb.com/?utm_source=automoneypit";
+                return routingConfig.getMarketValuePartnerUrl();
         }
     }
 }
