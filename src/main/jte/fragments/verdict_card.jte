@@ -464,14 +464,14 @@
                     </div>
                     
                     <p style="font-size: 0.8rem; color: #475569; line-height: 1.5; margin-bottom: 1rem;">
-                        Our estimates are based on publicly available data from trusted automotive sources:
+                        Our estimate is model-based; external sources can be used for validation.
                     </p>
                     
                     <!-- Data Source Badges (E-E-A-T) -->
                     <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem;">
-                        <span style="background: #dbeafe; color: #1e40af; padding: 0.25rem 0.75rem; border-radius: 99px; font-size: 0.7rem; font-weight: 700;">📘 NADA Guides</span>
-                        <span style="background: #dcfce7; color: #166534; padding: 0.25rem 0.75rem; border-radius: 99px; font-size: 0.7rem; font-weight: 700;">📗 Kelley Blue Book</span>
-                        <span style="background: #fef3c7; color: #92400e; padding: 0.25rem 0.75rem; border-radius: 99px; font-size: 0.7rem; font-weight: 700;">🛡️ NHTSA Data</span>
+                        <span style="background: #e0f2fe; color: #0369a1; padding: 0.25rem 0.75rem; border-radius: 99px; font-size: 0.7rem; font-weight: 700;">📘 Valuation Models</span>
+                        <span style="background: #f1f5f9; color: #475569; padding: 0.25rem 0.75rem; border-radius: 99px; font-size: 0.7rem; font-weight: 700;">📗 Industry Averages</span>
+                        <span style="background: #fef08a; color: #a16207; padding: 0.25rem 0.75rem; border-radius: 99px; font-size: 0.7rem; font-weight: 700;">🛡️ Historical Patterns</span>
                     </div>
 
                     <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1.5rem;">

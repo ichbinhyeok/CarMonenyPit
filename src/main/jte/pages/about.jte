@@ -13,7 +13,7 @@
                     <h2 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem;">Our Mission</h2>
                     <p style="color: #64748b; line-height: 1.6;">
                         We empower vehicle owners to exit "money pits" before they hemorrhage capital. 
-                        By analyzing thousands of data points from NHTSA, market indices, and historical repair outcomes, 
+                        By analyzing thousands of data points from market indices and historical repair outcomes, 
                         we provide the clarity needed to decide between preservation and liquidation.
                     </p>
                 </div>
@@ -58,7 +58,7 @@
                     </div>
 
                     <p style="text-align: center; opacity: 0.6; font-size: 0.85rem; margin-top: 1rem;">
-                        Data is sourced from official NHTSA safety databases, regional market indices, and longitudinal reliability studies.
+                        Data is sourced from available market frameworks and historical models.
                     </p>
                 </div>
             </section>
