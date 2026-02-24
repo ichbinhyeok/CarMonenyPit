@@ -474,7 +474,7 @@
     {
         "id": "nissan_sentra_b17_pit",
         "brand": "NISSAN",
-        "model": "Sentra",
+        "model": "Sentra (PIT)",
         "generation": "B17",
         "start_year": 2013,
         "end_year": 2019
@@ -482,7 +482,7 @@
     {
         "id": "jeep_grand_cherokee_wk2_pit",
         "brand": "JEEP",
-        "model": "Grand Cherokee",
+        "model": "Grand Cherokee (PIT)",
         "generation": "WK2",
         "start_year": 2011,
         "end_year": 2021
@@ -490,7 +490,7 @@
     {
         "id": "volkswagen_jetta_mk6",
         "brand": "VOLKSWAGEN",
-        "model": "Jetta",
+        "model": "Jetta (MK6)",
         "generation": "MK6",
         "start_year": 2011,
         "end_year": 2018

@@ -143,6 +143,7 @@ public class CarDataService {
 
     // --- Data Records (Updated) ---
 
+    @com.fasterxml.jackson.annotation.JsonIgnoreProperties(ignoreUnknown = true)
     public record CarModel(
             String id,
             String brand,
@@ -152,6 +153,7 @@ public class CarDataService {
             @com.fasterxml.jackson.annotation.JsonProperty("end_year") int endYear) {
     }
 
+    @com.fasterxml.jackson.annotation.JsonIgnoreProperties(ignoreUnknown = true)
     public record ModelReliability(
             @com.fasterxml.jackson.annotation.JsonProperty("model_id") String modelId,
             int score,
@@ -169,12 +171,14 @@ public class CarDataService {
         }
     }
 
+    @com.fasterxml.jackson.annotation.JsonIgnoreProperties(ignoreUnknown = true)
     public record Milestone(
             int mileage,
             String description,
             @com.fasterxml.jackson.annotation.JsonProperty("est_cost") int estCost) {
     }
 
+    @com.fasterxml.jackson.annotation.JsonIgnoreProperties(ignoreUnknown = true)
     public record ModelMarket(
             @com.fasterxml.jackson.annotation.JsonProperty("model_id") String modelId,
             @com.fasterxml.jackson.annotation.JsonProperty("jan_2026_avg_price") int jan2026AvgPrice,
@@ -192,11 +196,13 @@ public class CarDataService {
         }
     }
 
+    @com.fasterxml.jackson.annotation.JsonIgnoreProperties(ignoreUnknown = true)
     public record MajorFaults(
             @com.fasterxml.jackson.annotation.JsonProperty("model_id_ref") String modelIdRef,
             List<Fault> faults) {
     }
 
+    @com.fasterxml.jackson.annotation.JsonIgnoreProperties(ignoreUnknown = true)
     public record Fault(
             String component,
             String symptoms,

@@ -3,6 +3,9 @@ package com.carmoneypit.engine.data;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class CarBrandData {
     public String name;
     public String segment; // KEEPER, LEASER, etc
@@ -27,6 +30,7 @@ public class CarBrandData {
     @JsonProperty("sell_stat_pct")
     public int sellStatPct;
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class MajorIssue {
         public long mileage;
         public String part;
