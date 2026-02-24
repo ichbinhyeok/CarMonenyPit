@@ -267,10 +267,13 @@ public class PSeoController {
 
     // Build Tracking URLs
     double lifespanPercent = Math.min(100.0, (double) mileage / reliability.lifespanMiles() * 100);
-    String verdictType = lifespanPercent >= 50.0 ? "SELL" : "FIX";
-    String leadUrlInline = "/lead?page_type=pseo_mileage&verdict_type=" + verdictType + "&brand="
+    String intent = lifespanPercent >= 50.0 ? "sell" : "repair";
+    String verdictState = lifespanPercent >= 50.0 ? "TIME_BOMB" : "STABLE";
+    String leadUrlInline = "/lead?page_type=pseo_mileage&intent=" + intent + "&verdict_state=" + verdictState
+        + "&brand="
         + normalize(car.brand()) + "&model=" + normalize(car.model()) + "&detail=" + mileage + "k&placement=inline";
-    String leadUrlSticky = "/lead?page_type=pseo_mileage&verdict_type=" + verdictType + "&brand="
+    String leadUrlSticky = "/lead?page_type=pseo_mileage&intent=" + intent + "&verdict_state=" + verdictState
+        + "&brand="
         + normalize(car.brand()) + "&model=" + normalize(car.model()) + "&detail=" + mileage + "k&placement=sticky";
 
     // Load faults data
