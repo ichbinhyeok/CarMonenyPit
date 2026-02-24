@@ -125,7 +125,7 @@ public class DecisionEngine {
         var econContext = new com.carmoneypit.engine.api.OutputModels.EconomicContext(
                 friction,
                 monthly,
-                input.currentValueUsd() / 2 // 50% Rule threshold
+                input.currentValueUsd() / 2 // half-value threshold for repair-vs-replace comparison
         );
 
         VisualizationHint hint = new VisualizationHint(roundedRF, roundedRM, moneyPitState);
