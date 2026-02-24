@@ -7,21 +7,23 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Value;
 
 @RestController
 public class SitemapController {
 
     private final CarDataService dataService;
 
-    // Use property for base URL, default to automoneypit.com
-    private final String baseUrl = "https://automoneypit.com";
+    private final String baseUrl;
+    private final String lastModDate = "2026-02-24";
 
-    public SitemapController(CarDataService dataService) {
+    public SitemapController(CarDataService dataService,
+            @Value("${app.baseUrl:https://automoneypit.com}") String baseUrl) {
         this.dataService = dataService;
+        this.baseUrl = baseUrl;
     }
 
     @GetMapping(value = "/sitemap.xml", produces = MediaType.APPLICATION_XML_VALUE)
@@ -30,17 +32,17 @@ public class SitemapController {
         xmlBuilder.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
         xmlBuilder.append("<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n");
 
-        String today = LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE);
+        String lastMod = lastModDate;
 
         // 1. Static Pages
-        addUrl(xmlBuilder, baseUrl + "/", today, "daily", "1.0");
-        addUrl(xmlBuilder, baseUrl + "/models", today, "weekly", "0.9");
+        addUrl(xmlBuilder, baseUrl + "/", lastMod, "daily", "1.0");
+        addUrl(xmlBuilder, baseUrl + "/models", lastMod, "weekly", "0.9");
 
         // 2. Directory Pages (Brands)
         List<String> brands = dataService.getAllBrands();
         for (String brand : brands) {
             String brandSlug = normalize(brand);
-            addUrl(xmlBuilder, baseUrl + "/models/" + brandSlug, today, "weekly", "0.8");
+            addUrl(xmlBuilder, baseUrl + "/models/" + brandSlug, lastMod, "weekly", "0.8");
         }
 
         // 3. Model Directory & pSEO Pages
@@ -50,21 +52,23 @@ public class SitemapController {
             String modelSlug = normalize(car.model());
 
             // Model Directory Page
-            addUrl(xmlBuilder, baseUrl + "/models/" + brandSlug + "/" + modelSlug, today, "weekly", "0.8");
+            addUrl(xmlBuilder, baseUrl + "/models/" + brandSlug + "/" + modelSlug, lastMod, "weekly", "0.8");
 
             // Verdict Fault Pages
             Optional<MajorFaults> faultsOpt = dataService.findFaultsByModelId(car.id());
             if (faultsOpt.isPresent()) {
                 for (CarDataService.Fault fault : faultsOpt.get().faults()) {
                     String faultSlug = fault.component().toLowerCase().replace(" ", "-").replaceAll("[^a-z0-9-]", "");
-                    addUrl(xmlBuilder, baseUrl + "/verdict/" + brandSlug + "/" + modelSlug + "/" + faultSlug, today, "monthly", "0.7");
+                    addUrl(xmlBuilder, baseUrl + "/verdict/" + brandSlug + "/" + modelSlug + "/" + faultSlug, lastMod,
+                            "monthly", "0.7");
                 }
             }
 
             // Verdict Mileage Pages (Generate predictable buckets)
-            int[] mileageBuckets = {75000, 100000, 150000, 200000};
+            int[] mileageBuckets = { 75000, 100000, 150000, 200000 };
             for (int miles : mileageBuckets) {
-                addUrl(xmlBuilder, baseUrl + "/verdict/" + brandSlug + "/" + modelSlug + "/" + miles + "-miles", today, "monthly", "0.7");
+                addUrl(xmlBuilder, baseUrl + "/verdict/" + brandSlug + "/" + modelSlug + "/" + miles + "-miles",
+                        lastMod, "monthly", "0.7");
             }
         }
 
@@ -82,7 +86,8 @@ public class SitemapController {
     }
 
     private String normalize(String input) {
-        if (input == null) return "";
+        if (input == null)
+            return "";
         return input.toLowerCase()
                 .replaceAll("[^a-z0-9]+", "-")
                 .replaceAll("^-|-$", "");
