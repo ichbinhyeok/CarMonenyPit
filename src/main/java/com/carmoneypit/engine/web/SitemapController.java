@@ -3,6 +3,7 @@ package com.carmoneypit.engine.web;
 import com.carmoneypit.engine.service.CarDataService;
 import com.carmoneypit.engine.service.CarDataService.CarModel;
 import com.carmoneypit.engine.service.CarDataService.MajorFaults;
+import com.carmoneypit.engine.service.FaultHubService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,14 +39,20 @@ public class SitemapController {
         addUrl(xmlBuilder, baseUrl + "/", lastMod, "daily", "1.0");
         addUrl(xmlBuilder, baseUrl + "/models", lastMod, "weekly", "0.9");
 
-        // 2. Directory Pages (Brands)
+        // 2. Fault Hub Pages (directory + 5 hubs)
+        addUrl(xmlBuilder, baseUrl + "/faults", lastMod, "weekly", "0.9");
+        for (String slug : FaultHubService.ALLOWED_SLUGS.stream().sorted().toList()) {
+            addUrl(xmlBuilder, baseUrl + "/fault/" + slug, lastMod, "monthly", "0.8");
+        }
+
+        // 3. Directory Pages (Brands)
         List<String> brands = dataService.getAllBrands();
         for (String brand : brands) {
             String brandSlug = normalize(brand);
             addUrl(xmlBuilder, baseUrl + "/models/" + brandSlug, lastMod, "weekly", "0.8");
         }
 
-        // 3. Model Directory & pSEO Pages
+        // 4. Model Directory & pSEO Pages
         List<CarModel> allModels = dataService.getAllModels();
         for (CarModel car : allModels) {
             String brandSlug = normalize(car.brand());

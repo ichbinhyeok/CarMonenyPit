@@ -1,0 +1,117 @@
+{
+    "cvt-transmission": {
+        "last_verified": "2026-02-24",
+        "sources": [
+            {
+                "name": "CarComplaints — Nissan CVT Transmission Problems",
+                "url": "https://www.carcomplaints.com/Nissan/CVT_transmission.shtml",
+                "retrieved_at": "2026-02-24",
+                "note": "Aggregated owner complaints about CVT failures across Nissan models"
+            },
+            {
+                "name": "Consumer Reports — CVT Reliability Data",
+                "url": "https://www.consumerreports.org/cars/car-reliability-owner-satisfaction/",
+                "retrieved_at": "2026-02-24",
+                "note": "Annual reliability survey data covering CVT-equipped vehicles"
+            },
+            {
+                "name": "RepairPal — CVT Transmission Replacement Cost",
+                "url": "https://repairpal.com/estimator/cvt-transmission-replacement-cost",
+                "retrieved_at": "2026-02-24",
+                "note": "Crowdsourced repair cost estimates for CVT replacements by vehicle"
+            }
+        ]
+    },
+    "timing-chain": {
+        "last_verified": "2026-02-24",
+        "sources": [
+            {
+                "name": "RepairPal — Timing Chain Replacement Cost",
+                "url": "https://repairpal.com/estimator/timing-chain-replacement-cost",
+                "retrieved_at": "2026-02-24",
+                "note": "Crowdsourced repair cost estimates for timing chain replacements"
+            },
+            {
+                "name": "CarComplaints — Timing Chain Problems",
+                "url": "https://www.carcomplaints.com/common_problems/timing-chain/",
+                "retrieved_at": "2026-02-24",
+                "note": "Owner-reported timing chain issues compiled by vehicle"
+            },
+            {
+                "name": "Consumer Affairs — Timing Chain Replacement Cost Guide",
+                "url": "https://www.consumeraffairs.com/automotive/timing-chain-replacement-cost.html",
+                "retrieved_at": "2026-02-24",
+                "note": "Overview of replacement costs and factors affecting pricing"
+            }
+        ]
+    },
+    "oil-consumption": {
+        "last_verified": "2026-02-24",
+        "sources": [
+            {
+                "name": "Consumer Reports — Engines That Burn Too Much Oil",
+                "url": "https://www.consumerreports.org/cars/car-maintenance/excessive-oil-consumption/",
+                "retrieved_at": "2026-02-24",
+                "note": "Analysis of engine models most prone to oil consumption issues"
+            },
+            {
+                "name": "CarComplaints — Oil Consumption Problems",
+                "url": "https://www.carcomplaints.com/common_problems/excessive-oil-consumption/",
+                "retrieved_at": "2026-02-24",
+                "note": "Owner-reported oil consumption complaints across brands"
+            },
+            {
+                "name": "AutoZone — Why Is My Car Burning Oil?",
+                "url": "https://www.autozone.com/diy/engine/why-is-my-car-burning-oil",
+                "retrieved_at": "2026-02-24",
+                "note": "Diagnostic guide for identifying oil consumption causes"
+            }
+        ]
+    },
+    "torque-converter": {
+        "last_verified": "2026-02-24",
+        "sources": [
+            {
+                "name": "CarParts.com — Torque Converter Problems Guide",
+                "url": "https://www.carparts.com/blog/torque-converter-problems/",
+                "retrieved_at": "2026-02-24",
+                "note": "Comprehensive guide to torque converter symptoms and diagnosis"
+            },
+            {
+                "name": "GearStar — Torque Converter Cost",
+                "url": "https://www.gearstar.com/torque-converter-replacement-cost/",
+                "retrieved_at": "2026-02-24",
+                "note": "Detailed breakdown of converter replacement costs by type"
+            },
+            {
+                "name": "CarComplaints — Torque Converter Shudder",
+                "url": "https://www.carcomplaints.com/common_problems/torque-converter-shudder/",
+                "retrieved_at": "2026-02-24",
+                "note": "Compiled user reports on torque converter shudder across vehicles"
+            }
+        ]
+    },
+    "air-suspension": {
+        "last_verified": "2026-02-24",
+        "sources": [
+            {
+                "name": "Strutmasters — Air Suspension Problems Guide",
+                "url": "https://www.strutmasters.com/air-suspension-repair/",
+                "retrieved_at": "2026-02-24",
+                "note": "Overview of common air suspension failures and repair options"
+            },
+            {
+                "name": "ConsumerAffairs — Air Suspension Repair Cost",
+                "url": "https://www.consumeraffairs.com/automotive/air-suspension-repair-cost.html",
+                "retrieved_at": "2026-02-24",
+                "note": "Consumer cost guide for air suspension component replacement"
+            },
+            {
+                "name": "AutoGuide — Air Suspension vs Coil Spring Conversion",
+                "url": "https://www.autoguide.com/air-suspension-vs-coil-springs",
+                "retrieved_at": "2026-02-24",
+                "note": "Comparison of keeping air suspension vs converting to coil springs"
+            }
+        ]
+    }
+}
