@@ -12,7 +12,6 @@
 @param String leadUrlInline
 @param String leadUrlSticky
 @param List<Fault> relatedFaults
-@param String marketPulse
 @param List<Breadcrumb> breadcrumbs
 @param String ogImage = null
 

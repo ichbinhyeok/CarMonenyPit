@@ -7,7 +7,6 @@ import com.carmoneypit.engine.api.InputModels.VehicleType;
 import com.carmoneypit.engine.core.DecisionEngine;
 import com.carmoneypit.engine.service.CarDataService;
 import com.carmoneypit.engine.service.CarDataService.*;
-import com.carmoneypit.engine.service.MarketContextService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,16 +30,14 @@ public class PSeoController {
 
   private static final Logger logger = LoggerFactory.getLogger(PSeoController.class);
   private final CarDataService dataService;
-  private final MarketContextService marketContextService;
   private final DecisionEngine decisionEngine;
 
   @Value("${app.baseUrl:https://automoneypit.com}")
   private String baseUrl;
 
-  public PSeoController(CarDataService dataService, MarketContextService marketContextService,
+  public PSeoController(CarDataService dataService,
       DecisionEngine decisionEngine) {
     this.dataService = dataService;
-    this.marketContextService = marketContextService;
     this.decisionEngine = decisionEngine;
   }
 
@@ -156,7 +153,6 @@ public class PSeoController {
     modelMap.addAttribute("leadUrlInline", leadUrlInline);
     modelMap.addAttribute("leadUrlSticky", leadUrlSticky);
     modelMap.addAttribute("relatedFaults", relatedFaults);
-    modelMap.addAttribute("marketPulse", marketContextService.generateMarketContext(car, fault));
     modelMap.addAttribute("ogImage", ogImage);
     modelMap.addAttribute("breadcrumbs", breadcrumbs);
 
