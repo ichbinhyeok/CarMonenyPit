@@ -1,5 +1,10 @@
 package com.carmoneypit.engine.web;
 
+import com.carmoneypit.engine.api.OutputModels.VerdictResult;
+import com.carmoneypit.engine.api.OutputModels.VerdictState;
+import com.carmoneypit.engine.api.InputModels.EngineInput;
+import com.carmoneypit.engine.api.InputModels.VehicleType;
+import com.carmoneypit.engine.core.DecisionEngine;
 import com.carmoneypit.engine.service.CarDataService;
 import com.carmoneypit.engine.service.CarDataService.*;
 import com.carmoneypit.engine.service.MarketPulseService;
@@ -27,13 +32,16 @@ public class PSeoController {
   private static final Logger logger = LoggerFactory.getLogger(PSeoController.class);
   private final CarDataService dataService;
   private final MarketPulseService marketPulseService;
+  private final DecisionEngine decisionEngine;
 
   @Value("${app.baseUrl:https://automoneypit.com}")
   private String baseUrl;
 
-  public PSeoController(CarDataService dataService, MarketPulseService marketPulseService) {
+  public PSeoController(CarDataService dataService, MarketPulseService marketPulseService,
+      DecisionEngine decisionEngine) {
     this.dataService = dataService;
     this.marketPulseService = marketPulseService;
+    this.decisionEngine = decisionEngine;
   }
 
   @GetMapping("/verdict/{brand}/{model}/{faultSlug}")
@@ -110,8 +118,10 @@ public class PSeoController {
     String verdictText = isSell ? "VERDICT: SELL" : "VERDICT: CAUTION";
 
     // Build tracking URLs
-    String leadUrlInline = "/lead?page_type=pseo_fault&verdict_type=" + verdictType + "&brand=" + normalize(car.brand()) + "&model=" + normalize(car.model()) + "&detail=" + faultSlug + "&placement=inline";
-    String leadUrlSticky = "/lead?page_type=pseo_fault&verdict_type=" + verdictType + "&brand=" + normalize(car.brand()) + "&model=" + normalize(car.model()) + "&detail=" + faultSlug + "&placement=sticky";
+    String leadUrlInline = "/lead?page_type=pseo_fault&verdict_type=" + verdictType + "&brand=" + normalize(car.brand())
+        + "&model=" + normalize(car.model()) + "&detail=" + faultSlug + "&placement=inline";
+    String leadUrlSticky = "/lead?page_type=pseo_fault&verdict_type=" + verdictType + "&brand=" + normalize(car.brand())
+        + "&model=" + normalize(car.model()) + "&detail=" + faultSlug + "&placement=sticky";
 
     // Related faults for internal linking
     List<Fault> relatedFaults = faultsOpt.get().faults().stream()
@@ -119,7 +129,20 @@ public class PSeoController {
         .limit(3)
         .toList();
 
-    String ogImage = baseUrl + "/og-image.png"; // Replaced external placeholder with internal static OG image
+    // 6. Generate Social Assets (Dynamic Receipt) using Central Logic (SSOT)
+    double repairCost = fault.repairCost();
+
+    // Call unified SSOT Decision Engine
+    EngineInput input = new EngineInput(car.model(), VehicleType.SEDAN, car.brand(), car.startYear(),
+        profile != null ? profile.reliability().lifespanMiles() / 2 : 100000,
+        (long) repairCost, marketValue, true, true);
+
+    VerdictResult result = decisionEngine.evaluate(input);
+    boolean isSell = result.verdictState() == VerdictState.TIME_BOMB;
+    String verdictText = isSell ? "VERDICT: SELL"
+        : (result.verdictState() == VerdictState.BORDERLINE ? "VERDICT: CAUTION" : "VERDICT: FIX");
+
+    String ogImage = baseUrl + "/og-image.png";
 
     // 7. Breadcrumbs (Clickable)
     List<Breadcrumb> breadcrumbs = List.of(
@@ -167,8 +190,10 @@ public class PSeoController {
           closestBucket = bucket;
         }
       }
-      String redirectUrl = baseUrl + "/verdict/" + normalize(brand) + "/" + normalize(model) + "/" + closestBucket + "-miles";
-      org.springframework.web.servlet.view.RedirectView rv = new org.springframework.web.servlet.view.RedirectView(redirectUrl);
+      String redirectUrl = baseUrl + "/verdict/" + normalize(brand) + "/" + normalize(model) + "/" + closestBucket
+          + "-miles";
+      org.springframework.web.servlet.view.RedirectView rv = new org.springframework.web.servlet.view.RedirectView(
+          redirectUrl);
       rv.setStatusCode(org.springframework.http.HttpStatus.MOVED_PERMANENTLY);
       return rv;
     }
@@ -201,8 +226,7 @@ public class PSeoController {
         new Breadcrumb("Home", "/"),
         new Breadcrumb(car.brand(), "/models/" + normalize(car.brand())),
         new Breadcrumb(car.model(), "/models/" + normalize(car.brand()) + "/" + normalize(car.model())),
-        new Breadcrumb(String.format("%,d Miles", mileage), "#")
-    );
+        new Breadcrumb(String.format("%,d Miles", mileage), "#"));
 
     // 4. Build canonical URL
     String canonicalUrl = baseUrl + "/verdict/" + normalize(brand) + "/" + normalize(model) + "/" + mileage + "-miles";
@@ -210,8 +234,7 @@ public class PSeoController {
     // 5. Meta description
     String metaDescription = String.format(
         "Is your %s %s worth keeping at %,d miles? Expert analysis, expected repairs, and data-driven recommendations for %d-%d owners.",
-        car.brand(), car.model(), mileage, car.startYear(), car.endYear()
-    );
+        car.brand(), car.model(), mileage, car.startYear(), car.endYear());
 
     // 6. Schema JSON (FAQPage)
     String schemaJson = String.format("""
@@ -240,23 +263,24 @@ public class PSeoController {
         """,
         car.brand(), car.model(), mileage,
         mileage, car.brand(), car.model(),
-        (int)((1.0 - (double)mileage / reliability.lifespanMiles()) * 100),
-        reliability.mileageLogicText() != null && !reliability.mileageLogicText().isEmpty() 
-            ? reliability.mileageLogicText().values().iterator().next() 
+        (int) ((1.0 - (double) mileage / reliability.lifespanMiles()) * 100),
+        reliability.mileageLogicText() != null && !reliability.mileageLogicText().isEmpty()
+            ? reliability.mileageLogicText().values().iterator().next()
             : "Regular maintenance is key.",
         car.brand(), car.model(),
-        car.brand(), car.model(), market.commonJunkValue() != null ? market.commonJunkValue() : 500
-    );
+        car.brand(), car.model(), market.commonJunkValue() != null ? market.commonJunkValue() : 500);
 
     // Build Tracking URLs
     double lifespanPercent = Math.min(100.0, (double) mileage / reliability.lifespanMiles() * 100);
     String verdictType = lifespanPercent >= 50.0 ? "SELL" : "FIX";
-    String leadUrlInline = "/lead?page_type=pseo_mileage&verdict_type=" + verdictType + "&brand=" + normalize(car.brand()) + "&model=" + normalize(car.model()) + "&detail=" + mileage + "k&placement=inline";
-    String leadUrlSticky = "/lead?page_type=pseo_mileage&verdict_type=" + verdictType + "&brand=" + normalize(car.brand()) + "&model=" + normalize(car.model()) + "&detail=" + mileage + "k&placement=sticky";
+    String leadUrlInline = "/lead?page_type=pseo_mileage&verdict_type=" + verdictType + "&brand="
+        + normalize(car.brand()) + "&model=" + normalize(car.model()) + "&detail=" + mileage + "k&placement=inline";
+    String leadUrlSticky = "/lead?page_type=pseo_mileage&verdict_type=" + verdictType + "&brand="
+        + normalize(car.brand()) + "&model=" + normalize(car.model()) + "&detail=" + mileage + "k&placement=sticky";
 
     // Load faults data
     Optional<MajorFaults> faultsOpt = dataService.findFaultsByModelId(car.id());
-    
+
     modelMap.addAttribute("car", car);
     modelMap.addAttribute("reliability", reliability);
     modelMap.addAttribute("market", market);
@@ -273,7 +297,7 @@ public class PSeoController {
   }
 
   // --- Decision Page (CTA Target) ---
-  
+
   @GetMapping("/decision")
   public String showDecisionPage() {
     // Redirect to home page where the main calculator is
@@ -290,7 +314,8 @@ public class PSeoController {
         .toList();
 
     modelMap.addAttribute("title", "Car Brands - AutoMoneyPit");
-    modelMap.addAttribute("metaDescription", "Browse common repair costs and market value insights by car brand. See data-driven verdicts on whether to fix or sell.");
+    modelMap.addAttribute("metaDescription",
+        "Browse common repair costs and market value insights by car brand. See data-driven verdicts on whether to fix or sell.");
     modelMap.addAttribute("canonicalUrl", baseUrl + "/models");
     modelMap.addAttribute("breadcrumbs", List.of("Models")); // Keep simple for directory for now
     modelMap.addAttribute("items", brands);
@@ -319,7 +344,8 @@ public class PSeoController {
         .toList();
 
     modelMap.addAttribute("title", "Models for " + brandSlug.toUpperCase() + " - AutoMoneyPit");
-    modelMap.addAttribute("metaDescription", "Explore specific models from " + brandSlug.toUpperCase() + ". Find the most common repairs, costs, and value preservation data.");
+    modelMap.addAttribute("metaDescription", "Explore specific models from " + brandSlug.toUpperCase()
+        + ". Find the most common repairs, costs, and value preservation data.");
     modelMap.addAttribute("canonicalUrl", baseUrl + "/models/" + brandSlug);
     modelMap.addAttribute("breadcrumbs", List.of("Models", brandSlug));
     modelMap.addAttribute("items", modelLinks);
@@ -359,7 +385,8 @@ public class PSeoController {
     }
 
     modelMap.addAttribute("title", "Common Problems: " + car.brand() + " " + car.model() + " - AutoMoneyPit");
-    modelMap.addAttribute("metaDescription", "See the most expensive common repairs for the " + car.brand() + " " + car.model() + " and decide whether to fix them or sell your vehicle.");
+    modelMap.addAttribute("metaDescription", "See the most expensive common repairs for the " + car.brand() + " "
+        + car.model() + " and decide whether to fix them or sell your vehicle.");
     modelMap.addAttribute("canonicalUrl", baseUrl + "/models/" + brandSlug + "/" + modelSlug);
     modelMap.addAttribute("breadcrumbs", List.of("Models", brandSlug, modelSlug));
     modelMap.addAttribute("items", faultLinks);
