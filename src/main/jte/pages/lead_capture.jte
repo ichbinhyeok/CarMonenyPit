@@ -13,7 +13,7 @@
                         </svg>
                     </div>
                     <h2 class="text-3xl font-bold mb-4">Time to Sell Your ${brand}</h2>
-                    <p class="text-slate-400 mb-8 leading-relaxed">We are currently negotiating special cash-offer rates with national wholesale buyers for vehicles just like yours. Join the priority waitlist to get notified the minute our partner portal goes live, ensuring you get the absolute highest bid.</p>
+                    <p class="text-slate-400 mb-8 leading-relaxed">We are evaluating partnerships with national wholesale buyers for vehicles like yours. Join the priority waitlist to get notified when our partner portal goes live to help you compare multiple offers.</p>
                 @elseif("STABLE".equals(verdict))
                     <div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 mb-4">
                         <svg class="w-6 h-6 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -21,7 +21,7 @@
                         </svg>
                     </div>
                     <h2 class="text-3xl font-bold mb-4">Protect Your ${brand}</h2>
-                    <p class="text-slate-400 mb-8 leading-relaxed">Fixing it is the right call. We're finalizing partnerships with top-rated mechanics and warranty providers in your area to offer you exclusive discounts. Get notified as soon as these trusted options are available.</p>
+                    <p class="text-slate-400 mb-8 leading-relaxed">Fixing it is the right call. We're finalizing partnerships with local mechanics and warranty providers to potentially offer you special assistance. Get notified when trusted options become available.</p>
                 @else
                     <div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 mb-4">
                         <svg class="w-6 h-6 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">

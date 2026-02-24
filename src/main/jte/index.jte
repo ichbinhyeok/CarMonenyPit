@@ -420,7 +420,7 @@
             <div class="card info-card">
                 <div>
                     <div class="info-title">Market Data Correlated</div>
-                    <div class="info-desc">Cross-referenced against NADA/KBB market data and historical repair trends.</div>
+                    <div class="info-desc">Estimates based on vehicle valuation models. We recommend verifying with local listings.</div>
                 </div>
             </div>
 
@@ -451,7 +451,7 @@
                     <span class="popular-emoji">🚗</span>
                     <div class="popular-text">
                         <span class="popular-title">Should I fix my 2018 Toyota Camry?</span>
-                        <span class="popular-meta">High search volume</span>
+                        <span class="popular-meta">Commonly evaluated</span>
                     </div>
                     <span class="popular-arrow">→</span>
                 </a>
@@ -460,7 +460,7 @@
                     <span class="popular-emoji">🚙</span>
                     <div class="popular-text">
                         <span class="popular-title">Should I fix my 2017 Honda Accord?</span>
-                        <span class="popular-meta">Popular this week</span>
+                        <span class="popular-meta">Frequently analyzed</span>
                     </div>
                     <span class="popular-arrow">→</span>
                 </a>
@@ -469,7 +469,7 @@
                     <span class="popular-emoji">🛻</span>
                     <div class="popular-text">
                         <span class="popular-title">Should I fix my 2016 Ford F-150?</span>
-                        <span class="popular-meta">Trending</span>
+                        <span class="popular-meta">Recent evaluation</span>
                     </div>
                     <span class="popular-arrow">→</span>
                 </a>
@@ -478,7 +478,7 @@
                     <span class="popular-emoji">🚚</span>
                     <div class="popular-text">
                         <span class="popular-title">Should I fix my 2015 Chevy Silverado?</span>
-                        <span class="popular-meta">High engagement</span>
+                        <span class="popular-meta">Recent query</span>
                     </div>
                     <span class="popular-arrow">→</span>
                 </a>
