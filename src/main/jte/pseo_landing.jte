@@ -82,9 +82,8 @@
                 <span style="font-size: 1.25rem;">⚡</span> Quick Verdict
             </h2>
             <p style="font-size: 1rem; color: #3730a3; line-height: 1.6; margin: 0;">
-                The average cost to repair a <strong>${fault.component()}</strong> on a <strong>${car.brand()} ${car.model()}</strong> is approximately <strong>$${String.format("%,.0f", fault.repairCost())}</strong>. 
-                Before proceeding, compare this cost against your vehicle's current market value of <strong>$${String.format("%,d", details.market().jan2026AvgPrice())}</strong>. 
-                If the repair bill exceeds 50% of the vehicle's remaining value, it is financially recommended to sell.
+                The estimated cost to repair a <strong>${fault.component()}</strong> on a <strong>${car.brand()} ${car.model()}</strong> is approximately <strong>$${String.format("%,.0f", fault.repairCost())}</strong>. 
+                Compare this against your vehicle's estimated market value of <strong>$${String.format("%,d", details.market().jan2026AvgPrice())}</strong> to evaluate whether repairing or selling makes more financial sense for your situation.
             </p>
         </div>
 
@@ -97,8 +96,7 @@
             }
         </style>
 
-        <!-- Market Context Analysis -->
-        $unsafe{marketPulse}
+        <!-- Market Context (dataset-driven, no external pulse) -->
 
         <!-- 2. Vehicle Financial Profile (New Section) -->
         @if(details != null)
@@ -385,7 +383,7 @@
                 <span class="flow-icon">🤔</span>
                 <div>
                     <h2>Should You Repair or Sell?</h2>
-                    <p>A simple 2-question framework used by financial experts</p>
+                    <p>A common decision framework to compare repair burden vs. vehicle value</p>
                 </div>
             </div>
             
@@ -393,8 +391,8 @@
             <div class="flow-question">
                 <div class="q-number">1</div>
                 <div class="q-content">
-                    <p class="q-text">Is this repair more than <strong>50%</strong> of your car's value?</p>
-                    <p class="q-sub">Your car: ~$${String.format("%,d", details.market().jan2026AvgPrice())} → Threshold: <strong>$${String.format("%,d", details.market().jan2026AvgPrice() / 2)}</strong></p>
+                    <p class="q-text">Is this repair a <strong>significant portion</strong> of your car's value?</p>
+                    <p class="q-sub">Your car: ~$${String.format("%,d", details.market().jan2026AvgPrice())} · Repair: $${String.format("%,.0f", fault.repairCost())} · <em>Compare the ratio</em></p>
                 </div>
             </div>
             
@@ -414,8 +412,8 @@
             <div class="flow-question q2">
                 <div class="q-number">2</div>
                 <div class="q-content">
-                    <p class="q-text">Will your <strong>annual repair costs</strong> exceed a new car payment?</p>
-                    <p class="q-sub">Typical new car payment: ~$400-600/month</p>
+                    <p class="q-text">Will your <strong>annual repair costs</strong> exceed what you'd spend on a replacement vehicle?</p>
+                    <p class="q-sub">Factor in both purchase payments and insurance changes</p>
                 </div>
             </div>
             
@@ -432,9 +430,9 @@
             
             <!-- Trust Signals (Factual) -->
             <div class="flow-social fact-based">
-                <span>📊 Engine powered by <strong>10,000+</strong> real-world repair data points</span>
-                <span>🔍 Analyzing <strong>85</strong> car models across <strong>300+</strong> specific faults</span>
-                <span>⚙️ Evaluated against current <strong>2026</strong> market conditions</span>
+                <span>📊 Analysis based on our curated dataset of repair costs, reliability scores, and market values</span>
+                <span>🔍 Covering multiple car models and documented fault patterns</span>
+                <span>⚙️ Estimates vary by trim, condition, and location</span>
             </div>
         </div>
         
@@ -713,7 +711,7 @@
             <div style="margin-bottom: 2rem;">
                 <h3 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 0.5rem;">Is it worth fixing the ${fault.component()} on a ${car.brand()} ${car.model()}?</h3>
                 <p style="color: #555; line-height: 1.6;">
-                    Whether it's worth fixing the <strong>${fault.component()}</strong> on your <strong>${car.brand()} ${car.model()}</strong> depends on your current mileage and market value. As a general financial rule, if the $${String.format("%,.0f", fault.repairCost())} repair cost exceeds 50% of the vehicle's $${String.format("%,d", details.market().jan2026AvgPrice())} value, you should consider selling instead of repairing.
+                    Whether it's worth fixing the <strong>${fault.component()}</strong> on your <strong>${car.brand()} ${car.model()}</strong> depends on your mileage, overall condition, and market value. Compare the estimated $${String.format("%,.0f", fault.repairCost())} repair cost against the vehicle's ~$${String.format("%,d", details.market().jan2026AvgPrice())} value to evaluate the best option for your situation.
                 </p>
             </div>
             

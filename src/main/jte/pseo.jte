@@ -462,11 +462,12 @@
             @endif
             
             <div class="info-box">
-                <div class="info-box-title">📊 The 50% Rule</div>
+                <div class="info-box-title">📊 Repair vs. Value Comparison</div>
                 <p style="margin: 0; color: #475569;">
-                    Financial experts generally recommend selling your car if a single repair exceeds 
-                    50% of the vehicle's current market value. Our calculator applies this rule along 
-                    with other factors specific to your ${prefillModel}.
+                    A common decision framework is to compare the repair cost against your vehicle's 
+                    current market value. When repair costs represent a large share of the car's worth, 
+                    selling may be the more practical option. Our calculator weighs this alongside 
+                    other factors specific to your ${prefillModel}.
                 </p>
             </div>
             

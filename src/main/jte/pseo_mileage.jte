@@ -356,15 +356,15 @@
                 <div class="rule">
                     <div class="rule-icon" style="background: #fef2f2; color: #ef4444;">1</div>
                     <div class="rule-content">
-                        <h4>The 50% Rule</h4>
-                        <p>If repair cost exceeds <strong>$${String.format("%,d", estimatedValue / 2)}</strong> (50% of vehicle value), consider selling.</p>
+                        <h4>Repair-to-Value Ratio</h4>
+                        <p>Compare the repair cost against your vehicle's estimated value of <strong>$${String.format("%,d", estimatedValue)}</strong>. When repair costs represent a large share of the car's worth, selling may be more practical.</p>
                     </div>
                 </div>
                 <div class="rule">
                     <div class="rule-icon" style="background: #fefce8; color: #eab308;">2</div>
                     <div class="rule-content">
-                        <h4>The Annual Repair Rule</h4>
-                        <p>If total yearly repairs exceed <strong>$${String.format("%,d", market.avgAnnualRepairCost() * 2)}</strong> (2x average), your car is becoming a money pit.</p>
+                        <h4>Annual Repair Burden</h4>
+                        <p>If total yearly repairs significantly exceed typical maintenance costs of <strong>$${String.format("%,d", market.avgAnnualRepairCost())}</strong>/year, the vehicle may be costing more than it's worth.</p>
                     </div>
                 </div>
                 <div class="rule">
