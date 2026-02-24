@@ -442,8 +442,8 @@
         <!-- Popular Searches Section (pSEO Internal Linking) -->
         <div style="max-width: 1000px; margin: 0 auto 6rem; padding: 0 1rem;">
             <div style="text-align: center; margin-bottom: 2.5rem;">
-                <h2 style="font-size: 1.75rem; font-weight: 800; color: #0f172a; margin-bottom: 0.75rem;">Popular Repair Decisions</h2>
-                <p style="font-size: 1rem; color: #64748b;">See what other owners are analyzing right now</p>
+                <h2 style="font-size: 1.75rem; font-weight: 800; color: #0f172a; margin-bottom: 0.75rem;">Example Analyses</h2>
+                <p style="font-size: 1rem; color: #64748b;">Common scenarios owners evaluate with our calculator</p>
             </div>
             
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem;">
@@ -451,7 +451,7 @@
                     <span class="popular-emoji">🚗</span>
                     <div class="popular-text">
                         <span class="popular-title">Should I fix my 2018 Toyota Camry?</span>
-                        <span class="popular-meta">Commonly evaluated</span>
+                        <span class="popular-meta">Sedan · Mid-mileage</span>
                     </div>
                     <span class="popular-arrow">→</span>
                 </a>
@@ -460,7 +460,7 @@
                     <span class="popular-emoji">🚙</span>
                     <div class="popular-text">
                         <span class="popular-title">Should I fix my 2017 Honda Accord?</span>
-                        <span class="popular-meta">Frequently analyzed</span>
+                        <span class="popular-meta">Sedan · Pre-100k miles</span>
                     </div>
                     <span class="popular-arrow">→</span>
                 </a>
@@ -469,7 +469,7 @@
                     <span class="popular-emoji">🛻</span>
                     <div class="popular-text">
                         <span class="popular-title">Should I fix my 2016 Ford F-150?</span>
-                        <span class="popular-meta">Recent evaluation</span>
+                        <span class="popular-meta">Truck · High-mileage</span>
                     </div>
                     <span class="popular-arrow">→</span>
                 </a>
@@ -478,7 +478,7 @@
                     <span class="popular-emoji">🚚</span>
                     <div class="popular-text">
                         <span class="popular-title">Should I fix my 2015 Chevy Silverado?</span>
-                        <span class="popular-meta">Recent query</span>
+                        <span class="popular-meta">Truck · Heavy-duty</span>
                     </div>
                     <span class="popular-arrow">→</span>
                 </a>
@@ -487,7 +487,7 @@
                     <span class="popular-emoji">🚗</span>
                     <div class="popular-text">
                         <span class="popular-title">Should I fix my 2019 Nissan Altima?</span>
-                        <span class="popular-meta">Rising searches</span>
+                        <span class="popular-meta">Sedan · CVT concerns</span>
                     </div>
                     <span class="popular-arrow">→</span>
                 </a>
