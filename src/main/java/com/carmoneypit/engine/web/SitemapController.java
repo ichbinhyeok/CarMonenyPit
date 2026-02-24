@@ -19,12 +19,14 @@ public class SitemapController {
     private final CarDataService dataService;
 
     private final String baseUrl;
-    private final String lastModDate = "2026-02-24";
+    private final String lastModDate;
 
     public SitemapController(CarDataService dataService,
-            @Value("${app.baseUrl:https://automoneypit.com}") String baseUrl) {
+            @Value("${app.baseUrl:https://automoneypit.com}") String baseUrl,
+            @Value("${app.datasetLastmod:2026-02-24}") String lastModDate) {
         this.dataService = dataService;
         this.baseUrl = baseUrl;
+        this.lastModDate = lastModDate;
     }
 
     @GetMapping(value = "/sitemap.xml", produces = MediaType.APPLICATION_XML_VALUE)
