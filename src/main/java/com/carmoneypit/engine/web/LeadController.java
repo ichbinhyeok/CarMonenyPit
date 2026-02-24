@@ -30,7 +30,8 @@ public class LeadController {
     public RedirectView trackLead(
             @RequestParam(required = false, defaultValue = "cta_click") String event_type,
             @RequestParam(required = false, defaultValue = "unknown") String page_type,
-            @RequestParam(required = false, defaultValue = "unknown") String verdict_type,
+            @RequestParam(required = false, defaultValue = "unknown") String intent,
+            @RequestParam(required = false, defaultValue = "unknown") String verdict_state,
             @RequestParam(required = false, defaultValue = "") String brand,
             @RequestParam(required = false, defaultValue = "") String model,
             @RequestParam(required = false, defaultValue = "") String detail,
@@ -58,21 +59,23 @@ public class LeadController {
         // 3. Log securely to CSV format
         String safeEventType = sanitize(event_type);
         String safePageType = sanitize(page_type);
-        String safeVerdict = sanitize(verdict_type);
+        String safeIntent = sanitize(intent);
+        String safeVerdictState = sanitize(verdict_state);
         String safeBrand = sanitize(brand);
         String safeModel = sanitize(model);
         String safeDetail = sanitize(detail);
         String safeReferrer = sanitize(referrerPath);
         String safePlacement = sanitize(placement);
 
-        csvLogger.info("{},{},{},{},{},{},{},{}",
-                safeEventType, safePageType, safeVerdict, safeBrand, safeModel, safeDetail, safeReferrer,
+        csvLogger.info("{},{},{},{},{},{},{},{},{}",
+                safeEventType, safePageType, safeIntent, safeVerdictState, safeBrand, safeModel, safeDetail,
+                safeReferrer,
                 safePlacement);
 
         // 4. If approval is pending, redirect to waitlist instead of external partner
         // Target host is guaranteed to be from config, not user input.
         if (routingConfig.isApprovalPending()) {
-            String encodedVerdict = URLEncoder.encode(safeVerdict, StandardCharsets.UTF_8);
+            String encodedVerdict = URLEncoder.encode(safeVerdictState, StandardCharsets.UTF_8);
             String encodedBrand = URLEncoder.encode(safeBrand, StandardCharsets.UTF_8);
             RedirectView waitlistView = new RedirectView(
                     routingConfig.getWaitlistUrl() + "?verdict=" + encodedVerdict + "&brand=" + encodedBrand);
@@ -80,10 +83,14 @@ public class LeadController {
             return waitlistView;
         }
 
-        // 5. Determine partner redirect URL based on intent (SELL vs FIX)
+        // 5. Determine partner redirect URL based on intent
         String partnerUrl;
-        if ("SELL".equalsIgnoreCase(verdict_type)) {
+        if ("SELL".equalsIgnoreCase(safeIntent)) {
             partnerUrl = routingConfig.getSellPartnerUrl();
+        } else if ("WARRANTY".equalsIgnoreCase(safeIntent)) {
+            partnerUrl = routingConfig.getWarrantyPartnerUrl();
+        } else if ("VALUE".equalsIgnoreCase(safeIntent)) {
+            partnerUrl = routingConfig.getMarketValuePartnerUrl();
         } else {
             partnerUrl = routingConfig.getRepairPartnerUrl();
         }

@@ -3,7 +3,7 @@ package com.carmoneypit.engine.web;
 import com.carmoneypit.engine.api.OutputModels.VerdictState;
 import com.carmoneypit.engine.api.InputModels.EngineInput;
 import com.carmoneypit.engine.api.InputModels.SimulationControls;
-import com.carmoneypit.engine.config.PartnerRoutingConfig;
+
 import com.carmoneypit.engine.core.ValuationService;
 import com.carmoneypit.engine.data.CarBrandData;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -18,13 +18,10 @@ public class VerdictPresenter {
 
     private final ObjectMapper objectMapper;
     private final ValuationService valuationService;
-    private final PartnerRoutingConfig routingConfig;
 
-    public VerdictPresenter(ObjectMapper objectMapper, ValuationService valuationService,
-            PartnerRoutingConfig routingConfig) {
+    public VerdictPresenter(ObjectMapper objectMapper, ValuationService valuationService) {
         this.objectMapper = objectMapper;
         this.valuationService = valuationService;
-        this.routingConfig = routingConfig;
     }
 
     /**
@@ -228,25 +225,32 @@ public class VerdictPresenter {
     }
 
     public String getLeadUrl(VerdictState state, EngineInput input, SimulationControls controls) {
-        if (routingConfig.isApprovalPending()) {
-            // Routing to local Waitlist/Newsletter/Lead Generation form
-            return routingConfig.getWaitlistUrl() +
-                    "?verdict=" + state.name() +
-                    "&brand=" + input.brand().replace(" ", "+");
-        }
-
         boolean isHighMileage = input.mileage() > 80000;
+        String intent;
 
         switch (state) {
             case TIME_BOMB:
-                return routingConfig.getSellPartnerUrl();
+                intent = "sell";
+                break;
             case STABLE:
                 if (isHighMileage)
-                    return routingConfig.getWarrantyPartnerUrl();
-                return routingConfig.getRepairPartnerUrl();
+                    intent = "warranty";
+                else
+                    intent = "repair";
+                break;
             case BORDERLINE:
             default:
-                return routingConfig.getMarketValuePartnerUrl();
+                intent = "value";
+                break;
         }
+
+        String brand = input.brand() != null ? input.brand() : "";
+        String model = input.model() != null ? input.model() : "";
+
+        return "/lead?page_type=calculator_result&intent=" + intent +
+                "&verdict_state=" + state.name() +
+                "&brand=" + brand +
+                "&model=" + model +
+                "&placement=verdict_card";
     }
 }

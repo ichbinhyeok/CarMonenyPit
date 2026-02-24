@@ -15,7 +15,7 @@ The destination logic is decoupled from the UI. `PartnerRoutingConfig` determine
 ### B. Post-Approval Phase (`approval-pending=false`)
 - Affiliate partners are approved.
 - `/lead` requests redirect directly to external partners (e.g., Peddle, RepairPal).
-- Redirection target relies on the `verdict_type` (SELL vs FIX).
+- Redirection target relies on the `intent` (SELL, REPAIR, WARRANTY, VALUE).
 
 ## 3. Flow Diagram
 ```mermaid
@@ -27,7 +27,7 @@ sequenceDiagram
     participant Destination
 
     User->>VerdictPresenter: Views Result Page
-    VerdictPresenter-->>User: Renders CTA button to /lead?verdict_type=SELL
+    VerdictPresenter-->>User: Renders CTA button to /lead?intent=sell&verdict_state=TIME_BOMB
     User->>LeadController: Clicks CTA (/lead)
     LeadController->>LeadController: Sanitize inputs & log to CSV
     LeadController->>Config: Check approval pending state

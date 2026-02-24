@@ -124,9 +124,11 @@ public class PSeoController {
     String verdictType = isSell ? "SELL" : "FIX";
 
     // Build tracking URLs
-    String leadUrlInline = "/lead?page_type=pseo_fault&verdict_type=" + verdictType + "&brand=" + normalize(car.brand())
+    String leadUrlInline = "/lead?page_type=pseo_fault&intent=" + verdictType + "&verdict_state="
+        + result.verdictState().name() + "&brand=" + normalize(car.brand())
         + "&model=" + normalize(car.model()) + "&detail=" + faultSlug + "&placement=inline";
-    String leadUrlSticky = "/lead?page_type=pseo_fault&verdict_type=" + verdictType + "&brand=" + normalize(car.brand())
+    String leadUrlSticky = "/lead?page_type=pseo_fault&intent=" + verdictType + "&verdict_state="
+        + result.verdictState().name() + "&brand=" + normalize(car.brand())
         + "&model=" + normalize(car.model()) + "&detail=" + faultSlug + "&placement=sticky";
 
     // Related faults for internal linking
