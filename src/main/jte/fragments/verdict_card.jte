@@ -245,15 +245,15 @@
 
         <!-- Strategic Insights Row -->
         <div class="strategic-insight-row">
-            <!-- 1. Peer Comparison (PROMINENT) -->
+            <!-- 1. Modeled Decision Distribution -->
             <div class="insight-card" style="background: linear-gradient(135deg, #fef2f2, #fef2f2); border: 2px solid #fecaca;">
-                <div class="insight-label" style="color: #dc2626;">What Others Did</div>
+                <div class="insight-label" style="color: #dc2626;">Modeled Estimate</div>
                 <div class="insight-val" style="color: #dc2626;">
                     ${result.peerData().sellPercentage()}% 
-                    <span style="font-size: 0.9rem; font-weight: 700;">SOLD</span>
+                    <span style="font-size: 0.9rem; font-weight: 700;">SELL</span>
                 </div>
                 <p style="font-size: 0.85rem; margin: 0; color: #991b1b; font-weight: 600;">
-                    of owners in your situation chose to sell.
+                    of similar profiles lean toward selling (modeled).
                 </p>
             </div>
 
