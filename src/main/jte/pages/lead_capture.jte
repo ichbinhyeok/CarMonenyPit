@@ -1,7 +1,7 @@
 @param String verdict
 @param String brand
 
-@template.layout.main(
+@template.layout(
     title = "Next Steps for " + brand, 
     content = @`
         <div class="h-full flex flex-col justify-center max-w-2xl mx-auto py-12 px-4 sm:px-6 lg:px-8">

@@ -110,12 +110,20 @@ public class PSeoController {
 
     String canonicalUrl = baseUrl + "/verdict/" + brand + "/" + model + "/" + faultSlug;
 
-    // 6. Generate Social Assets (Dynamic Receipt)
+    // 6. Generate Social Assets using Central Logic (SSOT)
     long marketValue = profile != null ? profile.market().jan2026AvgPrice() : 0;
     double repairCost = fault.repairCost();
-    boolean isSell = repairCost > (marketValue * 0.5);
+
+    // Call unified SSOT Decision Engine
+    EngineInput input = new EngineInput(car.model(), VehicleType.SEDAN, car.brand(), car.startYear(),
+        profile != null ? profile.reliability().lifespanMiles() / 2 : 100000,
+        (long) repairCost, marketValue, true, true);
+
+    VerdictResult result = decisionEngine.evaluate(input);
+    boolean isSell = result.verdictState() == VerdictState.TIME_BOMB;
     String verdictType = isSell ? "SELL" : "FIX";
-    String verdictText = isSell ? "VERDICT: SELL" : "VERDICT: CAUTION";
+    String verdictText = isSell ? "VERDICT: SELL"
+        : (result.verdictState() == VerdictState.BORDERLINE ? "VERDICT: CAUTION" : "VERDICT: FIX");
 
     // Build tracking URLs
     String leadUrlInline = "/lead?page_type=pseo_fault&verdict_type=" + verdictType + "&brand=" + normalize(car.brand())
@@ -128,19 +136,6 @@ public class PSeoController {
         .filter(f -> !f.component().equals(fault.component()))
         .limit(3)
         .toList();
-
-    // 6. Generate Social Assets (Dynamic Receipt) using Central Logic (SSOT)
-    double repairCost = fault.repairCost();
-
-    // Call unified SSOT Decision Engine
-    EngineInput input = new EngineInput(car.model(), VehicleType.SEDAN, car.brand(), car.startYear(),
-        profile != null ? profile.reliability().lifespanMiles() / 2 : 100000,
-        (long) repairCost, marketValue, true, true);
-
-    VerdictResult result = decisionEngine.evaluate(input);
-    boolean isSell = result.verdictState() == VerdictState.TIME_BOMB;
-    String verdictText = isSell ? "VERDICT: SELL"
-        : (result.verdictState() == VerdictState.BORDERLINE ? "VERDICT: CAUTION" : "VERDICT: FIX");
 
     String ogImage = baseUrl + "/og-image.png";
 
