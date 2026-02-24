@@ -97,7 +97,7 @@
             }
         </style>
 
-        <!-- Bi-weekly Market Pulse (SEO Freshness) -->
+        <!-- Market Context Analysis -->
         $unsafe{marketPulse}
 
         <!-- 2. Vehicle Financial Profile (New Section) -->
@@ -664,8 +664,9 @@
                 @endif
             </div>
             <p style="font-size: 0.8rem; color: #6B7280; text-align: center; margin-top: 2rem; line-height: 1.6; max-width: 500px; margin-left: auto; margin-right: auto;">
-                Data is sourced from official NHTSA databases and market frameworks. Our bi-weekly updates reflect 
-                estimated market trends for your asset.
+                Data is sourced from available market frameworks. Our estimates reflect 
+                dynamic depreciation logic, component failure probabilities, and labor rate averages for your specific query.
+                Always cross-check with a local certified mechanic before making absolute financial decisions.
             </p>
         </div>
         <style>
