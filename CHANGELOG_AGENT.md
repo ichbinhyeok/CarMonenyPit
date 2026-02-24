@@ -32,3 +32,9 @@
 
 ### Summary
 All five phases of the pre-deployment architecture hardening roadmap are completed. The project compiles 100% cleanly and passes all test suites. Affiliate risks and Google HCU risks have been minimized.
+
+### Addendum: Final Hardening Patch (P0-P3)
+- **SSOT Outbound:** Unpacked UI-layer tracking and unified all external partner exits through `/lead` (P0-1).
+- **YMYL/Neutral Copy:** Removed unverified social proofs ("Trending", "bi-weekly updates") and NADA/KBB badges. Lowered guarantees in Waitlist. Deleted the legacy `MarketPulseService` to prevent HCU "manipulated freshness" flags (P0-2, P0-3, P2-1).
+- **Sitemap Stability:** Stopped mapping all index pages to `LocalDate.now()`. Updated `SitemapController` to rely on a stable `lastmod` format and configurable `baseUrl` to dodge scaled-content triggers (P1-1).
+- **Engine Invariants:** Covered 500-point separation boundaries in `VerdictConsistencyTest` up to 200,000 extreme mileage limits (P3-1).
