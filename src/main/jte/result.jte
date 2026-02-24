@@ -661,6 +661,9 @@
 
             // Global Share Function
             function shareResult(token) {
+                if (typeof gtag === 'function') {
+                    gtag('event', 'share_open', { 'event_category': 'Engagement' });
+                }
                 const url = window.location.origin + "/report?token=" + token;
                 navigator.clipboard.writeText(url).then(() => {
                     alert('Link copied to clipboard! Share this diagnostic receipt.');

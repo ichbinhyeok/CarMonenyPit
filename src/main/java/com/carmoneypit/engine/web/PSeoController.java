@@ -7,7 +7,7 @@ import com.carmoneypit.engine.api.InputModels.VehicleType;
 import com.carmoneypit.engine.core.DecisionEngine;
 import com.carmoneypit.engine.service.CarDataService;
 import com.carmoneypit.engine.service.CarDataService.*;
-import com.carmoneypit.engine.service.MarketPulseService;
+import com.carmoneypit.engine.service.MarketContextService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,16 +31,16 @@ public class PSeoController {
 
   private static final Logger logger = LoggerFactory.getLogger(PSeoController.class);
   private final CarDataService dataService;
-  private final MarketPulseService marketPulseService;
+  private final MarketContextService marketContextService;
   private final DecisionEngine decisionEngine;
 
   @Value("${app.baseUrl:https://automoneypit.com}")
   private String baseUrl;
 
-  public PSeoController(CarDataService dataService, MarketPulseService marketPulseService,
+  public PSeoController(CarDataService dataService, MarketContextService marketContextService,
       DecisionEngine decisionEngine) {
     this.dataService = dataService;
-    this.marketPulseService = marketPulseService;
+    this.marketContextService = marketContextService;
     this.decisionEngine = decisionEngine;
   }
 
@@ -122,8 +122,6 @@ public class PSeoController {
     VerdictResult result = decisionEngine.evaluate(input);
     boolean isSell = result.verdictState() == VerdictState.TIME_BOMB;
     String verdictType = isSell ? "SELL" : "FIX";
-    String verdictText = isSell ? "VERDICT: SELL"
-        : (result.verdictState() == VerdictState.BORDERLINE ? "VERDICT: CAUTION" : "VERDICT: FIX");
 
     // Build tracking URLs
     String leadUrlInline = "/lead?page_type=pseo_fault&verdict_type=" + verdictType + "&brand=" + normalize(car.brand())
@@ -156,7 +154,7 @@ public class PSeoController {
     modelMap.addAttribute("leadUrlInline", leadUrlInline);
     modelMap.addAttribute("leadUrlSticky", leadUrlSticky);
     modelMap.addAttribute("relatedFaults", relatedFaults);
-    modelMap.addAttribute("marketPulse", marketPulseService.generateBiweeklyInsight(car, fault));
+    modelMap.addAttribute("marketPulse", marketContextService.generateMarketContext(car, fault));
     modelMap.addAttribute("ogImage", ogImage);
     modelMap.addAttribute("breadcrumbs", breadcrumbs);
 
@@ -400,7 +398,6 @@ public class PSeoController {
 
   private String generateSchema(CarModel car, Fault fault, ProfileViewModel profile,
       String brandSlug, String modelSlug, String faultSlug) {
-    long marketValue = profile != null ? profile.market().jan2026AvgPrice() : 0;
     int switchingCost = 2500 + (Math.abs(car.id().hashCode()) % 1000);
 
     // Note: Using WebApplication schema instead of Product to avoid Google Shopping

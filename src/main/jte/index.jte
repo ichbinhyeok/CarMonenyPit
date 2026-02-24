@@ -281,7 +281,7 @@
                     </div>
                 </div>
 
-                <form hx-post="/analyze" hx-target="#form-container" hx-swap="outerHTML show:#form-container:top" hx-push-url="false" class="form-grid-modern">
+                <form hx-post="/analyze" hx-target="#form-container" hx-swap="outerHTML show:#form-container:top" hx-push-url="false" class="form-grid-modern" onsubmit="if(typeof gtag === 'function') gtag('event', 'calculator_submit', { 'event_category': 'Engagement' });">
                     <input type="hidden" name="situation" id="situationInput" value="quote">
                     
                     <!-- Row 1: Year (First!) -->

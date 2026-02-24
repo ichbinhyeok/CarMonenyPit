@@ -13,6 +13,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 @Controller
 public class LeadController {
@@ -68,9 +70,12 @@ public class LeadController {
                 safePlacement);
 
         // 4. If approval is pending, redirect to waitlist instead of external partner
+        // Target host is guaranteed to be from config, not user input.
         if (routingConfig.isApprovalPending()) {
+            String encodedVerdict = URLEncoder.encode(safeVerdict, StandardCharsets.UTF_8);
+            String encodedBrand = URLEncoder.encode(safeBrand, StandardCharsets.UTF_8);
             RedirectView waitlistView = new RedirectView(
-                    routingConfig.getWaitlistUrl() + "?verdict=" + safeVerdict + "&brand=" + safeBrand);
+                    routingConfig.getWaitlistUrl() + "?verdict=" + encodedVerdict + "&brand=" + encodedBrand);
             waitlistView.setStatusCode(HttpStatus.FOUND);
             return waitlistView;
         }
@@ -104,6 +109,21 @@ public class LeadController {
     private String sanitize(String input) {
         if (input == null)
             return "null";
-        return input.replace(",", " ").replace("\n", " ").replace("\r", " ").trim();
+        // Remove null bytes and standard whitespace replacements
+        String clean = input.replace("\u0000", "").replace(",", " ").replace("\n", " ").replace("\r", " ").trim();
+
+        // CSV Injection defense
+        if (!clean.isEmpty()) {
+            char firstChar = clean.charAt(0);
+            if (firstChar == '=' || firstChar == '+' || firstChar == '-' || firstChar == '@' || firstChar == '\t') {
+                clean = "'" + clean;
+            }
+        }
+
+        // Length limit
+        if (clean.length() > 200) {
+            clean = clean.substring(0, 200);
+        }
+        return clean;
     }
 }

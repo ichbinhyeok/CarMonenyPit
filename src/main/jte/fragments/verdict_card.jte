@@ -14,12 +14,21 @@
 <div id="verdict-card" class="fade-in">
 
     <!-- Information Transparency Disclaimer -->
+    @if(result != null && result.confidence() < 75)
+    <div style="background: #fffbeb; border: 1px solid #fde68a; padding: 1rem 1.5rem; border-radius: 12px; margin-bottom: 2rem; display: flex; align-items: flex-start; gap: 1rem;" id="transparency-disclaimer">
+        <span style="font-size: 1.25rem;">⚠️</span>
+        <div style="font-size: 0.85rem; color: #92400e; line-height: 1.4;">
+            <strong>Data Disclosure:</strong> Lower-confidence estimate — real-world costs may vary significantly by trim, condition, and location. This is not financial advice.
+        </div>
+    </div>
+    @else
     <div style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 1rem 1.5rem; border-radius: 12px; margin-bottom: 2rem; display: flex; align-items: flex-start; gap: 1rem;" id="transparency-disclaimer">
         <span style="font-size: 1.25rem;">ℹ️</span>
         <div style="font-size: 0.85rem; color: #475569; line-height: 1.4;">
             <strong>Data Disclosure:</strong> This verdict is generated using statistical models and historical market data. It is intended for informational purposes only and does not constitute mechanical diagnosis, financial advice, or legal appraisal. Actual costs and values vary.
         </div>
     </div>
+    @endif
 
     <style>
         .verdict-grid {
