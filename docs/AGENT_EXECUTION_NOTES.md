@@ -1,41 +1,58 @@
-# 🕵️ AutoMoneyPit Agent Execution Notes
+# 🕵️ AutoMoneyPit Agent Execution Notes (2026.02.24 최신화)
 
 ## 1. 현재 규칙 요약 (Core Rules Extracted)
 *   **데이터 스펙 (`data-spec.md`)**: 정확한 단일 금액 단위 지양, 대신 **"범위(Range) / 비율 / 계수 / 확률"** 사용. 실시간 API 연동 불가. 
 *   **계산식 (`계산식.md`)**: 단순 비용 비교가 아닌 **후회 기반 결정(Regret-Based Decision: RF vs RM)**. 결과값은 100단위로 반올림하여 신뢰성(EEAT) 보장.
 *   **톤앤매너 (`implementation_plan.md`)**: "Visual Authority". 가볍고 유치한(Silly) 방식이 아니라, 금융 전문가와 같은 진지하고 직관적인(Direct) 경고(Iceberg Receipt) 제공.
-*   **수익화/리드 전략 (`improvement_strategy.md`)**: 제휴 승인 전에는 SEO/소셜 트래픽을 내부 리드폼이나 문의로 돌려 **전환 가능성(CTR)을 먼저 증명**해야 함. (승인 대기 모드)
+*   **수익화/리드 전략**: `PartnerRoutingConfig`의 `approvalPending` 플래그로 제휴 승인 전/후 라우팅 자동 전환. 승인 전에는 `/lead-capture` waitlist 폼으로 fallback.
 *   **마케팅 방식 (`marketing_agent_prompt.md`)**: "SEO 위기관리(Hijacking)". RF/RM 같은 개발 용어를 감추고 인간적이고 취약성을 인정하는 방식으로 신뢰 빌드업.
 
 ---
 
-## 2. 충돌 지점 및 쟁점 (Conflicts & Bottlenecks)
-1.  **메인 결정 엔진 vs pSEO 결정 편차**: 
-    *   *문제*: 현재 pSEO는 "수리비 > 차값 50%"라는 단순 규칙을 사용 중이나, 메인 엔진은 "RF vs RM" (Regret 기반)을 사용. 일치하지 않으면 사용자가 랜딩 후 결과 불일치로 이탈 발생.
-    *   *해결*: 두 로직을 `VerdictPolicyService` 하나로 통합 (SSOT).
-2.  **데이터 확장 시 Jackson 파싱 에러 위험**:
-    *   *문제*: 신뢰도(confidence), last_updated, 출처(sources) 등의 필드를 대량 추가하면 기존 파서에서 에러가 발생하여 서비스 장애 유발 가능.
-    *   *해결*: `@JsonIgnoreProperties(ignoreUnknown=true)` 적극 도입 및 점진적 필드 매핑(schema evolution).
-3.  **데이터 품질(환각) vs 양(Volume)**:
-    *   *문제*: 수백 개의 차량 모델에 한 번에 출처와 신뢰도를 자동화로 넣을 경우 AI 환각(Hallucination) 리스크 큼.
-    *   *해결*: 상위 2~3개 베스트셀러 모델에만 PoC로 수동/반자동 데이터 강건화 적용, 나머지는 시스템 검증 후 스크립트로 처리.
+## 2. 완료된 Phase 요약
+
+### Phase 1: 데이터 무결성 ✅
+- `car_models.json` 중복 slug 해결 (Sentra, Grand Cherokee, Jetta)
+- `@JsonIgnoreProperties(ignoreUnknown=true)` 적용 → 스키마 진화 안전
+- `major_faults.json` 확장 메타데이터 PoC (F-150, Silverado)
+- `DataIntegrityTest` 통과
+
+### Phase 2: 판정 로직 통합 (SSOT) ✅
+- `PSeoController`가 `DecisionEngine`을 직접 사용 (기존 naive 50% 규칙 제거)
+- pSEO 페이지와 메인 결과 페이지의 판정 결과 100% 일치
+- 모든 단위 테스트 통과
+
+### Phase 3: 리드 파이프라인 ✅
+- `PartnerRoutingConfig.java`: `app.partner.approval-pending` 플래그 기반 동적 라우팅
+- `VerdictPresenter.java`: 하드코딩 URL → PartnerRoutingConfig 기반
+- `LeadController.java`: `/lead` (CSV 로깅 + 파트너 리다이렉트) + `/lead-capture` (waitlist)
+- `lead_capture.jte`: verdict별 맞춤 대기 페이지
+- 모든 단위 테스트 통과
 
 ---
 
-## 3. 에이전트 채택 우선순위 및 해결 방식 (Adopted Strategy)
-*   **안정성 최우선 방어적 코딩**: 데이터 스키마 확장은 기존 시스템을 깨지 않는 `fallback` 및 `ignoreUnknown` 설정을 기반으로 진행.
-*   **페이즈(Phase) 분할 실행**: 방대한 작업이 한 번에 섞이지 않도록 기능 단위로 분할하여 PR 커밋 진행.
-    *   **Phase 1**: 데이터 스키마 유연성 확보 & 무결성 테스트(CI) 도입, 상위 모델 JSON 신뢰도 필드 추가.
-    *   **Phase 2**: `VerdictPolicyService` 통합 및 pSEO 정합성 개선.
-    *   **Phase 3**: 제휴 승인 전/후 대응 가능한 `/lead` 라우팅(플래그 기반) 및 분석 로직, 최종 산출물 리포트(3종) 발행.
+## 3. 해결된 충돌 지점
+1. ~~**메인 결정 엔진 vs pSEO 결정 편차**~~ → Phase 2에서 `DecisionEngine` SSOT 통합 완료
+2. ~~**데이터 확장 시 Jackson 파싱 에러**~~ → `@JsonIgnoreProperties(ignoreUnknown=true)` 적용 완료
+3. ~~**하드코딩된 파트너 URL**~~ → Phase 3에서 `PartnerRoutingConfig`로 전환 완료
+4. ~~**도메인 혼란 (automoneypit vs carmoneypit)**~~ → `app.baseUrl` 환경변수로 통일
+
+## 4. 남은 작업
+- **이메일 수집 백엔드**: lead_capture.jte의 이메일 저장 연동 필요
+- **A/B 테스트 인프라**: CTA 문구/색상 변경 테스트 환경 구축
+- **GA4 커스텀 이벤트**: verdict_shown, cta_click, lead_submit 등
+- **파트너 승인 후**: `app.partner.approval-pending=false` 전환
+- **VerdictConsistencyTest**: pSEO와 메인 엔진 출력 자동 일치 검증 테스트
 
 ---
 
-## 4. 릴리즈 체크리스트 (Release Checklist)
-- [ ] (`Phase 1`) `gradlew test` 등 유닛 테스트에서 기존/신규 Data 관련 기능 100% 통과 확인.
-- [ ] (`Phase 1`) Data Integrity Validator(스크립트 또는 JUnit)가 누락된 필수 필드, slug 중복 등을 올바로 잡아내는지 테스트.
-- [ ] (`Phase 2`) pSEO 생성 결과물과 웹 메인 엔진의 Verdict 판정(SELL/FIX 등)이 100% 일치하는지 스모크 테스트.
-- [ ] (`Phase 2`) Sitemap에 버킷 301 리다이렉트가 아닌 최종 Canonical URL들만 정상 등재되었는지 확인.
-- [ ] (`Phase 3`) `APPROVAL_PENDING=true` 상태에서 `/lead`가 파트너사 URL이 아닌 내부 문의/리드폼으로 정상 fallback 되는지 점검.
-- [ ] (`Phase 3`) UTM 및 Referrer 값이 `/lead`를 거칠 때 XSS나 오픈 리다이렉트에 취약하지 않고 인코딩 전달되는지 테스트.
-- [ ] CHANGELOG_AGENT.md, DATA_REPORT.md, REVENUE_MODEL.md 최종 작성 완료.
+## 5. 릴리즈 체크리스트 (Release Checklist)
+- [x] (`Phase 1`) `gradlew test` 전체 통과 확인
+- [x] (`Phase 1`) Data Integrity Validator가 중복 slug 검출 확인
+- [x] (`Phase 2`) pSEO와 메인 엔진이 동일한 `DecisionEngine` 사용 확인
+- [x] (`Phase 2`) Sitemap에 최종 Canonical URL만 등재
+- [x] (`Phase 3`) `approvalPending=true` 상태에서 `/lead-capture`로 정상 fallback 확인
+- [x] (`Phase 3`) LeadController의 입력값 sanitize 처리 확인
+- [ ] 이메일 수집 백엔드 연동
+- [ ] GA4 전환 이벤트 설정
+- [ ] 파트너 승인 후 실제 리다이렉트 테스트

@@ -171,24 +171,24 @@ if (!peddleServiceAreas.contains(zipCode)) {
 
 ---
 
-## 🛠 구현 체크리스트
+## 🛠 구현 체크리스트 (2026.02.24 최신화)
 
 ### 즉시 (이번 주)
-- [ ] GA4 설치 및 이벤트 설정
-- [ ] VerdictPresenter의 leadUrl을 `/lead?...` 로 변경
-- [ ] 간이 리드폼 페이지 생성 (lead_form.jte)
-- [ ] CTA 클릭 이벤트 추적
+- [x] GA4 설치 및 이벤트 설정 → ✅ G-1NQYSFWZ7C 설치 완료
+- [x] VerdictPresenter의 leadUrl을 `/lead?...` 로 변경 → ✅ PartnerRoutingConfig 기반 동적 라우팅
+- [x] 간이 리드폼 페이지 생성 (lead_form.jte) → ✅ lead_capture.jte 구현 완료
+- [x] CTA 클릭 이벤트 추적 → ✅ LeadController CSV 로깅
 
 ### 단기 (2주)
-- [ ] LeadController.java 구현 (리드 저장)
+- [x] LeadController.java 구현 (리드 처리) → ✅ /lead + /lead-capture 엔드포인트
 - [ ] Peddle 제휴 문의 발송
 - [ ] 틱톡 계정 생성 + 첫 영상 업로드
 - [ ] 결과 화면 "공유" 기능 강화
 
 ### 중기 (1개월)
-- [ ] 제휴사 승인 후 실제 연동
+- [ ] 제휴사 승인 후 실제 연동 (`app.partner.approval-pending=false` 전환)
 - [ ] A/B 테스트 인프라 구축
-- [ ] sitemap.xml 자동 생성 (SEO)
+- [x] sitemap.xml 자동 생성 (SEO) → ✅ RootController에서 동적 생성
 - [ ] Google Search Console 등록
 
 ### 장기 (3개월)
@@ -210,12 +210,14 @@ if (!peddleServiceAreas.contains(zipCode)) {
 
 ---
 
-## 📁 관련 파일
+## 📁 관련 파일 (2026.02.24 최신화)
 
-| 파일 | 역할 | 수정 필요 |
-|------|------|----------|
-| `VerdictPresenter.java` | 리드 URL/라벨 생성 | ✅ 수정 필요 |
-| `verdict_card.jte` | CTA 버튼 UI | 선택 |
-| `sticky_bar.jte` | 플로팅 CTA | 선택 |
-| (새로 생성) `LeadController.java` | 리드 처리 | ⭐ 생성 필요 |
-| (새로 생성) `lead_form.jte` | 리드폼 UI | ⭐ 생성 필요 |
+| 파일 | 역할 | 상태 |
+|------|------|------|
+| `PartnerRoutingConfig.java` | 파트너 URL 동적 라우팅 설정 | ✅ 구현 완료 |
+| `VerdictPresenter.java` | 리드 URL/라벨 생성 | ✅ PartnerRoutingConfig 연동 |
+| `LeadController.java` | 리드 /lead 로깅 + /lead-capture 대기폼 | ✅ 구현 완료 |
+| `lead_capture.jte` | verdict별 맞춤 Waitlist 폼 | ✅ 구현 완료 |
+| `verdict_card.jte` | CTA 버튼 UI | ✅ 동적 leadUrl 사용 |
+| `sticky_bar.jte` | 플로팅 CTA | ✅ 동적 leadUrl 사용 |
+

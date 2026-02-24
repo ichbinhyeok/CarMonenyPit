@@ -1,6 +1,7 @@
 # 🔬 AutoMoneyPit 다면 페르소나 해부 보고서
 > **목표**: 월 100만원(≈$750) 리드 수익 달성  
-> **분석 일시**: 2026-02-23  
+> **최초 분석**: 2026-02-23  
+> **최종 업데이트**: 2026-02-24 (Phase 1-3 완료 반영)  
 > **분석 범위**: 코드, SEO, pSEO, AEO, SERP, 사용자 의도, 경쟁 난이도, 수익화, UX
 
 ---
@@ -82,6 +83,7 @@ title = car.brand() + " " + car.model() + " " + fault.component() + " Repair ($"
 String ogImage = "https://placehold.co/1200x630/1e293b/ffffff?text=..."
 ```
 **해결**: 동적 OG 이미지 생성 서비스 구축 또는 Vercel OG 같은 서비스 활용
+> **✅ 2026.02.24 해결**: `baseUrl + "/og-image.png"` 으로 내부 호스팅 전환 완료
 
 ---
 
@@ -349,6 +351,7 @@ return "https://www.peddle.com/instant-offer?utm_source=automoneypit...";
 5. 이메일 리마케팅 불가
 
 **해결 우선순위 #1**: `LeadController.java` + `lead_form.jte` 구현. **이것 없이는 수익이 $0**
+> **✅ 2026.02.24 해결**: `LeadController.java` (CSV 로깅 + 조건부 리다이렉트) + `lead_capture.jte` (verdict별 대기폼) 구현 완료. `PartnerRoutingConfig`로 승인 전/후 동적 라우팅.
 
 #### 6.2 "FIX" 판정의 수익화가 약함
 ```java
@@ -640,25 +643,25 @@ if (fromPSEO != null && fromPSEO && brandParam != null && repairQuoteParam != nu
 ## 💡 최종 요약: "100만원까지의 최단 경로"
 
 ```
-현재 상태: 제품은 85% 완성, 수익화는 0%
+현재 상태: 제품은 95% 완성, 수익화 파이프라인 구현 완료 (승인 대기 중)
 
-가장 큰 병목: 리드 캡쳐가 없다.
-→ 아무리 SEO가 완벽해도, 리드폼이 없으면 수익 = $0
+가장 큰 병목: ~~리드 캡쳐가 없다.~~ → ✅ 해결됨 (LeadController + lead_capture.jte)
+→ 현재 병목: 파트너 승인 대기 + 트래픽 확보
 
 두 번째 병목: 트래픽이 없다 (DA 0).
 → Reddit 게릴라 전술이 가장 빠른 트래픽 확보 경로
 → SEO는 6개월 후에야 효과가 나옴
 
-세 번째 병목: E-E-A-T 위반 요소 (가짜 데이터).
-→ 구글이 당장 패널티를 주진 않지만, 장기적으로 반드시 문제됨
-→ 초기에 제거하는 것이 나중보다 쉬움
+세 번째 병목: ~~E-E-A-T 위반 요소 (가짜 데이터).~~ → ✅ 대부분 해결됨
+→ 가짜 소셜 프루프 제거, OG 이미지 내부 호스팅 전환
 
 결론:
-1. 리드폼 만들고 (이번 주)
-2. Peddle 제휴 신청하고 (이번 주)  
+1. ~~리드폼 만들고 (이번 주)~~ ✅ 완료
+2. Peddle 제휴 신청하고 (진행 중)  
 3. Reddit에 댓글 달기 시작하고 (이번 주)
-4. 가짜 데이터 제거하고 (이번 주)
+4. ~~가짜 데이터 제거하고 (이번 주)~~ ✅ 완료
 5. SEO는 꾸준히 개선 (매주)
+6. 승인 후 `app.partner.approval-pending=false` 전환
 
 → 3개월 후 첫 수익, 6-9개월 후 월 100만원 도달 가능
 ```
