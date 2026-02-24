@@ -1,9 +1,11 @@
 package com.carmoneypit.engine.web;
 
+import com.carmoneypit.engine.config.PartnerRoutingConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
@@ -16,6 +18,11 @@ import java.net.URISyntaxException;
 public class LeadController {
 
     private static final Logger csvLogger = LoggerFactory.getLogger("CSV_LEAD_LOGGER");
+    private final PartnerRoutingConfig routingConfig;
+
+    public LeadController(PartnerRoutingConfig routingConfig) {
+        this.routingConfig = routingConfig;
+    }
 
     @GetMapping("/lead")
     public RedirectView trackLead(
@@ -46,8 +53,7 @@ public class LeadController {
             }
         }
 
-        // 3. Log securely to CSV format: timestamp is added by Logback -> event_type,page_type,verdict_type,brand,model,detail,referrer_path,placement
-        // Sanitize inputs to prevent CSV injection / commas breaking the parser
+        // 3. Log securely to CSV format
         String safeEventType = sanitize(event_type);
         String safePageType = sanitize(page_type);
         String safeVerdict = sanitize(verdict_type);
@@ -57,28 +63,47 @@ public class LeadController {
         String safeReferrer = sanitize(referrerPath);
         String safePlacement = sanitize(placement);
 
-        csvLogger.info("{},{},{},{},{},{},{},{}", 
-            safeEventType, safePageType, safeVerdict, safeBrand, safeModel, safeDetail, safeReferrer, safePlacement);
+        csvLogger.info("{},{},{},{},{},{},{},{}",
+                safeEventType, safePageType, safeVerdict, safeBrand, safeModel, safeDetail, safeReferrer,
+                safePlacement);
 
-        // 4. Determine partner redirect URL based on intent (SELL vs FIX)
-        String partnerUrl;
-        if ("SELL".equalsIgnoreCase(verdict_type)) {
-            // Future integration: Peddle, Copart, CarMax, etc.
-            partnerUrl = "https://example-partner-sell.com/offer?make=" + safeBrand + "&model=" + safeModel;
-        } else {
-            // Future integration: RepairPal, YourMechanic, Autozone, etc.
-            partnerUrl = "https://example-partner-repair.com/quote?make=" + safeBrand + "&model=" + safeModel + "&issue=" + safeDetail;
+        // 4. If approval is pending, redirect to waitlist instead of external partner
+        if (routingConfig.isApprovalPending()) {
+            RedirectView waitlistView = new RedirectView(
+                    routingConfig.getWaitlistUrl() + "?verdict=" + safeVerdict + "&brand=" + safeBrand);
+            waitlistView.setStatusCode(HttpStatus.FOUND);
+            return waitlistView;
         }
 
-        // 5. Redirect (302 Found or 307 Temporary Redirect)
+        // 5. Determine partner redirect URL based on intent (SELL vs FIX)
+        String partnerUrl;
+        if ("SELL".equalsIgnoreCase(verdict_type)) {
+            partnerUrl = routingConfig.getSellPartnerUrl();
+        } else {
+            partnerUrl = routingConfig.getRepairPartnerUrl();
+        }
+
+        // 6. Redirect (302 Found)
         RedirectView redirectView = new RedirectView(partnerUrl);
-        redirectView.setStatusCode(HttpStatus.FOUND); // 302
+        redirectView.setStatusCode(HttpStatus.FOUND);
         return redirectView;
     }
 
+    @GetMapping("/lead-capture")
+    public String showWaitlistForm(
+            @RequestParam(name = "verdict", required = false) String verdict,
+            @RequestParam(name = "brand", required = false) String brand,
+            Model model) {
+
+        model.addAttribute("verdict", verdict != null ? verdict : "UNKNOWN");
+        model.addAttribute("brand", brand != null ? brand.replace("+", " ") : "your vehicle");
+
+        return "pages/lead_capture";
+    }
+
     private String sanitize(String input) {
-        if (input == null) return "null";
-        // Remove commas and newlines to prevent CSV structural breaks
+        if (input == null)
+            return "null";
         return input.replace(",", " ").replace("\n", " ").replace("\r", " ").trim();
     }
 }
