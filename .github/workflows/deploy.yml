@@ -41,6 +41,7 @@ jobs:
           key: ${{ secrets.OCI_KEY }}
           script: |
             mkdir -p ~/deploy/automoneypit
+            mkdir -p ~/deploy/automoneypit/logs
             cd ~/deploy/automoneypit
             
             cat <<EOF > docker-compose.yml
@@ -49,6 +50,11 @@ jobs:
                 image: shinhyeok22/automoneypit:latest
                 ports:
                   - "8806:8080"
+                environment:
+                  - LOG_DIR=/app/logs
+                  - APP_NICKNAME=automoneypit
+                volumes:
+                  - ./logs:/app/logs
                 restart: always
                 deploy:
                   resources:

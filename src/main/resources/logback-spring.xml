@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
+    <springProperty scope="context" name="LOG_DIR" source="LOG_DIR" defaultValue="." />
+    <springProperty scope="context" name="APP_NICKNAME" source="APP_NICKNAME" defaultValue="automoneypit" />
+
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
@@ -7,9 +10,9 @@
     </appender>
 
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>debug.log</file>
+        <file>${LOG_DIR}/debug.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>debug.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>${LOG_DIR}/debug.%d{yyyy-MM-dd}.log</fileNamePattern>
             <maxHistory>14</maxHistory>
         </rollingPolicy>
         <encoder>
@@ -18,9 +21,9 @@
     </appender>
 
     <appender name="LEADS_CSV" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>leads.csv</file>
+        <file>${LOG_DIR}/${APP_NICKNAME}-leads.csv</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>leads.%d{yyyy-MM-dd}.csv</fileNamePattern>
+            <fileNamePattern>${LOG_DIR}/${APP_NICKNAME}-leads.%d{yyyy-MM-dd}.csv</fileNamePattern>
             <maxHistory>365</maxHistory>
         </rollingPolicy>
         <encoder>

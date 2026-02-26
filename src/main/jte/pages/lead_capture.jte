@@ -1,5 +1,6 @@
 @param String verdict
 @param String brand
+@param String status = ""
 
 @template.layout(
     title = "Next Steps for " + brand, 
@@ -32,12 +33,25 @@
                     <p class="text-slate-400 mb-8 leading-relaxed">You're in a borderline situation where finding the best deal matters most. We are curating a list of vetted partners to help you decide. Drop your email below, and we'll send you our trusted recommendations once approved.</p>
                 @endif
 
-                <form class="max-w-md mx-auto" action="/" method="GET" onsubmit="event.preventDefault(); alert('Thanks! You have been added to the priority notification list.'); window.location.href='/';">
+                @if("success".equals(status))
+                    <div class="mb-6 rounded-md border border-emerald-500/40 bg-emerald-500/10 p-3 text-sm text-emerald-300">
+                        You're on the list. We will contact you when partner access is live.
+                    </div>
+                @elseif("invalid_email".equals(status))
+                    <div class="mb-6 rounded-md border border-rose-500/40 bg-rose-500/10 p-3 text-sm text-rose-300">
+                        Please enter a valid email address.
+                    </div>
+                @endif
+
+                <form class="max-w-md mx-auto" action="/waitlist/submit" method="POST" onsubmit="if(typeof gtag === 'function') gtag('event', 'submit_lead', { event_category: 'lead_capture', event_label: 'waitlist_form' });">
+                    <input type="hidden" name="verdict" value="${verdict}">
+                    <input type="hidden" name="brand" value="${brand}">
+                    <input type="hidden" name="source" value="lead_capture">
                     <div class="flex gap-2">
                         <label for="email" class="sr-only">Email address</label>
                         <input id="email" name="email" type="email" autocomplete="email" required class="min-w-0 flex-auto rounded-md border-0 bg-slate-900/50 px-3.5 py-2 text-white shadow-sm ring-1 ring-inset ring-slate-700/50 focus:ring-2 focus:ring-inset focus:ring-amber-500 sm:text-sm sm:leading-6 placeholder-slate-500 transition-colors" placeholder="Enter your email">
                         <button type="submit" class="flex-none rounded-md bg-amber-500 px-3.5 py-2.5 text-sm font-semibold text-slate-900 shadow-sm hover:bg-amber-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-500 transition-colors">
-                            Notify Me instantly
+                            Join Priority List
                         </button>
                     </div>
                     <p class="mt-4 text-xs text-slate-500">

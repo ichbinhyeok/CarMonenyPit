@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
 import jakarta.servlet.http.HttpServletResponse;
@@ -15,6 +16,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.Locale;
 
 @Controller
 public class LeadController {
@@ -101,16 +103,88 @@ public class LeadController {
         return redirectView;
     }
 
+    @PostMapping("/waitlist/submit")
+    public RedirectView submitWaitlist(
+            @RequestParam(name = "email") String email,
+            @RequestParam(name = "verdict", required = false, defaultValue = "UNKNOWN") String verdict,
+            @RequestParam(name = "brand", required = false, defaultValue = "") String brand,
+            @RequestParam(name = "source", required = false, defaultValue = "lead_capture") String source,
+            HttpServletResponse response) {
+
+        // Prevent form result caching in browser history/proxy.
+        response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0");
+        response.setHeader("Pragma", "no-cache");
+        response.setHeader("Expires", "0");
+
+        String safeVerdict = sanitize(verdict);
+        String safeBrand = sanitize(brand);
+        String safeSource = sanitize(source);
+        String safeEmail = sanitizeEmail(email);
+
+        if (safeEmail == null) {
+            RedirectView invalidView = new RedirectView(buildWaitlistRedirectUrl("invalid_email", safeVerdict, safeBrand));
+            invalidView.setStatusCode(HttpStatus.FOUND);
+            return invalidView;
+        }
+
+        csvLogger.info("{},{},{},{},{},{},{},{},{}",
+                "submit_lead", safeSource, "waitlist", safeVerdict, safeBrand, "", maskEmail(safeEmail),
+                "/lead-capture", "form");
+
+        RedirectView successView = new RedirectView(buildWaitlistRedirectUrl("success", safeVerdict, safeBrand));
+        successView.setStatusCode(HttpStatus.FOUND);
+        return successView;
+    }
+
     @GetMapping("/lead-capture")
     public String showWaitlistForm(
+            @RequestParam(name = "status", required = false) String status,
             @RequestParam(name = "verdict", required = false) String verdict,
             @RequestParam(name = "brand", required = false) String brand,
             Model model) {
 
+        model.addAttribute("status", status != null ? status : "");
         model.addAttribute("verdict", verdict != null ? verdict : "UNKNOWN");
         model.addAttribute("brand", brand != null ? brand.replace("+", " ") : "your vehicle");
 
         return "pages/lead_capture";
+    }
+
+    private String buildWaitlistRedirectUrl(String status, String verdict, String brand) {
+        return "/lead-capture?status=" + URLEncoder.encode(status, StandardCharsets.UTF_8)
+                + "&verdict=" + URLEncoder.encode(verdict, StandardCharsets.UTF_8)
+                + "&brand=" + URLEncoder.encode(brand, StandardCharsets.UTF_8);
+    }
+
+    private String sanitizeEmail(String input) {
+        if (input == null) {
+            return null;
+        }
+
+        String clean = input.trim().toLowerCase(Locale.ROOT);
+        if (clean.length() > 254) {
+            return null;
+        }
+
+        if (!clean.matches("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}$")) {
+            return null;
+        }
+
+        return clean;
+    }
+
+    private String maskEmail(String email) {
+        int atIndex = email.indexOf('@');
+        if (atIndex <= 0 || atIndex == email.length() - 1) {
+            return "hidden";
+        }
+
+        String localPart = email.substring(0, atIndex);
+        String domainPart = email.substring(atIndex + 1);
+        String maskedLocal = localPart.length() <= 2
+                ? localPart.charAt(0) + "*"
+                : localPart.substring(0, 2) + "***";
+        return maskedLocal + "@" + domainPart;
     }
 
     private String sanitize(String input) {
