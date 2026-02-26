@@ -78,11 +78,22 @@
         <!-- TL;DR AEO Summary -->
         <div class="tldr-summary" style="background: #eef2ff; border-left: 4px solid #4f46e5; padding: 1.5rem; border-radius: 8px; margin-bottom: 3rem;">
             <h2 style="font-size: 1.1rem; font-weight: 800; color: #312e81; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
-                <span style="font-size: 1.25rem;">⚡</span> Quick Verdict
+                <span style="font-size: 1.25rem;">⚡</span> AI Diagnostic Summary
             </h2>
+            !{
+                double ratio = fault.repairCost() / (double) details.market().jan2026AvgPrice();
+                String recommendation;
+                if (ratio > 0.5) {
+                    recommendation = "This repair represents " + String.format("%.0f", ratio * 100) + "% of the car's current estimated value. Data indicates proceeding with this repair carries a high risk of financial regret. We strongly recommend considering a sale or trade-in.";
+                } else if (ratio > 0.25) {
+                    recommendation = "Costing around " + String.format("%.0f", ratio * 100) + "% of the vehicle's residual value, this is a borderline case. Evaluate if the car has other impending issues before committing to this repair.";
+                } else {
+                    recommendation = "At merely " + String.format("%.0f", ratio * 100) + "% of the ongoing market value, repairing the " + fault.component() + " is generally a financially sound decision to preserve your equity.";
+                }
+            }
             <p style="font-size: 1rem; color: #3730a3; line-height: 1.6; margin: 0;">
-                The estimated cost to repair a <strong>${fault.component()}</strong> on a <strong>${car.brand()} ${car.model()}</strong> is approximately <strong>$${String.format("%,.0f", fault.repairCost())}</strong>. 
-                Compare this against your vehicle's estimated market value of <strong>$${String.format("%,d", details.market().jan2026AvgPrice())}</strong> to evaluate whether repairing or selling makes more financial sense for your situation.
+                The estimated cost to repair the <strong>${fault.component()}</strong> on a <strong>${car.brand()} ${car.model()}</strong> is approximately <strong>$${String.format("%,.0f", fault.repairCost())}</strong>. 
+                With the vehicle's current market value estimated at <strong>$${String.format("%,d", details.market().jan2026AvgPrice())}</strong>, ${recommendation}
             </p>
         </div>
 

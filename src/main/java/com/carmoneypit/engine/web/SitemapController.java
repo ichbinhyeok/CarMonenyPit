@@ -74,11 +74,16 @@ public class SitemapController {
             }
 
             // Verdict Mileage Pages (Generate predictable buckets)
-            int[] mileageBuckets = { 75000, 100000, 150000, 200000 };
+            int[] mileageBuckets = { 50000, 75000, 100000, 125000, 150000, 175000, 200000 };
             for (int miles : mileageBuckets) {
                 addUrl(xmlBuilder, baseUrl + "/verdict/" + brandSlug + "/" + modelSlug + "/" + miles + "-miles",
                         lastMod, "monthly", "0.7");
             }
+
+            // Should-I-Fix pSEO landing page
+            addUrl(xmlBuilder, baseUrl + "/should-i-fix/" + car.startYear() + "-" + brandSlug + "-" + modelSlug,
+                    lastMod,
+                    "monthly", "0.8");
         }
 
         xmlBuilder.append("</urlset>");

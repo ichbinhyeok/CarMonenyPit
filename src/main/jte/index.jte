@@ -11,7 +11,7 @@
     canonical = "https://automoneypit.com/",
     ogTitle = "Fix It or Sell It? Get Your Verdict in 30 Seconds",
     ogDescription = "Got a repair quote? Find out if it makes financial sense to fix your car or sell it.",
-    ogImage = "https://automoneypit.com/static/og-image.png",
+    ogImage = "https://automoneypit.com/og-image.png",
     schemaJson = """
     {
         "@context": "https://schema.org",
@@ -20,7 +20,7 @@
                 "@type": "Organization",
                 "name": "AutoMoneyPit",
                 "url": "https://automoneypit.com",
-                "logo": "https://automoneypit.com/static/og-image.png",
+                "logo": "https://automoneypit.com/og-image.png",
                 "description": "Data-driven car repair decision calculator. Analyze repair costs vs vehicle value to make smart financial decisions.",
                 "sameAs": []
             },

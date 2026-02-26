@@ -15,16 +15,19 @@ import java.util.Map;
 public class FaultController {
 
     private final FaultHubService faultHubService;
+    private final String baseUrl;
 
-    public FaultController(FaultHubService faultHubService) {
+    public FaultController(FaultHubService faultHubService,
+            @org.springframework.beans.factory.annotation.Value("${app.baseUrl:https://automoneypit.com}") String baseUrl) {
         this.faultHubService = faultHubService;
+        this.baseUrl = baseUrl;
     }
 
     @GetMapping("/faults")
     public String faultsIndex(Model model) {
         List<FaultHubViewModel> hubs = faultHubService.getAllHubSummaries();
         model.addAttribute("hubs", hubs);
-        model.addAttribute("canonicalUrl", "/faults");
+        model.addAttribute("canonicalUrl", baseUrl + "/faults");
         model.addAttribute("breadcrumbs", List.of(
                 Map.of("label", "Home", "url", "/"),
                 Map.of("label", "Common Faults", "url", "/faults")));
@@ -38,7 +41,7 @@ public class FaultController {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         model.addAttribute("hub", hub);
-        model.addAttribute("canonicalUrl", "/fault/" + faultSlug);
+        model.addAttribute("canonicalUrl", baseUrl + "/fault/" + faultSlug);
         model.addAttribute("breadcrumbs", List.of(
                 Map.of("label", "Home", "url", "/"),
                 Map.of("label", "Common Faults", "url", "/faults"),

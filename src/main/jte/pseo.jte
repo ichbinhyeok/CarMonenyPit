@@ -426,6 +426,15 @@
             </p>
 
             @if(majorFaults != null && !majorFaults.faults().isEmpty())
+                <div class="tldr-summary" style="background: #eef2ff; border-left: 4px solid #4f46e5; padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
+                    <h3 style="font-size: 1.1rem; font-weight: 800; color: #312e81; margin-top: 0; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                        <span style="font-size: 1.25rem;">⚡</span> AI Diagnostic Summary
+                    </h3>
+                    <p style="font-size: 1rem; color: #3730a3; line-height: 1.6; margin: 0;">
+                        The <strong>${prefillYear} ${prefillBrand} ${prefillModel}</strong> has documented failure patterns, most notably the <strong>${majorFaults.faults().get(0).component()}</strong> averaging around <strong>$${String.format("%,.0f", majorFaults.faults().get(0).repairCost())}</strong> to fix. If your repair quote approaches this threshold, our algorithm highly recommends comparing it against the vehicle's remaining lifespan and market value to avoid sunk-cost traps.
+                    </p>
+                </div>
+
                 <div class="fault-warning-box">
                     <h3 style="color: #991b1b; margin-top: 0; font-size: 1.1rem;">⚠️ Known High-Cost Failures for ${prefillModel}</h3>
                     <p style="font-size: 0.9rem; color: #7f1d1d; margin-bottom: 1rem;">

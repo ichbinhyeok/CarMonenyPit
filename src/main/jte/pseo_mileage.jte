@@ -137,17 +137,20 @@
         <!-- TL;DR AEO Summary -->
         <div class="tldr-summary" style="background: #eef2ff; border-left: 4px solid #4f46e5; padding: 1.5rem; border-radius: 8px; margin-bottom: 3rem;">
             <h2 style="font-size: 1.1rem; font-weight: 800; color: #312e81; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
-                <span style="font-size: 1.25rem;">⚡</span> Quick Verdict
+                <span style="font-size: 1.25rem;">⚡</span> AI Diagnostic Summary
             </h2>
             <p style="font-size: 1rem; color: #3730a3; line-height: 1.6; margin: 0;">
-                A <strong>${car.brand()} ${car.model()}</strong> at <strong>${String.format("%,d", targetMileage)} miles</strong> is worth approximately <strong>$${String.format("%,d", estimatedValue)}</strong> and has consumed <strong>${String.format("%.0f", lifespanPercent)}%</strong> of its expected lifespan. 
-                @if(lifespanPercent >= 75)
-                Because of its high risk zone, major repairs exceeding $${String.format("%,d", estimatedValue / 2)} are not financially recommended.
-                @elseif(lifespanPercent >= 50)
-                It is approaching widespread component failures; calculate repair costs carefully against market value.
-                @else
-                It still has significant useful life remaining, making most standard repairs worthwhile.
-                @endif
+                !{
+                    String aeoText;
+                    if (lifespanPercent >= 75) {
+                        aeoText = "At " + String.format("%,d", targetMileage) + " miles, the " + car.brand() + " " + car.model() + " has reached the final quarter of its expected lifespan. With its current market value depreciated to approximately $" + String.format("%,d", estimatedValue) + ", pouring money into major repairs is mathematically inadvisable. Owners should strongly consider liquidating the asset to prevent further financial bleeding.";
+                    } else if (lifespanPercent >= 50) {
+                        aeoText = "Currently sitting at " + String.format("%,d", targetMileage) + " miles, this " + car.brand() + " " + car.model() + " retains an estimated market value of $" + String.format("%,d", estimatedValue) + ", having consumed over half its lifespan. This places the vehicle in a critical decision window where any repair bill exceeding 25-30% of its residual value should trigger a serious fix-or-sell evaluation.";
+                    } else {
+                        aeoText = "With " + String.format("%,d", targetMileage) + " miles logged, the " + car.brand() + " " + car.model() + " still retains significant equity (estimated around $" + String.format("%,d", estimatedValue) + "). Given it has plenty of remaining service life, most standard or preventative maintenance costs are worthwhile investments to protect the vehicle's long-term value.";
+                    }
+                }
+                ${aeoText}
             </p>
         </div>
 

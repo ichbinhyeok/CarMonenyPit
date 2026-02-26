@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class RootController {
 
-
     @GetMapping("/about")
     public String about() {
         return "pages/about";
@@ -39,10 +38,10 @@ public class RootController {
         return """
                 User-agent: *
                 Allow: /
-                Disallow: /verdict/share # Prevent indexing of temporary personal results
+                Disallow: /verdict?
+                Disallow: /report?
                 Sitemap: https://automoneypit.com/sitemap.xml
                 """;
     }
 
 }
-
