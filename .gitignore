@@ -38,8 +38,23 @@ out/
 
 ### JTE ###
 /jte-classes/
+
+### Logs & Outputs ###
 *.log
+*.log.*.gz
+*_log*.txt
+*_transcript.txt
 build_output*.txt
 test_error.txt
 test_report.txt
+models_temp.json
+faults_temp.json
+*result.html
 leads.csv
+
+### Node / Playwright ###
+node_modules/
+package-lock.json
+playwright-report/
+test-results/
+playwright/.cache/

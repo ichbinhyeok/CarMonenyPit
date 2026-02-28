@@ -1,0 +1,19 @@
+{
+  "name": "carmoneypit-playwright",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Playwright E2E and content-quality suite for CarMoneyPit",
+  "scripts": {
+    "pw:install": "playwright install chromium",
+    "pw:build-jar": "set JAVA_HOME=C:\\Program Files\\Microsoft\\jdk-21.0.10.7-hotspot&& set PATH=C:\\Program Files\\Microsoft\\jdk-21.0.10.7-hotspot\\bin;C:\\Program Files\\nodejs;%PATH%&& gradlew.bat bootJar -x test --no-daemon",
+    "pw:test": "playwright test",
+    "pw:test:headed": "playwright test --headed",
+    "pw:test:managed": "set JAVA_HOME=C:\\Program Files\\Microsoft\\jdk-21.0.10.7-hotspot&& set PATH=C:\\Program Files\\Microsoft\\jdk-21.0.10.7-hotspot\\bin;C:\\Program Files\\nodejs;%PATH%&& gradlew.bat clean bootJar -x test --no-daemon && set PW_USE_WEBSERVER=1&& playwright test",
+    "pw:report": "playwright show-report"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.55.0",
+    "@types/node": "^22.10.2",
+    "typescript": "^5.7.2"
+  }
+}
