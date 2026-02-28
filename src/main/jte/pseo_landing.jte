@@ -615,9 +615,9 @@
         <!-- 4. The Solution (CTA) -->
         <div class="cta-banner" style="background: #1a1a1a; color: #fff; padding: 4rem 2rem; border-radius: 24px; text-align: center; position: relative; overflow: hidden; margin-bottom: 4rem;">
             <div style="position: relative; z-index: 2;">
-                <h2 style="font-weight: 800; margin-bottom: 1rem; line-height: 1.2;">Is your ${car.model()} an Asset or a Liability?</h2>
+                <h2 style="font-weight: 800; margin-bottom: 1rem; line-height: 1.2;">How does this ${car.model()} repair affect your options?</h2>
                 <p style="font-size: 1.1rem; color: #aaa; margin-bottom: 2.5rem; max-width: 600px; margin-left: auto; margin-right: auto; line-height: 1.5;">
-                    Verify how this estimated $${String.format("%,.0f", fault.repairCost())} repair bill impacts your core equity. Consult our partners to confirm actual market viability.
+                    Review how this estimated $${String.format("%,.0f", fault.repairCost())} repair cost compares with current value and ownership goals before deciding your next step.
                 </p>
                 
                 <a id="inlineCta" href="${leadUrlInline}" class="btn-cinematic" style="display: inline-block; text-decoration: none; font-size: 1.1rem; padding: 1.2rem 2.5rem; background: #2563EB; color: #ffffff; border-radius: 12px; font-weight: 700; box-shadow: 0 10px 20px rgba(37, 99, 235, 0.3);">
@@ -724,7 +724,7 @@
             <div style="margin-bottom: 2rem;">
                 <h3 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 0.5rem;">How much does it cost to fix the ${fault.component()} on a ${car.brand()} ${car.model()}?</h3>
                 <p style="color: #555; line-height: 1.6;">
-                    The average cost to fix the <strong>${fault.component()}</strong> on a <strong>${car.brand()} ${car.model()}</strong> is approximately <strong>$${String.format("%,.0f", fault.repairCost())}</strong>. This estimate includes both parts and labor based on national averages.
+                    The estimated cost to fix the <strong>${fault.component()}</strong> on a <strong>${car.brand()} ${car.model()}</strong> is approximately <strong>$${String.format("%,.0f", fault.repairCost())}</strong>. Actual quotes vary by location, labor rates, and parts availability.
                 </p>
             </div>
         </div>

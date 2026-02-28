@@ -9,7 +9,11 @@ const bannedClaims = [
   "signal freshness",
   "freshness to google",
   "get 2-3 offers today",
-  "take the best offer this week"
+  "take the best offer this week",
+  "updated jan 2026",
+  "2026_auto_decision_engine",
+  "asset sustainability verified",
+  "core equity"
 ];
 
 function pickPaths(paths: string[], regex: RegExp, count: number): string[] {

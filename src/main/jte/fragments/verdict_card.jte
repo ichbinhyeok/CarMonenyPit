@@ -10,6 +10,7 @@
 @param String leadDescription
 @param String leadUrl
 @param boolean isValueEstimated = false
+@param String datasetVersion = "2026-02-24"
 
 <div id="verdict-card" class="fade-in">
 
@@ -405,7 +406,7 @@
                                  border: 2px solid rgba(239, 68, 68, 0.3);">
                         
                         <div style="text-align: center; margin-bottom: 1rem;">
-                            <span style="font-size: 0.8rem; opacity: 0.8;">START HERE →</span>
+                            <span style="font-size: 0.8rem; opacity: 0.8;">Next Step →</span>
                         </div>
                         
                         <a href="${leadUrl}" 
@@ -417,7 +418,7 @@
                         </a>
                         
                         <p style="font-size: 0.8rem; text-align: center; opacity: 0.7; margin: 1rem 0 0;">
-                            Free instant offer • No obligation
+                            Compare options before deciding
                         </p>
                         <p style="font-size: 0.7rem; color: rgba(255,255,255,0.8); text-align: center; margin: 0.6rem 0 0;">
                             May include affiliate links | <a href="/privacy" style="color: rgba(255,255,255,0.9);">Disclosure</a>
@@ -437,7 +438,7 @@
                         <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
                             <span style="font-size: 1.5rem;">✓</span>
                             <span style="font-size: 0.9rem; font-weight: 700; opacity: 0.9;">
-                                ASSET SUSTAINABILITY VERIFIED
+                                MODEL-BASED KEEP SIGNAL
                             </span>
                         </div>
                         
@@ -493,7 +494,7 @@
                     </div>
 
                     <div style="padding-top: 0.75rem; border-top: 1px solid #e2e8f0; display: flex; align-items: center; justify-content: space-between;">
-                        <span style="color: #64748b; font-size: 0.65rem;">Updated Jan 2026 • For informational purposes only</span>
+                        <span style="color: #64748b; font-size: 0.65rem;">Dataset: ${datasetVersion} • For informational purposes only</span>
                         <a href="/methodology" style="font-size: 0.7rem; font-weight: 700; color: #6366f1; text-decoration: none;">Full Methodology →</a>
                     </div>
                 </div>
@@ -513,7 +514,7 @@
             </div>
         </div>
         <div style="font-size: 0.8rem; font-weight: 700; color: var(--text-secondary); opacity: 0.6;">
-            [ 2026_AUTO_DECISION_ENGINE ]
+            [ DECISION_ENGINE_${datasetVersion} ]
         </div>
     </footer>
 </div>

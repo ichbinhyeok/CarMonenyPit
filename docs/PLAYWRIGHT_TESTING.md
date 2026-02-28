@@ -38,6 +38,11 @@ This suite is designed to test more than "page loads":
   - Multi-page sitemap sampling (`should-i-fix`, fault verdict, mileage verdict)
   - Trust framing, numeric context, and banned-phrase regression checks
 
+- `05-beta-persona-journeys.spec.ts`
+  - Search-landing persona flow (`should-i-fix` -> lead handoff)
+  - Waitlist form state handling (invalid/valid email redirects)
+  - Mobile viewport overflow checks on homepage and verdict pages
+
 ## Scope note
 This suite validates rendered behavior and published content integrity.
 It does not replace deep business-logic unit tests in `src/test/java`.
