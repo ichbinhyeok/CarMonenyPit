@@ -444,7 +444,7 @@
             <div class="faq-item">
                 <h3>Should I sell my ${car.model()} or keep repairing it?</h3>
                 <p>
-                    You should sell your <strong>${car.model()}</strong> if any single repair exceeds 50% of your vehicle's value (<strong>$${String.format("%,d", estimatedValue / 2)}</strong>), or if your annual repair costs exceed a new car payment (~$400/month). Otherwise, keep repairing it.
+                    Many owners reassess when a single repair approaches a large share of vehicle value (for example, around <strong>$${String.format("%,d", estimatedValue / 2)}</strong>), or when annual repair spend starts to resemble a new-car payment (~$400/month). The final decision depends on condition, mileage, and expected upcoming repairs.
                 </p>
             </div>
         </section>

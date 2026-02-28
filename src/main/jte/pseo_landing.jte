@@ -375,7 +375,7 @@
              </p>
              <p style="font-size: 1.05rem; color: #444; line-height: 1.6;">
                 AutoMoneyPit was founded on a simple premise: vehicle repair decisions should be informed by data-driven logic and financial frameworks, not just emotion.
-                Our data suggests that if a repair costs more than 50% of your vehicle's current estimated market value, or if your total monthly repair average exceeds a new car payment, it may be time to exit.
+                A common heuristic is to take a closer look when a repair approaches a large share of your vehicle's current value (for example, around half), or when ongoing monthly repair burden starts to resemble a new car payment.
                 Always consult with a certified mechanic and financial advisor for personalized advice.
              </p>
         </div>
@@ -621,7 +621,7 @@
                 </p>
                 
                 <a id="inlineCta" href="${leadUrlInline}" class="btn-cinematic" style="display: inline-block; text-decoration: none; font-size: 1.1rem; padding: 1.2rem 2.5rem; background: #2563EB; color: #ffffff; border-radius: 12px; font-weight: 700; box-shadow: 0 10px 20px rgba(37, 99, 235, 0.3);">
-                    Get Expert Assessment <span>→</span>
+                    Compare Next Steps <span>→</span>
                 </a>
                 <p style="font-size: 0.7rem; color: #94a3b8; text-align: center; margin-top: 0.75rem;">
                     May include affiliate links | <a href="/privacy" style="color: #94a3b8;">Disclosure</a>

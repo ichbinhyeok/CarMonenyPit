@@ -459,14 +459,14 @@ public class PSeoController {
         "\"position\": 1," +
         "\"name\": \"Calculate Repair-to-Value Ratio\"," +
         "\"text\": \"Divide the $" + String.format("%,d", Math.round(fault.repairCost()))
-        + " repair cost by your vehicle's current market value. If the ratio exceeds 50%, it's typically not worth repairing.\""
+        + " repair cost by your vehicle's current market value. Many owners treat higher ratios as a caution signal, but this should be weighed with mileage, condition, and expected future repairs.\""
         +
         "}," +
         "{" +
         "\"@type\": \"HowToStep\"," +
         "\"position\": 2," +
         "\"name\": \"Check peer behavior data\"," +
-        "\"text\": \"Our market analysis suggests that for repairs exceeding 50% of vehicle value, financially-optimized owners typically choose to sell.\""
+        "\"text\": \"Our analysis suggests that as repair-to-value ratios rise, more owners consider selling, especially when additional major repairs are likely.\""
         +
         "}," +
         "{" +

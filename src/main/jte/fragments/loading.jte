@@ -24,7 +24,7 @@
     </div>
     
     <div class="text-blue-600 font-medium mb-2">Analyzing Market Data...</div>
-    <div class="text-slate-400 text-sm">Analyzing market data points & repair databases</div>
+    <div class="text-slate-400 text-sm">Analyzing market data and repair cost patterns</div>
 </div>
 
 <style>

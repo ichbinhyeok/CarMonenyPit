@@ -186,7 +186,7 @@ public class FaultHubService {
                                         new FaultHubViewModel.FaqItem("Can I drive with a failing CVT?",
                                                         "It depends on the severity. Minor shuddering may be manageable short-term, but complete loss of power requires immediate attention. Consult a mechanic."),
                                         new FaultHubViewModel.FaqItem("Is it worth fixing a CVT or should I sell?",
-                                                        "Compare the repair cost to your vehicle's current market value. If the repair exceeds 50% of the car's value, selling may be more practical."));
+                                                        "Compare the repair cost to your vehicle's current market value. Many owners use higher repair-to-value ratios as a caution signal, then confirm with full condition and maintenance context."));
                         case "timing-chain" -> List.of(
                                         new FaultHubViewModel.FaqItem("What happens when a timing chain fails?",
                                                         "In interference engines, a broken chain can cause pistons to strike valves, potentially destroying the engine. In non-interference engines, the engine simply stops."),

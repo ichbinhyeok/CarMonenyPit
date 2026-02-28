@@ -13,7 +13,9 @@ const bannedClaims = [
   "updated jan 2026",
   "2026_auto_decision_engine",
   "asset sustainability verified",
-  "core equity"
+  "core equity",
+  "it's typically not worth repairing",
+  "financially-optimized owners typically choose to sell"
 ];
 
 function pickPaths(paths: string[], regex: RegExp, count: number): string[] {

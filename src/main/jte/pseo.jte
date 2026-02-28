@@ -536,9 +536,9 @@
                 <div class="faq-question">Should I fix my ${prefillModel} or buy a new car?</div>
                 <div class="faq-answer">
                     This depends on the repair cost relative to your car's value and your financial situation. 
-                    If repairs exceed 50% of the car's value, or if you're facing multiple major repairs, 
-                    selling often makes more financial sense. Our calculator analyzes your specific situation 
-                    to provide a data-backed recommendation.
+                    Many owners treat higher repair-to-value ratios as a caution signal, especially when multiple 
+                    major repairs are likely. Our calculator analyzes your specific situation to provide a 
+                    data-backed recommendation.
                 </div>
             </div>
             

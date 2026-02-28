@@ -208,7 +208,7 @@
                 <p>Our <a href="/" style="color: var(--primary-color, #3b82f6);">Decision Engine</a> weighs the
                     "Regret of Fixing" against the "Regret of Moving" using your specific vehicle details. Key factors include:</p>
                 <ul>
-                    <li><strong>Repair cost relative to vehicle value</strong> — if the fix costs more than 50% of the car's worth, selling may be more practical</li>
+                    <li><strong>Repair cost relative to vehicle value</strong> — many owners use high repair-to-value ratios as a caution signal, then confirm with full condition and maintenance context</li>
                     <li><strong>Vehicle age and remaining useful life</strong> — newer cars with one major fix often remain cost-effective</li>
                     <li><strong>Other pending maintenance</strong> — cascading failures can shift the equation</li>
                 </ul>
