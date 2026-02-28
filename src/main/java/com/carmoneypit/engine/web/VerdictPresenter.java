@@ -157,7 +157,7 @@ public class VerdictPresenter {
 
     public String getActionPlan(VerdictState state) {
         return switch (state) {
-            case TIME_BOMB -> "Get offers from Peddle, CarMax, or local dealers this week.";
+            case TIME_BOMB -> "Compare offers from online buyers, dealers, and private sale options.";
             case STABLE -> "Approve the repair. Your car should serve you well for years to come.";
             case BORDERLINE -> "Get a second repair quote. If it's lower, fix it. If not, consider selling.";
             default ->

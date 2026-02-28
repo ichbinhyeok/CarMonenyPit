@@ -14,9 +14,10 @@
 @param List<Fault> relatedFaults
 @param List<Breadcrumb> breadcrumbs
 @param String ogImage = null
+@param String datasetVersion = "2026-02-24"
 
 @template.layout(
-    title = car.brand() + " " + car.model() + " " + fault.component() + " Repair ($" + String.format("%,.0f", fault.repairCost()) + "): Fix or Sell? [2026 Data]",
+    title = car.brand() + " " + car.model() + " " + fault.component() + " Repair ($" + String.format("%,.0f", fault.repairCost()) + "): Fix or Sell? [" + datasetVersion + "]",
     description = metaDescription,
     canonical = canonicalUrl,
     schemaJson = schemaJson,
@@ -38,16 +39,8 @@
             @endfor
         </nav>
         
-        <!-- 1. The Hook (Hero) - Spintax Randomization -->
         !{
-            // Simple deterministic randomization based on model name length to keep it consistent per page but varied across pages
-            int spinIndex = (car.model().length() + fault.component().length()) % 3;
-            String[] headlines = {
-                "Should You Fix the <span style=\"background: linear-gradient(120deg, #d91b1b33 0%, #d91b1b33 100%); background-repeat: no-repeat; background-size: 100% 40%; background-position: 0 90%;\">" + fault.component() + "</span><br>on Your " + car.model() + "?",
-                "Is the " + car.model() + " <span style=\"background: linear-gradient(120deg, #d91b1b33 0%, #d91b1b33 100%); background-repeat: no-repeat; background-size: 100% 40%; background-position: 0 90%;\">" + fault.component() + "</span><br>Worth Repairing in 2026?",
-                "<span style=\"background: linear-gradient(120deg, #d91b1b33 0%, #d91b1b33 100%); background-repeat: no-repeat; background-size: 100% 40%; background-position: 0 90%;\">" + fault.component() + "</span> Failure:<br>Fix or Sell Your " + car.model() + "?"
-            };
-            String headline = headlines[spinIndex];
+            String headline = car.brand() + " " + car.model() + " <span style=\"background: linear-gradient(120deg, #d91b1b33 0%, #d91b1b33 100%); background-repeat: no-repeat; background-size: 100% 40%; background-position: 0 90%;\">" + fault.component() + "</span> Repair:<br>Fix or Sell?";
         }
 
         <header style="text-align: center; margin-bottom: 3rem;">
@@ -65,20 +58,20 @@
                 <span style="opacity: 0.5;">|</span>
                 <span>🔍 Methodology: Algorithm-driven</span>
                 <span style="opacity: 0.5;">|</span>
-                <span>🔄 Updated: 2026</span>
+                <span>🔄 Dataset: ${datasetVersion}</span>
             </div>
             
             <div class="repair-card" style="display: inline-flex; flex-direction: column; align-items: center; background: #fff; border: 2px solid #000; padding: 1.5rem 2.5rem; border-radius: 16px; box-shadow: 6px 6px 0px #000;">
                 <span style="font-size: 0.85rem; color: #666; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">Estimated Repair Cost</span>
                 <span style="font-size: 3.5rem; font-weight: 900; color: #000; line-height: 1; margin: 0.5rem 0;">$${String.format("%,.0f", fault.repairCost())}</span>
-                <span style="font-size: 0.65rem; color: #999; font-weight: 600;">(Est. National Avg.)</span>
+                <span style="font-size: 0.65rem; color: #999; font-weight: 600;">(Estimated - Varies by location)</span>
             </div>
         </header>
 
         <!-- TL;DR AEO Summary -->
         <div class="tldr-summary" style="background: #eef2ff; border-left: 4px solid #4f46e5; padding: 1.5rem; border-radius: 8px; margin-bottom: 3rem;">
             <h2 style="font-size: 1.1rem; font-weight: 800; color: #312e81; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
-                <span style="font-size: 1.25rem;">⚡</span> AI Diagnostic Summary
+                <span style="font-size: 1.25rem;">⚡</span> Vehicle Analysis Summary
             </h2>
             !{
                 double ratio = fault.repairCost() / (double) details.market().jan2026AvgPrice();
@@ -112,7 +105,7 @@
         @if(details != null)
         <div class="profile-section" style="background: #fff; border: 1px solid #e5e7eb; border-radius: 24px; padding: 2rem; margin-bottom: 4rem; box-shadow: 0 4px 20px rgba(0,0,0,0.04);">
             <h2 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 2rem; display: flex; align-items: center; gap: 0.5rem;">
-                 📊 ${car.brand()} ${car.model()} Profile (Jan 2026 Data)
+                 📊 ${car.brand()} ${car.model()} Profile (${datasetVersion} Data)
             </h2>
             
             <!-- Stats Row -->
@@ -312,7 +305,7 @@
             </div>
             
             <p style="font-size: 0.9rem; color: #64748b; margin-bottom: 1.5rem; line-height: 1.6;">
-                Based on owner reports and repair data, these are the most common problem areas for the ${car.brand()} ${car.model()} (${car.generation()}).
+                Based on documented failure patterns, these are the most common problem areas for the ${car.brand()} ${car.model()} (${car.generation()}).
             </p>
             
             <div class="trouble-spots-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem;">
@@ -630,6 +623,9 @@
                 <a id="inlineCta" href="${leadUrlInline}" class="btn-cinematic" style="display: inline-block; text-decoration: none; font-size: 1.1rem; padding: 1.2rem 2.5rem; background: #2563EB; color: #ffffff; border-radius: 12px; font-weight: 700; box-shadow: 0 10px 20px rgba(37, 99, 235, 0.3);">
                     Get Expert Assessment <span>→</span>
                 </a>
+                <p style="font-size: 0.7rem; color: #94a3b8; text-align: center; margin-top: 0.75rem;">
+                    May include affiliate links | <a href="/privacy" style="color: #94a3b8;">Disclosure</a>
+                </p>
             </div>
         </div>
         <style>

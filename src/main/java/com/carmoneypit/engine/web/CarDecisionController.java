@@ -10,6 +10,7 @@ import com.carmoneypit.engine.api.OutputModels.VerdictResult;
 import com.carmoneypit.engine.core.DecisionEngine;
 import com.carmoneypit.engine.core.ValuationService;
 import com.carmoneypit.engine.service.CarDataService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,6 +39,9 @@ public class CarDecisionController {
         private final ValuationService valuationService;
         private final CarDataService carDataService;
 
+        @Value("${app.baseUrl:https://automoneypit.com}")
+        private String baseUrl;
+
         public CarDecisionController(DecisionEngine decisionEngine, VerdictPresenter presenter,
                         ValuationService valuationService, CarDataService carDataService) {
                 this.decisionEngine = decisionEngine;
@@ -65,6 +69,7 @@ public class CarDecisionController {
                         model.addAttribute("prefillModel", modelParam);
                         model.addAttribute("prefillQuote", repairQuoteParam);
                 }
+                model.addAttribute("baseUrl", baseUrl);
                 return "index"; // Renders src/main/jte/index.jte
         }
 
@@ -126,7 +131,7 @@ public class CarDecisionController {
                         String seoTitle = String.format("%d %s %s: Fix or Sell? [Free 2026 Calculator]",
                                         year, brandSlug, modelSlug);
                         String seoDescription = String.format(
-                                        "Got a repair quote on your %d %s %s? Our free calculator tells you if fixing is worth it—based on NADA/KBB data. Takes 30 seconds.",
+                                        "Got a repair quote on your %d %s %s? Our free calculator tells you if fixing is worth it, using depreciation models and market data. Takes 30 seconds.",
                                         year, brandSlug, modelSlug);
 
                         model.addAttribute("seoTitle", seoTitle);
@@ -136,6 +141,7 @@ public class CarDecisionController {
                         model.addAttribute("prefillModel", modelSlug);
                         model.addAttribute("isPseoPage", true);
                         model.addAttribute("pseoSlug", slug);
+                        model.addAttribute("canonicalUrl", baseUrl + "/should-i-fix/" + slug);
 
                         return "pseo";
                 } catch (NumberFormatException e) {

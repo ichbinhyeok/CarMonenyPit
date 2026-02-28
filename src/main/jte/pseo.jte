@@ -6,6 +6,7 @@
 @param String prefillModel
 @param Boolean isPseoPage = false
 @param String pseoSlug = ""
+@param String canonicalUrl = null
 @param MajorFaults majorFaults = null
 
 !{var faqSchema = """
@@ -18,7 +19,7 @@
       "name": "How much is my %d %s %s worth?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "The value of a %d %s varies significantly based on mileage and condition. For a %d-year-old vehicle, expect depreciation to have reduced the value by 50-70%% from the original MSRP. Use our calculator for a market-based estimate."
+        "text": "The value of a %d %s varies significantly based on mileage and condition. Depreciation varies significantly by model popularity, condition, and mileage. Use our calculator or check KBB/NADA for a current estimate specific to your trim and condition."
       }
     },
     {
@@ -26,7 +27,7 @@
       "name": "Should I fix my %d %s %s or sell it?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "As a rule of thumb, if a repair costs more than 50%% of your vehicle's current value, it's often financially wiser to sell. Our calculator analyzes your specific repair quote against market value to give you a data-driven verdict."
+        "text": "Whether to fix or sell depends on how the repair cost compares to your vehicle's current value, along with factors like condition, mileage, and local market. Our calculator helps you weigh these factors for your specific situation."
       }
     },
     {
@@ -43,7 +44,7 @@
 @template.layout(
     title = seoTitle,
     description = seoDescription,
-    canonical = "https://automoneypit.com/should-i-fix/" + pseoSlug,
+    canonical = canonicalUrl,
     ogTitle = seoTitle,
     ogDescription = seoDescription,
     schemaJson = faqSchema,
@@ -422,13 +423,13 @@
             
             <p>
                 The ${prefillYear} ${prefillBrand} ${prefillModel} is generally a reliable vehicle, but as it ages, specific mechanical patterns emerge. 
-                Instead of guessing, we use data from actual repair databases.
+                Instead of guessing, we analyze documented failure patterns and repair cost data for this model.
             </p>
 
             @if(majorFaults != null && !majorFaults.faults().isEmpty())
                 <div class="tldr-summary" style="background: #eef2ff; border-left: 4px solid #4f46e5; padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
                     <h3 style="font-size: 1.1rem; font-weight: 800; color: #312e81; margin-top: 0; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
-                        <span style="font-size: 1.25rem;">⚡</span> AI Diagnostic Summary
+                        <span style="font-size: 1.25rem;">⚡</span> Vehicle Analysis Summary
                     </h3>
                     <p style="font-size: 1rem; color: #3730a3; line-height: 1.6; margin: 0;">
                         The <strong>${prefillYear} ${prefillBrand} ${prefillModel}</strong> has documented failure patterns, most notably the <strong>${majorFaults.faults().get(0).component()}</strong> averaging around <strong>$${String.format("%,.0f", majorFaults.faults().get(0).repairCost())}</strong> to fix. If your repair quote approaches this threshold, our algorithm highly recommends comparing it against the vehicle's remaining lifespan and market value to avoid sunk-cost traps.

@@ -1,11 +1,15 @@
 package com.carmoneypit.engine.web;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class RootController {
+
+    @Value("${app.baseUrl:https://automoneypit.com}")
+    private String baseUrl;
 
     @GetMapping("/about")
     public String about() {
@@ -35,13 +39,11 @@ public class RootController {
     @GetMapping(value = "/robots.txt", produces = "text/plain")
     @ResponseBody
     public String robots() {
-        return """
-                User-agent: *
-                Allow: /
-                Disallow: /verdict?
-                Disallow: /report?
-                Sitemap: https://automoneypit.com/sitemap.xml
-                """;
+        return "User-agent: *\n" +
+                "Allow: /\n" +
+                "Disallow: /verdict?\n" +
+                "Disallow: /report?\n" +
+                "Sitemap: " + baseUrl + "/sitemap.xml\n";
     }
 
 }

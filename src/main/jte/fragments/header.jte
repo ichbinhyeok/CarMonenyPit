@@ -83,7 +83,7 @@
 <header class="main-header">
     <div class="header-content">
         <a href="/" class="logo">
-            <span class="logo-icon">PIT</span>
+            <span class="logo-icon">AMP</span>
             <span class="logo-text">AutoMoney<span>Pit</span></span>
         </a>
         <nav class="header-nav">

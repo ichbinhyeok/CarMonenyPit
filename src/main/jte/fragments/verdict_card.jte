@@ -378,8 +378,8 @@
                             <div style="display: flex; gap: 1rem; align-items: flex-start;">
                                 <div style="width: 28px; height: 28px; background: #3b82f6; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.8rem; flex-shrink: 0;">1</div>
                                 <div>
-                                    <div style="font-weight: 700;">Get 2-3 offers today</div>
-                                    <div style="font-size: 0.85rem; color: #64748b;">Peddle, CarMax, and local dealers</div>
+                                    <div style="font-weight: 700;">Compare your options</div>
+                                    <div style="font-size: 0.85rem; color: #64748b;">Online buyers, dealers, and private sale</div>
                                 </div>
                             </div>
                             <div style="display: flex; gap: 1rem; align-items: flex-start;">
@@ -392,7 +392,7 @@
                             <div style="display: flex; gap: 1rem; align-items: flex-start;">
                                 <div style="width: 28px; height: 28px; background: #3b82f6; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.8rem; flex-shrink: 0;">3</div>
                                 <div>
-                                    <div style="font-weight: 700;">Take the best offer this week</div>
+                                    <div style="font-weight: 700;">Compare offers against repair cost</div>
                                     <div style="font-size: 0.85rem; color: #64748b;">Your car loses ~$${Math.round(result.assetBleedAmount() / 180)}/day in value</div>
                                 </div>
                             </div>
@@ -418,6 +418,9 @@
                         
                         <p style="font-size: 0.8rem; text-align: center; opacity: 0.7; margin: 1rem 0 0;">
                             Free instant offer • No obligation
+                        </p>
+                        <p style="font-size: 0.7rem; color: rgba(255,255,255,0.8); text-align: center; margin: 0.6rem 0 0;">
+                            May include affiliate links | <a href="/privacy" style="color: rgba(255,255,255,0.9);">Disclosure</a>
                         </p>
                     </div>
                 </div>
@@ -514,4 +517,3 @@
         </div>
     </footer>
 </div>
-

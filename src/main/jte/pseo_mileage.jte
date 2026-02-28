@@ -19,6 +19,7 @@
 @param String schemaJson
 @param String leadUrlInline
 @param String leadUrlSticky
+@param String datasetVersion = "2026-02-24"
 
 !{
     // Calculate lifespan percentage
@@ -90,7 +91,7 @@
 }
 
 @template.layout(
-    title = car.brand() + " " + car.model() + " at " + String.format("%,d", targetMileage) + " Miles: Worth Keeping? [2026 Analysis]",
+    title = car.brand() + " " + car.model() + " at " + String.format("%,d", targetMileage) + " Miles: Worth Keeping? [" + datasetVersion + "]",
     description = metaDescription,
     canonical = canonicalUrl,
     schemaJson = schemaJson,
@@ -125,7 +126,7 @@
                 <span style="opacity: 0.5;">|</span>
                 <span>🔍 Methodology: Algorithm-driven</span>
                 <span style="opacity: 0.5;">|</span>
-                <span>🔄 Updated: 2026</span>
+                <span>🔄 Dataset: ${datasetVersion}</span>
             </div>
             
             <p class="hero-subtitle">
@@ -137,7 +138,7 @@
         <!-- TL;DR AEO Summary -->
         <div class="tldr-summary" style="background: #eef2ff; border-left: 4px solid #4f46e5; padding: 1.5rem; border-radius: 8px; margin-bottom: 3rem;">
             <h2 style="font-size: 1.1rem; font-weight: 800; color: #312e81; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
-                <span style="font-size: 1.25rem;">⚡</span> AI Diagnostic Summary
+                <span style="font-size: 1.25rem;">⚡</span> Vehicle Analysis Summary
             </h2>
             <p style="font-size: 1rem; color: #3730a3; line-height: 1.6; margin: 0;">
                 !{

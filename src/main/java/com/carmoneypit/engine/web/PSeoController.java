@@ -35,6 +35,9 @@ public class PSeoController {
   @Value("${app.baseUrl:https://automoneypit.com}")
   private String baseUrl;
 
+  @Value("${app.datasetLastmod:2026-02-24}")
+  private String datasetVersion;
+
   public PSeoController(CarDataService dataService,
       DecisionEngine decisionEngine) {
     this.dataService = dataService;
@@ -155,6 +158,7 @@ public class PSeoController {
     modelMap.addAttribute("relatedFaults", relatedFaults);
     modelMap.addAttribute("ogImage", ogImage);
     modelMap.addAttribute("breadcrumbs", breadcrumbs);
+    modelMap.addAttribute("datasetVersion", datasetVersion);
 
     return "pseo_landing";
   }
@@ -286,6 +290,7 @@ public class PSeoController {
     modelMap.addAttribute("schemaJson", schemaJson);
     modelMap.addAttribute("leadUrlInline", leadUrlInline);
     modelMap.addAttribute("leadUrlSticky", leadUrlSticky);
+    modelMap.addAttribute("datasetVersion", datasetVersion);
 
     return "pseo_mileage";
   }

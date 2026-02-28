@@ -6,17 +6,16 @@ import org.springframework.stereotype.Service;
 
 /**
  * Generates market context descriptions for pSEO pages.
- * Replaces fake "freshness" signals with deterministic, educational framing
- * around expected price variability.
+ * Generates educational market context descriptions for pSEO pages.
+ * Provides deterministic, dataset-derived cost ranges and pricing context.
  */
 @Service
 public class MarketContextService {
 
     /**
      * Generates a deterministic market context block.
-     * Replaces previous random volatility metrics with educational text explaining
-     * why prices fluctuate (dealership vs independent shop, condition, regional
-     * differences).
+     * Provides educational text explaining why prices fluctuate
+     * (dealership vs independent shop, condition, regional differences).
      */
     public String generateMarketContext(CarModel car, Fault fault) {
 

@@ -4,41 +4,37 @@
 @param String prefillBrand = null
 @param String prefillModel = null
 @param Long prefillQuote = null
+@param String baseUrl = "https://automoneypit.com"
 
-@template.layout(
-    title = "Fix It or Sell It? | Free Car Repair Decision Calculator",
-    description = "Should you fix your car or sell it? Our free calculator analyzes repair costs vs car value to give you a data-driven verdict in 30 seconds.",
-    canonical = "https://automoneypit.com/",
-    ogTitle = "Fix It or Sell It? Get Your Verdict in 30 Seconds",
-    ogDescription = "Got a repair quote? Find out if it makes financial sense to fix your car or sell it.",
-    ogImage = "https://automoneypit.com/og-image.png",
-    schemaJson = """
+!{
+    String resolvedBaseUrl = (baseUrl == null || baseUrl.isBlank()) ? "https://automoneypit.com" : baseUrl;
+    String schemaGraphJson = """
     {
         "@context": "https://schema.org",
         "@graph": [
             {
                 "@type": "Organization",
                 "name": "AutoMoneyPit",
-                "url": "https://automoneypit.com",
-                "logo": "https://automoneypit.com/og-image.png",
+                "url": "%1$s",
+                "logo": "%1$s/og-image.png",
                 "description": "Data-driven car repair decision calculator. Analyze repair costs vs vehicle value to make smart financial decisions.",
                 "sameAs": []
             },
             {
                 "@type": "WebSite",
                 "name": "AutoMoneyPit",
-                "url": "https://automoneypit.com",
+                "url": "%1$s",
                 "description": "Free car repair decision calculator - should you fix it or sell it?",
                 "potentialAction": {
                     "@type": "SearchAction",
-                    "target": "https://automoneypit.com/models?q={search_term_string}",
+                    "target": "%1$s/models?q={search_term_string}",
                     "query-input": "required name=search_term_string"
                 }
             },
             {
                 "@type": "WebApplication",
                 "name": "AutoMoneyPit Car Repair Calculator",
-                "url": "https://automoneypit.com/",
+                "url": "%1$s/",
                 "description": "Free tool to analyze if your car repair is worth it based on market data and depreciation curves.",
                 "applicationCategory": "FinanceApplication",
                 "operatingSystem": "Web Browser",
@@ -50,7 +46,17 @@
             }
         ]
     }
-    """,
+    """.formatted(resolvedBaseUrl);
+}
+
+@template.layout(
+    title = "Fix It or Sell It? | Free Car Repair Decision Calculator",
+    description = "Should you fix your car or sell it? Our free calculator analyzes repair costs vs car value to give you a data-driven verdict in 30 seconds.",
+    canonical = resolvedBaseUrl + "/",
+    ogTitle = "Fix It or Sell It? Get Your Verdict in 30 Seconds",
+    ogDescription = "Got a repair quote? Find out if it makes financial sense to fix your car or sell it.",
+    ogImage = resolvedBaseUrl + "/og-image.png",
+    schemaJson = schemaGraphJson,
     extraStyles = @`
         <style>
             .hero-section {

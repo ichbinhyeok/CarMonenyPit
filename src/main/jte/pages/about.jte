@@ -13,7 +13,7 @@
                     <h2 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem;">Our Mission</h2>
                     <p style="color: #64748b; line-height: 1.6;">
                         We empower vehicle owners to exit "money pits" before they hemorrhage capital. 
-                        By analyzing thousands of data points from market indices and historical repair outcomes, 
+                        By analyzing depreciation models, component failure data, and historical repair cost records, 
                         we provide the clarity needed to decide between preservation and liquidation.
                     </p>
                 </div>

@@ -143,9 +143,25 @@ public class LeadController {
             @RequestParam(name = "brand", required = false) String brand,
             Model model) {
 
+        String displayBrand = "your vehicle";
+        if (brand != null && !brand.isEmpty()) {
+            displayBrand = brand.replace("+", " ");
+            if (displayBrand.length() > 0) {
+                // Capitalize first letter of each word (simplified to just capitalize the whole string nicely if needed, or just first letter)
+                String[] words = displayBrand.split(" ");
+                StringBuilder sb = new StringBuilder();
+                for (String w : words) {
+                    if (w.length() > 0) {
+                        sb.append(w.substring(0, 1).toUpperCase()).append(w.substring(1).toLowerCase()).append(" ");
+                    }
+                }
+                displayBrand = sb.toString().trim();
+            }
+        }
+        
         model.addAttribute("status", status != null ? status : "");
         model.addAttribute("verdict", verdict != null ? verdict : "UNKNOWN");
-        model.addAttribute("brand", brand != null ? brand.replace("+", " ") : "your vehicle");
+        model.addAttribute("brand", displayBrand);
 
         return "pages/lead_capture";
     }
