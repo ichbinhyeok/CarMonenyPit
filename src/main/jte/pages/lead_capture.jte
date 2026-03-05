@@ -162,7 +162,13 @@
                     </div>
                 @endif
 
-                <form class="form-box" action="/waitlist/submit" method="POST" onsubmit="if(typeof gtag === 'function') gtag('event', 'submit_lead', { event_category: 'lead_capture', event_label: 'waitlist_form' });">
+                <div id="lead-capture-meta"
+                     data-verdict="${verdict}"
+                     data-brand="${brand}"
+                     data-status="${status}"
+                     hidden></div>
+
+                <form class="form-box" action="/waitlist/submit" method="POST" onsubmit="var m=document.getElementById('lead-capture-meta'); window.ampTrack('lead_submit', { event_category: 'conversion', funnel_step: 'lead_submit', page_type: 'lead_capture', verdict_state: m ? (m.dataset.verdict || 'UNKNOWN') : 'UNKNOWN', brand: m ? (m.dataset.brand || '') : '' });">
                     <input type="hidden" name="verdict" value="${verdict}">
                     <input type="hidden" name="brand" value="${brand}">
                     <input type="hidden" name="source" value="lead_capture">
@@ -176,6 +182,23 @@
                         * We never spam. You'll only hear from us when our trusted partner network is ready.
                     </p>
                 </form>
+
+                <script>
+                    (function () {
+                        var meta = document.getElementById("lead-capture-meta");
+                        if (!meta) {
+                            return;
+                        }
+                        window.ampTrack("lead_capture_view", {
+                            event_category: "conversion",
+                            funnel_step: "lead_capture_view",
+                            page_type: "lead_capture",
+                            verdict_state: meta.dataset.verdict || "UNKNOWN",
+                            brand: meta.dataset.brand || "",
+                            status: meta.dataset.status || ""
+                        });
+                    })();
+                </script>
             </div>
         </div>
     `

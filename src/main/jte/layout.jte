@@ -26,6 +26,7 @@
 
         window.__AMP_ANALYTICS_BLOCKED__ = isAutomation || isTaggedTest;
         window.gtag = function () {};
+        window.ampTrack = function () {};
 
         if (window.__AMP_ANALYTICS_BLOCKED__) {
           return;
@@ -33,6 +34,10 @@
 
         window.dataLayer = window.dataLayer || [];
         window.gtag = function(){ dataLayer.push(arguments); };
+        window.ampTrack = function (eventName, payload) {
+          if (!eventName) return;
+          gtag("event", eventName, payload || {});
+        };
 
         var gaScript = document.createElement("script");
         gaScript.async = true;
@@ -223,6 +228,7 @@
                 </div>
                 <div class="footer-links">
                     <a href="/about">About Us</a>
+                    <a href="/guides">Guides</a>
                     <a href="/models">Models</a>
                     <a href="/methodology">Methodology</a>
                     <a href="/contact">Contact</a>
@@ -234,7 +240,7 @@
             <div class="footer-disclosure">
                 <strong>Affiliate Disclosure:</strong> AutoMoneyPit is a participant in various affiliate partnership programs. We may earn a commission when you click through links on our site and complete a lead form, request a quote, or make a purchase. This partnership allows us to maintain our proprietary valuation engine and provide high-precision financial diagnostics free of charge to all vehicle owners. Our verdicts remain data-driven and objective, independent of our affiliate relationships.
                 <br><br>
-                <strong>Disclaimer:</strong> This tool provides estimates based on market data for informational and entertainment purposes only. We are not financial advisors or certified mechanics. Always consult a professional before making financial decisions.
+                <strong>Disclaimer:</strong> This tool provides estimates based on market data for educational and informational purposes only. We are not financial advisors or certified mechanics. Always consult a professional before making financial decisions.
             </div>
         </div>
     </footer>
@@ -243,13 +249,27 @@
     <script>
         document.addEventListener('click', function(e) {
             var cta = e.target.closest('a[href^="/lead"]');
-            if (cta) {
-                gtag('event', 'cta_click', {
-                    'event_category': 'monetization',
-                    'event_label': cta.href,
-                    'transport_type': 'beacon'
-                });
+            if (!cta) {
+                return;
             }
+
+            var parsed = new URL(cta.href, window.location.origin);
+            var params = parsed.searchParams;
+            var pageType = params.get("page_type") || "unknown";
+            var intent = (params.get("intent") || "unknown").toUpperCase();
+            var verdictState = (params.get("verdict_state") || "unknown").toUpperCase();
+            var placement = params.get("placement") || "unknown";
+
+            window.ampTrack('cta_click', {
+                event_category: 'conversion',
+                event_label: parsed.pathname,
+                transport_type: 'beacon',
+                funnel_step: 'cta_click',
+                page_type: pageType,
+                intent: intent,
+                verdict_state: verdictState,
+                placement: placement
+            });
         });
     </script>
 </body>

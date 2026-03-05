@@ -287,7 +287,7 @@
                     </div>
                 </div>
 
-                <form hx-post="/analyze" hx-target="#form-container" hx-swap="outerHTML show:#form-container:top" hx-push-url="false" class="form-grid-modern" onsubmit="if(typeof gtag === 'function') gtag('event', 'calculator_submit', { 'event_category': 'Engagement' });">
+                <form hx-post="/analyze" hx-target="#form-container" hx-swap="outerHTML show:#form-container:top" hx-push-url="false" class="form-grid-modern" onsubmit="window.ampTrack('calculator_submit', { event_category: 'conversion', funnel_step: 'calculator_submit', page_type: 'home_calculator', situation: (document.getElementById('situationInput') || {}).value || 'unknown' });">
                     <input type="hidden" name="situation" id="situationInput" value="quote">
                     
                     <!-- Row 1: Year (First!) -->
@@ -505,6 +505,40 @@
                         <span class="popular-meta">50+ brands, 500+ models</span>
                     </div>
                     <span class="popular-arrow">→</span>
+                </a>
+            </div>
+        </div>
+
+        <div style="max-width: 1000px; margin: 0 auto 7rem; padding: 0 1rem;">
+            <div style="text-align: center; margin-bottom: 2rem;">
+                <h2 style="font-size: 1.7rem; font-weight: 800; color: #0f172a; margin-bottom: 0.6rem;">Decision Guides</h2>
+                <p style="font-size: 1rem; color: #64748b;">Non-brand guides for repair-vs-sell decisions</p>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem;">
+                <a href="/guides/when-to-stop-repairing-your-car" class="popular-link">
+                    <span class="popular-emoji">Guide</span>
+                    <div class="popular-text">
+                        <span class="popular-title">When to stop repairing your car</span>
+                        <span class="popular-meta">Threshold checklist</span>
+                    </div>
+                    <span class="popular-arrow">-></span>
+                </a>
+                <a href="/guides/sunk-cost-fallacy-car-repairs" class="popular-link">
+                    <span class="popular-emoji">Guide</span>
+                    <div class="popular-text">
+                        <span class="popular-title">Sunk cost fallacy in repairs</span>
+                        <span class="popular-meta">Bias-proof framework</span>
+                    </div>
+                    <span class="popular-arrow">-></span>
+                </a>
+                <a href="/guides/car-repair-cost-vs-value" class="popular-link">
+                    <span class="popular-emoji">Guide</span>
+                    <div class="popular-text">
+                        <span class="popular-title">Repair cost vs value</span>
+                        <span class="popular-meta">Ratio-based decisions</span>
+                    </div>
+                    <span class="popular-arrow">-></span>
                 </a>
             </div>
         </div>

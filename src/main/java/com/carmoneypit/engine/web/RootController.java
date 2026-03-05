@@ -36,6 +36,26 @@ public class RootController {
         return "pages/contact";
     }
 
+    @GetMapping("/guides")
+    public String guides() {
+        return "pages/guides/index";
+    }
+
+    @GetMapping("/guides/when-to-stop-repairing-your-car")
+    public String guideWhenToStopRepairing() {
+        return "pages/guides/when_to_stop_repairing";
+    }
+
+    @GetMapping("/guides/sunk-cost-fallacy-car-repairs")
+    public String guideSunkCost() {
+        return "pages/guides/sunk_cost_fallacy";
+    }
+
+    @GetMapping("/guides/car-repair-cost-vs-value")
+    public String guideRepairCostVsValue() {
+        return "pages/guides/repair_cost_vs_value";
+    }
+
     @GetMapping(value = "/robots.txt", produces = "text/plain")
     @ResponseBody
     public String robots() {

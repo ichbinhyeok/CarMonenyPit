@@ -88,6 +88,7 @@
         </a>
         <nav class="header-nav">
             <a href="/models">Models</a>
+            <a href="/guides">Guides</a>
             <a href="/methodology">Methodology</a>
             <a href="/about">About</a>
         </nav>

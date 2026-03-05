@@ -400,6 +400,14 @@
 
         @template.fragments.sticky_bar(result = result, verdictTitle = verdictTitle, verdictExplanation = verdictExplanation, verdictAction = verdictAction, verdictCss = verdictCss, leadLabel = leadLabel, leadDescription = leadDescription, leadUrl = leadUrl, isValueEstimated = isValueEstimated, oob = false)
 
+        <div id="amp-verdict-meta"
+             data-view-mode="${viewMode}"
+             data-verdict-state="${result.verdictState().name()}"
+             data-brand="${input.brand()}"
+             data-model="${input.model()}"
+             data-mileage="${input.mileage()}"
+             hidden></div>
+
         <main class="container">
             <!-- Verdict Dashboard -->
             <section class="bento-card verdict-cell ${verdictCss}">
@@ -672,6 +680,19 @@
 
             // Bootstrap
             StickyBarController.init();
+
+            const verdictMeta = document.getElementById("amp-verdict-meta");
+            if (verdictMeta && verdictMeta.dataset.viewMode === "OWNER") {
+                window.ampTrack("verdict_shown", {
+                    event_category: "conversion",
+                    funnel_step: "verdict_shown",
+                    page_type: "calculator_result",
+                    verdict_state: verdictMeta.dataset.verdictState || "UNKNOWN",
+                    brand: verdictMeta.dataset.brand || "",
+                    model: verdictMeta.dataset.model || "",
+                    mileage: Number(verdictMeta.dataset.mileage || 0)
+                });
+            }
         </script>
     `
 )

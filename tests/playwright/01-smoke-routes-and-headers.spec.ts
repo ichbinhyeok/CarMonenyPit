@@ -1,7 +1,18 @@
 import { test, expect } from "@playwright/test";
 
 test.describe("Smoke: routes and transport headers", () => {
-  const staticPaths = ["/", "/about", "/contact", "/models", "/privacy", "/terms", "/robots.txt", "/sitemap.xml"];
+  const staticPaths = [
+    "/",
+    "/about",
+    "/contact",
+    "/models",
+    "/guides",
+    "/guides/when-to-stop-repairing-your-car",
+    "/privacy",
+    "/terms",
+    "/robots.txt",
+    "/sitemap.xml",
+  ];
 
   for (const path of staticPaths) {
     test(`GET ${path} should be healthy`, async ({ request }) => {

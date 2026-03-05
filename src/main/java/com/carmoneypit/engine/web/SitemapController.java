@@ -40,6 +40,10 @@ public class SitemapController {
         // 1. Static Pages
         addUrl(xmlBuilder, baseUrl + "/", lastMod, "daily", "1.0");
         addUrl(xmlBuilder, baseUrl + "/models", lastMod, "weekly", "0.9");
+        addUrl(xmlBuilder, baseUrl + "/guides", lastMod, "weekly", "0.9");
+        addUrl(xmlBuilder, baseUrl + "/guides/when-to-stop-repairing-your-car", lastMod, "monthly", "0.8");
+        addUrl(xmlBuilder, baseUrl + "/guides/sunk-cost-fallacy-car-repairs", lastMod, "monthly", "0.8");
+        addUrl(xmlBuilder, baseUrl + "/guides/car-repair-cost-vs-value", lastMod, "monthly", "0.8");
 
         // 2. Fault Hub Pages (directory + 5 hubs)
         addUrl(xmlBuilder, baseUrl + "/faults", lastMod, "weekly", "0.9");
