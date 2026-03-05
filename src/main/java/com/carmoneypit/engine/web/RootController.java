@@ -41,6 +41,10 @@ public class RootController {
     public String robots() {
         return "User-agent: *\n" +
                 "Allow: /\n" +
+                "Disallow: /lead\n" +
+                "Disallow: /lead-capture\n" +
+                "Disallow: /waitlist/submit\n" +
+                "Disallow: /report\n" +
                 "Disallow: /verdict?\n" +
                 "Disallow: /report?\n" +
                 "Sitemap: " + baseUrl + "/sitemap.xml\n";

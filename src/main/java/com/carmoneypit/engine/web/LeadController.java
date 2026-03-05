@@ -3,6 +3,7 @@ package com.carmoneypit.engine.web;
 import com.carmoneypit.engine.config.PartnerRoutingConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +24,9 @@ public class LeadController {
 
     private static final Logger csvLogger = LoggerFactory.getLogger("CSV_LEAD_LOGGER");
     private final PartnerRoutingConfig routingConfig;
+
+    @Value("${app.baseUrl:https://automoneypit.com}")
+    private String baseUrl;
 
     public LeadController(PartnerRoutingConfig routingConfig) {
         this.routingConfig = routingConfig;
@@ -45,6 +49,7 @@ public class LeadController {
         response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0");
         response.setHeader("Pragma", "no-cache");
         response.setHeader("Expires", "0");
+        response.setHeader("X-Robots-Tag", "noindex, nofollow");
 
         // 2. Extract Referrer securely
         String referrer = request.getHeader("referer");
@@ -68,11 +73,15 @@ public class LeadController {
         String safeDetail = sanitize(detail);
         String safeReferrer = sanitize(referrerPath);
         String safePlacement = sanitize(placement);
+        boolean filteredTestTraffic = isSyntheticTraffic(safePageType, request);
+        response.setHeader("X-Analytics-Filtered", filteredTestTraffic ? "1" : "0");
 
-        csvLogger.info("{},{},{},{},{},{},{},{},{}",
-                safeEventType, safePageType, safeIntent, safeVerdictState, safeBrand, safeModel, safeDetail,
-                safeReferrer,
-                safePlacement);
+        if (!filteredTestTraffic) {
+            csvLogger.info("{},{},{},{},{},{},{},{},{}",
+                    safeEventType, safePageType, safeIntent, safeVerdictState, safeBrand, safeModel, safeDetail,
+                    safeReferrer,
+                    safePlacement);
+        }
 
         // 4. If approval is pending, redirect to waitlist instead of external partner
         // Target host is guaranteed to be from config, not user input.
@@ -109,17 +118,21 @@ public class LeadController {
             @RequestParam(name = "verdict", required = false, defaultValue = "UNKNOWN") String verdict,
             @RequestParam(name = "brand", required = false, defaultValue = "") String brand,
             @RequestParam(name = "source", required = false, defaultValue = "lead_capture") String source,
+            HttpServletRequest request,
             HttpServletResponse response) {
 
         // Prevent form result caching in browser history/proxy.
         response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0");
         response.setHeader("Pragma", "no-cache");
         response.setHeader("Expires", "0");
+        response.setHeader("X-Robots-Tag", "noindex, nofollow");
 
         String safeVerdict = sanitize(verdict);
         String safeBrand = sanitize(brand);
         String safeSource = sanitize(source);
         String safeEmail = sanitizeEmail(email);
+        boolean filteredTestTraffic = isSyntheticTraffic(safeSource, request);
+        response.setHeader("X-Analytics-Filtered", filteredTestTraffic ? "1" : "0");
 
         if (safeEmail == null) {
             RedirectView invalidView = new RedirectView(buildWaitlistRedirectUrl("invalid_email", safeVerdict, safeBrand));
@@ -127,9 +140,11 @@ public class LeadController {
             return invalidView;
         }
 
-        csvLogger.info("{},{},{},{},{},{},{},{},{}",
-                "submit_lead", safeSource, "waitlist", safeVerdict, safeBrand, "", maskEmail(safeEmail),
-                "/lead-capture", "form");
+        if (!filteredTestTraffic) {
+            csvLogger.info("{},{},{},{},{},{},{},{},{}",
+                    "submit_lead", safeSource, "waitlist", safeVerdict, safeBrand, "", maskEmail(safeEmail),
+                    "/lead-capture", "form");
+        }
 
         RedirectView successView = new RedirectView(buildWaitlistRedirectUrl("success", safeVerdict, safeBrand));
         successView.setStatusCode(HttpStatus.FOUND);
@@ -141,7 +156,10 @@ public class LeadController {
             @RequestParam(name = "status", required = false) String status,
             @RequestParam(name = "verdict", required = false) String verdict,
             @RequestParam(name = "brand", required = false) String brand,
-            Model model) {
+            Model model,
+            HttpServletResponse response) {
+
+        response.setHeader("X-Robots-Tag", "noindex, nofollow");
 
         String displayBrand = "your vehicle";
         if (brand != null && !brand.isEmpty()) {
@@ -162,6 +180,7 @@ public class LeadController {
         model.addAttribute("status", status != null ? status : "");
         model.addAttribute("verdict", verdict != null ? verdict : "UNKNOWN");
         model.addAttribute("brand", displayBrand);
+        model.addAttribute("canonicalUrl", baseUrl + "/lead-capture");
 
         return "pages/lead_capture";
     }
@@ -222,5 +241,33 @@ public class LeadController {
             clean = clean.substring(0, 200);
         }
         return clean;
+    }
+
+    private boolean isSyntheticTraffic(String sourceOrPageType, HttpServletRequest request) {
+        String source = sourceOrPageType == null ? "" : sourceOrPageType.toLowerCase(Locale.ROOT);
+        if ("playwright".equals(source)
+                || "smoke".equals(source)
+                || "e2e".equals(source)
+                || "test".equals(source)
+                || source.startsWith("test_")
+                || source.startsWith("qa_")) {
+            return true;
+        }
+
+        String marker = request.getHeader("X-Test-Traffic");
+        if ("1".equals(marker) || "true".equalsIgnoreCase(marker)) {
+            return true;
+        }
+
+        String userAgent = request.getHeader("User-Agent");
+        if (userAgent == null) {
+            return false;
+        }
+
+        String ua = userAgent.toLowerCase(Locale.ROOT);
+        return ua.contains("playwright")
+                || ua.contains("headlesschrome")
+                || ua.contains("puppeteer")
+                || ua.contains("lighthouse");
     }
 }

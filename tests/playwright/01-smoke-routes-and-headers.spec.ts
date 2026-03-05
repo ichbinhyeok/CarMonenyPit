@@ -23,6 +23,8 @@ test.describe("Smoke: routes and transport headers", () => {
     expect(headers["cache-control"]).toContain("no-store");
     expect(headers["pragma"]).toBe("no-cache");
     expect(headers["expires"]).toBe("0");
+    expect(headers["x-robots-tag"]).toContain("noindex");
+    expect(headers["x-analytics-filtered"]).toBe("1");
     expect(headers["location"] ?? "", "approvalPending=true should route internally").toContain("/lead-capture");
   });
 
@@ -32,6 +34,15 @@ test.describe("Smoke: routes and transport headers", () => {
     const headers = response.headers();
     expect(headers["x-robots-tag"]).toContain("noindex");
     expect(headers["location"], "invalid report tokens should not render a public page").toBeTruthy();
+  });
+
+  test("lead capture page should be noindex", async ({ request }) => {
+    const response = await request.get("/lead-capture?verdict=TIME_BOMB&brand=toyota");
+    expect(response.status()).toBe(200);
+    const headers = response.headers();
+    expect(headers["x-robots-tag"]).toContain("noindex");
+    const body = (await response.text()).toLowerCase();
+    expect(body).toContain('<meta name="robots" content="noindex">');
   });
 
   test("robots and sitemap should look coherent", async ({ request }) => {
@@ -45,6 +56,7 @@ test.describe("Smoke: routes and transport headers", () => {
     const sitemapBody = await sitemap.text();
 
     expect(robotsBody).toContain("sitemap:");
+    expect(robotsBody).toContain("disallow: /lead");
     expect(robotsBody).toContain("disallow: /report?");
     expect(sitemapBody).toContain("<urlset");
     expect((sitemapBody.match(/<url>/g) ?? []).length, "sitemap should not be trivially small").toBeGreaterThan(100);

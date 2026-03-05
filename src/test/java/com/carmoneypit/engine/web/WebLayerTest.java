@@ -16,6 +16,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
@@ -157,5 +158,17 @@ public class WebLayerTest {
                                 .andExpect(status().isOk())
                                 .andExpect(view().name(""))
                                 .andExpect(header().string("HX-Location", containsString("/report?token=")));
+        }
+
+        @Test
+        public void shouldRedirectPseoSlugToCanonicalHyphenatedRoute() throws Exception {
+                given(valuationService.isValidBrand("HONDA")).willReturn(true);
+                given(carDataService.getAllModels()).willReturn(List.of(
+                                new CarDataService.CarModel("honda-crv", "HONDA", "CR-V", "RW", 2018, 2024)));
+                given(carDataService.findFaultsByModelId("honda-crv")).willReturn(Optional.empty());
+
+                mockMvc.perform(get("/should-i-fix/2018-honda-crv"))
+                                .andExpect(status().isMovedPermanently())
+                                .andExpect(redirectedUrl("https://automoneypit.com/should-i-fix/2018-honda-cr-v"));
         }
 }

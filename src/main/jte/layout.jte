@@ -14,14 +14,34 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-1NQYSFWZ7C"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+      (function () {
+        var ua = navigator.userAgent || "";
+        var params = new URLSearchParams(window.location.search);
+        var isAutomation = !!navigator.webdriver ||
+          /HeadlessChrome|Playwright|Puppeteer|Lighthouse/i.test(ua);
+        var isTaggedTest = params.get("traffic") === "test" ||
+          params.get("e2e") === "1" ||
+          params.get("test") === "1";
 
-      gtag('config', 'G-1NQYSFWZ7C');
+        window.__AMP_ANALYTICS_BLOCKED__ = isAutomation || isTaggedTest;
+        window.gtag = function () {};
+
+        if (window.__AMP_ANALYTICS_BLOCKED__) {
+          return;
+        }
+
+        window.dataLayer = window.dataLayer || [];
+        window.gtag = function(){ dataLayer.push(arguments); };
+
+        var gaScript = document.createElement("script");
+        gaScript.async = true;
+        gaScript.src = "https://www.googletagmanager.com/gtag/js?id=G-1NQYSFWZ7C";
+        document.head.appendChild(gaScript);
+
+        gtag("js", new Date());
+        gtag("config", "G-1NQYSFWZ7C", { anonymize_ip: true });
+      })();
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">

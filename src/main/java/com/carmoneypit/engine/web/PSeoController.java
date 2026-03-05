@@ -9,11 +9,13 @@ import com.carmoneypit.engine.service.CarDataService;
 import com.carmoneypit.engine.service.CarDataService.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.servlet.view.RedirectView;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.util.List;
@@ -45,7 +47,7 @@ public class PSeoController {
   }
 
   @GetMapping("/verdict/{brand}/{model}/{faultSlug}")
-  public String showVerdict(
+  public Object showVerdict(
       @PathVariable("brand") String brand,
       @PathVariable("model") String model,
       @PathVariable("faultSlug") String faultSlug,
@@ -70,14 +72,14 @@ public class PSeoController {
       throw new ResourceNotFoundException("No faults found for model");
     }
 
+    String requestedFaultSlug = normalize(faultSlug);
+
     // 3. Find the Specific Fault by Slug
     Optional<Fault> faultOpt = faultsOpt.get().faults().stream()
         .filter(f -> {
-          // Generate the exact slug for this fault, same as in listFaults
-          String slug = f.component().toLowerCase()
-              .replace(" ", "-")
-              .replaceAll("[^a-z0-9-]", "");
-          return slug.equals(faultSlug);
+          String slug = toFaultSlug(f.component());
+          // Accept non-canonical separators in the incoming URL, then redirect.
+          return slug.equals(requestedFaultSlug);
         })
         .findFirst();
 
@@ -86,6 +88,16 @@ public class PSeoController {
       throw new ResourceNotFoundException("Fault not found");
     }
     Fault fault = faultOpt.get();
+    String canonicalBrandSlug = normalize(car.brand());
+    String canonicalModelSlug = normalize(car.model());
+    String canonicalFaultSlug = toFaultSlug(fault.component());
+
+    if (!brand.equals(canonicalBrandSlug)
+        || !model.equals(canonicalModelSlug)
+        || !faultSlug.equals(canonicalFaultSlug)) {
+      return permanentRedirect(
+          baseUrl + "/verdict/" + canonicalBrandSlug + "/" + canonicalModelSlug + "/" + canonicalFaultSlug);
+    }
 
     // 3. Load Reliability & Market Data
     Optional<ModelReliability> reliabilityOpt = dataService.findReliabilityByModelId(car.id());
@@ -101,14 +113,14 @@ public class PSeoController {
     }
 
     // 5. Generate SEO Assets
-    String schemaJson = generateSchema(car, fault, profile, brand, model, faultSlug);
+    String schemaJson = generateSchema(car, fault, profile, canonicalBrandSlug, canonicalModelSlug, canonicalFaultSlug);
 
     String metaDescription = "Experiencing " + fault.symptoms().toLowerCase() + "? Is a $"
         + String.format("%,d", Math.round(fault.repairCost())) + " " + fault.component() +
         " repair worth it on your " + car.brand() + " " + car.model()
         + "? We analyzed market data and depreciation curves to give you a clear financial verdict.";
 
-    String canonicalUrl = baseUrl + "/verdict/" + brand + "/" + model + "/" + faultSlug;
+    String canonicalUrl = baseUrl + "/verdict/" + canonicalBrandSlug + "/" + canonicalModelSlug + "/" + canonicalFaultSlug;
 
     // 6. Generate Social Assets using Central Logic (SSOT)
     long marketValue = profile != null ? profile.market().jan2026AvgPrice() : 0;
@@ -126,10 +138,10 @@ public class PSeoController {
     // Build tracking URLs
     String leadUrlInline = "/lead?page_type=pseo_fault&intent=" + verdictType + "&verdict_state="
         + result.verdictState().name() + "&brand=" + normalize(car.brand())
-        + "&model=" + normalize(car.model()) + "&detail=" + faultSlug + "&placement=inline";
+        + "&model=" + normalize(car.model()) + "&detail=" + canonicalFaultSlug + "&placement=inline";
     String leadUrlSticky = "/lead?page_type=pseo_fault&intent=" + verdictType + "&verdict_state="
         + result.verdictState().name() + "&brand=" + normalize(car.brand())
-        + "&model=" + normalize(car.model()) + "&detail=" + faultSlug + "&placement=sticky";
+        + "&model=" + normalize(car.model()) + "&detail=" + canonicalFaultSlug + "&placement=sticky";
 
     // Related faults for internal linking
     List<Fault> relatedFaults = faultsOpt.get().faults().stream()
@@ -143,9 +155,9 @@ public class PSeoController {
     List<Breadcrumb> breadcrumbs = List.of(
         new Breadcrumb("Home", "/"),
         new Breadcrumb("Models", "/models"),
-        new Breadcrumb(car.brand(), "/models/" + brand),
-        new Breadcrumb(car.model(), "/models/" + brand + "/" + model),
-        new Breadcrumb(faultSlug, "#"));
+        new Breadcrumb(car.brand(), "/models/" + canonicalBrandSlug),
+        new Breadcrumb(car.model(), "/models/" + canonicalBrandSlug + "/" + canonicalModelSlug),
+        new Breadcrumb(canonicalFaultSlug, "#"));
 
     modelMap.addAttribute("car", car);
     modelMap.addAttribute("fault", fault);
@@ -173,36 +185,26 @@ public class PSeoController {
       Model modelMap,
       HttpServletResponse response) {
 
-    // 1. Mileage Bucketing 301 Redirect Logic (Crawl Optimization)
-    List<Integer> allowedBuckets = List.of(50000, 75000, 100000, 125000, 150000, 175000, 200000);
-    if (!allowedBuckets.contains(mileage)) {
-      int closestBucket = allowedBuckets.get(0);
-      int minDiff = Math.abs(mileage - closestBucket);
-      for (int bucket : allowedBuckets) {
-        int diff = Math.abs(mileage - bucket);
-        if (diff < minDiff || (diff == minDiff && bucket > closestBucket)) {
-          minDiff = diff;
-          closestBucket = bucket;
-        }
-      }
-      String redirectUrl = baseUrl + "/verdict/" + normalize(brand) + "/" + normalize(model) + "/" + closestBucket
-          + "-miles";
-      org.springframework.web.servlet.view.RedirectView rv = new org.springframework.web.servlet.view.RedirectView(
-          redirectUrl);
-      rv.setStatusCode(org.springframework.http.HttpStatus.MOVED_PERMANENTLY);
-      return rv;
-    }
-
-    response.setHeader("Cache-Control", "public, max-age=86400");
-    logger.info("Mileage request for {} / {} at {} miles", brand, model, mileage);
-
-    // 1. Find Car Model
+    // 1. Find Car Model (supports loose slug matching), then normalize to canonical path.
     Optional<CarModel> carOpt = dataService.findCarBySlug(brand, model);
     if (carOpt.isEmpty()) {
       logger.warn("Car not found: {} / {}", brand, model);
       throw new ResourceNotFoundException("Car model not found");
     }
     CarModel car = carOpt.get();
+    String canonicalBrandSlug = normalize(car.brand());
+    String canonicalModelSlug = normalize(car.model());
+
+    // 2. Mileage Bucketing + Canonical Slug Redirect (crawl budget + dedup)
+    List<Integer> allowedBuckets = List.of(50000, 75000, 100000, 125000, 150000, 175000, 200000);
+    int canonicalMileage = allowedBuckets.contains(mileage) ? mileage : findClosestBucket(mileage, allowedBuckets);
+    if (!brand.equals(canonicalBrandSlug) || !model.equals(canonicalModelSlug) || mileage != canonicalMileage) {
+      return permanentRedirect(baseUrl + "/verdict/" + canonicalBrandSlug + "/" + canonicalModelSlug + "/"
+          + canonicalMileage + "-miles");
+    }
+
+    response.setHeader("Cache-Control", "public, max-age=86400");
+    logger.info("Mileage request for {} / {} at {} miles", brand, model, mileage);
 
     // 2. Load Reliability & Market Data
     Optional<ModelReliability> reliabilityOpt = dataService.findReliabilityByModelId(car.id());
@@ -219,12 +221,13 @@ public class PSeoController {
     // 3. Build breadcrumbs
     List<Breadcrumb> breadcrumbs = List.of(
         new Breadcrumb("Home", "/"),
-        new Breadcrumb(car.brand(), "/models/" + normalize(car.brand())),
-        new Breadcrumb(car.model(), "/models/" + normalize(car.brand()) + "/" + normalize(car.model())),
+        new Breadcrumb(car.brand(), "/models/" + canonicalBrandSlug),
+        new Breadcrumb(car.model(), "/models/" + canonicalBrandSlug + "/" + canonicalModelSlug),
         new Breadcrumb(String.format("%,d Miles", mileage), "#"));
 
     // 4. Build canonical URL
-    String canonicalUrl = baseUrl + "/verdict/" + normalize(brand) + "/" + normalize(model) + "/" + mileage + "-miles";
+    String canonicalUrl = baseUrl + "/verdict/" + canonicalBrandSlug + "/" + canonicalModelSlug + "/" + mileage
+        + "-miles";
 
     // 5. Meta description
     String metaDescription = String.format(
@@ -270,11 +273,11 @@ public class PSeoController {
     String intent = lifespanPercent >= 50.0 ? "sell" : "repair";
     String verdictState = lifespanPercent >= 50.0 ? "TIME_BOMB" : "STABLE";
     String leadUrlInline = "/lead?page_type=pseo_mileage&intent=" + intent + "&verdict_state=" + verdictState
-        + "&brand="
-        + normalize(car.brand()) + "&model=" + normalize(car.model()) + "&detail=" + mileage + "k&placement=inline";
+        + "&brand=" + canonicalBrandSlug + "&model=" + canonicalModelSlug + "&detail=" + mileage
+        + "k&placement=inline";
     String leadUrlSticky = "/lead?page_type=pseo_mileage&intent=" + intent + "&verdict_state=" + verdictState
-        + "&brand="
-        + normalize(car.brand()) + "&model=" + normalize(car.model()) + "&detail=" + mileage + "k&placement=sticky";
+        + "&brand=" + canonicalBrandSlug + "&model=" + canonicalModelSlug + "&detail=" + mileage
+        + "k&placement=sticky";
 
     // Load faults data
     Optional<MajorFaults> faultsOpt = dataService.findFaultsByModelId(car.id());
@@ -327,32 +330,37 @@ public class PSeoController {
   }
 
   @GetMapping("/models/{brandSlug}")
-  public String listModels(@PathVariable("brandSlug") String brandSlug, Model modelMap, HttpServletResponse response) {
+  public Object listModels(@PathVariable("brandSlug") String brandSlug, Model modelMap, HttpServletResponse response) {
     response.setHeader("Cache-Control", "public, max-age=86400");
     List<CarModel> models = dataService.getModelsByBrand(brandSlug);
 
     if (models.isEmpty()) {
       throw new ResourceNotFoundException("Brand not found");
     }
+    String canonicalBrandSlug = normalize(models.get(0).brand());
+    if (!brandSlug.equals(canonicalBrandSlug)) {
+      return permanentRedirect(baseUrl + "/models/" + canonicalBrandSlug);
+    }
+    String displayBrand = models.get(0).brand();
 
     List<java.util.Map.Entry<String, String>> modelLinks = models.stream()
         .map(c -> java.util.Map.entry(
             c.model(),
-            "/models/" + brandSlug + "/" + normalize(c.model())))
+            "/models/" + canonicalBrandSlug + "/" + normalize(c.model())))
         .distinct()
         .toList();
 
-    modelMap.addAttribute("title", "Models for " + brandSlug.toUpperCase() + " - AutoMoneyPit");
-    modelMap.addAttribute("metaDescription", "Explore specific models from " + brandSlug.toUpperCase()
+    modelMap.addAttribute("title", "Models for " + displayBrand + " - AutoMoneyPit");
+    modelMap.addAttribute("metaDescription", "Explore specific models from " + displayBrand
         + ". Find the most common repairs, costs, and value preservation data.");
-    modelMap.addAttribute("canonicalUrl", baseUrl + "/models/" + brandSlug);
-    modelMap.addAttribute("breadcrumbs", List.of("Models", brandSlug));
+    modelMap.addAttribute("canonicalUrl", baseUrl + "/models/" + canonicalBrandSlug);
+    modelMap.addAttribute("breadcrumbs", List.of("Models", displayBrand));
     modelMap.addAttribute("items", modelLinks);
     return "pages/directory_list";
   }
 
   @GetMapping("/models/{brandSlug}/{modelSlug}")
-  public String listFaults(@PathVariable("brandSlug") String brandSlug, @PathVariable("modelSlug") String modelSlug,
+  public Object listFaults(@PathVariable("brandSlug") String brandSlug, @PathVariable("modelSlug") String modelSlug,
       Model modelMap, HttpServletResponse response) {
     response.setHeader("Cache-Control", "public, max-age=86400");
     Optional<CarModel> carOpt = dataService.findCarBySlug(brandSlug, modelSlug);
@@ -360,6 +368,11 @@ public class PSeoController {
       throw new ResourceNotFoundException("Model not found");
     }
     CarModel car = carOpt.get();
+    String canonicalBrandSlug = normalize(car.brand());
+    String canonicalModelSlug = normalize(car.model());
+    if (!brandSlug.equals(canonicalBrandSlug) || !modelSlug.equals(canonicalModelSlug)) {
+      return permanentRedirect(baseUrl + "/models/" + canonicalBrandSlug + "/" + canonicalModelSlug);
+    }
 
     Optional<MajorFaults> faultsOpt = dataService.findFaultsByModelId(car.id());
 
@@ -367,12 +380,10 @@ public class PSeoController {
     if (faultsOpt.isPresent()) {
       faultLinks = faultsOpt.get().faults().stream()
           .map(f -> {
-            String slug = f.component().toLowerCase()
-                .replace(" ", "-")
-                .replaceAll("[^a-z0-9-]", "");
+            String slug = toFaultSlug(f.component());
             return java.util.Map.entry(
                 "Analyze " + f.component(),
-                "/verdict/" + brandSlug + "/" + modelSlug + "/" + slug);
+                "/verdict/" + canonicalBrandSlug + "/" + canonicalModelSlug + "/" + slug);
           })
           .toList();
     } else {
@@ -380,19 +391,47 @@ public class PSeoController {
       faultLinks = List.of(
           java.util.Map.entry(
               "General Reliability Analysis",
-              "/?vehicleType=" + brandSlug + "&model=" + modelSlug));
+              "/?vehicleType=" + canonicalBrandSlug + "&model=" + canonicalModelSlug));
     }
 
     modelMap.addAttribute("title", "Common Problems: " + car.brand() + " " + car.model() + " - AutoMoneyPit");
     modelMap.addAttribute("metaDescription", "See the most expensive common repairs for the " + car.brand() + " "
         + car.model() + " and decide whether to fix them or sell your vehicle.");
-    modelMap.addAttribute("canonicalUrl", baseUrl + "/models/" + brandSlug + "/" + modelSlug);
-    modelMap.addAttribute("breadcrumbs", List.of("Models", brandSlug, modelSlug));
+    modelMap.addAttribute("canonicalUrl", baseUrl + "/models/" + canonicalBrandSlug + "/" + canonicalModelSlug);
+    modelMap.addAttribute("breadcrumbs", List.of("Models", car.brand(), car.model()));
     modelMap.addAttribute("items", faultLinks);
     return "pages/directory_list";
   }
 
   // --- Helper Methods ---
+
+  private RedirectView permanentRedirect(String absoluteUrl) {
+    RedirectView rv = new RedirectView(absoluteUrl);
+    rv.setStatusCode(HttpStatus.MOVED_PERMANENTLY);
+    return rv;
+  }
+
+  private int findClosestBucket(int mileage, List<Integer> allowedBuckets) {
+    int closestBucket = allowedBuckets.get(0);
+    int minDiff = Math.abs(mileage - closestBucket);
+    for (int bucket : allowedBuckets) {
+      int diff = Math.abs(mileage - bucket);
+      if (diff < minDiff || (diff == minDiff && bucket > closestBucket)) {
+        minDiff = diff;
+        closestBucket = bucket;
+      }
+    }
+    return closestBucket;
+  }
+
+  private String toFaultSlug(String component) {
+    if (component == null) {
+      return "";
+    }
+    return component.toLowerCase()
+        .replace(" ", "-")
+        .replaceAll("[^a-z0-9-]", "");
+  }
 
   private String normalize(String input) {
     if (input == null)

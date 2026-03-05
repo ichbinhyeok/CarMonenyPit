@@ -29,7 +29,7 @@ export default defineConfig({
     ? {
         command:
           process.platform === "win32"
-            ? `cmd /c "set JAVA_HOME=C:\\Program Files\\Microsoft\\jdk-21.0.10.7-hotspot&& set PATH=C:\\Program Files\\Microsoft\\jdk-21.0.10.7-hotspot\\bin;%PATH%&& java -jar build\\libs\\app.jar --server.port=${managedPort}"`
+            ? `cmd /c "java -jar build\\libs\\app.jar --server.port=${managedPort}"`
             : `java -jar build/libs/app.jar --server.port=${managedPort}`,
         url: managedBaseUrl,
         timeout: 240_000,

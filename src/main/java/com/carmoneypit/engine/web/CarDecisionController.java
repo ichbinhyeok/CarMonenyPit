@@ -22,7 +22,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.web.servlet.view.RedirectView;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -84,7 +86,7 @@ public class CarDecisionController {
         // Format: /should-i-fix/{year}-{brand}-{model}
         // Example: /should-i-fix/2018-toyota-camry
         @GetMapping("/should-i-fix/{slug}")
-        public String pSeoLanding(@PathVariable("slug") String slug, Model model) {
+        public Object pSeoLanding(@PathVariable("slug") String slug, Model model) {
                 // Parse slug: "2018-toyota-camry" -> year=2018, brand=TOYOTA, model=Camry
                 String[] parts = slug.split("-", 3);
                 if (parts.length < 2) {
@@ -95,6 +97,7 @@ public class CarDecisionController {
                         int year = Integer.parseInt(parts[0]);
                         String brandSlug = parts[1].toUpperCase().replace(" ", "_");
                         String modelSlug = parts.length > 2 ? formatModelName(parts[2]) : "";
+                        String canonicalSlug = null;
 
                         // Validate brand exists in loaded data
                         if (!valuationService.isValidBrand(brandSlug)) {
@@ -109,9 +112,10 @@ public class CarDecisionController {
                         // We iterate to find a model that matches the slug using fuzzy matching
                         // (normalization)
                         String normalizedSlugModel = modelSlug.toLowerCase().replaceAll("[^a-z0-9]", "");
+                        final String lookupBrand = brandSlug;
 
                         var carModelOpt = carDataService.getAllModels().stream()
-                                        .filter(m -> m.brand().equalsIgnoreCase(brandSlug))
+                                        .filter(m -> m.brand().equalsIgnoreCase(lookupBrand))
                                         .filter(m -> m.model().toLowerCase().replaceAll("[^a-z0-9]", "")
                                                         .equals(normalizedSlugModel))
                                         .findFirst();
@@ -119,7 +123,16 @@ public class CarDecisionController {
                         if (carModelOpt.isPresent()) {
                                 var carModel = carModelOpt.get();
                                 // If we found a model, use its official display name instead of the slug
+                                brandSlug = carModel.brand();
                                 modelSlug = carModel.model();
+                                canonicalSlug = year + "-" + normalizeSlugSegment(carModel.brand()) + "-"
+                                                + normalizeSlugSegment(carModel.model());
+
+                                if (!slug.equals(canonicalSlug)) {
+                                        RedirectView rv = new RedirectView(baseUrl + "/should-i-fix/" + canonicalSlug);
+                                        rv.setStatusCode(HttpStatus.MOVED_PERMANENTLY);
+                                        return rv;
+                                }
 
                                 // Fetch specific faults
                                 var faultsOpt = carDataService.findFaultsByModelId(carModel.id());
@@ -140,8 +153,8 @@ public class CarDecisionController {
                         model.addAttribute("prefillBrand", brandSlug);
                         model.addAttribute("prefillModel", modelSlug);
                         model.addAttribute("isPseoPage", true);
-                        model.addAttribute("pseoSlug", slug);
-                        model.addAttribute("canonicalUrl", baseUrl + "/should-i-fix/" + slug);
+                        model.addAttribute("pseoSlug", canonicalSlug != null ? canonicalSlug : slug);
+                        model.addAttribute("canonicalUrl", baseUrl + "/should-i-fix/" + (canonicalSlug != null ? canonicalSlug : slug));
 
                         return "pseo";
                 } catch (NumberFormatException e) {
@@ -154,6 +167,15 @@ public class CarDecisionController {
                 if (slug == null || slug.isEmpty())
                         return "";
                 return slug.substring(0, 1).toUpperCase() + slug.substring(1).replace("-", " ");
+        }
+
+        private String normalizeSlugSegment(String input) {
+                if (input == null) {
+                        return "";
+                }
+                return input.toLowerCase()
+                                .replaceAll("[^a-z0-9]+", "-")
+                                .replaceAll("^-|-$", "");
         }
 
         @GetMapping(value = "/favicon.ico", produces = "image/x-icon")

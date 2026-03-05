@@ -1,9 +1,12 @@
 @param String verdict
 @param String brand
 @param String status = ""
+@param String canonicalUrl = null
 
 @template.layout(
     title = "Next Steps for " + brand, 
+    canonical = canonicalUrl,
+    noindex = true,
     extraStyles = @`
         <style>
             .lead-layout {
