@@ -203,3 +203,125 @@ The main question to answer each week is:
 - historical CSV rows from before taxonomy cleanup are noisy
 - GA4 can undercount if scripts are blocked
 - partner-side approval data is still outside this internal tracking spec
+
+## 13. Audit Summary (2026-03-20)
+This section records what was wrong during the March 20, 2026 tracking audit, what was fixed, and what must be checked next.
+
+### A. What Was Wrong
+- waitlist attribution broke across the redirect
+  - `/lead` knew the source page context
+  - `/lead-capture` and `/waitlist/submit` did not reliably preserve all of it
+- legacy waitlist URLs were still query-based
+  - example: `/lead-capture?verdict=TIME_BOMB&brand=toyota`
+  - this created unnecessary crawlable variants and made tracking/debugging noisier
+- session IDs could leak into URLs as `;jsessionid=...`
+  - this is bad for clean URL hygiene and bad for SEO
+- intent taxonomy was inconsistent
+  - values like `FIX`, `repair`, `sell`, and `analyze` were mixed across surfaces
+- event naming and CSV interpretation were inconsistent in docs
+  - `lead_submit` vs `submit_lead`
+  - old notes still described an outdated CSV meaning
+- mileage CTA detail values were not clean enough for analysis
+  - examples like `100000k` were less useful than canonical detail values
+
+### B. What Was Fixed
+- waitlist routing now normalizes to clean `/lead-capture`
+- attribution context is preserved in session across:
+  - `/lead`
+  - `/lead-capture`
+  - `/waitlist/submit`
+- legacy query-style waitlist URLs are folded back to clean `/lead-capture`
+- session tracking is forced to cookies so `;jsessionid=...` does not pollute URLs
+- canonical intent taxonomy is now:
+  - `SELL`
+  - `REPAIR`
+  - `WARRANTY`
+  - `VALUE`
+  - `WAITLIST`
+- mileage detail tracking now uses canonical detail values like `150000-miles`
+- tracking docs were rewritten to match implementation
+
+### C. What This Means
+- source attribution is now readable again
+- future `lead_submit` rows are more trustworthy than historical rows
+- tracking quality is no longer the main blocker
+- the main blocker has moved to:
+  - CTR
+  - page-level click quality
+  - eventual partner-side monetization
+
+## 14. What To Check In The Next Review
+At the next review, do not start by asking whether tracking exists. Start by validating whether tracking is still clean.
+
+### A. Routing Integrity
+Check that these are still true:
+- `/lead` returns a `302`
+- `/lead` routes to clean `/lead-capture` when `approvalPending=true`
+- `/lead-capture?...` variants redirect to clean `/lead-capture`
+- no `;jsessionid=...` appears in public URLs
+
+### B. Attribution Integrity
+Check recent CSV rows and confirm these fields are populated:
+- `page_type`
+- `intent`
+- `verdict`
+- `brand`
+- `model`
+- `detail`
+- `placement`
+
+If these are blank or noisy again, attribution regressed.
+
+### C. Funnel Integrity
+Compare:
+- `cta_click`
+- `lead_capture_view`
+- `lead_submit`
+
+Questions to answer:
+- are users reaching the waitlist page after the CTA click?
+- are waitlist submits attributable to a real page type and intent?
+- which page types convert best?
+
+### D. SEO / Tracking Boundary
+Because the main SEO issue has shifted from indexation to CTR, the next review should check:
+- which tracked pages are getting impressions but not clicks
+- which tracked pages are getting clicks but not `lead_submit`
+- whether the best traffic is coming from:
+  - `/verdict/`
+  - `/should-i-fix/`
+  - `/models/`
+  - `/guides/`
+
+### E. Revenue Readiness
+If partners are still not live:
+- do not treat `lead_submit` as revenue
+- treat it as a proxy conversion only
+
+If partners are live:
+- add partner-side `approved_action` measurement to the review
+
+## 15. Next-Review Checklist
+Use this exact checklist on the next checkpoint.
+
+1. Confirm current date range being reviewed.
+2. Confirm whether `approvalPending` is still `true` or `false`.
+3. Confirm `/lead` and `/lead-capture` clean URL behavior.
+4. Inspect the last 20 CSV lead rows for attribution completeness.
+5. Review `cta_click -> lead_capture_view -> lead_submit` ratios.
+6. Review top pages by impressions and identify zero-click pages.
+7. Review top pages by clicks and identify zero-submit pages.
+8. Decide whether the bottleneck is:
+   - snippet / CTR
+   - waitlist friction
+   - weak traffic quality
+   - partner-side monetization
+
+## 16. Current Conclusion For This Audit
+As of March 20, 2026:
+
+- tracking structure: fixed
+- tracking docs: updated
+- attribution continuity: fixed
+- waitlist URL hygiene: fixed
+- remaining growth problem: not tracking, but CTR and monetization readiness
