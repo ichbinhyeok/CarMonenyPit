@@ -27,8 +27,8 @@
             <maxHistory>365</maxHistory>
         </rollingPolicy>
         <encoder>
-            <!-- Formats: timestamp(UTC default via XXX if configured but GMT is safer),%msg -->
-            <!-- Note: %msg will contain "event_type,page_type,verdict_type,brand,model,detail,referrer_path,placement" -->
+            <!-- Formats: timestamp in Asia/Seoul,%msg -->
+            <!-- Note: %msg contains "event_type,page_type,intent,verdict,brand,model,detail,referrer_path,placement" -->
             <pattern>%d{yyyy-MM-dd'T'HH:mm:ssXXX, Asia/Seoul},%msg%n</pattern>
         </encoder>
     </appender>

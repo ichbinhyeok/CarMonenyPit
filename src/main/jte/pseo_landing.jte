@@ -17,7 +17,7 @@
 @param String datasetVersion = "2026-02-24"
 
 @template.layout(
-    title = car.brand() + " " + car.model() + " " + fault.component() + " Repair ($" + String.format("%,.0f", fault.repairCost()) + "): Fix or Sell? [" + datasetVersion + "]",
+    title = car.brand() + " " + car.model() + " " + fault.component() + " Repair Cost: Fix or Sell?",
     description = metaDescription,
     canonical = canonicalUrl,
     schemaJson = schemaJson,

@@ -115,10 +115,9 @@ public class PSeoController {
     // 5. Generate SEO Assets
     String schemaJson = generateSchema(car, fault, profile, canonicalBrandSlug, canonicalModelSlug, canonicalFaultSlug);
 
-    String metaDescription = "Experiencing " + fault.symptoms().toLowerCase() + "? Is a $"
-        + String.format("%,d", Math.round(fault.repairCost())) + " " + fault.component() +
-        " repair worth it on your " + car.brand() + " " + car.model()
-        + "? We analyzed market data and depreciation curves to give you a clear financial verdict.";
+    String metaDescription = "See " + car.brand() + " " + car.model() + " " + fault.component()
+        + " repair cost, common failure mileage, and whether it makes more sense to fix or sell before approving a $"
+        + String.format("%,d", Math.round(fault.repairCost())) + " repair.";
 
     String canonicalUrl = baseUrl + "/verdict/" + canonicalBrandSlug + "/" + canonicalModelSlug + "/" + canonicalFaultSlug;
 
@@ -133,7 +132,7 @@ public class PSeoController {
 
     VerdictResult result = decisionEngine.evaluate(input);
     boolean isSell = result.verdictState() == VerdictState.TIME_BOMB;
-    String verdictType = isSell ? "SELL" : "FIX";
+    String verdictType = isSell ? "SELL" : "REPAIR";
 
     // Build tracking URLs
     String leadUrlInline = "/lead?page_type=pseo_fault&intent=" + verdictType + "&verdict_state="
@@ -231,8 +230,8 @@ public class PSeoController {
 
     // 5. Meta description
     String metaDescription = String.format(
-        "Is your %s %s worth keeping at %,d miles? Expert analysis, expected repairs, and data-driven recommendations for %d-%d owners.",
-        car.brand(), car.model(), mileage, car.startYear(), car.endYear());
+        "How many miles can a %s %s last? See expected lifespan, remaining life at %,d miles, market value, and whether keeping it still makes financial sense.",
+        car.brand(), car.model(), mileage);
 
     // 6. Schema JSON (FAQPage)
     String schemaJson = String.format("""
@@ -270,14 +269,15 @@ public class PSeoController {
 
     // Build Tracking URLs
     double lifespanPercent = Math.min(100.0, (double) mileage / reliability.lifespanMiles() * 100);
-    String intent = lifespanPercent >= 50.0 ? "sell" : "repair";
+    String intent = lifespanPercent >= 50.0 ? "SELL" : "REPAIR";
     String verdictState = lifespanPercent >= 50.0 ? "TIME_BOMB" : "STABLE";
+    String detailSlug = canonicalMileage + "-miles";
     String leadUrlInline = "/lead?page_type=pseo_mileage&intent=" + intent + "&verdict_state=" + verdictState
-        + "&brand=" + canonicalBrandSlug + "&model=" + canonicalModelSlug + "&detail=" + mileage
-        + "k&placement=inline";
+        + "&brand=" + canonicalBrandSlug + "&model=" + canonicalModelSlug + "&detail=" + detailSlug
+        + "&placement=inline";
     String leadUrlSticky = "/lead?page_type=pseo_mileage&intent=" + intent + "&verdict_state=" + verdictState
-        + "&brand=" + canonicalBrandSlug + "&model=" + canonicalModelSlug + "&detail=" + mileage
-        + "k&placement=sticky";
+        + "&brand=" + canonicalBrandSlug + "&model=" + canonicalModelSlug + "&detail=" + detailSlug
+        + "&placement=sticky";
 
     // Load faults data
     Optional<MajorFaults> faultsOpt = dataService.findFaultsByModelId(car.id());

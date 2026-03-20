@@ -91,7 +91,7 @@
 }
 
 @template.layout(
-    title = car.brand() + " " + car.model() + " at " + String.format("%,d", targetMileage) + " Miles: Worth Keeping? [" + datasetVersion + "]",
+    title = "How Many Miles Can a " + car.brand() + " " + car.model() + " Last? " + String.format("%,d", targetMileage) + "-Mile Guide",
     description = metaDescription,
     canonical = canonicalUrl,
     schemaJson = schemaJson,

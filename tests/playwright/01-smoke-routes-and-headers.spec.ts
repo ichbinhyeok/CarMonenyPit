@@ -36,7 +36,7 @@ test.describe("Smoke: routes and transport headers", () => {
     expect(headers["expires"]).toBe("0");
     expect(headers["x-robots-tag"]).toContain("noindex");
     expect(headers["x-analytics-filtered"]).toBe("1");
-    expect(headers["location"] ?? "", "approvalPending=true should route internally").toContain("/lead-capture");
+    expect(headers["location"], "approvalPending=true should route internally").toBe("/lead-capture");
   });
 
   test("invalid report token should be redirect + noindex", async ({ request }) => {
@@ -48,12 +48,22 @@ test.describe("Smoke: routes and transport headers", () => {
   });
 
   test("lead capture page should be noindex", async ({ request }) => {
-    const response = await request.get("/lead-capture?verdict=TIME_BOMB&brand=toyota");
+    const response = await request.get("/lead-capture");
     expect(response.status()).toBe(200);
     const headers = response.headers();
     expect(headers["x-robots-tag"]).toContain("noindex");
     const body = (await response.text()).toLowerCase();
-    expect(body).toContain('<meta name="robots" content="noindex">');
+    expect(body).toContain('<meta name="robots" content="noindex, nofollow">');
+  });
+
+  test("legacy lead capture query variants should fold into clean canonical path", async ({ request }) => {
+    const response = await request.get("/lead-capture?verdict=TIME_BOMB&brand=toyota&model=camry", {
+      maxRedirects: 0
+    });
+    expect(response.status()).toBe(302);
+    const headers = response.headers();
+    expect(headers["x-robots-tag"]).toContain("noindex");
+    expect(headers["location"]).toBe("/lead-capture");
   });
 
   test("robots and sitemap should look coherent", async ({ request }) => {

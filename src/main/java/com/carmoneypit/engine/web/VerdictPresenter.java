@@ -230,17 +230,17 @@ public class VerdictPresenter {
 
         switch (state) {
             case TIME_BOMB:
-                intent = "sell";
+                intent = "SELL";
                 break;
             case STABLE:
                 if (isHighMileage)
-                    intent = "warranty";
+                    intent = "WARRANTY";
                 else
-                    intent = "repair";
+                    intent = "REPAIR";
                 break;
             case BORDERLINE:
             default:
-                intent = "value";
+                intent = "VALUE";
                 break;
         }
 

@@ -42,32 +42,28 @@ test.describe("Beta persona journeys", () => {
     }
   });
 
-  test("waitlist submission flow handles invalid and valid email states", async ({ request }) => {
-    const invalid = await request.post("/waitlist/submit", {
-      form: {
-        email: "invalid-email-format",
-        verdict: "TIME_BOMB",
-        brand: "toyota",
-        source: "playwright"
-      },
-      maxRedirects: 0
-    });
-    expect(invalid.status()).toBe(302);
-    const invalidLocation = invalid.headers()["location"] ?? "";
-    expect(invalidLocation).toContain("status=invalid_email");
+  test("waitlist submission flow handles invalid and valid email states", async ({ page }) => {
+    await page.goto(
+      "/lead-capture?verdict=TIME_BOMB&brand=toyota&model=camry&pageType=pseo_fault&detail=torque-converter&placement=inline&intent=SELL"
+    );
+    await expect(page).toHaveURL(/\/lead-capture$/);
+    await expect(page.locator('input[name="brand"][value="toyota"]')).toHaveCount(1);
+    await expect(page.locator('input[name="model"][value="camry"]')).toHaveCount(1);
 
-    const valid = await request.post("/waitlist/submit", {
-      form: {
-        email: `playwright-${Date.now()}@example.com`,
-        verdict: "TIME_BOMB",
-        brand: "toyota",
-        source: "playwright"
-      },
-      maxRedirects: 0
+    await page.locator('form[action="/waitlist/submit"]').evaluate((form: HTMLFormElement) => {
+      form.noValidate = true;
     });
-    expect(valid.status()).toBe(302);
-    const validLocation = valid.headers()["location"] ?? "";
-    expect(validLocation).toContain("status=success");
+
+    await page.locator("#email").fill("playwright@example.c");
+    await page.locator('button[type="submit"]').click();
+    await expect(page).toHaveURL(/\/lead-capture$/);
+    await expect(page.getByText("Please enter a valid email address.")).toBeVisible();
+    await expect(page.locator('input[name="detail"][value="torque-converter"]')).toHaveCount(1);
+
+    await page.locator("#email").fill(`playwright-${Date.now()}@example.com`);
+    await page.locator('button[type="submit"]').click();
+    await expect(page).toHaveURL(/\/lead-capture$/);
+    await expect(page.getByText("You're on the list. We will contact you when partner access is live.")).toBeVisible();
   });
 
   test("mobile user can consume homepage and verdict without horizontal overflow", async ({ browser, request }) => {

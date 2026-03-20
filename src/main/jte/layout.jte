@@ -68,7 +68,7 @@
     </script>
     @endif
     @if(noindex)
-    <meta name="robots" content="noindex">
+    <meta name="robots" content="noindex, nofollow">
     @endif
     
     @if(ogTitle != null)

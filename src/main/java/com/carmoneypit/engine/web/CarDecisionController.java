@@ -141,10 +141,10 @@ public class CarDecisionController {
                                 }
                         }
                         // SEO Meta - Optimized for CTR
-                        String seoTitle = String.format("%d %s %s: Fix or Sell? [Free 2026 Calculator]",
+                        String seoTitle = String.format("Should You Fix a %d %s %s or Sell It?",
                                         year, brandSlug, modelSlug);
                         String seoDescription = String.format(
-                                        "Got a repair quote on your %d %s %s? Our free calculator tells you if fixing is worth it, using depreciation models and market data. Takes 30 seconds.",
+                                        "Compare repair cost, depreciation, resale value, and known trouble spots before you fix or sell your %d %s %s. Free 30-second calculator.",
                                         year, brandSlug, modelSlug);
 
                         model.addAttribute("seoTitle", seoTitle);

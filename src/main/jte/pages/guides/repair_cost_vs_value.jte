@@ -1,6 +1,6 @@
 @template.layout(
-    title = "Repair Cost vs Car Value: Decision Framework | AutoMoneyPit",
-    description = "Compare quote size and current vehicle value with a clear framework for repair-or-sell decisions.",
+    title = "Repair Cost vs Car Value: Should You Fix or Sell? | AutoMoneyPit",
+    description = "Compare repair quote size and current vehicle value with a clear repair-or-sell decision framework.",
     canonical = "https://automoneypit.com/guides/car-repair-cost-vs-value",
     content = @`
         <article style="max-width: 860px; margin: 3rem auto; padding: 0 1rem;">

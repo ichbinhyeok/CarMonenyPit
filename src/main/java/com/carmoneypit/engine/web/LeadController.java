@@ -13,16 +13,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 
 @Controller
 public class LeadController {
 
     private static final Logger csvLogger = LoggerFactory.getLogger("CSV_LEAD_LOGGER");
+    private static final String WAITLIST_CONTEXT_SESSION_KEY = "leadCaptureContext";
+    private static final String WAITLIST_STATUS_SESSION_KEY = "leadCaptureStatus";
     private final PartnerRoutingConfig routingConfig;
 
     @Value("${app.baseUrl:https://automoneypit.com}")
@@ -43,15 +44,12 @@ public class LeadController {
             @RequestParam(required = false, defaultValue = "") String detail,
             @RequestParam(required = false, defaultValue = "") String placement,
             HttpServletRequest request,
-            HttpServletResponse response) {
+            HttpServletResponse response,
+            HttpSession session) {
 
-        // 1. Set NO-STORE for prevent caching redirects
-        response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0");
-        response.setHeader("Pragma", "no-cache");
-        response.setHeader("Expires", "0");
-        response.setHeader("X-Robots-Tag", "noindex, nofollow");
+        applyNoindexHeaders(response);
 
-        // 2. Extract Referrer securely
+        // 1. Extract referrer securely for attribution.
         String referrer = request.getHeader("referer");
         String referrerPath = "";
         if (referrer != null && !referrer.isEmpty()) {
@@ -63,50 +61,62 @@ public class LeadController {
             }
         }
 
-        // 3. Log securely to CSV format
+        // 2. Sanitize incoming tracking context.
         String safeEventType = sanitize(event_type);
         String safePageType = sanitize(page_type);
-        String safeIntent = sanitize(intent);
+        String safeIntent = normalizeIntent(intent);
         String safeVerdictState = sanitize(verdict_state);
         String safeBrand = sanitize(brand);
         String safeModel = sanitize(model);
         String safeDetail = sanitize(detail);
         String safeReferrer = sanitize(referrerPath);
         String safePlacement = sanitize(placement);
+        LeadCaptureContext context = new LeadCaptureContext(
+                safeVerdictState,
+                safeBrand,
+                safeModel,
+                safePageType,
+                safeDetail,
+                safePlacement,
+                safeIntent,
+                safeReferrer);
+
         boolean filteredTestTraffic = isSyntheticTraffic(safePageType, request);
         response.setHeader("X-Analytics-Filtered", filteredTestTraffic ? "1" : "0");
 
         if (!filteredTestTraffic) {
             csvLogger.info("{},{},{},{},{},{},{},{},{}",
-                    safeEventType, safePageType, safeIntent, safeVerdictState, safeBrand, safeModel, safeDetail,
-                    safeReferrer,
-                    safePlacement);
+                    safeEventType,
+                    context.pageType(),
+                    context.intent(),
+                    context.verdict(),
+                    context.brand(),
+                    context.model(),
+                    context.detail(),
+                    context.referrerPath(),
+                    context.placement());
         }
 
-        // 4. If approval is pending, redirect to waitlist instead of external partner
-        // Target host is guaranteed to be from config, not user input.
+        // 3. If approval is pending, store attribution context in the session and
+        // redirect to a clean waitlist URL without query params.
         if (routingConfig.isApprovalPending()) {
-            String encodedVerdict = URLEncoder.encode(safeVerdictState, StandardCharsets.UTF_8);
-            String encodedBrand = URLEncoder.encode(safeBrand, StandardCharsets.UTF_8);
-            RedirectView waitlistView = new RedirectView(
-                    routingConfig.getWaitlistUrl() + "?verdict=" + encodedVerdict + "&brand=" + encodedBrand);
-            waitlistView.setStatusCode(HttpStatus.FOUND);
-            return waitlistView;
+            storeWaitlistState(session, "", context);
+            return buildRedirect(routingConfig.getWaitlistUrl());
         }
 
-        // 5. Determine partner redirect URL based on intent
+        // 4. Determine partner redirect URL based on normalized intent.
         String partnerUrl;
-        if ("SELL".equalsIgnoreCase(safeIntent)) {
+        if ("SELL".equalsIgnoreCase(context.intent())) {
             partnerUrl = routingConfig.getSellPartnerUrl();
-        } else if ("WARRANTY".equalsIgnoreCase(safeIntent)) {
+        } else if ("WARRANTY".equalsIgnoreCase(context.intent())) {
             partnerUrl = routingConfig.getWarrantyPartnerUrl();
-        } else if ("VALUE".equalsIgnoreCase(safeIntent)) {
+        } else if ("VALUE".equalsIgnoreCase(context.intent())) {
             partnerUrl = routingConfig.getMarketValuePartnerUrl();
         } else {
             partnerUrl = routingConfig.getRepairPartnerUrl();
         }
 
-        // 6. Redirect (302 Found)
+        // 5. Redirect (302 Found)
         RedirectView redirectView = new RedirectView(partnerUrl);
         redirectView.setStatusCode(HttpStatus.FOUND);
         return redirectView;
@@ -117,55 +127,102 @@ public class LeadController {
             @RequestParam(name = "email") String email,
             @RequestParam(name = "verdict", required = false, defaultValue = "UNKNOWN") String verdict,
             @RequestParam(name = "brand", required = false, defaultValue = "") String brand,
-            @RequestParam(name = "source", required = false, defaultValue = "lead_capture") String source,
+            @RequestParam(name = "model", required = false, defaultValue = "") String model,
+            @RequestParam(name = "pageType", required = false, defaultValue = "lead_capture") String pageType,
+            @RequestParam(name = "detail", required = false, defaultValue = "") String detail,
+            @RequestParam(name = "placement", required = false, defaultValue = "waitlist") String placement,
+            @RequestParam(name = "intent", required = false, defaultValue = "WAITLIST") String intent,
+            @RequestParam(name = "referrerPath", required = false, defaultValue = "") String referrerPath,
             HttpServletRequest request,
-            HttpServletResponse response) {
+            HttpServletResponse response,
+            HttpSession session) {
 
-        // Prevent form result caching in browser history/proxy.
-        response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0");
-        response.setHeader("Pragma", "no-cache");
-        response.setHeader("Expires", "0");
-        response.setHeader("X-Robots-Tag", "noindex, nofollow");
+        applyNoindexHeaders(response);
 
         String safeVerdict = sanitize(verdict);
         String safeBrand = sanitize(brand);
-        String safeSource = sanitize(source);
+        String safeModel = sanitize(model);
+        String safePageType = sanitize(pageType);
+        String safeDetail = sanitize(detail);
+        String safePlacement = sanitize(placement);
+        String safeIntent = normalizeIntent(intent);
+        String safeReferrerPath = sanitize(referrerPath);
         String safeEmail = sanitizeEmail(email);
-        boolean filteredTestTraffic = isSyntheticTraffic(safeSource, request);
+        LeadCaptureContext context = new LeadCaptureContext(
+                safeVerdict,
+                safeBrand,
+                safeModel,
+                safePageType,
+                safeDetail,
+                safePlacement,
+                safeIntent,
+                safeReferrerPath);
+
+        boolean filteredTestTraffic = isSyntheticTraffic(safePageType, request);
         response.setHeader("X-Analytics-Filtered", filteredTestTraffic ? "1" : "0");
 
         if (safeEmail == null) {
-            RedirectView invalidView = new RedirectView(buildWaitlistRedirectUrl("invalid_email", safeVerdict, safeBrand));
-            invalidView.setStatusCode(HttpStatus.FOUND);
-            return invalidView;
+            storeWaitlistState(session, "invalid_email", context);
+            return buildRedirect(routingConfig.getWaitlistUrl());
         }
 
         if (!filteredTestTraffic) {
             csvLogger.info("{},{},{},{},{},{},{},{},{}",
-                    "submit_lead", safeSource, "waitlist", safeVerdict, safeBrand, "", maskEmail(safeEmail),
-                    "/lead-capture", "form");
+                    "lead_submit",
+                    context.pageType(),
+                    context.intent(),
+                    context.verdict(),
+                    context.brand(),
+                    context.model(),
+                    context.detail(),
+                    context.referrerPath(),
+                    context.placement());
         }
 
-        RedirectView successView = new RedirectView(buildWaitlistRedirectUrl("success", safeVerdict, safeBrand));
-        successView.setStatusCode(HttpStatus.FOUND);
-        return successView;
+        storeWaitlistState(session, "success", context);
+        return buildRedirect(routingConfig.getWaitlistUrl());
     }
 
     @GetMapping("/lead-capture")
-    public String showWaitlistForm(
+    public Object showWaitlistForm(
             @RequestParam(name = "status", required = false) String status,
             @RequestParam(name = "verdict", required = false) String verdict,
             @RequestParam(name = "brand", required = false) String brand,
+            @RequestParam(name = "model", required = false) String modelValue,
+            @RequestParam(name = "pageType", required = false) String pageType,
+            @RequestParam(name = "detail", required = false) String detail,
+            @RequestParam(name = "placement", required = false) String placement,
+            @RequestParam(name = "intent", required = false) String intent,
+            @RequestParam(name = "referrerPath", required = false) String referrerPath,
             Model model,
-            HttpServletResponse response) {
+            HttpServletResponse response,
+            HttpSession session) {
 
-        response.setHeader("X-Robots-Tag", "noindex, nofollow");
+        applyNoindexHeaders(response);
+        response.setHeader("Link", "<" + baseUrl + "/lead-capture>; rel=\"canonical\"");
+
+        if (hasLegacyWaitlistParams(status, verdict, brand, modelValue, pageType, detail, placement, intent,
+                referrerPath)) {
+            LeadCaptureContext context = new LeadCaptureContext(
+                    sanitize(defaultIfBlank(verdict, "UNKNOWN")),
+                    sanitize(defaultIfBlank(brand, "")),
+                    sanitize(defaultIfBlank(modelValue, "")),
+                    sanitize(defaultIfBlank(pageType, "lead_capture")),
+                    sanitize(defaultIfBlank(detail, "")),
+                    sanitize(defaultIfBlank(placement, "waitlist")),
+                    normalizeIntent(defaultIfBlank(intent, "WAITLIST")),
+                    sanitize(defaultIfBlank(referrerPath, "")));
+            storeWaitlistState(session, sanitizeStatus(status), context);
+            return buildRedirect(routingConfig.getWaitlistUrl());
+        }
+
+        LeadCaptureContext context = readWaitlistContext(session);
+        String safeStatus = sanitizeStatus(readWaitlistStatus(session));
 
         String displayBrand = "your vehicle";
-        if (brand != null && !brand.isEmpty()) {
-            displayBrand = brand.replace("+", " ");
+        if (context.brand() != null && !context.brand().isEmpty()) {
+            displayBrand = context.brand().replace("+", " ");
             if (displayBrand.length() > 0) {
-                // Capitalize first letter of each word (simplified to just capitalize the whole string nicely if needed, or just first letter)
                 String[] words = displayBrand.split(" ");
                 StringBuilder sb = new StringBuilder();
                 for (String w : words) {
@@ -176,19 +233,26 @@ public class LeadController {
                 displayBrand = sb.toString().trim();
             }
         }
-        
-        model.addAttribute("status", status != null ? status : "");
-        model.addAttribute("verdict", verdict != null ? verdict : "UNKNOWN");
+
+        model.addAttribute("status", safeStatus);
+        model.addAttribute("verdict", context.verdict());
         model.addAttribute("brand", displayBrand);
+        model.addAttribute("brandValue", context.brand());
+        model.addAttribute("modelValue", context.model());
+        model.addAttribute("pageType", context.pageType());
+        model.addAttribute("detail", context.detail());
+        model.addAttribute("placement", context.placement());
+        model.addAttribute("intent", context.intent());
+        model.addAttribute("referrerPath", context.referrerPath());
         model.addAttribute("canonicalUrl", baseUrl + "/lead-capture");
 
         return "pages/lead_capture";
     }
 
-    private String buildWaitlistRedirectUrl(String status, String verdict, String brand) {
-        return "/lead-capture?status=" + URLEncoder.encode(status, StandardCharsets.UTF_8)
-                + "&verdict=" + URLEncoder.encode(verdict, StandardCharsets.UTF_8)
-                + "&brand=" + URLEncoder.encode(brand, StandardCharsets.UTF_8);
+    private RedirectView buildRedirect(String location) {
+        RedirectView redirectView = new RedirectView(location);
+        redirectView.setStatusCode(HttpStatus.FOUND);
+        return redirectView;
     }
 
     private String sanitizeEmail(String input) {
@@ -206,20 +270,6 @@ public class LeadController {
         }
 
         return clean;
-    }
-
-    private String maskEmail(String email) {
-        int atIndex = email.indexOf('@');
-        if (atIndex <= 0 || atIndex == email.length() - 1) {
-            return "hidden";
-        }
-
-        String localPart = email.substring(0, atIndex);
-        String domainPart = email.substring(atIndex + 1);
-        String maskedLocal = localPart.length() <= 2
-                ? localPart.charAt(0) + "*"
-                : localPart.substring(0, 2) + "***";
-        return maskedLocal + "@" + domainPart;
     }
 
     private String sanitize(String input) {
@@ -241,6 +291,77 @@ public class LeadController {
             clean = clean.substring(0, 200);
         }
         return clean;
+    }
+
+    private void applyNoindexHeaders(HttpServletResponse response) {
+        response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0");
+        response.setHeader("Pragma", "no-cache");
+        response.setHeader("Expires", "0");
+        response.setHeader("X-Robots-Tag", "noindex, nofollow, noarchive");
+    }
+
+    private void storeWaitlistState(HttpSession session, String status, LeadCaptureContext context) {
+        session.setAttribute(WAITLIST_STATUS_SESSION_KEY, sanitizeStatus(status));
+        session.setAttribute(WAITLIST_CONTEXT_SESSION_KEY, context);
+    }
+
+    private String readWaitlistStatus(HttpSession session) {
+        Object raw = session.getAttribute(WAITLIST_STATUS_SESSION_KEY);
+        session.removeAttribute(WAITLIST_STATUS_SESSION_KEY);
+        return raw instanceof String value ? value : "";
+    }
+
+    private LeadCaptureContext readWaitlistContext(HttpSession session) {
+        Object raw = session.getAttribute(WAITLIST_CONTEXT_SESSION_KEY);
+        session.removeAttribute(WAITLIST_CONTEXT_SESSION_KEY);
+        if (raw instanceof LeadCaptureContext context) {
+            return context;
+        }
+        return new LeadCaptureContext("UNKNOWN", "", "", "lead_capture", "", "waitlist", "WAITLIST", "");
+    }
+
+    private boolean hasLegacyWaitlistParams(String status, String verdict, String brand, String model, String pageType,
+            String detail, String placement, String intent, String referrerPath) {
+        return status != null
+                || verdict != null
+                || brand != null
+                || model != null
+                || pageType != null
+                || detail != null
+                || placement != null
+                || intent != null
+                || referrerPath != null;
+    }
+
+    private String sanitizeStatus(String status) {
+        if ("success".equals(status) || "invalid_email".equals(status)) {
+            return status;
+        }
+        return "";
+    }
+
+    private String normalizeIntent(String intent) {
+        String clean = sanitize(defaultIfBlank(intent, "WAITLIST"));
+        if ("FIX".equalsIgnoreCase(clean) || "REPAIR".equalsIgnoreCase(clean)) {
+            return "REPAIR";
+        }
+        if ("SELL".equalsIgnoreCase(clean)) {
+            return "SELL";
+        }
+        if ("VALUE".equalsIgnoreCase(clean)) {
+            return "VALUE";
+        }
+        if ("WARRANTY".equalsIgnoreCase(clean)) {
+            return "WARRANTY";
+        }
+        if ("WAITLIST".equalsIgnoreCase(clean)) {
+            return "WAITLIST";
+        }
+        return clean.toUpperCase(Locale.ROOT);
+    }
+
+    private String defaultIfBlank(String input, String fallback) {
+        return input == null || input.isBlank() ? fallback : input;
     }
 
     private boolean isSyntheticTraffic(String sourceOrPageType, HttpServletRequest request) {
@@ -269,5 +390,16 @@ public class LeadController {
                 || ua.contains("headlesschrome")
                 || ua.contains("puppeteer")
                 || ua.contains("lighthouse");
+    }
+
+    private record LeadCaptureContext(
+            String verdict,
+            String brand,
+            String model,
+            String pageType,
+            String detail,
+            String placement,
+            String intent,
+            String referrerPath) {
     }
 }

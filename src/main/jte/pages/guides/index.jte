@@ -1,6 +1,6 @@
 @template.layout(
-    title = "Car Decision Guides | AutoMoneyPit",
-    description = "Practical guides on when to stop repairing your car, avoiding sunk-cost mistakes, and comparing repair cost vs market value.",
+    title = "Repair or Sell Guides for Car Owners | AutoMoneyPit",
+    description = "Practical car repair vs sell guides on repair cost vs value, when to stop repairing your car, and avoiding sunk-cost mistakes.",
     canonical = "https://automoneypit.com/guides",
     content = @`
         <div style="max-width: 980px; margin: 3rem auto; padding: 0 1rem;">

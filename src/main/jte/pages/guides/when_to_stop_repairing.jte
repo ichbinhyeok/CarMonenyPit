@@ -1,6 +1,6 @@
 @template.layout(
-    title = "When to Stop Repairing Your Car | AutoMoneyPit",
-    description = "Use this repair-vs-sell checklist to decide when additional repairs stop making financial sense.",
+    title = "When to Stop Repairing Your Car: Repair or Sell Checklist | AutoMoneyPit",
+    description = "Use this repair-or-sell checklist to decide when another car repair stops making financial sense.",
     canonical = "https://automoneypit.com/guides/when-to-stop-repairing-your-car",
     content = @`
         <article style="max-width: 860px; margin: 3rem auto; padding: 0 1rem;">

@@ -1,6 +1,6 @@
 @template.layout(
-    title = "Sunk Cost Fallacy and Car Repairs | AutoMoneyPit",
-    description = "Understand how sunk-cost bias affects car repair decisions and how to use forward-looking criteria.",
+    title = "Sunk Cost Fallacy in Car Repairs | AutoMoneyPit",
+    description = "Understand how sunk-cost bias distorts car repair decisions and how to switch to forward-looking criteria.",
     canonical = "https://automoneypit.com/guides/sunk-cost-fallacy-car-repairs",
     content = @`
         <article style="max-width: 860px; margin: 3rem auto; padding: 0 1rem;">

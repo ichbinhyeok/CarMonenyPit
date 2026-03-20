@@ -62,6 +62,7 @@ $checks = @(
     "$BaseUrl/",
     "$BaseUrl/models",
     "$BaseUrl/lead?page_type=playwright&intent=SELL&verdict_state=TIME_BOMB&brand=toyota&model=camry",
+    "$BaseUrl/lead-capture",
     "$BaseUrl/lead-capture?verdict=TIME_BOMB&brand=toyota",
     "$BaseUrl/report?token=invalid-seo-check",
     "$BaseUrl/models/mercedesbenz",
@@ -82,9 +83,14 @@ if ($leadRow -and ($leadRow.Status -ne 302 -or $leadRow.XRobotsTag -notmatch "no
     $failures += "Lead endpoint should be 302 + noindex."
 }
 
-$leadCaptureRow = $results | Where-Object { $_.Url -like "*/lead-capture*" } | Select-Object -First 1
+$leadCaptureRow = $results | Where-Object { $_.Url -eq "$BaseUrl/lead-capture" } | Select-Object -First 1
 if ($leadCaptureRow -and ($leadCaptureRow.Status -ne 200 -or $leadCaptureRow.XRobotsTag -notmatch "noindex" -or $leadCaptureRow.MetaRobots -notmatch "noindex")) {
     $failures += "Lead capture should be 200 + noindex meta/header."
+}
+
+$legacyLeadCaptureRow = $results | Where-Object { $_.Url -like "*/lead-capture?*" } | Select-Object -First 1
+if ($legacyLeadCaptureRow -and ($legacyLeadCaptureRow.Status -ne 302 -or $legacyLeadCaptureRow.Location -ne "/lead-capture")) {
+    $failures += "Legacy lead capture query variants should 302 to the clean canonical path."
 }
 
 $modelsRedirectRow = $results | Where-Object { $_.Url -like "*/models/mercedesbenz" } | Select-Object -First 1
