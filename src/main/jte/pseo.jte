@@ -55,19 +55,32 @@
 }
 """.formatted(prefillYear, prefillBrand, prefillModel, prefillYear, prefillModel, 2026 - prefillYear, prefillYear, prefillBrand, prefillModel, prefillBrand, prefillModel);}
 !{
-    String quickSignalClass = "neutral";
+    String quickSignalClassValue = "neutral";
+    Integer cautionThresholdUsd = marketValue != null ? Math.max(500, (int) Math.round(marketValue * 0.25)) : null;
+    Integer sellThresholdUsd = marketValue != null ? Math.max(750, (int) Math.round(marketValue * 0.35)) : null;
+    String thresholdRuleValue = null;
     if (quickSignal != null) {
         String quickSignalLower = quickSignal.toLowerCase();
         if (quickSignalLower.contains("sell")) {
-            quickSignalClass = "sell";
+            quickSignalClassValue = "sell";
         } else if (quickSignalLower.contains("borderline")) {
-            quickSignalClass = "borderline";
+            quickSignalClassValue = "borderline";
         } else if (quickSignalLower.contains("worth fixing") || quickSignalLower.contains("fix")) {
-            quickSignalClass = "repair";
+            quickSignalClassValue = "repair";
         } else if (quickSignalLower.contains("mileage-sensitive")) {
-            quickSignalClass = "borderline";
+            quickSignalClassValue = "borderline";
         }
     }
+    if (sellThresholdUsd != null && primaryFaultName != null) {
+        thresholdRuleValue = "Rule of thumb: once a quote gets near $" + String.format("%,d", sellThresholdUsd)
+            + ", this often becomes a real sell comparison for " + prefillModel + " owners. "
+            + primaryFaultName + " is the most expensive common failure in our current dataset.";
+    } else if (sellThresholdUsd != null) {
+        thresholdRuleValue = "Rule of thumb: once a quote gets near $" + String.format("%,d", sellThresholdUsd)
+            + ", this often becomes a real sell comparison for " + prefillModel + " owners.";
+    }
+    final String quickSignalClass = quickSignalClassValue;
+    final String thresholdRule = thresholdRuleValue;
 }
 @template.layout(
     title = seoTitle,
@@ -442,7 +455,6 @@
                 display: inline-flex;
                 align-items: center;
                 gap: 0.45rem;
-                background: #312e81;
                 color: #fff;
                 padding: 0.35rem 0.8rem;
                 border-radius: 999px;
@@ -452,11 +464,22 @@
                 letter-spacing: 0.05em;
                 margin-bottom: 0.9rem;
             }
+            .quick-answer-badge.sell { background: #be123c; }
+            .quick-answer-badge.borderline { background: #b45309; }
+            .quick-answer-badge.repair { background: #166534; }
+            .quick-answer-badge.neutral { background: #312e81; }
             .quick-answer-card p {
                 font-size: 1rem;
                 color: #312e81;
                 line-height: 1.7;
                 margin: 0;
+            }
+            .quick-answer-rule {
+                margin-top: 0.85rem;
+                font-size: 0.92rem;
+                line-height: 1.6;
+                color: #4338ca;
+                font-weight: 600;
             }
             .quick-link-grid {
                 max-width: 820px;
@@ -499,11 +522,14 @@
 
         @if(quickAnswer != null)
         <section class="quick-answer-card">
-            <div class="quick-answer-badge">
+            <div class="quick-answer-badge ${quickSignalClass}">
                 <span>Quick answer</span>
                 <span>${quickSignal}</span>
             </div>
             <p>${quickAnswer}</p>
+            @if(thresholdRule != null)
+            <div class="quick-answer-rule">${thresholdRule}</div>
+            @endif
         </section>
         @endif
 
@@ -729,10 +755,17 @@
             <div class="faq-item">
                 <div class="faq-question">Should I fix my ${prefillModel} or buy a new car?</div>
                 <div class="faq-answer">
-                    This depends on the repair cost relative to your car's value and your financial situation. 
-                    Many owners treat higher repair-to-value ratios as a caution signal, especially when multiple 
-                    major repairs are likely. Our calculator analyzes your specific situation to provide a 
-                    data-backed recommendation.
+                    @if(cautionThresholdUsd != null && sellThresholdUsd != null)
+                        For many ${prefillYear} ${prefillBrand} ${prefillModel} owners, repair quotes below roughly 
+                        <strong>$${String.format("%,d", cautionThresholdUsd)}</strong> are easier to justify, while quotes near 
+                        <strong>$${String.format("%,d", sellThresholdUsd)}</strong> usually deserve a serious fix-versus-sell comparison. 
+                        Your exact answer still depends on mileage, condition, and whether other major repairs are likely.
+                    @else
+                        This depends on the repair cost relative to your car's value and your financial situation. 
+                        Many owners treat higher repair-to-value ratios as a caution signal, especially when multiple 
+                        major repairs are likely. Our calculator analyzes your specific situation to provide a 
+                        data-backed recommendation.
+                    @endif
                 </div>
             </div>
             
