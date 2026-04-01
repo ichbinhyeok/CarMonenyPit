@@ -204,6 +204,11 @@ Common `page_type` values in current implementation:
 
 New page types should be stable, descriptive, and lowercase with underscores.
 
+Important:
+- `/should-i-fix/*` is currently an organic entry surface, not a lead CSV page type by itself
+- `/models/*` is currently an organic directory / model-hub surface, not a lead CSV page type by itself
+- these surfaces are evaluated mainly through GSC, click-through into calculator/report flows, and downstream lead attribution after a CTA is clicked
+
 ## 9. How To Read The Funnel
 Primary funnel:
 
@@ -384,3 +389,35 @@ As of March 20, 2026:
 - attribution continuity: fixed
 - waitlist URL hygiene: fixed
 - remaining growth problem: not tracking, but CTR and monetization readiness
+
+## 17. Update Note (2026-04-01)
+This section records tracking-relevant changes shipped after the March 20 audit.
+
+### A. What Changed
+- pSEO fault and mileage pages now render waitlist-aware CTA copy when `approvalPending=true`
+- `/should-i-fix/*` entry pages now surface stronger decision-threshold copy higher on the page
+- `/models/{brand}/{model}` pages are being upgraded from plain directories toward model decision hubs
+
+### B. What Did Not Change
+- no canonical event names changed
+- no CSV schemas changed
+- no canonical intent values changed
+- the main attribution path is still:
+  - `cta_click`
+  - `lead_capture_view`
+  - `lead_submit`
+  - partner `approved_action`
+
+### C. How To Interpret This
+- these changes are expected to affect CTR and click quality before they affect downstream submit volume
+- if pSEO landing pages become more honest about waitlist mode, short-term CTA click-through may dip while submit quality improves
+- `/should-i-fix/*` and `/models/*` should be judged first by:
+  - GSC impressions
+  - GSC CTR
+  - click-through into calculator / report / lead flows
+  - not by raw lead CSV volume alone
+
+### D. What To Check Next
+- whether top `/should-i-fix/*` pages with positions 1-10 gain clicks after the new copy
+- whether pSEO fault and mileage pages still preserve clean waitlist routing after CTA copy changes
+- whether the new model hubs improve internal handoff into year-specific decision pages

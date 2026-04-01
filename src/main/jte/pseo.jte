@@ -646,6 +646,12 @@
                 Instead of guessing, we analyze documented failure patterns and repair cost data for this model.
             </p>
 
+            @if(thresholdRule != null)
+                <p>
+                    ${thresholdRule}
+                </p>
+            @endif
+
             @if(majorFaults != null && !majorFaults.faults().isEmpty())
                 <div class="tldr-summary" style="background: #eef2ff; border-left: 4px solid #4f46e5; padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
                     <h3 style="font-size: 1.1rem; font-weight: 800; color: #312e81; margin-top: 0; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
@@ -772,9 +778,16 @@
             <div class="faq-item">
                 <div class="faq-question">Is repairing a high-mileage ${prefillModel} worth it?</div>
                 <div class="faq-answer">
-                    High-mileage vehicles (over 100,000 miles) require more careful consideration. While the 
-                    ${prefillBrand} ${prefillModel} has a reputation for longevity, each repair decision should 
-                    factor in remaining useful life. Our tool helps you make this calculation objectively.
+                    High-mileage vehicles (over 100,000 miles) require more careful consideration.
+                    @if(lifespanMiles != null)
+                        Our current dataset puts the expected lifespan of the ${prefillBrand} ${prefillModel} around 
+                        <strong>${String.format("%,d", lifespanMiles)} miles</strong>, so once your quote is large and the car is deep into that range, 
+                        the decision gets much harder.
+                    @else
+                        While the ${prefillBrand} ${prefillModel} has a reputation for longevity, each repair decision should 
+                        factor in remaining useful life.
+                    @endif
+                    Our tool helps you make this calculation objectively.
                 </div>
             </div>
         </section>

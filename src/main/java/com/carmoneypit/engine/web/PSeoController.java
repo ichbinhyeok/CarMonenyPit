@@ -362,6 +362,9 @@ public class PSeoController {
   public record RelatedFaultLink(String component, String url, double repairCost) {
   }
 
+  public record ModelHubLink(String label, String url) {
+  }
+
   @GetMapping("/models/{brandSlug}")
   public Object listModels(@PathVariable("brandSlug") String brandSlug, Model modelMap, HttpServletResponse response) {
     response.setHeader("Cache-Control", "public, max-age=86400");
@@ -408,13 +411,15 @@ public class PSeoController {
     }
 
     Optional<MajorFaults> faultsOpt = dataService.findFaultsByModelId(car.id());
+    Optional<ModelReliability> reliabilityOpt = dataService.findReliabilityByModelId(car.id());
+    Optional<ModelMarket> marketOpt = dataService.findMarketByModelId(car.id());
 
-    List<java.util.Map.Entry<String, String>> faultLinks;
+    List<ModelHubLink> faultLinks;
     if (faultsOpt.isPresent()) {
       faultLinks = faultsOpt.get().faults().stream()
           .map(f -> {
             String slug = toFaultSlug(f.component());
-            return java.util.Map.entry(
+            return new ModelHubLink(
                 f.component() + " repair cost and fix-or-sell guide",
                 "/verdict/" + canonicalBrandSlug + "/" + canonicalModelSlug + "/" + slug);
           })
@@ -422,18 +427,40 @@ public class PSeoController {
     } else {
       // Fallback for models without specific faults
       faultLinks = List.of(
-          java.util.Map.entry(
+          new ModelHubLink(
               "Open The Fix-or-Sell Calculator",
               "/"));
     }
 
-    modelMap.addAttribute("title", car.brand() + " " + car.model() + " Problems: Repair Costs and Fix-or-Sell Guides");
-    modelMap.addAttribute("metaDescription", "See the most expensive " + car.brand() + " "
-        + car.model() + " repairs, common failure points, and fix-or-sell guides for each major problem.");
+    int representativeYear = selectRepresentativeYear(car, reliabilityOpt.orElse(null));
+    String shouldFixUrl = "/should-i-fix/" + representativeYear + "-" + canonicalBrandSlug + "-" + canonicalModelSlug;
+    String title = car.brand() + " " + car.model() + " Problems: Repair Costs and Should-You-Fix-It Guidance";
+    String metaDescription;
+    if (marketOpt.isPresent() && faultsOpt.isPresent() && !faultsOpt.get().faults().isEmpty()) {
+      Fault topFault = faultsOpt.get().faults().stream()
+          .max(java.util.Comparator.comparingDouble(Fault::repairCost))
+          .orElse(faultsOpt.get().faults().get(0));
+      metaDescription = "See common " + car.brand() + " " + car.model()
+          + " problems, top repair costs like " + topFault.component() + " (~$"
+          + String.format("%,.0f", topFault.repairCost()) + "), and whether owners should fix or sell before approving a major repair.";
+    } else {
+      metaDescription = "See common " + car.brand() + " " + car.model()
+          + " problems, repair costs, and whether owners should fix or sell before approving a major repair.";
+    }
+
+    modelMap.addAttribute("title", title);
+    modelMap.addAttribute("metaDescription", metaDescription);
     modelMap.addAttribute("canonicalUrl", baseUrl + "/models/" + canonicalBrandSlug + "/" + canonicalModelSlug);
     modelMap.addAttribute("breadcrumbs", List.of("Models", car.brand(), car.model()));
-    modelMap.addAttribute("items", faultLinks);
-    return "pages/directory_list";
+    modelMap.addAttribute("car", car);
+    modelMap.addAttribute("faultLinks", faultLinks);
+    modelMap.addAttribute("majorFaults", faultsOpt.orElse(null));
+    modelMap.addAttribute("reliability", reliabilityOpt.orElse(null));
+    modelMap.addAttribute("market", marketOpt.orElse(null));
+    modelMap.addAttribute("representativeYear", representativeYear);
+    modelMap.addAttribute("shouldFixUrl", shouldFixUrl);
+    modelMap.addAttribute("datasetVersion", datasetVersion);
+    return "pages/model_hub";
   }
 
   // --- Helper Methods ---
@@ -442,6 +469,16 @@ public class PSeoController {
     RedirectView rv = new RedirectView(absoluteUrl);
     rv.setStatusCode(HttpStatus.MOVED_PERMANENTLY);
     return rv;
+  }
+
+  private int selectRepresentativeYear(CarModel car, ModelReliability reliability) {
+    if (reliability != null && reliability.bestYears() != null && !reliability.bestYears().isEmpty()) {
+      return reliability.bestYears().stream()
+          .filter(year -> year >= car.startYear() && year <= car.endYear())
+          .max(Integer::compareTo)
+          .orElse(car.endYear());
+    }
+    return car.endYear() > 0 ? car.endYear() : car.startYear();
   }
 
   private int findClosestBucket(int mileage, List<Integer> allowedBuckets) {
