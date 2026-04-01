@@ -17,6 +17,7 @@
 @param String brandDirectoryUrl
 @param String modelDirectoryUrl
 @param String mileageBaseUrl
+@param String shouldFixUrl = null
 @param String ogImage = null
 @param String datasetVersion = "2026-02-24"
 @param boolean waitlistMode = true
@@ -658,6 +659,16 @@
                 ${car.brand()} ${car.model()} Owners Also Researched:
             </h2>
             <div class="related-grid">
+                @if(shouldFixUrl != null)
+                <a href="${shouldFixUrl}" class="related-card cta-card">
+                    <h3 style="font-size: 1rem; font-weight: 700; color: #1d4ed8; margin-bottom: 0.75rem; line-height: 1.3;">
+                        See the full ${car.brand()} ${car.model()} fix-or-sell page
+                    </h3>
+                    <p style="font-size: 0.88rem; color: #475569; margin: 0;">
+                        Step back from this single repair and compare the whole-car decision before you approve a big quote.
+                    </p>
+                </a>
+                @endif
                 @for(var related : relatedFaultLinks)
                 <a href="${related.url()}" 
                    class="related-card">

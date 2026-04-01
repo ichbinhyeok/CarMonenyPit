@@ -448,52 +448,52 @@
         <!-- Popular Searches Section (pSEO Internal Linking) -->
         <div style="max-width: 1000px; margin: 0 auto 6rem; padding: 0 1rem;">
             <div style="text-align: center; margin-bottom: 2.5rem;">
-                <h2 style="font-size: 1.75rem; font-weight: 800; color: #0f172a; margin-bottom: 0.75rem;">Example Analyses</h2>
-                <p style="font-size: 1rem; color: #64748b;">Common scenarios owners evaluate with our calculator</p>
+                <h2 style="font-size: 1.75rem; font-weight: 800; color: #0f172a; margin-bottom: 0.75rem;">Popular Fix-or-Sell Pages</h2>
+                <p style="font-size: 1rem; color: #64748b;">High-intent US-market decision pages that deserve stronger internal support</p>
             </div>
             
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem;">
-                <a href="/should-i-fix/2018-toyota-camry" class="popular-link">
+                <a href="/should-i-fix/2014-toyota-camry" class="popular-link">
                     <span class="popular-emoji">🚗</span>
                     <div class="popular-text">
-                        <span class="popular-title">Should I fix my 2018 Toyota Camry?</span>
-                        <span class="popular-meta">Sedan · Mid-mileage</span>
+                        <span class="popular-title">Should I fix or sell my 2014 Toyota Camry?</span>
+                        <span class="popular-meta">Strong resale baseline | midsize sedan</span>
                     </div>
                     <span class="popular-arrow">→</span>
                 </a>
                 
-                <a href="/should-i-fix/2017-honda-accord" class="popular-link">
+                <a href="/should-i-fix/2014-nissan-altima" class="popular-link">
                     <span class="popular-emoji">🚙</span>
                     <div class="popular-text">
-                        <span class="popular-title">Should I fix my 2017 Honda Accord?</span>
-                        <span class="popular-meta">Sedan · Pre-100k miles</span>
+                        <span class="popular-title">Should I fix or sell my 2014 Nissan Altima?</span>
+                        <span class="popular-meta">CVT-heavy decision | faster sell threshold</span>
                     </div>
                     <span class="popular-arrow">→</span>
                 </a>
                 
-                <a href="/should-i-fix/2016-ford-f150" class="popular-link">
-                    <span class="popular-emoji">🛻</span>
-                    <div class="popular-text">
-                        <span class="popular-title">Should I fix my 2016 Ford F-150?</span>
-                        <span class="popular-meta">Truck · High-mileage</span>
-                    </div>
-                    <span class="popular-arrow">→</span>
-                </a>
-                
-                <a href="/should-i-fix/2015-chevrolet-silverado" class="popular-link">
-                    <span class="popular-emoji">🚚</span>
-                    <div class="popular-text">
-                        <span class="popular-title">Should I fix my 2015 Chevy Silverado?</span>
-                        <span class="popular-meta">Truck · Heavy-duty</span>
-                    </div>
-                    <span class="popular-arrow">→</span>
-                </a>
-                
-                <a href="/should-i-fix/2019-nissan-altima" class="popular-link">
+                <a href="/should-i-fix/2015-honda-accord" class="popular-link">
                     <span class="popular-emoji">🚗</span>
                     <div class="popular-text">
-                        <span class="popular-title">Should I fix my 2019 Nissan Altima?</span>
-                        <span class="popular-meta">Sedan · CVT concerns</span>
+                        <span class="popular-title">Should I fix or sell my 2015 Honda Accord?</span>
+                        <span class="popular-meta">High-value benchmark | midsize sedan</span>
+                    </div>
+                    <span class="popular-arrow">→</span>
+                </a>
+                
+                <a href="/should-i-fix/2013-honda-cr-v" class="popular-link">
+                    <span class="popular-emoji">🚙</span>
+                    <div class="popular-text">
+                        <span class="popular-title">Should I fix or sell my 2013 Honda CR-V?</span>
+                        <span class="popular-meta">SUV durability baseline | high-mileage call</span>
+                    </div>
+                    <span class="popular-arrow">→</span>
+                </a>
+                
+                <a href="/should-i-fix/2015-mazda-cx-5" class="popular-link">
+                    <span class="popular-emoji">🚗</span>
+                    <div class="popular-text">
+                        <span class="popular-title">Should I fix or sell my 2015 Mazda CX-5?</span>
+                        <span class="popular-meta">SUV repair-vs-value decision</span>
                     </div>
                     <span class="popular-arrow">→</span>
                 </a>
@@ -502,7 +502,7 @@
                     <span class="popular-emoji">📊</span>
                     <div class="popular-text">
                         <span class="popular-title">Browse All Models</span>
-                        <span class="popular-meta">50+ brands, 500+ models</span>
+                        <span class="popular-meta">Open model hubs and year-specific decision pages</span>
                     </div>
                     <span class="popular-arrow">→</span>
                 </a>

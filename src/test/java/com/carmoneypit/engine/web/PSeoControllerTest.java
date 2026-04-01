@@ -14,6 +14,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import static org.mockito.BDDMockito.given;
+import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -57,6 +58,7 @@ public class PSeoControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("pages/model_hub"))
                 .andExpect(model().attribute("representativeYear", 2017))
-                .andExpect(model().attribute("shouldFixUrl", "/should-i-fix/2017-toyota-camry"));
+                .andExpect(model().attribute("shouldFixUrl", "/should-i-fix/2017-toyota-camry"))
+                .andExpect(model().attribute("decisionPageLinks", hasSize(3)));
     }
 }

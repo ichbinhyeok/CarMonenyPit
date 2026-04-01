@@ -22,6 +22,7 @@
 @param String brandDirectoryUrl
 @param String modelDirectoryUrl
 @param String mileageBaseUrl
+@param String shouldFixUrl = null
 @param String datasetVersion = "2026-02-24"
 @param boolean waitlistMode = true
 
@@ -464,6 +465,11 @@
         <section class="related-section">
             <h3>Related Analysis</h3>
             <div class="related-links">
+                @if(shouldFixUrl != null)
+                <a href="${shouldFixUrl}" class="related-link">
+                    <span>Decision</span> Full ${car.brand()} ${car.model()} fix-or-sell page
+                </a>
+                @endif
                 @if(targetMileage > 50000)
                 <a href="${mileageBaseUrl}/${targetMileage - 50000}-miles" class="related-link">
                     <span>📉</span> ${car.model()} at ${String.format("%,d", targetMileage - 50000)} miles

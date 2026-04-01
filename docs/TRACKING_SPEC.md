@@ -398,6 +398,8 @@ This section records tracking-relevant changes shipped after the March 20 audit.
 - `/should-i-fix/*` entry pages now surface stronger decision-threshold copy higher on the page
 - `/models/{brand}/{model}` pages are being upgraded from plain directories toward model decision hubs
 - top opportunity `/should-i-fix/*` pages now receive more model-specific intro and FAQ copy for US-market repair decisions
+- the homepage and model hubs now link more aggressively into a small set of priority `/should-i-fix/*` pages
+- fault verdict and mileage verdict pages now loop users back into the full model-level `/should-i-fix/*` decision page
 
 ### B. What Did Not Change
 - no canonical event names changed
@@ -430,6 +432,10 @@ This section records tracking-relevant changes shipped after the March 20 audit.
   - CTR
   - calculator / report handoff
   - `lead_submit`
+- internal-link changes should be judged by whether priority decision pages gain:
+  - better impressions
+  - better average position
+  - more calculator/report handoffs
 - do not expect all model pages to move at once; watch the highest-opportunity models first:
   - Camry
   - Altima

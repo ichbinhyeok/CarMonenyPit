@@ -21,6 +21,8 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
 
 /**
  * Controller responsible for handling pSEO page requests.
@@ -107,6 +109,9 @@ public class PSeoController {
     Optional<ModelReliability> reliabilityOpt = dataService.findReliabilityByModelId(car.id());
     Optional<ModelMarket> marketOpt = dataService.findMarketByModelId(car.id());
 
+    int representativeYear = selectRepresentativeYear(car, reliabilityOpt.orElse(null));
+    String shouldFixUrl = "/should-i-fix/" + representativeYear + "-" + canonicalBrandSlug + "-" + canonicalModelSlug;
+
     // 4. Build View Model
     ProfileViewModel profile = null;
     if (reliabilityOpt.isPresent() && marketOpt.isPresent()) {
@@ -188,6 +193,7 @@ public class PSeoController {
     modelMap.addAttribute("brandDirectoryUrl", "/models/" + canonicalBrandSlug);
     modelMap.addAttribute("modelDirectoryUrl", "/models/" + canonicalBrandSlug + "/" + canonicalModelSlug);
     modelMap.addAttribute("mileageBaseUrl", "/verdict/" + canonicalBrandSlug + "/" + canonicalModelSlug);
+    modelMap.addAttribute("shouldFixUrl", shouldFixUrl);
     modelMap.addAttribute("ogImage", ogImage);
     modelMap.addAttribute("breadcrumbs", breadcrumbs);
     modelMap.addAttribute("datasetVersion", datasetVersion);
@@ -230,6 +236,8 @@ public class PSeoController {
     // 2. Load Reliability & Market Data
     Optional<ModelReliability> reliabilityOpt = dataService.findReliabilityByModelId(car.id());
     Optional<ModelMarket> marketOpt = dataService.findMarketByModelId(car.id());
+    int representativeYear = selectRepresentativeYear(car, reliabilityOpt.orElse(null));
+    String shouldFixUrl = "/should-i-fix/" + representativeYear + "-" + canonicalBrandSlug + "-" + canonicalModelSlug;
 
     if (reliabilityOpt.isEmpty() || marketOpt.isEmpty()) {
       logger.warn("Missing data for model: {}", car.id());
@@ -322,6 +330,7 @@ public class PSeoController {
     modelMap.addAttribute("brandDirectoryUrl", "/models/" + canonicalBrandSlug);
     modelMap.addAttribute("modelDirectoryUrl", "/models/" + canonicalBrandSlug + "/" + canonicalModelSlug);
     modelMap.addAttribute("mileageBaseUrl", "/verdict/" + canonicalBrandSlug + "/" + canonicalModelSlug);
+    modelMap.addAttribute("shouldFixUrl", shouldFixUrl);
     modelMap.addAttribute("datasetVersion", datasetVersion);
     modelMap.addAttribute("waitlistMode", routingConfig.isApprovalPending());
 
@@ -434,6 +443,8 @@ public class PSeoController {
 
     int representativeYear = selectRepresentativeYear(car, reliabilityOpt.orElse(null));
     String shouldFixUrl = "/should-i-fix/" + representativeYear + "-" + canonicalBrandSlug + "-" + canonicalModelSlug;
+    List<ModelHubLink> decisionPageLinks = buildDecisionPageLinks(car, reliabilityOpt.orElse(null),
+        canonicalBrandSlug, canonicalModelSlug, representativeYear);
     String title = car.brand() + " " + car.model() + " Problems: Repair Costs and Should-You-Fix-It Guidance";
     String metaDescription;
     if (marketOpt.isPresent() && faultsOpt.isPresent() && !faultsOpt.get().faults().isEmpty()) {
@@ -459,6 +470,7 @@ public class PSeoController {
     modelMap.addAttribute("market", marketOpt.orElse(null));
     modelMap.addAttribute("representativeYear", representativeYear);
     modelMap.addAttribute("shouldFixUrl", shouldFixUrl);
+    modelMap.addAttribute("decisionPageLinks", decisionPageLinks);
     modelMap.addAttribute("datasetVersion", datasetVersion);
     return "pages/model_hub";
   }
@@ -479,6 +491,71 @@ public class PSeoController {
           .orElse(car.endYear());
     }
     return car.endYear() > 0 ? car.endYear() : car.startYear();
+  }
+
+  private List<ModelHubLink> buildDecisionPageLinks(CarModel car, ModelReliability reliability,
+      String canonicalBrandSlug, String canonicalModelSlug, int representativeYear) {
+    LinkedHashSet<Integer> candidateYears = new LinkedHashSet<>();
+    candidateYears.add(representativeYear);
+
+    Integer strongestYear = null;
+    Integer cautionYear = null;
+
+    if (reliability != null) {
+      if (reliability.bestYears() != null && !reliability.bestYears().isEmpty()) {
+        strongestYear = reliability.bestYears().stream()
+            .filter(year -> year >= car.startYear() && year <= car.endYear())
+            .max(Integer::compareTo)
+            .orElse(null);
+      }
+      if (reliability.worstYears() != null && !reliability.worstYears().isEmpty()) {
+        cautionYear = reliability.worstYears().stream()
+            .filter(year -> year >= car.startYear() && year <= car.endYear())
+            .min(Integer::compareTo)
+            .orElse(null);
+      }
+    }
+
+    if (strongestYear != null) {
+      candidateYears.add(strongestYear);
+    }
+    if (reliability != null && reliability.bestYears() != null) {
+      reliability.bestYears().stream()
+          .filter(year -> year >= car.startYear() && year <= car.endYear())
+          .filter(year -> !year.equals(representativeYear))
+          .sorted((a, b) -> Integer.compare(b, a))
+          .findFirst()
+          .ifPresent(candidateYears::add);
+    }
+    if (cautionYear != null) {
+      candidateYears.add(cautionYear);
+    }
+    if (car.endYear() > 0) {
+      candidateYears.add(car.endYear());
+    }
+
+    ArrayList<ModelHubLink> links = new ArrayList<>();
+    int index = 0;
+    for (Integer year : candidateYears) {
+      if (year == null || index >= 3) {
+        continue;
+      }
+      String label;
+      if (year == representativeYear) {
+        label = "Start with " + year + " " + car.brand() + " " + car.model() + " fix-or-sell page";
+      } else if (strongestYear != null && year.equals(strongestYear)) {
+        label = "Compare the stronger " + year + " " + car.model() + " year";
+      } else if (cautionYear != null && year.equals(cautionYear)) {
+        label = "Check the higher-risk " + year + " " + car.model() + " year";
+      } else {
+        label = "Open " + year + " " + car.brand() + " " + car.model() + " decision page";
+      }
+      links.add(new ModelHubLink(label,
+          "/should-i-fix/" + year + "-" + canonicalBrandSlug + "-" + canonicalModelSlug));
+      index++;
+    }
+
+    return links;
   }
 
   private int findClosestBucket(int mileage, List<Integer> allowedBuckets) {

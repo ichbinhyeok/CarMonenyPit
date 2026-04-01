@@ -14,6 +14,7 @@
 @param ModelMarket market = null
 @param int representativeYear
 @param String shouldFixUrl
+@param java.util.List<ModelHubLink> decisionPageLinks = java.util.List.of()
 @param String datasetVersion = "2026-02-24"
 
 !{
@@ -83,6 +84,25 @@
             </p>
             <a href="${shouldFixUrl}" style="display: inline-block; text-decoration: none; background: #fff; color: #1d4ed8; padding: 1rem 1.25rem; border-radius: 14px; font-weight: 900;">Go To ${representativeYear} Fix-or-Sell Page -></a>
         </div>
+
+        @if(decisionPageLinks != null && !decisionPageLinks.isEmpty())
+        <div style="margin-bottom: 2.5rem;">
+            <h2 style="font-size: 1.4rem; font-weight: 900; margin-bottom: 0.75rem; color: #0f172a;">Most Useful Year-Specific Decision Pages</h2>
+            <p style="font-size: 1rem; color: #64748b; line-height: 1.7; margin-bottom: 1rem; max-width: 760px;">
+                Use these when you want the fastest path from model research into a quote-specific fix-or-sell answer.
+            </p>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 0.9rem;">
+                @for(ModelHubLink link : decisionPageLinks)
+                <a href="${link.url()}" style="display: block; text-decoration: none; border: 1px solid #dbeafe; background: #f8fbff; border-radius: 16px; padding: 1rem 1.1rem; color: #0f172a; font-weight: 800; line-height: 1.5; transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;">
+                    ${link.label()}
+                    <div style="font-size: 0.82rem; font-weight: 600; color: #64748b; margin-top: 0.4rem;">
+                        Open a year-specific should-i-fix page before you approve a large repair.
+                    </div>
+                </a>
+                @endfor
+            </div>
+        </div>
+        @endif
 
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin-bottom: 2.5rem;">
             @if(bestYearsText != null)
