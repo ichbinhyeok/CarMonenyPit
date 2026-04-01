@@ -475,3 +475,16 @@ The latest batch added three layers of page-level sharpening for top opportunity
 - hero subtitle and FAQ schema aligned to the same decision logic
 
 This means the next review should not ask only whether traffic increased. It should ask whether the SERP promise, the first screen, and the structured FAQ answer are now telling the same story.
+
+### H. Strategic Read After The Authority-Routing Pass
+As of the latest internal-link pass:
+
+- the strongest remaining growth bottleneck is still organic click-through, not tracking integrity
+- the main bet is now concentrated into a small US-market wedge of year-specific `/should-i-fix/*` pages
+- brand directories, fault hubs, model hubs, and core guides should now be treated as feeder surfaces for those priority decision pages
+- if those feeder surfaces gain their own traffic but fail to send more users into the priority decision pages, the routing strategy is not working yet
+- if impressions rise on the priority decision pages but CTR stays weak, the next round should narrow even further into fault-specific pain pages rather than broad model coverage
+
+Operationally, the next review should answer this question first:
+
+`Did the authority-routing pass make the priority decision pages more visible and more clickable?`
