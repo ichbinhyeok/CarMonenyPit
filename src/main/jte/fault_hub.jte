@@ -214,8 +214,9 @@
                 </ul>
                 <p style="font-size: 0.85rem; color: var(--text-secondary);"><em>This is decision support only, not financial advice.</em></p>
                 <div style="margin-top: 1rem;">
-                    <a href="/lead?page_type=fault_hub&intent=VALUE&verdict_state=UNKNOWN&detail=${hub.slug()}&placement=inline" class="hub-cta" id="hub-cta-inline">
-                        Run Your Fix-or-Sell Analysis →
+                    <a href="/#form-container" class="hub-cta" id="hub-cta-inline"
+                       onclick="window.ampTrack('cta_click', { event_category: 'conversion', page_type: 'fault_hub', intent: 'VALUE', verdict_state: 'UNKNOWN', detail: '${hub.slug()}', placement: 'inline' });">
+                        Open The 30-Second Calculator →
                     </a>
                 </div>
             </section>
@@ -253,8 +254,9 @@
 
             <%-- Bottom CTA --%>
             <div style="text-align: center; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--border-color, #334155);">
-                <a href="/lead?page_type=fault_hub&intent=VALUE&verdict_state=UNKNOWN&detail=${hub.slug()}&placement=bottom" class="hub-cta" id="hub-cta-bottom">
-                    Compare Repair vs. Sell for Your Car →
+                <a href="/#form-container" class="hub-cta" id="hub-cta-bottom"
+                   onclick="window.ampTrack('cta_click', { event_category: 'conversion', page_type: 'fault_hub', intent: 'VALUE', verdict_state: 'UNKNOWN', detail: '${hub.slug()}', placement: 'bottom' });">
+                    Compare Repair vs. Sell For Your Car →
                 </a>
             </div>
         </div>

@@ -224,25 +224,25 @@
     content = @`
         <section class="hero-section">
             <div class="hero-badge">
-                <span style="font-size: 1.1rem;">🔧</span> 30-Second Decision Tool
+                <span style="font-size: 0.85rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;">Decision Tool</span>
             </div>
             <h1 class="hero-title">Fix It or<br>Sell It?</h1>
             <p class="hero-subtitle">
-                Got a repair quote that made you gasp? Let's find out if it's worth it — or if you should cut your losses.
+                Got a repair quote that made you gasp? Let's find out if it's worth it, or if you should cut your losses.
             </p>
 
             <!-- Situation Selection Cards -->
             <div class="situation-cards" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2.5rem; max-width: 700px; margin-left: auto; margin-right: auto;">
                 <button type="button" class="situation-card active" data-situation="quote" onclick="selectSituation(this, 'quote')">
-                    <span style="font-size: 2rem; margin-bottom: 0.5rem;">💰</span>
+                    <span style="font-size: 1rem; margin-bottom: 0.5rem; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase;">Quote</span>
                     <span style="font-weight: 700; font-size: 0.85rem;">I got a repair quote</span>
                 </button>
                 <button type="button" class="situation-card" data-situation="breakdown" onclick="selectSituation(this, 'breakdown')">
-                    <span style="font-size: 2rem; margin-bottom: 0.5rem;">🔧</span>
+                    <span style="font-size: 1rem; margin-bottom: 0.5rem; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase;">Breakdown</span>
                     <span style="font-weight: 700; font-size: 0.85rem;">My car broke down</span>
                 </button>
                 <button type="button" class="situation-card" data-situation="old" onclick="selectSituation(this, 'old')">
-                    <span style="font-size: 2rem; margin-bottom: 0.5rem;">⏰</span>
+                    <span style="font-size: 1rem; margin-bottom: 0.5rem; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase;">Aging</span>
                     <span style="font-weight: 700; font-size: 0.85rem;">My car is getting old</span>
                 </button>
             </div>

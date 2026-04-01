@@ -490,7 +490,7 @@
                                         @for(MobilityStatus val : MobilityStatus.values())
                                             <label class="pill">
                                                 <input type="radio" name="mobilityStatus" value="${val}" checked="${val == controls.mobilityStatus()}">
-                                                <span>${val == MobilityStatus.NEEDS_TOW ? "🚫 Tow" : "✓ Drivable"}</span>
+                                                <span>${val == MobilityStatus.NEEDS_TOW ? "Tow required" : "Drivable"}</span>
                                             </label>
                                         @endfor
                                     </div>
@@ -499,7 +499,7 @@
 
                             <!-- Card 2: Diagnosis -->
                             <div class="sim-column">
-                                <h4>🔧 Diagnosis</h4>
+                                <h4>Diagnosis</h4>
                                 
                                 <div class="sim-item">
                                     <label>Failure Severity</label>
@@ -507,7 +507,7 @@
                                          @for(FailureSeverity val : FailureSeverity.values())
                                             <label class="pill-row">
                                                 <input type="radio" name="failureSeverity" value="${val}" checked="${val == controls.failureSeverity()}">
-                                                <span class="pill-text">${val == FailureSeverity.ENGINE_TRANSMISSION ? "🔴 Critical" : (val == FailureSeverity.SUSPENSION_BRAKES ? "🟠 Major" : "🟢 General")}</span>
+                                                <span class="pill-text">${val == FailureSeverity.ENGINE_TRANSMISSION ? "Critical" : (val == FailureSeverity.SUSPENSION_BRAKES ? "Major" : "General")}</span>
                                             </label>
                                         @endfor
                                     </div>
@@ -516,7 +516,7 @@
 
                             <!-- Card 3: Retention -->
                             <div class="sim-column">
-                                <h4>📅 Retention Plan</h4>
+                                <h4>Retention Plan</h4>
                                 
                                 <div class="sim-item">
                                     <label>How long do you plan to keep it?</label>
@@ -530,7 +530,7 @@
 
                             <!-- Card 4: Willingness -->
                             <div class="sim-column">
-                                <h4>🚗 Switching Willingness</h4>
+                                <h4>Switching Willingness</h4>
                                 
                                 <div class="sim-item">
                                     <label>Ready to move on?</label>
@@ -572,7 +572,7 @@
             
             @if(result.verdictState().name().equals("TIME_BOMB"))
                 <div style="background: #fef2f2; border-left: 4px solid #ef4444; padding: 1rem; margin-bottom: 1.5rem; border-radius: 0 8px 8px 0;">
-                    <h4 style="color: #dc2626; font-size: 0.85rem; font-weight: 800; margin-bottom: 0.5rem;">💸 ASSET BLEED DETECTED</h4>
+                    <h4 style="color: #dc2626; font-size: 0.85rem; font-weight: 800; margin-bottom: 0.5rem;">ASSET BLEED DETECTED</h4>
                     <p style="font-size: 0.95rem; line-height: 1.5; color: #7f1d1d; margin: 0;">
                         Your repair cost is high relative to the vehicle's remaining value. 
                         Even if repaired, depreciation will likely erase that investment within months.
@@ -580,7 +580,7 @@
                 </div>
             @elseif(result.verdictState().name().equals("STABLE"))
                 <div style="background: #f0fdf4; border-left: 4px solid #22c55e; padding: 1rem; margin-bottom: 1.5rem; border-radius: 0 8px 8px 0;">
-                    <h4 style="color: #16a34a; font-size: 0.85rem; font-weight: 800; margin-bottom: 0.5rem;">✅ REPAIR MAKES SENSE</h4>
+                    <h4 style="color: #16a34a; font-size: 0.85rem; font-weight: 800; margin-bottom: 0.5rem;">REPAIR MAKES SENSE</h4>
                     <p style="font-size: 0.95rem; line-height: 1.5; color: #14532d; margin: 0;">
                         The repair cost is reasonable compared to your vehicle's value. 
                         Fixing it now should give you more reliable transportation at lower cost than switching.
@@ -588,7 +588,7 @@
                 </div>
             @else
                 <div style="background: #fffbeb; border-left: 4px solid #f59e0b; padding: 1rem; margin-bottom: 1.5rem; border-radius: 0 8px 8px 0;">
-                    <h4 style="color: #d97706; font-size: 0.85rem; font-weight: 800; margin-bottom: 0.5rem;">⚖️ BORDERLINE DECISION</h4>
+                    <h4 style="color: #d97706; font-size: 0.85rem; font-weight: 800; margin-bottom: 0.5rem;">BORDERLINE DECISION</h4>
                     <p style="font-size: 0.95rem; line-height: 1.5; color: #78350f; margin: 0;">
                         This is a close call. The numbers don't strongly favor either option. 
                         Your personal preference and financial situation should guide this decision.

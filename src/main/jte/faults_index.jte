@@ -56,10 +56,10 @@
                     <a href="/fault/${hub.slug()}" class="fault-card" id="fault-card-${hub.slug()}">
                         <h2>${hub.displayName()}</h2>
                         <div class="card-meta">
-                            <span>📊 ${hub.modelCount()} models affected</span>
+                            <span>Models affected: ${hub.modelCount()}</span>
                         </div>
                         <p class="card-desc">${hub.quickAnswer().length() > 120 ? hub.quickAnswer().substring(0, 120) + "..." : hub.quickAnswer()}</p>
-                        <div class="card-arrow">View Guide →</div>
+                        <div class="card-arrow">Open guide →</div>
                     </a>
                 @endfor
             </div>
