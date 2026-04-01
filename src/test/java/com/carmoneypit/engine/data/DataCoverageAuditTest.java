@@ -45,6 +45,21 @@ class DataCoverageAuditTest {
     }
 
     @Test
+    void fiftyThousandDollarPlusModelsShouldHaveFaultCoverage() {
+        List<CarModel> models = carDataService.getAllModels();
+        List<String> uncoveredHighValueModels = models.stream()
+                .filter(model -> carDataService.findMarketByModelId(model.id())
+                        .map(market -> market.jan2026AvgPrice() >= 50000)
+                        .orElse(false))
+                .filter(model -> carDataService.findFaultsByModelId(model.id()).isEmpty())
+                .map(CarModel::id)
+                .toList();
+
+        assertTrue(uncoveredHighValueModels.isEmpty(),
+                "High-value models should not ship without major fault coverage. Missing: " + uncoveredHighValueModels);
+    }
+
+    @Test
     void sourceFilesShouldStayReferentiallyConsistent() throws IOException {
         List<CarModel> models = carDataService.getAllModels();
         Set<String> modelIds = models.stream()

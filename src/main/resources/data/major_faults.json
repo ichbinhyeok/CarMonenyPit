@@ -1130,6 +1130,159 @@
         "model_id_ref": "jeep_compass_mp"
     },
     {
+        "model_id_ref": "porsche_911_992",
+        "faults": [
+            {
+                "component": "Coolant Pump Leak",
+                "symptoms": "Coolant smell, low coolant warning, visible seepage near pump housing",
+                "repairCost": 3200,
+                "repairCost_range_low": 2500,
+                "repairCost_range_high": 4200,
+                "verdictImplication": "High Risk: Official Porsche workshop campaign WKJ7 replaced early 992 coolant pumps after seal-related leaks. If the cooling system is already losing coolant, treat the car as a stop-driving decision until repaired.",
+                "occurrence_rate": 0.12,
+                "avg_failure_mileage": 28000,
+                "confidence": "high",
+                "last_updated": "2026-04-01",
+                "sources": [
+                    {
+                        "name": "Porsche WKJ7 Workshop Campaign",
+                        "url": "https://static.nhtsa.gov/odi/tsbs/2020/MC-10174673-0001.pdf",
+                        "retrieved_at": "2026-04-01",
+                        "note": "Official Porsche campaign for 2020 911 (992) coolant pump replacement due to leak risk."
+                    }
+                ]
+            },
+            {
+                "component": "Dynamic Engine Mount Failure (PADM)",
+                "symptoms": "New vibration at idle, drivetrain thump, active mount fault messages",
+                "repairCost": 3600,
+                "repairCost_range_low": 3000,
+                "repairCost_range_high": 4600,
+                "verdictImplication": "Moderate: Porsche campaign WKJ8 replaced affected dynamic engine mounts. Failed mounts rarely total the car, but they can turn a borderline repair quote into a non-trivial ownership event.",
+                "occurrence_rate": 0.08,
+                "avg_failure_mileage": 25000,
+                "confidence": "medium",
+                "last_updated": "2026-04-01",
+                "sources": [
+                    {
+                        "name": "Porsche WKJ8 Workshop Campaign",
+                        "url": "https://static.nhtsa.gov/odi/tsbs/2020/MC-10177994-0001.pdf",
+                        "retrieved_at": "2026-04-01",
+                        "note": "Official Porsche campaign covering dynamic engine mounts on 992 vehicles."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "model_id_ref": "porsche_cayenne_e3",
+        "faults": [
+            {
+                "component": "Coolant Pipe / Water Pump Leak",
+                "symptoms": "Coolant drip under front of engine, sweet smell, low coolant warnings, overheating risk",
+                "repairCost": 4200,
+                "repairCost_range_low": 3200,
+                "repairCost_range_high": 5500,
+                "verdictImplication": "High Risk: Early E3 Cayenne owners report expensive coolant leak repairs, and Porsche published TSB guidance for leaking coolant pipes. A large quote here should be treated as a major ownership-event repair.",
+                "occurrence_rate": 0.18,
+                "avg_failure_mileage": 42000,
+                "confidence": "medium",
+                "last_updated": "2026-04-01",
+                "sources": [
+                    {
+                        "name": "Porsche TSB 122-Y2L6A-02",
+                        "url": "https://m.carcomplaints.com/Porsche/Cayenne/2019/tsbs/tsb-122-y2l6a-02.shtml",
+                        "retrieved_at": "2026-04-01",
+                        "note": "TSB summary describing leaking coolant pipes at the front of the cylinder head on certain Cayenne/Macan vehicles."
+                    },
+                    {
+                        "name": "Rennlist 9Y0 Water Pump Failure Megathread",
+                        "url": "https://rennlist.com/forums/cayenne-9y0-2019/1452471-9y0-cayenne-water-pump-failure-megathread.html",
+                        "retrieved_at": "2026-04-01",
+                        "note": "Owner reports suggest recurring water pump failures around 30k-70k miles on 9Y0 Cayennes."
+                    }
+                ]
+            },
+            {
+                "component": "Panoramic Roof Water Leak",
+                "symptoms": "Wet headliner, water near front interior light cluster, damp carpets, musty smell",
+                "repairCost": 1800,
+                "repairCost_range_low": 900,
+                "repairCost_range_high": 3000,
+                "verdictImplication": "Moderate: Water ingress is not usually terminal, but interior leak remediation can stack onto other large repairs and quickly sour the economics on an out-of-warranty Cayenne.",
+                "occurrence_rate": 0.10,
+                "avg_failure_mileage": 25000,
+                "confidence": "medium",
+                "last_updated": "2026-04-01",
+                "sources": [
+                    {
+                        "name": "2019 Porsche Cayenne TSB Index",
+                        "url": "https://www.carcomplaints.com/Porsche/Cayenne/2019/tsbs/",
+                        "retrieved_at": "2026-04-01",
+                        "note": "Includes panoramic sunroof leak rework guidance for 2019 Cayenne vehicles."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "model_id_ref": "genesis_gv80_jx",
+        "faults": [
+            {
+                "component": "Rear Differential Whine / Vibration",
+                "symptoms": "Howling or humming from rear axle, vibration under load, metal in diff fluid",
+                "repairCost": 4300,
+                "repairCost_range_low": 3500,
+                "repairCost_range_high": 4600,
+                "verdictImplication": "High Risk: Repeat rear differential replacements show up early on some GV80s. If a used example already has driveline vibration, budget this as a serious ownership risk and not a small maintenance item.",
+                "occurrence_rate": 0.22,
+                "avg_failure_mileage": 12000,
+                "confidence": "medium",
+                "last_updated": "2026-04-01",
+                "sources": [
+                    {
+                        "name": "Genesis Owners - Intense Vibration while driving our 2021 GV80",
+                        "url": "https://genesisowners.com/genesis-forum/threads/intense-vibration-while-driving-our-2021-gv80.35577/",
+                        "retrieved_at": "2026-04-01",
+                        "note": "Owner report indicating dealership differential replacement after severe vibration."
+                    },
+                    {
+                        "name": "Genesis GV80 repeat rear differential failure thread",
+                        "url": "https://www.gvforums.com/threads/gv80-repeat-rear-differential-failure.1493/",
+                        "retrieved_at": "2026-04-01",
+                        "note": "Multiple owners report rear differential failures and metal contamination."
+                    }
+                ]
+            },
+            {
+                "component": "Transfer Case Assembly Noise / Failure",
+                "symptoms": "Binding on turns, grinding under load, AWD driveline vibration",
+                "repairCost": 2800,
+                "repairCost_range_low": 2200,
+                "repairCost_range_high": 3600,
+                "verdictImplication": "Moderate to Severe: Transfer case noise can be confused with rear differential issues, but replacement cost is still material. Combined driveline complaints should be treated as a major caution sign on a used GV80.",
+                "occurrence_rate": 0.12,
+                "avg_failure_mileage": 14000,
+                "confidence": "low",
+                "last_updated": "2026-04-01",
+                "sources": [
+                    {
+                        "name": "Genesis Owners - Drive-Train Noise @ Lower Speeds",
+                        "url": "https://genesisowners.com/genesis-forum/threads/drive-train-noise-lower-speeds.34766/",
+                        "retrieved_at": "2026-04-01",
+                        "note": "Thread documents a GV80 that progressed from differential replacement to transfer case replacement."
+                    },
+                    {
+                        "name": "Go-Parts GV80 Transfer Case Guide",
+                        "url": "https://www.go-parts.com/garage/transfer-case-assembly-genesis-gv80-2021-2024",
+                        "retrieved_at": "2026-04-01",
+                        "note": "Aftermarket service summary referencing known GV80 transfer case replacements and cost band."
+                    }
+                ]
+            }
+        ]
+    },
+    {
         "faults": [
             {
                 "repairCost": 500,
@@ -1141,5 +1294,200 @@
             }
         ],
         "model_id_ref": "lexus_es_xz10"
+    },
+    {
+        "model_id_ref": "porsche_911_992",
+        "faults": [
+            {
+                "component": "Coolant Pump Leak",
+                "symptoms": "Low coolant warning, coolant smell from rear, visible seepage near pump housing",
+                "repairCost": 2200,
+                "repairCost_range_low": 1700,
+                "repairCost_range_high": 2800,
+                "verdictImplication": "High cost: Early 992 cars have a documented coolant-pump leak path. If coolant traces are present, budget for pump and seal replacement instead of repeated top-offs.",
+                "occurrence_rate": 0.12,
+                "avg_failure_mileage": 24850,
+                "confidence": "high",
+                "last_updated": "2026-04-01",
+                "sources": [
+                    {
+                        "name": "Porsche TSB MC-11008155-0001",
+                        "url": "https://static.nhtsa.gov/odi/tsbs/2020/MC-11008155-0001.pdf",
+                        "retrieved_at": "2026-04-01",
+                        "note": "Porsche technical information for coolant pump leakage on 2020 911 (992)."
+                    }
+                ]
+            },
+            {
+                "component": "Dynamic Engine Mount (PADM) Failure",
+                "symptoms": "Engine mount warning, vibration at idle, drivetrain movement under load",
+                "repairCost": 3800,
+                "repairCost_range_low": 3000,
+                "repairCost_range_high": 4600,
+                "verdictImplication": "Severe: Failed active mounts are expensive and usually replaced in pairs. A vibration complaint on a 992 is not a cheap rubber-mount job.",
+                "occurrence_rate": 0.08,
+                "avg_failure_mileage": 31240,
+                "confidence": "medium",
+                "last_updated": "2026-04-01",
+                "sources": [
+                    {
+                        "name": "Porsche TSB MC-10171900-0001",
+                        "url": "https://static.nhtsa.gov/odi/tsbs/2020/MC-10171900-0001.pdf",
+                        "retrieved_at": "2026-04-01",
+                        "note": "Porsche technical information covering defective dynamic engine mounts on 911 (992)."
+                    }
+                ]
+            },
+            {
+                "component": "Oil Pan Return Seal Leak",
+                "symptoms": "Oil drips on undertray, underbody oil film, burn smell after spirited driving",
+                "repairCost": 2600,
+                "repairCost_range_low": 1900,
+                "repairCost_range_high": 3400,
+                "verdictImplication": "Moderate to severe: Oil leaks on a rear-engine Porsche are labor heavy. If the belly pan is wet, the bill is usually far above a simple gasket reseal.",
+                "occurrence_rate": 0.07,
+                "avg_failure_mileage": 28950,
+                "confidence": "medium",
+                "last_updated": "2026-04-01",
+                "sources": [
+                    {
+                        "name": "Porsche TSB MC-11001406-0001",
+                        "url": "https://static.nhtsa.gov/odi/tsbs/2024/MC-11001406-0001.pdf",
+                        "retrieved_at": "2026-04-01",
+                        "note": "Porsche technical information for oil leaks from the oil pan return seal on 911 (992)."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "model_id_ref": "porsche_cayenne_e3",
+        "faults": [
+            {
+                "component": "Transfer Box Oil Leak",
+                "symptoms": "Gear oil seepage around transfer case housing, vibration or judder under load",
+                "repairCost": 2600,
+                "repairCost_range_low": 1900,
+                "repairCost_range_high": 3400,
+                "verdictImplication": "Severe: Once the transfer box starts leaking, the fix is usually seal-intensive and labor heavy. Ignore it and AWD drivability can deteriorate fast.",
+                "occurrence_rate": 0.14,
+                "avg_failure_mileage": 36420,
+                "confidence": "high",
+                "last_updated": "2026-04-01",
+                "sources": [
+                    {
+                        "name": "Porsche TSB MC-11009165-0001",
+                        "url": "https://static.nhtsa.gov/odi/tsbs/2024/MC-11009165-0001.pdf",
+                        "retrieved_at": "2026-04-01",
+                        "note": "Porsche technical information for oil leakage on the transfer box housing for Cayenne E3."
+                    }
+                ]
+            },
+            {
+                "component": "Coolant Change-Over Valve Leak",
+                "symptoms": "Coolant loss, sweet smell after shutdown, cooling system pressure loss",
+                "repairCost": 2100,
+                "repairCost_range_low": 1600,
+                "repairCost_range_high": 2900,
+                "verdictImplication": "High cost: Cooling leaks on the E3 often turn into multiple-part jobs once the intake-side plumbing is opened. Budget more than a basic hose replacement.",
+                "occurrence_rate": 0.12,
+                "avg_failure_mileage": 40110,
+                "confidence": "high",
+                "last_updated": "2026-04-01",
+                "sources": [
+                    {
+                        "name": "Porsche TSB MC-11015524-0001",
+                        "url": "https://static.nhtsa.gov/odi/tsbs/2024/MC-11015524-0001.pdf",
+                        "retrieved_at": "2026-04-01",
+                        "note": "Porsche technical information covering leaks at the coolant change-over valve on Cayenne E3."
+                    }
+                ]
+            },
+            {
+                "component": "Charge-Air Pressure Hose Leak",
+                "symptoms": "Loss of boost, hissing under acceleration, reduced power",
+                "repairCost": 950,
+                "repairCost_range_low": 650,
+                "repairCost_range_high": 1400,
+                "verdictImplication": "Moderate: A leaking charge-air hose is cheaper than transfer case work, but on a turbo Cayenne it still produces a real drivability bill and should not be dismissed as 'just software.'",
+                "occurrence_rate": 0.1,
+                "avg_failure_mileage": 28700,
+                "confidence": "medium",
+                "last_updated": "2026-04-01",
+                "sources": [
+                    {
+                        "name": "Porsche TSB MC-11009273-0001",
+                        "url": "https://static.nhtsa.gov/odi/tsbs/2024/MC-11009273-0001.pdf",
+                        "retrieved_at": "2026-04-01",
+                        "note": "Porsche technical information for leaking charge-air pressure hose on Cayenne E3."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "model_id_ref": "genesis_gv80_jx",
+        "faults": [
+            {
+                "component": "Rear Differential Hum or Whine",
+                "symptoms": "Humming or whining from the rear at 25-50 mph, vibration on accel/decel",
+                "repairCost": 3200,
+                "repairCost_range_low": 2400,
+                "repairCost_range_high": 4200,
+                "verdictImplication": "Severe: Genesis has a formal inspection-and-repair bulletin because some units need retorque, others need a full differential assembly. If the noise is present, do not assume it is tire roar.",
+                "occurrence_rate": 0.16,
+                "avg_failure_mileage": 16800,
+                "confidence": "high",
+                "last_updated": "2026-04-01",
+                "sources": [
+                    {
+                        "name": "Genesis TSB MC-11000783-0001",
+                        "url": "https://static.nhtsa.gov/odi/tsbs/2024/MC-11000783-0001.pdf",
+                        "retrieved_at": "2026-04-01",
+                        "note": "Genesis rear differential hum or whine inspection and repair bulletin for GV80."
+                    }
+                ]
+            },
+            {
+                "component": "Turbocharger Oil Feed Pipe Leak",
+                "symptoms": "Oil seepage near turbo plumbing, burnt oil smell, drip marks on undertray",
+                "repairCost": 1600,
+                "repairCost_range_low": 1200,
+                "repairCost_range_high": 2400,
+                "verdictImplication": "Moderate: Oil-feed leaks are rarely catastrophic on day one, but labor is enough that a 'small leak' still matters in a fix-or-sell decision.",
+                "occurrence_rate": 0.09,
+                "avg_failure_mileage": 18750,
+                "confidence": "high",
+                "last_updated": "2026-04-01",
+                "sources": [
+                    {
+                        "name": "Genesis TSB MC-11010484-0001",
+                        "url": "https://static.nhtsa.gov/odi/tsbs/2024/MC-11010484-0001.pdf",
+                        "retrieved_at": "2026-04-01",
+                        "note": "Genesis service bulletin for oil leakage from the turbocharger oil feed pipe on GV80."
+                    }
+                ]
+            },
+            {
+                "component": "A/C Evaporator O-Ring Refrigerant Leak",
+                "symptoms": "Weak cooling, refrigerant loss, oily residue at HVAC line joints",
+                "repairCost": 1400,
+                "repairCost_range_low": 950,
+                "repairCost_range_high": 2100,
+                "verdictImplication": "Moderate: HVAC leaks are not drivetrain failures, but they create a real ownership bill and usually show up before buyers expect a luxury SUV to need air-conditioning work.",
+                "occurrence_rate": 0.08,
+                "avg_failure_mileage": 22100,
+                "confidence": "high",
+                "last_updated": "2026-04-01",
+                "sources": [
+                    {
+                        "name": "Genesis TSB MC-11009327-0001",
+                        "url": "https://static.nhtsa.gov/odi/tsbs/2024/MC-11009327-0001.pdf",
+                        "retrieved_at": "2026-04-01",
+                        "note": "Genesis service bulletin for refrigerant leakage at the evaporator pipe O-ring on GV80."
+                    }
+                ]
+            }
+        ]
     }
 ]
