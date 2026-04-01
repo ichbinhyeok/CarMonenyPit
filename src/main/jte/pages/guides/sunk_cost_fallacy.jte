@@ -32,6 +32,15 @@
                     <a href="/" style="text-decoration:none; font-weight:700; color:#1d4ed8;">Run Repair vs Sell Analysis</a>
                 </div>
             </div>
+
+            <div style="margin-top: 1rem; padding: 1rem; border: 1px solid #dbeafe; border-radius: 14px; background: #f8fbff;">
+                <strong>See how this looks on real cars:</strong>
+                <div style="display:grid; gap:0.6rem; margin-top:0.8rem;">
+                    <a href="/should-i-fix/2014-toyota-corolla" style="text-decoration:none; font-weight:700; color:#0f172a;">2014 Toyota Corolla fix-or-sell page -></a>
+                    <a href="/should-i-fix/2014-toyota-camry" style="text-decoration:none; font-weight:700; color:#0f172a;">2014 Toyota Camry fix-or-sell page -></a>
+                    <a href="/should-i-fix/2014-nissan-altima" style="text-decoration:none; font-weight:700; color:#0f172a;">2014 Nissan Altima fix-or-sell page -></a>
+                </div>
+            </div>
         </article>
     `
 )

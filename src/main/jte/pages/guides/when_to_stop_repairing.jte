@@ -33,6 +33,15 @@
                     <a href="/" style="text-decoration:none; font-weight:700; color:#1d4ed8;">Open Calculator</a>
                 </div>
             </div>
+
+            <div style="margin-top: 1rem; padding: 1rem; border: 1px solid #dbeafe; border-radius: 14px; background: #f8fbff;">
+                <strong>Start with a real vehicle example:</strong>
+                <div style="display:grid; gap:0.6rem; margin-top:0.8rem;">
+                    <a href="/should-i-fix/2013-honda-cr-v" style="text-decoration:none; font-weight:700; color:#0f172a;">2013 Honda CR-V fix-or-sell page -></a>
+                    <a href="/should-i-fix/2015-mazda-cx-5" style="text-decoration:none; font-weight:700; color:#0f172a;">2015 Mazda CX-5 fix-or-sell page -></a>
+                    <a href="/should-i-fix/2014-ford-escape" style="text-decoration:none; font-weight:700; color:#0f172a;">2014 Ford Escape fix-or-sell page -></a>
+                </div>
+            </div>
         </article>
     `
 )

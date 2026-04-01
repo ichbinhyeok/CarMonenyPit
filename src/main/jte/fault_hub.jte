@@ -8,6 +8,46 @@
 @param String canonicalUrl
 @param List<java.util.Map<String, String>> breadcrumbs
 
+!{
+    var featuredDecisionLinks = new java.util.ArrayList<java.util.Map.Entry<String, String>>();
+    var seenDecisionUrls = new java.util.LinkedHashSet<String>();
+    for (AffectedModel m : hub.affectedModels()) {
+        String brand = m.brand() == null ? "" : m.brand();
+        String model = m.model() == null ? "" : m.model();
+        String url = null;
+        String label = null;
+        if (brand.equalsIgnoreCase("TOYOTA") && model.equalsIgnoreCase("Camry")) {
+            url = "/should-i-fix/2014-toyota-camry";
+            label = "2014 Toyota Camry fix-or-sell page";
+        } else if (brand.equalsIgnoreCase("NISSAN") && model.equalsIgnoreCase("Altima")) {
+            url = "/should-i-fix/2014-nissan-altima";
+            label = "2014 Nissan Altima fix-or-sell page";
+        } else if (brand.equalsIgnoreCase("HONDA") && model.equalsIgnoreCase("Accord")) {
+            url = "/should-i-fix/2015-honda-accord";
+            label = "2015 Honda Accord fix-or-sell page";
+        } else if (brand.equalsIgnoreCase("HONDA") && model.equalsIgnoreCase("CR-V")) {
+            url = "/should-i-fix/2013-honda-cr-v";
+            label = "2013 Honda CR-V fix-or-sell page";
+        } else if (brand.equalsIgnoreCase("MAZDA") && model.equalsIgnoreCase("CX-5")) {
+            url = "/should-i-fix/2015-mazda-cx-5";
+            label = "2015 Mazda CX-5 fix-or-sell page";
+        } else if (brand.equalsIgnoreCase("TOYOTA") && model.equalsIgnoreCase("Corolla")) {
+            url = "/should-i-fix/2014-toyota-corolla";
+            label = "2014 Toyota Corolla fix-or-sell page";
+        } else if (brand.equalsIgnoreCase("FORD") && model.equalsIgnoreCase("Escape")) {
+            url = "/should-i-fix/2014-ford-escape";
+            label = "2014 Ford Escape fix-or-sell page";
+        }
+
+        if (url != null && seenDecisionUrls.add(url)) {
+            featuredDecisionLinks.add(java.util.Map.entry(label, url));
+        }
+        if (featuredDecisionLinks.size() >= 4) {
+            break;
+        }
+    }
+}
+
 @template.layout(
     title = hub.displayName() + ": Cost, Symptoms & Fix-or-Sell Guide | AutoMoneyPit",
     canonical = canonicalUrl,
@@ -213,6 +253,20 @@
                     <li><strong>Other pending maintenance</strong> — cascading failures can shift the equation</li>
                 </ul>
                 <p style="font-size: 0.85rem; color: var(--text-secondary);"><em>This is decision support only, not financial advice.</em></p>
+                @if(!featuredDecisionLinks.isEmpty())
+                <div style="margin: 1.25rem 0 0; padding: 1rem 1.1rem; border: 1px solid #dbeafe; background: #f8fbff; border-radius: 14px;">
+                    <div style="font-size: 0.76rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: #1d4ed8; margin-bottom: 0.7rem;">
+                        Popular Model Decision Pages
+                    </div>
+                    <div style="display: grid; gap: 0.7rem;">
+                        @for(var link : featuredDecisionLinks)
+                        <a href="${link.getValue()}" style="text-decoration: none; color: #0f172a; font-weight: 800; background: #fff; border: 1px solid #bfdbfe; border-radius: 12px; padding: 0.9rem 1rem; display: block;">
+                            ${link.getKey()} <span style="float: right; color: #1d4ed8;">-></span>
+                        </a>
+                        @endfor
+                    </div>
+                </div>
+                @endif
                 <div style="margin-top: 1rem;">
                     <a href="/#form-container" class="hub-cta" id="hub-cta-inline"
                        onclick="window.ampTrack('cta_click', { event_category: 'conversion', page_type: 'fault_hub', intent: 'VALUE', verdict_state: 'UNKNOWN', detail: '${hub.slug()}', placement: 'inline' });">

@@ -401,6 +401,7 @@ This section records tracking-relevant changes shipped after the March 20 audit.
 - the homepage and model hubs now link more aggressively into a small set of priority `/should-i-fix/*` pages
 - fault verdict and mileage verdict pages now loop users back into the full model-level `/should-i-fix/*` decision page
 - top opportunity `/should-i-fix/*` pages now align hero copy and FAQ schema with the same model-specific decision logic
+- brand directories, fault hubs, and core guides now also push users toward priority `/should-i-fix/*` decision pages
 
 ### B. What Did Not Change
 - no canonical event names changed
@@ -440,6 +441,7 @@ This section records tracking-relevant changes shipped after the March 20 audit.
   - better impressions
   - better average position
   - more calculator/report handoffs
+- guide and directory changes should be judged by whether those pages become stronger feeder pages, not by standalone lead volume
 - do not expect all model pages to move at once; watch the highest-opportunity models first:
   - Camry
   - Altima

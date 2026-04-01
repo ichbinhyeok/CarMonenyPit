@@ -359,6 +359,7 @@ public class PSeoController {
         "Browse car brands to find common problems, repair costs, and fix-or-sell guides for specific models.");
     modelMap.addAttribute("canonicalUrl", baseUrl + "/models");
     modelMap.addAttribute("breadcrumbs", List.of("Models")); // Keep simple for directory for now
+    modelMap.addAttribute("featuredItems", getGlobalPriorityDecisionLinks());
     modelMap.addAttribute("items", brands);
     return "pages/directory_list";
   }
@@ -400,6 +401,7 @@ public class PSeoController {
         + " models with common problems, repair costs, and fix-or-sell guidance before you approve a big repair.");
     modelMap.addAttribute("canonicalUrl", baseUrl + "/models/" + canonicalBrandSlug);
     modelMap.addAttribute("breadcrumbs", List.of("Models", displayBrand));
+    modelMap.addAttribute("featuredItems", getBrandPriorityDecisionLinks(canonicalBrandSlug));
     modelMap.addAttribute("items", modelLinks);
     return "pages/directory_list";
   }
@@ -569,6 +571,33 @@ public class PSeoController {
       }
     }
     return closestBucket;
+  }
+
+  private List<java.util.Map.Entry<String, String>> getGlobalPriorityDecisionLinks() {
+    return List.of(
+        java.util.Map.entry("2014 Toyota Camry fix-or-sell page", "/should-i-fix/2014-toyota-camry"),
+        java.util.Map.entry("2014 Nissan Altima fix-or-sell page", "/should-i-fix/2014-nissan-altima"),
+        java.util.Map.entry("2015 Honda Accord fix-or-sell page", "/should-i-fix/2015-honda-accord"),
+        java.util.Map.entry("2013 Honda CR-V fix-or-sell page", "/should-i-fix/2013-honda-cr-v"),
+        java.util.Map.entry("2015 Mazda CX-5 fix-or-sell page", "/should-i-fix/2015-mazda-cx-5"));
+  }
+
+  private List<java.util.Map.Entry<String, String>> getBrandPriorityDecisionLinks(String canonicalBrandSlug) {
+    return switch (canonicalBrandSlug) {
+      case "toyota" -> List.of(
+          java.util.Map.entry("Start with 2014 Toyota Camry", "/should-i-fix/2014-toyota-camry"),
+          java.util.Map.entry("Check 2014 Toyota Corolla", "/should-i-fix/2014-toyota-corolla"));
+      case "nissan" -> List.of(
+          java.util.Map.entry("Start with 2014 Nissan Altima", "/should-i-fix/2014-nissan-altima"));
+      case "honda" -> List.of(
+          java.util.Map.entry("Start with 2015 Honda Accord", "/should-i-fix/2015-honda-accord"),
+          java.util.Map.entry("Check 2013 Honda CR-V", "/should-i-fix/2013-honda-cr-v"));
+      case "mazda" -> List.of(
+          java.util.Map.entry("Start with 2015 Mazda CX-5", "/should-i-fix/2015-mazda-cx-5"));
+      case "ford" -> List.of(
+          java.util.Map.entry("Start with 2014 Ford Escape", "/should-i-fix/2014-ford-escape"));
+      default -> List.of();
+    };
   }
 
   private String toFaultSlug(String component) {

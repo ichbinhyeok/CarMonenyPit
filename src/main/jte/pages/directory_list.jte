@@ -2,6 +2,7 @@
 @param String metaDescription = null
 @param String canonicalUrl = null
 @param java.util.List<String> breadcrumbs
+@param java.util.List<java.util.Map.Entry<String, String>> featuredItems = java.util.List.of()
 @param java.util.List<java.util.Map.Entry<String, String>> items
 
 @template.layout(
@@ -25,6 +26,24 @@
             <p style="font-size: 1.05rem; color: #64748b; line-height: 1.7; margin-bottom: 2rem; max-width: 720px;">
                 ${metaDescription}
             </p>
+        @endif
+
+        @if(featuredItems != null && !featuredItems.isEmpty())
+            <div style="margin-bottom: 2rem; padding: 1.25rem; border: 1px solid #dbeafe; border-radius: 16px; background: #f8fbff;">
+                <div style="font-size: 0.78rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: #1d4ed8; margin-bottom: 0.75rem;">
+                    Priority Fix-or-Sell Pages
+                </div>
+                <div style="display: grid; gap: 0.75rem;">
+                    @for(java.util.Map.Entry<String, String> item : featuredItems)
+                        <a href="${item.getValue()}" style="display: block; text-decoration: none; color: #0f172a; font-weight: 800; padding: 0.9rem 1rem; border-radius: 12px; border: 1px solid #bfdbfe; background: #fff;">
+                            ${item.getKey()} <span style="float: right; color: #1d4ed8;">-></span>
+                            <div style="font-size: 0.82rem; color: #64748b; font-weight: 600; margin-top: 0.35rem;">
+                                Open a year-specific decision page before you drill into the long-tail problem pages.
+                            </div>
+                        </a>
+                    @endfor
+                </div>
+            </div>
         @endif
 
         <ul style="list-style: none; padding: 0;">

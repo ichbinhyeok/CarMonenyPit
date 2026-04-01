@@ -15,6 +15,7 @@ import java.util.Optional;
 
 import static org.mockito.BDDMockito.given;
 import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -60,5 +61,18 @@ public class PSeoControllerTest {
                 .andExpect(model().attribute("representativeYear", 2017))
                 .andExpect(model().attribute("shouldFixUrl", "/should-i-fix/2017-toyota-camry"))
                 .andExpect(model().attribute("decisionPageLinks", hasSize(3)));
+    }
+
+    @Test
+    void brandDirectoryShouldExposePriorityDecisionLinks() throws Exception {
+        given(dataService.getModelsByBrand("honda")).willReturn(List.of(
+                new CarDataService.CarModel("honda_accord_9g", "HONDA", "Accord", "9G", 2013, 2017),
+                new CarDataService.CarModel("honda_crv_rm", "HONDA", "CR-V", "RM", 2012, 2016)));
+
+        mockMvc.perform(get("/models/honda"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("pages/directory_list"))
+                .andExpect(model().attribute("featuredItems", hasSize(2)))
+                .andExpect(model().attribute("metaDescription", containsString("HONDA")));
     }
 }
