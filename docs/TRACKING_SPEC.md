@@ -397,6 +397,7 @@ This section records tracking-relevant changes shipped after the March 20 audit.
 - pSEO fault and mileage pages now render waitlist-aware CTA copy when `approvalPending=true`
 - `/should-i-fix/*` entry pages now surface stronger decision-threshold copy higher on the page
 - `/models/{brand}/{model}` pages are being upgraded from plain directories toward model decision hubs
+- top opportunity `/should-i-fix/*` pages now receive more model-specific intro and FAQ copy for US-market repair decisions
 
 ### B. What Did Not Change
 - no canonical event names changed
@@ -421,3 +422,17 @@ This section records tracking-relevant changes shipped after the March 20 audit.
 - whether top `/should-i-fix/*` pages with positions 1-10 gain clicks after the new copy
 - whether pSEO fault and mileage pages still preserve clean waitlist routing after CTA copy changes
 - whether the new model hubs improve internal handoff into year-specific decision pages
+
+### E. Practical Reading Guide
+- if CTR rises first on `/should-i-fix/*` without an immediate lead spike, that is still a good sign
+- page-level copy changes should be judged in this order:
+  - impressions
+  - CTR
+  - calculator / report handoff
+  - `lead_submit`
+- do not expect all model pages to move at once; watch the highest-opportunity models first:
+  - Camry
+  - Altima
+  - Accord
+  - CR-V
+  - CX-5

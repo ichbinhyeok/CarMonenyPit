@@ -173,4 +173,26 @@ public class WebLayerTest {
                                 .andExpect(status().isMovedPermanently())
                                 .andExpect(redirectedUrl("https://automoneypit.com/should-i-fix/2018-honda-cr-v"));
         }
+
+        @Test
+        public void shouldProvideModelSpecificCopyForAltimaPages() throws Exception {
+                given(valuationService.isValidBrand("NISSAN")).willReturn(true);
+                given(carDataService.getAllModels()).willReturn(List.of(
+                                new CarDataService.CarModel("nissan-altima-l33", "NISSAN", "Altima", "L33", 2013, 2018)));
+                given(carDataService.findFaultsByModelId("nissan-altima-l33")).willReturn(Optional.of(
+                                new CarDataService.MajorFaults("nissan-altima-l33", List.of(
+                                                new CarDataService.Fault("CVT", "Shudder and slip", 4200, "SELL", 0.0,
+                                                                105000)))));
+                given(carDataService.findReliabilityByModelId("nissan-altima-l33")).willReturn(Optional.of(
+                                new CarDataService.ModelReliability("nissan-altima-l33", 58, 180000, List.of(2017),
+                                                List.of(2013, 2014), List.of("Transmission"), List.of(), java.util.Map.of())));
+                given(carDataService.findMarketByModelId("nissan-altima-l33")).willReturn(Optional.of(
+                                new CarDataService.ModelMarket("nissan-altima-l33", 9800, 0.12, 244, "soft", 1500)));
+
+                mockMvc.perform(get("/should-i-fix/2014-nissan-altima"))
+                                .andExpect(status().isOk())
+                                .andExpect(view().name("pseo"))
+                                .andExpect(model().attribute("introParagraph", containsString("CVT")))
+                                .andExpect(model().attribute("decisionFaqAnswer", containsString("Altima")));
+        }
 }

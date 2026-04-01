@@ -21,6 +21,11 @@
 @param String brandDirectoryUrl = null
 @param String prefillBrandSlug = null
 @param String prefillModelSlug = null
+@param String introParagraph = null
+@param String valueFaqAnswer = null
+@param String repairsFaqAnswer = null
+@param String decisionFaqAnswer = null
+@param String highMileageFaqAnswer = null
 
 !{var faqSchema = """
 {
@@ -642,8 +647,9 @@
             <h2>Understanding ${prefillYear} ${prefillBrand} ${prefillModel} Repair Costs</h2>
             
             <p>
-                The ${prefillYear} ${prefillBrand} ${prefillModel} is generally a reliable vehicle, but as it ages, specific mechanical patterns emerge. 
-                Instead of guessing, we analyze documented failure patterns and repair cost data for this model.
+                ${introParagraph != null
+                    ? introParagraph
+                    : "The " + prefillYear + " " + prefillBrand + " " + prefillModel + " should be judged by real repair economics, not generic advice. We look at market value, lifespan, and known failure patterns so you can decide whether this quote is still worth approving."}
             </p>
 
             @if(thresholdRule != null)
@@ -729,17 +735,18 @@
             <div class="faq-item">
                 <div class="faq-question">How much is my ${prefillYear} ${prefillBrand} ${prefillModel} worth?</div>
                 <div class="faq-answer">
-                    The value of a ${prefillYear} ${prefillModel} varies significantly based on mileage, condition, 
-                    and your local market. For a ${2026 - prefillYear}-year-old vehicle, expect depreciation to have 
-                    reduced the value by 50-70% from the original MSRP. Our calculator uses current market 
-                    data to estimate your specific vehicle's value.
+                    ${valueFaqAnswer != null
+                        ? valueFaqAnswer
+                        : "The value of a " + prefillYear + " " + prefillModel + " varies significantly based on mileage, condition, and your local market. For a " + (2026 - prefillYear) + "-year-old vehicle, expect depreciation to have reduced the value by 50-70% from the original MSRP. Our calculator uses current market data to estimate your specific vehicle's value."}
                 </div>
             </div>
             
             <div class="faq-item">
                 <div class="faq-question">What are common repairs for the ${prefillBrand} ${prefillModel}?</div>
                 <div class="faq-answer">
-                    @if(majorFaults != null && !majorFaults.faults().isEmpty())
+                    @if(repairsFaqAnswer != null)
+                        ${repairsFaqAnswer}
+                    @elseif(majorFaults != null && !majorFaults.faults().isEmpty())
                         For the ${prefillYear} ${prefillModel}, owners frequently report issues with the 
                         <strong>${majorFaults.faults().get(0).component()}</strong> (approx. $${(int)majorFaults.faults().get(0).repairCost()}) 
                         and 
@@ -761,7 +768,9 @@
             <div class="faq-item">
                 <div class="faq-question">Should I fix my ${prefillModel} or buy a new car?</div>
                 <div class="faq-answer">
-                    @if(cautionThresholdUsd != null && sellThresholdUsd != null)
+                    @if(decisionFaqAnswer != null)
+                        ${decisionFaqAnswer}
+                    @elseif(cautionThresholdUsd != null && sellThresholdUsd != null)
                         For many ${prefillYear} ${prefillBrand} ${prefillModel} owners, repair quotes below roughly 
                         <strong>$${String.format("%,d", cautionThresholdUsd)}</strong> are easier to justify, while quotes near 
                         <strong>$${String.format("%,d", sellThresholdUsd)}</strong> usually deserve a serious fix-versus-sell comparison. 
@@ -778,16 +787,20 @@
             <div class="faq-item">
                 <div class="faq-question">Is repairing a high-mileage ${prefillModel} worth it?</div>
                 <div class="faq-answer">
-                    High-mileage vehicles (over 100,000 miles) require more careful consideration.
-                    @if(lifespanMiles != null)
-                        Our current dataset puts the expected lifespan of the ${prefillBrand} ${prefillModel} around 
-                        <strong>${String.format("%,d", lifespanMiles)} miles</strong>, so once your quote is large and the car is deep into that range, 
-                        the decision gets much harder.
+                    @if(highMileageFaqAnswer != null)
+                        ${highMileageFaqAnswer}
                     @else
-                        While the ${prefillBrand} ${prefillModel} has a reputation for longevity, each repair decision should 
-                        factor in remaining useful life.
+                        High-mileage vehicles (over 100,000 miles) require more careful consideration.
+                        @if(lifespanMiles != null)
+                            Our current dataset puts the expected lifespan of the ${prefillBrand} ${prefillModel} around 
+                            <strong>${String.format("%,d", lifespanMiles)} miles</strong>, so once your quote is large and the car is deep into that range, 
+                            the decision gets much harder.
+                        @else
+                            While the ${prefillBrand} ${prefillModel} has a reputation for longevity, each repair decision should 
+                            factor in remaining useful life.
+                        @endif
+                        Our tool helps you make this calculation objectively.
                     @endif
-                    Our tool helps you make this calculation objectively.
                 </div>
             </div>
         </section>
