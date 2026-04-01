@@ -1130,6 +1130,186 @@
         "model_id_ref": "jeep_compass_mp"
     },
     {
+        "model_id_ref": "porsche_macan_95b",
+        "faults": [
+            {
+                "component": "Transfer Box Oil Leak",
+                "symptoms": "Oil seepage near transfer case, judder under load, driveline vibration on acceleration",
+                "repairCost": 2800,
+                "repairCost_range_low": 2100,
+                "repairCost_range_high": 3600,
+                "verdictImplication": "Severe: Porsche issued a U.S. technical bulletin because oil leakage at the transfer box can require full transfer-box replacement, not just a seal. On a used Macan, this is a real fix-or-sell bill.",
+                "occurrence_rate": 0.16,
+                "avg_failure_mileage": 38400,
+                "confidence": "high",
+                "last_updated": "2026-04-01",
+                "sources": [
+                    {
+                        "name": "Porsche TSB MC-10249866-0001",
+                        "url": "https://static.nhtsa.gov/odi/tsbs/2024/MC-10249866-0001.pdf",
+                        "retrieved_at": "2026-04-01",
+                        "note": "Porsche technical information for Macan (95B) transfer box oil leakage and replacement criteria."
+                    }
+                ]
+            },
+            {
+                "component": "Coolant Pump / Change-Over Valve Failure",
+                "symptoms": "Coolant temperature too high warning, coolant loss, overheating risk under load",
+                "repairCost": 2400,
+                "repairCost_range_low": 1800,
+                "repairCost_range_high": 3200,
+                "verdictImplication": "High cost: Porsche instructs technicians to inspect both the coolant pump and change-over valve because the root cause can cascade. If overheating is already showing up, this is not a cheap hose fix.",
+                "occurrence_rate": 0.11,
+                "avg_failure_mileage": 33600,
+                "confidence": "high",
+                "last_updated": "2026-04-01",
+                "sources": [
+                    {
+                        "name": "Porsche TSB MC-11005795-0001",
+                        "url": "https://static.nhtsa.gov/odi/tsbs/2024/MC-11005795-0001.pdf",
+                        "retrieved_at": "2026-04-01",
+                        "note": "Porsche technical information covering coolant pump and change-over valve faults on Macan S/GTS/Turbo."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "model_id_ref": "genesis_gv70_jk",
+        "faults": [
+            {
+                "component": "Rear Differential Hum / Whine",
+                "symptoms": "Humming or whining from rear axle at highway speed, vibration on throttle tip-in and coast-down",
+                "repairCost": 3100,
+                "repairCost_range_low": 2400,
+                "repairCost_range_high": 4100,
+                "verdictImplication": "Severe: Genesis has a U.S. differential inspection-and-repair bulletin because some GV70s need lock-nut correction while others need a full differential. Buyers should treat this as a major driveline issue, not tire noise.",
+                "occurrence_rate": 0.17,
+                "avg_failure_mileage": 18500,
+                "confidence": "high",
+                "last_updated": "2026-04-01",
+                "sources": [
+                    {
+                        "name": "Genesis TSB MC-11000781-0001",
+                        "url": "https://static.nhtsa.gov/odi/tsbs/2024/MC-11000781-0001.pdf",
+                        "retrieved_at": "2026-04-01",
+                        "note": "Genesis U.S. bulletin for rear differential hum or whine inspection and repair on GV70."
+                    }
+                ]
+            },
+            {
+                "component": "Seat Belt Pretensioner Recall Exposure",
+                "symptoms": "No warning in normal use; unresolved recall shows up in VIN check and materially affects saleability",
+                "repairCost": 900,
+                "repairCost_range_low": 0,
+                "repairCost_range_high": 1800,
+                "verdictImplication": "Moderate: Recall 012G is free when open, but an unresolved pretensioner VIN on a used GV70 is still a trust and transaction hit. If recall status is unknown, treat it as a must-verify issue before buying or selling.",
+                "occurrence_rate": 0.09,
+                "avg_failure_mileage": 12000,
+                "confidence": "medium",
+                "last_updated": "2026-04-01",
+                "sources": [
+                    {
+                        "name": "Genesis Recall 012G",
+                        "url": "https://static.nhtsa.gov/odi/rcl/2023/RCRIT-23V094-8249.pdf",
+                        "retrieved_at": "2026-04-01",
+                        "note": "Genesis U.S. recall bulletin for GV70 front seat belt pretensioner protection cap installation."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "model_id_ref": "kia_telluride_on",
+        "faults": [
+            {
+                "component": "Intermediate Shaft / Driveshaft Spline Wear",
+                "symptoms": "Grinding noise, reduced motive power, vehicle movement in Park without EPB, difficulty engaging Drive or Reverse",
+                "repairCost": 2500,
+                "repairCost_range_low": 1800,
+                "repairCost_range_high": 3400,
+                "verdictImplication": "Severe: Kia's U.S. recall says partial engagement can damage shaft splines and produce grinding, loss of drive, or unintended movement in Park. If this symptom is present, treat it as a serious driveline event.",
+                "occurrence_rate": 0.11,
+                "avg_failure_mileage": 32200,
+                "confidence": "high",
+                "last_updated": "2026-04-01",
+                "sources": [
+                    {
+                        "name": "Kia Recall 24V214",
+                        "url": "https://static.nhtsa.gov/odi/rcl/2024/RCMN-24V214-1535.pdf",
+                        "retrieved_at": "2026-04-01",
+                        "note": "Kia U.S. recall for Telluride intermediate shaft and right front driveshaft partial engagement."
+                    }
+                ]
+            },
+            {
+                "component": "Self-Leveling Rear Shock Absorber Leak",
+                "symptoms": "Rear suspension sag, oil leakage at rear shocks, floaty ride or instability over bumps",
+                "repairCost": 1700,
+                "repairCost_range_low": 1200,
+                "repairCost_range_high": 2400,
+                "verdictImplication": "Moderate: The U.S. TSB confirms rear self-leveling shock replacement on Telluride. This is not catastrophic, but it is a real four-figure ownership hit on a family SUV that buyers often assume is trouble-free.",
+                "occurrence_rate": 0.12,
+                "avg_failure_mileage": 42800,
+                "confidence": "high",
+                "last_updated": "2026-04-01",
+                "sources": [
+                    {
+                        "name": "Kia TSB CHA125 Rev 1",
+                        "url": "https://static.nhtsa.gov/odi/tsbs/2024/MC-11008052-0002.pdf",
+                        "retrieved_at": "2026-04-01",
+                        "note": "Kia U.S. bulletin for self-leveling rear shock absorber inspection and replacement on Telluride."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "model_id_ref": "lexus_nx_az20",
+        "faults": [
+            {
+                "component": "Front Shock Tower Spot-Weld Defect",
+                "symptoms": "Abnormal steering feel, front suspension noise, structural cracking around the strut mount area",
+                "repairCost": 5200,
+                "repairCost_range_low": 3500,
+                "repairCost_range_high": 8000,
+                "verdictImplication": "Severe: Lexus recall 22LA02 involves potentially missing spot-welds at the front shock absorber mounting area. If unresolved, this is a structural safety defect, not a cosmetic campaign.",
+                "occurrence_rate": 0.07,
+                "avg_failure_mileage": 15000,
+                "confidence": "high",
+                "last_updated": "2026-04-01",
+                "sources": [
+                    {
+                        "name": "Lexus Recall 22LA02",
+                        "url": "https://static.nhtsa.gov/odi/rcl/2022/RCMN-22V238-3701.pdf",
+                        "retrieved_at": "2026-04-01",
+                        "note": "Lexus U.S. recall for potentially missing spot-welds near the front shock absorber mounting area on 2022 NX."
+                    }
+                ]
+            },
+            {
+                "component": "Gear Shift Control Unit Logic Fault",
+                "symptoms": "Unexpected shift behavior, warning messages, drivability complaints resolved by ECU update",
+                "repairCost": 450,
+                "repairCost_range_low": 0,
+                "repairCost_range_high": 900,
+                "verdictImplication": "Low to Moderate: Lexus issued a U.S. special service campaign for gear shift control software. It is usually a software fix, but unresolved campaign status still hurts confidence on an otherwise premium compact SUV.",
+                "occurrence_rate": 0.08,
+                "avg_failure_mileage": 9000,
+                "confidence": "high",
+                "last_updated": "2026-04-01",
+                "sources": [
+                    {
+                        "name": "Lexus Campaign 22LC03",
+                        "url": "https://static.nhtsa.gov/odi/tsbs/2022/MC-10228586-9999.pdf",
+                        "retrieved_at": "2026-04-01",
+                        "note": "Lexus U.S. special service campaign for gear shift control unit software on 2022 NX 250/350."
+                    }
+                ]
+            }
+        ]
+    },
+    {
         "faults": [
             {
                 "repairCost": 500,
@@ -1332,6 +1512,170 @@
                         "url": "https://static.nhtsa.gov/odi/tsbs/2024/MC-11009327-0001.pdf",
                         "retrieved_at": "2026-04-01",
                         "note": "Genesis service bulletin for refrigerant leakage at the evaporator pipe O-ring on GV80."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "model_id_ref": "porsche_macan_95b",
+        "faults": [
+            {
+                "component": "Transfer Box Oil Leak / Replacement",
+                "symptoms": "Oil leakage around transfer box, judder under load, AWD driveline vibration",
+                "repairCost": 2800,
+                "repairCost_range_low": 2200,
+                "repairCost_range_high": 3800,
+                "verdictImplication": "Severe: Porsche has issued transfer box technical information and workshop campaigns because leak-related failures can require full transfer box replacement. On a used Macan, this is not a cosmetic leak.",
+                "occurrence_rate": 0.18,
+                "avg_failure_mileage": 32000,
+                "confidence": "high",
+                "last_updated": "2026-04-01",
+                "sources": [
+                    {
+                        "name": "Porsche TSB MC-10249866-0001",
+                        "url": "https://static.nhtsa.gov/odi/tsbs/2024/MC-10249866-0001.pdf",
+                        "retrieved_at": "2026-04-01",
+                        "note": "Porsche technical information describing oil leakage at the transfer box on Macan (95B)."
+                    },
+                    {
+                        "name": "Porsche WPR1 Workshop Campaign",
+                        "url": "https://static.nhtsa.gov/odi/tsbs/2024/MC-10251185-0001.pdf",
+                        "retrieved_at": "2026-04-01",
+                        "note": "Porsche workshop campaign to replace affected Macan transfer boxes due to oil leakage risk."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "model_id_ref": "genesis_gv70_jk",
+        "faults": [
+            {
+                "component": "Rear Differential Hum or Whine",
+                "symptoms": "Humming or whining from rear axle, vibration at speed, driveline resonance on throttle lift",
+                "repairCost": 3200,
+                "repairCost_range_low": 2400,
+                "repairCost_range_high": 4200,
+                "verdictImplication": "Severe: Genesis has a formal inspection and repair bulletin because some GV70s need lock-nut retorque while others need a full differential or driveline component replacement.",
+                "occurrence_rate": 0.15,
+                "avg_failure_mileage": 16500,
+                "confidence": "high",
+                "last_updated": "2026-04-01",
+                "sources": [
+                    {
+                        "name": "Genesis TSB MC-11009768-0001",
+                        "url": "https://static.nhtsa.gov/odi/tsbs/2024/MC-11009768-0001.pdf",
+                        "retrieved_at": "2026-04-01",
+                        "note": "Official Genesis bulletin for GV70 rear differential hum or whine inspection and repair."
+                    }
+                ]
+            },
+            {
+                "component": "Transfer Case Noise / Replacement",
+                "symptoms": "Grinding or binding at low speeds, driveline shudder on turns, front-to-rear power transfer hesitation",
+                "repairCost": 2800,
+                "repairCost_range_low": 2200,
+                "repairCost_range_high": 3600,
+                "verdictImplication": "Moderate to Severe: US owner forums report transfer case replacements on early GV70s after driveline noise complaints. If a GV70 already has this symptom set, the repair is too large to ignore in a buy-or-fix decision.",
+                "occurrence_rate": 0.10,
+                "avg_failure_mileage": 18000,
+                "confidence": "medium",
+                "last_updated": "2026-04-01",
+                "sources": [
+                    {
+                        "name": "Genesis Owners - GV70 potential buyer concerned about transfer case",
+                        "url": "https://genesisowners.com/genesis-forum/threads/gv70-potential-buyer-concerned-about-transfer-case.47543/",
+                        "retrieved_at": "2026-04-01",
+                        "note": "US owner thread describing dealer familiarity with differential and transfer case replacements on GV70."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "model_id_ref": "lexus_nx_az20",
+        "faults": [
+            {
+                "component": "No Major Systematic Mechanical Faults",
+                "symptoms": "Most US complaints center on 12V battery drain, software glitches, or roof noise rather than a consistent high-cost drivetrain failure",
+                "repairCost": 600,
+                "repairCost_range_low": 250,
+                "repairCost_range_high": 1200,
+                "verdictImplication": "Low Risk: Current US-market evidence does not show a strong money-pit mechanical pattern on the 2022+ NX. Treat it as a generally safe platform, but check for battery-drain complaints and outstanding recall work.",
+                "occurrence_rate": 0.08,
+                "avg_failure_mileage": 12000,
+                "confidence": "low",
+                "last_updated": "2026-04-01",
+                "sources": [
+                    {
+                        "name": "ClubLexus NX 12V battery drain thread",
+                        "url": "https://www.clublexus.com/forums/nx-2nd-gen-2022-current/1034422-lexus-dealer-just-told-me-lexus-app-drains-12-v-battery.html",
+                        "retrieved_at": "2026-04-01",
+                        "note": "US owner reports point to parasitic 12V battery drain rather than an expensive systemic powertrain defect."
+                    },
+                    {
+                        "name": "2022 Lexus NX shock-mount recall coverage",
+                        "url": "https://www.carcomplaints.com/news/2022/lexus-nx-suvs-recalled-shocks-may-detach.shtml",
+                        "retrieved_at": "2026-04-01",
+                        "note": "Safety recall exists, but the main early ownership signal is recall/warranty activity rather than a repeat out-of-pocket failure."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "model_id_ref": "kia_telluride_on",
+        "faults": [
+            {
+                "component": "Rear Self-Leveling Shock Failure",
+                "symptoms": "Clunking or harsh rear suspension, sagging rear ride height, repeated rear shock replacement",
+                "repairCost": 2200,
+                "repairCost_range_low": 1500,
+                "repairCost_range_high": 2800,
+                "verdictImplication": "Moderate: This is not usually a total-loss failure, but US owners repeatedly report expensive rear shock replacements outside warranty, especially on tow-package and self-leveling setups.",
+                "occurrence_rate": 0.14,
+                "avg_failure_mileage": 31000,
+                "confidence": "medium",
+                "last_updated": "2026-04-01",
+                "sources": [
+                    {
+                        "name": "Kia Telluride Forums - Rear self-leveling shock absorbers have failed",
+                        "url": "https://tellurideforum.org/threads/rear-self-leveling-shock-absorbers-have-failed.14968/",
+                        "retrieved_at": "2026-04-01",
+                        "note": "US owners report failures from roughly 25k-70k miles and dealer quotes near $2k."
+                    },
+                    {
+                        "name": "Kia Telluride Forums - Self leveling shocks out again",
+                        "url": "https://tellurideforum.org/threads/self-leveling-shocks-out-again-options.15247/",
+                        "retrieved_at": "2026-04-01",
+                        "note": "Repeat failure reports with out-of-warranty repair quotes around $2,500."
+                    }
+                ]
+            },
+            {
+                "component": "AWD Coupler / Intermediate Shaft Damage",
+                "symptoms": "Grinding noise, reduced drive power, binding or driveline shock in AWD operation",
+                "repairCost": 2600,
+                "repairCost_range_low": 1800,
+                "repairCost_range_high": 3600,
+                "verdictImplication": "Moderate to Severe: Kia has a formal US recall for intermediate shaft engagement problems, and owner reports suggest some AWD driveline repairs go beyond a simple software update.",
+                "occurrence_rate": 0.09,
+                "avg_failure_mileage": 22000,
+                "confidence": "medium",
+                "last_updated": "2026-04-01",
+                "sources": [
+                    {
+                        "name": "Kia Recall 24V214 / SC303",
+                        "url": "https://static.nhtsa.gov/odi/rcl/2024/RCMN-24V214-9139.pdf",
+                        "retrieved_at": "2026-04-01",
+                        "note": "Official US recall describing partial engagement damage of the intermediate shaft and right front driveshaft."
+                    },
+                    {
+                        "name": "Kia Telluride Forums - Multiple AWD / 4WD Coupler Failures",
+                        "url": "https://tellurideforum.org/threads/multiple-awd-4wd-coupler-failures.16435/",
+                        "retrieved_at": "2026-04-01",
+                        "note": "Owner reports suggest repeated coupler-related driveline failures beyond a single isolated event."
                     }
                 ]
             }

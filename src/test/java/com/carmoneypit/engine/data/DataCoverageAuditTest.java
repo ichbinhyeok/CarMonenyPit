@@ -45,11 +45,11 @@ class DataCoverageAuditTest {
     }
 
     @Test
-    void fiftyThousandDollarPlusModelsShouldHaveFaultCoverage() {
+    void fortyThousandDollarPlusModelsShouldHaveFaultCoverage() {
         List<CarModel> models = carDataService.getAllModels();
         List<String> uncoveredHighValueModels = models.stream()
                 .filter(model -> carDataService.findMarketByModelId(model.id())
-                        .map(market -> market.jan2026AvgPrice() >= 50000)
+                        .map(market -> market.jan2026AvgPrice() >= 40000)
                         .orElse(false))
                 .filter(model -> carDataService.findFaultsByModelId(model.id()).isEmpty())
                 .map(CarModel::id)
