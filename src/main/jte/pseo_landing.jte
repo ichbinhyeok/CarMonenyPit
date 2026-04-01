@@ -19,6 +19,7 @@
 @param String mileageBaseUrl
 @param String ogImage = null
 @param String datasetVersion = "2026-02-24"
+@param boolean waitlistMode = true
 
 @template.layout(
     title = fault.component() + " Repair Cost on " + car.brand() + " " + car.model() + ": Is It Worth Fixing?",
@@ -45,6 +46,11 @@
         
         !{
             String headline = car.brand() + " " + car.model() + " <span style=\"background: linear-gradient(120deg, #d91b1b33 0%, #d91b1b33 100%); background-repeat: no-repeat; background-size: 100% 40%; background-position: 0 90%;\">" + fault.component() + "</span> Repair:<br>Fix or Sell?";
+            String inlineCtaLabel = waitlistMode ? "Join Fix vs Sell Waitlist" : "Get Fix vs Sell Next Steps";
+            String stickyCtaLabel = waitlistMode ? "Join Waitlist" : "Next-Step Guide";
+            String ctaFootnote = waitlistMode
+                ? "Join now and we will send partner-backed next-step options when access goes live."
+                : "May include affiliate links | Disclosure";
         }
 
         <header style="text-align: center; margin-bottom: 3rem;">
@@ -625,10 +631,14 @@
                 </p>
                 
                 <a id="inlineCta" href="${leadUrlInline}" class="btn-cinematic" style="display: inline-block; text-decoration: none; font-size: 1.1rem; padding: 1.2rem 2.5rem; background: #2563EB; color: #ffffff; border-radius: 12px; font-weight: 700; box-shadow: 0 10px 20px rgba(37, 99, 235, 0.3);">
-                    Get Fix vs Sell Next Steps <span>→</span>
+                    ${inlineCtaLabel} <span>-></span>
                 </a>
                 <p style="font-size: 0.7rem; color: #94a3b8; text-align: center; margin-top: 0.75rem;">
-                    May include affiliate links | <a href="/privacy" style="color: #94a3b8;">Disclosure</a>
+                    @if(waitlistMode)
+                        ${ctaFootnote}
+                    @else
+                        May include affiliate links | <a href="/privacy" style="color: #94a3b8;">Disclosure</a>
+                    @endif
                 </p>
             </div>
         </div>
@@ -665,7 +675,7 @@
                 @if(relatedFaultLinks.size() == 1)
                 <a href="/" class="related-card cta-card">
                     <h3 style="font-size: 1rem; font-weight: 700; color: #3b82f6; margin-bottom: 0.75rem; line-height: 1.3;">
-                        🔍 Analyze Another Repair
+                        Analyze Another Repair
                     </h3>
                     <p style="font-size: 0.85rem; color: #64748b; margin: 0;">Get a personalized verdict for any repair quote on your ${car.model()}</p>
                 </a>
@@ -852,7 +862,7 @@
                 <div style="font-size: 0.75rem; color: #64748b; font-weight: 600;">Data-Driven Diagnostic</div>
             </div>
             <a href="${leadUrlSticky}" class="btn-cinematic" style="background: #2563EB; color: #fff; text-decoration: none; padding: 0.75rem 1.25rem; border-radius: 8px; font-weight: 700; font-size: 0.9rem;">
-                Next-Step Guide
+                ${stickyCtaLabel}
             </a>
         </div>
         

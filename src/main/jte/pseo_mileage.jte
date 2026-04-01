@@ -23,6 +23,7 @@
 @param String modelDirectoryUrl
 @param String mileageBaseUrl
 @param String datasetVersion = "2026-02-24"
+@param boolean waitlistMode = true
 
 !{
     // Calculate lifespan percentage
@@ -38,6 +39,14 @@
     // Generate verdict text based on data - use final variables
     final String verdictText;
     final String verdictAdvice;
+    final String ctaHeading = waitlistMode ? "Join The Fix vs Sell Waitlist" : "Get Your Personalized Verdict";
+    final String ctaBody = waitlistMode
+        ? "Have a specific repair quote? Join the waitlist and we will send partner-backed next-step options when access goes live."
+        : "Have a specific repair quote? Our free calculator analyzes your exact situation - your mileage, your repair cost, current market value - and tells you whether to fix or sell.";
+    final String ctaButtonLabel = waitlistMode ? "Join Fix vs Sell Waitlist" : "Check My Repair Quote";
+    final String ctaSubtext = waitlistMode
+        ? "Free | 30 seconds | Launch alert + next-step guide"
+        : "Free | 30 seconds | Data-driven decision";
     if (lifespanPercent >= 75) {
         verdictText = "Your " + car.brand() + " " + car.model() + " is in the final quarter of its expected lifespan.";
         verdictAdvice = "Major repairs at this stage often exceed the vehicle's remaining value. Consider selling before a catastrophic failure.";
@@ -387,16 +396,15 @@
         <!-- CTA Section -->
         <section class="cta-section">
             <div class="cta-content">
-                <h2>Get Your Personalized Verdict</h2>
+                <h2>${ctaHeading}</h2>
                 <p>
-                    Have a specific repair quote? Our free calculator analyzes your exact situation — 
-                    your mileage, your repair cost, current market value — and tells you whether to fix or sell.
+                    ${ctaBody}
                 </p>
                 <a id="inlineCta" href="${leadUrlInline}" class="cta-button">
-                    <span>Check My Repair Quote</span>
-                    <span class="arrow">→</span>
+                    <span>${ctaButtonLabel}</span>
+                    <span class="arrow">-></span>
                 </a>
-                <p class="cta-subtext">Free • 30 seconds • Data-driven decision</p>
+                <p class="cta-subtext">${ctaSubtext}</p>
             </div>
         </section>
 

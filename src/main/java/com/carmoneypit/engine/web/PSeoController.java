@@ -4,6 +4,7 @@ import com.carmoneypit.engine.api.OutputModels.VerdictResult;
 import com.carmoneypit.engine.api.OutputModels.VerdictState;
 import com.carmoneypit.engine.api.InputModels.EngineInput;
 import com.carmoneypit.engine.api.InputModels.VehicleType;
+import com.carmoneypit.engine.config.PartnerRoutingConfig;
 import com.carmoneypit.engine.core.DecisionEngine;
 import com.carmoneypit.engine.service.CarDataService;
 import com.carmoneypit.engine.service.CarDataService.*;
@@ -33,6 +34,7 @@ public class PSeoController {
   private static final Logger logger = LoggerFactory.getLogger(PSeoController.class);
   private final CarDataService dataService;
   private final DecisionEngine decisionEngine;
+  private final PartnerRoutingConfig routingConfig;
 
   @Value("${app.baseUrl:https://automoneypit.com}")
   private String baseUrl;
@@ -41,9 +43,11 @@ public class PSeoController {
   private String datasetVersion;
 
   public PSeoController(CarDataService dataService,
-      DecisionEngine decisionEngine) {
+      DecisionEngine decisionEngine,
+      PartnerRoutingConfig routingConfig) {
     this.dataService = dataService;
     this.decisionEngine = decisionEngine;
+    this.routingConfig = routingConfig;
   }
 
   @GetMapping("/verdict/{brand}/{model}/{faultSlug}")
@@ -187,6 +191,7 @@ public class PSeoController {
     modelMap.addAttribute("ogImage", ogImage);
     modelMap.addAttribute("breadcrumbs", breadcrumbs);
     modelMap.addAttribute("datasetVersion", datasetVersion);
+    modelMap.addAttribute("waitlistMode", routingConfig.isApprovalPending());
 
     return "pseo_landing";
   }
@@ -318,6 +323,7 @@ public class PSeoController {
     modelMap.addAttribute("modelDirectoryUrl", "/models/" + canonicalBrandSlug + "/" + canonicalModelSlug);
     modelMap.addAttribute("mileageBaseUrl", "/verdict/" + canonicalBrandSlug + "/" + canonicalModelSlug);
     modelMap.addAttribute("datasetVersion", datasetVersion);
+    modelMap.addAttribute("waitlistMode", routingConfig.isApprovalPending());
 
     return "pseo_mileage";
   }
