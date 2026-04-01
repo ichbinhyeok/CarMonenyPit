@@ -425,6 +425,8 @@ This section records tracking-relevant changes shipped after the March 20 audit.
 - whether top `/should-i-fix/*` pages with positions 1-10 gain clicks after the new copy
 - whether pSEO fault and mileage pages still preserve clean waitlist routing after CTA copy changes
 - whether the new model hubs improve internal handoff into year-specific decision pages
+- whether proof-based `<title>` changes improve CTR on pages with known expensive faults
+- whether hero copy, FAQ copy, and FAQ schema stay aligned on the same model-specific decision story
 
 ### E. Practical Reading Guide
 - if CTR rises first on `/should-i-fix/*` without an immediate lead spike, that is still a good sign
@@ -444,3 +446,30 @@ This section records tracking-relevant changes shipped after the March 20 audit.
   - Accord
   - CR-V
   - CX-5
+
+### F. Priority URLs For The Next Review
+At the next review, check these pages first before looking at the long tail:
+
+- `/should-i-fix/2014-toyota-camry`
+- `/should-i-fix/2014-nissan-altima`
+- `/should-i-fix/2015-honda-accord`
+- `/should-i-fix/2013-honda-cr-v`
+- `/should-i-fix/2015-mazda-cx-5`
+- `/should-i-fix/2014-toyota-corolla`
+- `/should-i-fix/2014-ford-escape`
+
+For each one, answer these questions in order:
+
+1. Did impressions rise, fall, or stay flat?
+2. Did CTR improve after the new title / hero / FAQ / schema alignment?
+3. Did calculator or report handoff improve?
+4. Did any of those pages start producing more attributable `lead_submit` rows?
+
+### G. What Was Added In This Batch
+The latest batch added three layers of page-level sharpening for top opportunity `/should-i-fix/*` pages:
+
+- model-specific intro and FAQ copy
+- proof-based title patterns when a known expensive fault exists
+- hero subtitle and FAQ schema aligned to the same decision logic
+
+This means the next review should not ask only whether traffic increased. It should ask whether the SERP promise, the first screen, and the structured FAQ answer are now telling the same story.
