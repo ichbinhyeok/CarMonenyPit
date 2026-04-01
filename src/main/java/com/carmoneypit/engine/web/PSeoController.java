@@ -409,7 +409,7 @@ public class PSeoController {
           .map(f -> {
             String slug = toFaultSlug(f.component());
             return java.util.Map.entry(
-                "Analyze " + f.component(),
+                f.component() + " repair cost and fix-or-sell guide",
                 "/verdict/" + canonicalBrandSlug + "/" + canonicalModelSlug + "/" + slug);
           })
           .toList();

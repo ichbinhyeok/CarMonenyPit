@@ -186,13 +186,13 @@ public class CarDecisionController {
                                                 primaryFaultName, primaryFaultCost, primaryFaultMileage, lifespanMiles,
                                                 year);
                         }
-                        // SEO Meta - Optimized for CTR
-                        String seoTitle = String.format("%d %s %s: Fix It or Sell It?",
+                        // SEO Meta - Optimized for CTR and direct decision intent
+                        String seoTitle = String.format("Should I Fix or Sell My %d %s %s?",
                                         year, brandSlug, modelSlug);
                         String seoDescription;
                         if (marketValue != null && primaryFaultName != null && primaryFaultCost != null) {
                                 seoDescription = String.format(
-                                                "See typical value ($%,d), expected lifespan, and %s repair risk (~$%,d) before you decide whether to fix or sell your %d %s %s.",
+                                                "See typical value ($%,d), expected lifespan, and %s repair risk (~$%,d) before you approve a big repair on your %d %s %s.",
                                                 marketValue, primaryFaultName, primaryFaultCost, year, brandSlug, modelSlug);
                         } else {
                                 seoDescription = String.format(

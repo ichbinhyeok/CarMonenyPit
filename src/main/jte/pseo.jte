@@ -58,12 +58,14 @@
     String quickSignalClass = "neutral";
     if (quickSignal != null) {
         String quickSignalLower = quickSignal.toLowerCase();
-        if (quickSignalLower.contains("caution")) {
+        if (quickSignalLower.contains("sell")) {
             quickSignalClass = "sell";
         } else if (quickSignalLower.contains("borderline")) {
             quickSignalClass = "borderline";
-        } else if (quickSignalLower.contains("fixable")) {
+        } else if (quickSignalLower.contains("worth fixing") || quickSignalLower.contains("fix")) {
             quickSignalClass = "repair";
+        } else if (quickSignalLower.contains("mileage-sensitive")) {
+            quickSignalClass = "borderline";
         }
     }
 }
@@ -469,14 +471,14 @@
     content = @`
         <section class="pseo-hero">
             <div class="pseo-badge">
-                <span>🔍</span> ${prefillYear} ${prefillBrand} ${prefillModel} Analysis
+                US decision page | ${prefillYear} ${prefillBrand} ${prefillModel}
             </div>
             
             <h1 class="pseo-title">Should You Fix or Sell Your ${prefillYear} ${prefillBrand} ${prefillModel}?</h1>
             
             <p class="pseo-subtitle">
-                Get the likely answer first. Then compare your real repair quote against market value, expected lifespan,
-                and the biggest known failure costs for this ${prefillModel}.
+                If you already have a painful repair quote, start here. See the likely answer, typical market value,
+                expected lifespan, and the biggest known failure cost for this ${prefillModel} before you approve anything.
             </p>
             
             <div class="pseo-stats">
@@ -509,20 +511,20 @@
         <section class="quick-link-grid">
             @if(primaryFaultUrl != null)
             <a class="related-link" href="${primaryFaultUrl}">
-                <span>Cost</span>
-                <span>See the ${primaryFaultName} cost page</span>
+                <span>Repair cost</span>
+                <span>See the ${primaryFaultName} risk and cost guide</span>
             </a>
             @endif
             @if(mileageVerdictUrl != null)
             <a class="related-link" href="${mileageVerdictUrl}">
-                <span>100K</span>
-                <span>See the 100,000-mile decision guide</span>
+                <span>100K miles</span>
+                <span>See when this model usually becomes a keep-or-sell call</span>
             </a>
             @endif
             @if(modelDirectoryUrl != null)
             <a class="related-link" href="${modelDirectoryUrl}">
-                <span>Model</span>
-                <span>Browse common ${prefillModel} problems</span>
+                <span>Model guide</span>
+                <span>Browse common ${prefillModel} problems before approving a quote</span>
             </a>
             @endif
         </section>
@@ -532,7 +534,7 @@
             <div class="pseo-form-title">Check Your Real Repair Quote</div>
             
             <div class="pseo-prefilled">
-                <span class="pseo-prefilled-icon">✅</span>
+                <span class="pseo-prefilled-icon" style="font-size: 0.75rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;">Ready</span>
                 <div class="pseo-prefilled-text">
                     Vehicle pre-filled: <strong>${prefillYear} ${prefillBrand} ${prefillModel}</strong>
                 </div>
@@ -570,8 +572,8 @@
                 </div>
                 
                 <button type="submit" id="pseo-submit-btn" class="pseo-btn">
-                    <span class="btn-text">See Fix vs Sell Verdict</span>
-                    <span class="btn-arrow">→</span>
+                    <span class="btn-text">Check If This Repair Is Worth It</span>
+                    <span class="btn-arrow">-></span>
                 </button>
             </form>
             
@@ -621,7 +623,7 @@
             @if(majorFaults != null && !majorFaults.faults().isEmpty())
                 <div class="tldr-summary" style="background: #eef2ff; border-left: 4px solid #4f46e5; padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
                     <h3 style="font-size: 1.1rem; font-weight: 800; color: #312e81; margin-top: 0; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
-                        <span style="font-size: 1.25rem;">⚡</span> Biggest Repair Risk To Know
+                        Biggest Repair Risk To Know
                     </h3>
                     <p style="font-size: 1rem; color: #3730a3; line-height: 1.6; margin: 0;">
                         The <strong>${prefillYear} ${prefillBrand} ${prefillModel}</strong> has documented failure patterns, most notably the <strong>${majorFaults.faults().get(0).component()}</strong> averaging around <strong>$${String.format("%,.0f", majorFaults.faults().get(0).repairCost())}</strong> to fix. If your repair quote approaches this threshold, our algorithm highly recommends comparing it against the vehicle's remaining lifespan and market value to avoid sunk-cost traps.
@@ -629,7 +631,7 @@
                 </div>
 
                 <div class="fault-warning-box">
-                    <h3 style="color: #991b1b; margin-top: 0; font-size: 1.1rem;">⚠️ Known High-Cost Failures for ${prefillModel}</h3>
+                    <h3 style="color: #991b1b; margin-top: 0; font-size: 1.1rem;">Known High-Cost Failures for ${prefillModel}</h3>
                     <p style="font-size: 0.9rem; color: #7f1d1d; margin-bottom: 1rem;">
                         Our data indicates these specific issues have a high occurrence rate for this model generation:
                     </p>
@@ -664,7 +666,7 @@
             @endif
             
             <div class="info-box">
-                <div class="info-box-title">📊 Repair vs. Value Comparison</div>
+                <div class="info-box-title">Repair vs. Value Comparison</div>
                 <p style="margin: 0; color: #475569;">
                     A common decision framework is to compare the repair cost against your vehicle's 
                     current market value. When repair costs represent a large share of the car's worth, 
@@ -749,16 +751,16 @@
             <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 1rem; color: #64748b;">Related Searches</h3>
             
             <a href="${mileageVerdictUrl != null ? mileageVerdictUrl : "/verdict/" + prefillBrandSlug + "/" + prefillModelSlug + "/100000-miles"}" class="related-link">
-                <span>📍</span> ${prefillBrand} ${prefillModel} at 100K miles - worth keeping?
+                <span>100K</span> ${prefillBrand} ${prefillModel} at 100K miles - worth keeping?
             </a>
             <a href="${brandDirectoryUrl != null ? brandDirectoryUrl : "/models/" + prefillBrandSlug}" class="related-link">
-                <span>📊</span> Browse all ${prefillBrand} models
+                <span>Models</span> Browse all ${prefillBrand} models
             </a>
             <a href="/" class="related-link">
-                <span>🔧</span> Analyze a different vehicle
+                <span>Calculator</span> Analyze a different vehicle
             </a>
             <a href="/models" class="related-link">
-                <span>🚗</span> View all supported brands
+                <span>Brands</span> View all supported brands
             </a>
         </section>
     `

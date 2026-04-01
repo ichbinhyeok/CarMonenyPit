@@ -31,10 +31,10 @@
             @for(java.util.Map.Entry<String, String> item : items)
                 <li style="margin-bottom: 1rem; padding: 1rem 1.1rem; border: 1px solid #eee; border-radius: 12px; transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;">
                     <a href="${item.getValue()}" style="text-decoration: none; color: #111; font-weight: 700; font-size: 1.2rem; display: block;">
-                        ${item.getKey()} <span style="float: right; color: #d91b1b;">→</span>
+                        ${item.getKey()} <span style="float: right; color: #d91b1b;">-></span>
                     </a>
                     <div style="font-size: 0.88rem; color: #64748b; margin-top: 0.45rem; line-height: 1.5;">
-                        Open repair costs, common problems, and fix-or-sell analysis.
+                        Open repair costs, common problems, and the next fix-or-sell question to check.
                     </div>
                 </li>
             @endfor
