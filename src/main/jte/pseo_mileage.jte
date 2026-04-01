@@ -19,6 +19,9 @@
 @param String schemaJson
 @param String leadUrlInline
 @param String leadUrlSticky
+@param String brandDirectoryUrl
+@param String modelDirectoryUrl
+@param String mileageBaseUrl
 @param String datasetVersion = "2026-02-24"
 
 !{
@@ -91,7 +94,7 @@
 }
 
 @template.layout(
-    title = "How Many Miles Can a " + car.brand() + " " + car.model() + " Last? " + String.format("%,d", targetMileage) + "-Mile Guide",
+    title = car.brand() + " " + car.model() + " at " + String.format("%,d", targetMileage) + " Miles: Keep It, Fix It, or Sell It?",
     description = metaDescription,
     canonical = canonicalUrl,
     schemaJson = schemaJson,
@@ -118,7 +121,7 @@
             </div>
             
             <h1 class="hero-title">
-                Is Your ${car.brand()} ${car.model()} Worth Keeping<br>
+                Should You Keep Your ${car.brand()} ${car.model()}<br>
                 at <span class="highlight">${String.format("%,d", targetMileage)} Miles</span>?
             </h1>
             <div style="font-size: 0.9rem; color: #64748b; margin-bottom: 2rem; display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; font-weight: 500;">
@@ -138,7 +141,7 @@
         <!-- TL;DR AEO Summary -->
         <div class="tldr-summary" style="background: #eef2ff; border-left: 4px solid #4f46e5; padding: 1.5rem; border-radius: 8px; margin-bottom: 3rem;">
             <h2 style="font-size: 1.1rem; font-weight: 800; color: #312e81; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
-                <span style="font-size: 1.25rem;">⚡</span> Vehicle Analysis Summary
+                <span style="font-size: 1.25rem;">⚡</span> Quick Answer: Is It Worth Keeping?
             </h2>
             <p style="font-size: 1rem; color: #3730a3; line-height: 1.6; margin: 0;">
                 !{
@@ -390,7 +393,7 @@
                     your mileage, your repair cost, current market value — and tells you whether to fix or sell.
                 </p>
                 <a id="inlineCta" href="${leadUrlInline}" class="cta-button">
-                    <span>Get My Verdict</span>
+                    <span>Check My Repair Quote</span>
                     <span class="arrow">→</span>
                 </a>
                 <p class="cta-subtext">Free • 30 seconds • Data-driven decision</p>
@@ -454,19 +457,19 @@
             <h3>Related Analysis</h3>
             <div class="related-links">
                 @if(targetMileage > 50000)
-                <a href="/verdict/${car.brand().toLowerCase().replaceAll("[^a-z0-9]", "")}/${car.model().toLowerCase().replaceAll("[^a-z0-9]", "")}/${targetMileage - 50000}-miles" class="related-link">
+                <a href="${mileageBaseUrl}/${targetMileage - 50000}-miles" class="related-link">
                     <span>📉</span> ${car.model()} at ${String.format("%,d", targetMileage - 50000)} miles
                 </a>
                 @endif
                 @if(targetMileage < lifespanMiles - 50000)
-                <a href="/verdict/${car.brand().toLowerCase().replaceAll("[^a-z0-9]", "")}/${car.model().toLowerCase().replaceAll("[^a-z0-9]", "")}/${targetMileage + 50000}-miles" class="related-link">
+                <a href="${mileageBaseUrl}/${targetMileage + 50000}-miles" class="related-link">
                     <span>📈</span> ${car.model()} at ${String.format("%,d", targetMileage + 50000)} miles
                 </a>
                 @endif
-                <a href="/models/${car.brand().toLowerCase().replaceAll("[^a-z0-9]", "")}/${car.model().toLowerCase().replaceAll("[^a-z0-9]", "")}" class="related-link">
+                <a href="${modelDirectoryUrl}" class="related-link">
                     <span>🔧</span> All ${car.model()} Common Problems
                 </a>
-                <a href="/models/${car.brand().toLowerCase().replaceAll("[^a-z0-9]", "")}" class="related-link">
+                <a href="${brandDirectoryUrl}" class="related-link">
                     <span>🚗</span> All ${car.brand()} Models
                 </a>
             </div>
@@ -508,7 +511,7 @@
                         </a>
                     @endfor
                 @else
-                    <a href="/models/${car.brand().toLowerCase().replaceAll("[^a-z0-9]", "")}" class="compare-link">
+                    <a href="${brandDirectoryUrl}" class="compare-link">
                         Explore ${car.brand()} Models
                     </a>
                 @endif
@@ -522,7 +525,7 @@
                 <div style="font-size: 0.75rem; color: #64748b; font-weight: 600;">Mileage Valuation</div>
             </div>
             <a href="${leadUrlSticky}" class="cta-button" style="padding: 0.75rem 1.25rem; font-size: 0.9rem;">
-                View Verdict
+                Check My Quote
             </a>
         </div>
         

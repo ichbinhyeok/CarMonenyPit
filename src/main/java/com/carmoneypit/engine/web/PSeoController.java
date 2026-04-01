@@ -115,9 +115,17 @@ public class PSeoController {
     // 5. Generate SEO Assets
     String schemaJson = generateSchema(car, fault, profile, canonicalBrandSlug, canonicalModelSlug, canonicalFaultSlug);
 
-    String metaDescription = "See " + car.brand() + " " + car.model() + " " + fault.component()
-        + " repair cost, common failure mileage, and whether it makes more sense to fix or sell before approving a $"
-        + String.format("%,d", Math.round(fault.repairCost())) + " repair.";
+    String metaDescription;
+    if (profile != null) {
+      metaDescription = "See " + car.brand() + " " + car.model() + " " + fault.component()
+          + " repair cost (~$" + String.format("%,d", Math.round(fault.repairCost()))
+          + "), typical market value (~$" + String.format("%,d", profile.market().jan2026AvgPrice())
+          + "), and whether it makes more sense to fix or sell.";
+    } else {
+      metaDescription = "See " + car.brand() + " " + car.model() + " " + fault.component()
+          + " repair cost, common failure mileage, and whether it makes more sense to fix or sell before approving a $"
+          + String.format("%,d", Math.round(fault.repairCost())) + " repair.";
+    }
 
     String canonicalUrl = baseUrl + "/verdict/" + canonicalBrandSlug + "/" + canonicalModelSlug + "/" + canonicalFaultSlug;
 
@@ -143,8 +151,12 @@ public class PSeoController {
         + "&model=" + normalize(car.model()) + "&detail=" + canonicalFaultSlug + "&placement=sticky";
 
     // Related faults for internal linking
-    List<Fault> relatedFaults = faultsOpt.get().faults().stream()
+    List<RelatedFaultLink> relatedFaultLinks = faultsOpt.get().faults().stream()
         .filter(f -> !f.component().equals(fault.component()))
+        .map(f -> new RelatedFaultLink(
+            f.component(),
+            "/verdict/" + canonicalBrandSlug + "/" + canonicalModelSlug + "/" + toFaultSlug(f.component()),
+            f.repairCost()))
         .limit(3)
         .toList();
 
@@ -166,7 +178,12 @@ public class PSeoController {
     modelMap.addAttribute("canonicalUrl", canonicalUrl);
     modelMap.addAttribute("leadUrlInline", leadUrlInline);
     modelMap.addAttribute("leadUrlSticky", leadUrlSticky);
-    modelMap.addAttribute("relatedFaults", relatedFaults);
+    modelMap.addAttribute("relatedFaultLinks", relatedFaultLinks);
+    modelMap.addAttribute("canonicalBrandSlug", canonicalBrandSlug);
+    modelMap.addAttribute("canonicalModelSlug", canonicalModelSlug);
+    modelMap.addAttribute("brandDirectoryUrl", "/models/" + canonicalBrandSlug);
+    modelMap.addAttribute("modelDirectoryUrl", "/models/" + canonicalBrandSlug + "/" + canonicalModelSlug);
+    modelMap.addAttribute("mileageBaseUrl", "/verdict/" + canonicalBrandSlug + "/" + canonicalModelSlug);
     modelMap.addAttribute("ogImage", ogImage);
     modelMap.addAttribute("breadcrumbs", breadcrumbs);
     modelMap.addAttribute("datasetVersion", datasetVersion);
@@ -229,9 +246,11 @@ public class PSeoController {
         + "-miles";
 
     // 5. Meta description
+    int estimatedValue = (int) Math.max(market.commonJunkValue(),
+        market.jan2026AvgPrice() * Math.max(0.15, 1.0 - (mileage * 0.000003)));
     String metaDescription = String.format(
-        "How many miles can a %s %s last? See expected lifespan, remaining life at %,d miles, market value, and whether keeping it still makes financial sense.",
-        car.brand(), car.model(), mileage);
+        "See whether a %s %s is still worth keeping at %,d miles. Compare expected lifespan, estimated value (~$%,d), and major repair risk before you fix or sell.",
+        car.brand(), car.model(), mileage, estimatedValue);
 
     // 6. Schema JSON (FAQPage)
     String schemaJson = String.format("""
@@ -293,6 +312,11 @@ public class PSeoController {
     modelMap.addAttribute("schemaJson", schemaJson);
     modelMap.addAttribute("leadUrlInline", leadUrlInline);
     modelMap.addAttribute("leadUrlSticky", leadUrlSticky);
+    modelMap.addAttribute("canonicalBrandSlug", canonicalBrandSlug);
+    modelMap.addAttribute("canonicalModelSlug", canonicalModelSlug);
+    modelMap.addAttribute("brandDirectoryUrl", "/models/" + canonicalBrandSlug);
+    modelMap.addAttribute("modelDirectoryUrl", "/models/" + canonicalBrandSlug + "/" + canonicalModelSlug);
+    modelMap.addAttribute("mileageBaseUrl", "/verdict/" + canonicalBrandSlug + "/" + canonicalModelSlug);
     modelMap.addAttribute("datasetVersion", datasetVersion);
 
     return "pseo_mileage";
@@ -315,9 +339,9 @@ public class PSeoController {
         .map(brand -> java.util.Map.entry(brand, "/models/" + normalize(brand)))
         .toList();
 
-    modelMap.addAttribute("title", "Car Brands - AutoMoneyPit");
+    modelMap.addAttribute("title", "Car Problems by Brand: Repair Costs and Fix-or-Sell Guides | AutoMoneyPit");
     modelMap.addAttribute("metaDescription",
-        "Browse common repair costs and market value insights by car brand. See data-driven verdicts on whether to fix or sell.");
+        "Browse car brands to find common problems, repair costs, and fix-or-sell guides for specific models.");
     modelMap.addAttribute("canonicalUrl", baseUrl + "/models");
     modelMap.addAttribute("breadcrumbs", List.of("Models")); // Keep simple for directory for now
     modelMap.addAttribute("items", brands);
@@ -327,6 +351,9 @@ public class PSeoController {
   // --- View Helpers ---
 
   public record Breadcrumb(String label, String url) {
+  }
+
+  public record RelatedFaultLink(String component, String url, double repairCost) {
   }
 
   @GetMapping("/models/{brandSlug}")
@@ -350,9 +377,9 @@ public class PSeoController {
         .distinct()
         .toList();
 
-    modelMap.addAttribute("title", "Models for " + displayBrand + " - AutoMoneyPit");
-    modelMap.addAttribute("metaDescription", "Explore specific models from " + displayBrand
-        + ". Find the most common repairs, costs, and value preservation data.");
+    modelMap.addAttribute("title", displayBrand + " Problems by Model: Repair Costs and Ownership Risk");
+    modelMap.addAttribute("metaDescription", "See " + displayBrand
+        + " models with common problems, repair costs, and fix-or-sell guidance before you approve a big repair.");
     modelMap.addAttribute("canonicalUrl", baseUrl + "/models/" + canonicalBrandSlug);
     modelMap.addAttribute("breadcrumbs", List.of("Models", displayBrand));
     modelMap.addAttribute("items", modelLinks);
@@ -390,13 +417,13 @@ public class PSeoController {
       // Fallback for models without specific faults
       faultLinks = List.of(
           java.util.Map.entry(
-              "General Reliability Analysis",
-              "/?vehicleType=" + canonicalBrandSlug + "&model=" + canonicalModelSlug));
+              "Open The Fix-or-Sell Calculator",
+              "/"));
     }
 
-    modelMap.addAttribute("title", "Common Problems: " + car.brand() + " " + car.model() + " - AutoMoneyPit");
-    modelMap.addAttribute("metaDescription", "See the most expensive common repairs for the " + car.brand() + " "
-        + car.model() + " and decide whether to fix them or sell your vehicle.");
+    modelMap.addAttribute("title", car.brand() + " " + car.model() + " Problems: Repair Costs and Fix-or-Sell Guides");
+    modelMap.addAttribute("metaDescription", "See the most expensive " + car.brand() + " "
+        + car.model() + " repairs, common failure points, and fix-or-sell guides for each major problem.");
     modelMap.addAttribute("canonicalUrl", baseUrl + "/models/" + canonicalBrandSlug + "/" + canonicalModelSlug);
     modelMap.addAttribute("breadcrumbs", List.of("Models", car.brand(), car.model()));
     modelMap.addAttribute("items", faultLinks);

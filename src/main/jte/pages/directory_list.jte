@@ -19,14 +19,23 @@
             @endfor
         </div>
 
-        <h1 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 2rem;">${title}</h1>
+        <h1 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem;">${title}</h1>
+
+        @if(metaDescription != null)
+            <p style="font-size: 1.05rem; color: #64748b; line-height: 1.7; margin-bottom: 2rem; max-width: 720px;">
+                ${metaDescription}
+            </p>
+        @endif
 
         <ul style="list-style: none; padding: 0;">
             @for(java.util.Map.Entry<String, String> item : items)
-                <li style="margin-bottom: 1rem; padding: 1rem; border: 1px solid #eee; border-radius: 8px; transition: transform 0.2s;">
+                <li style="margin-bottom: 1rem; padding: 1rem 1.1rem; border: 1px solid #eee; border-radius: 12px; transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;">
                     <a href="${item.getValue()}" style="text-decoration: none; color: #111; font-weight: 700; font-size: 1.2rem; display: block;">
                         ${item.getKey()} <span style="float: right; color: #d91b1b;">→</span>
                     </a>
+                    <div style="font-size: 0.88rem; color: #64748b; margin-top: 0.45rem; line-height: 1.5;">
+                        Open repair costs, common problems, and fix-or-sell analysis.
+                    </div>
                 </li>
             @endfor
         </ul>

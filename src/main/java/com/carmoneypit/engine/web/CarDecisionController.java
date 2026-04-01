@@ -97,6 +97,8 @@ public class CarDecisionController {
                         int year = Integer.parseInt(parts[0]);
                         String brandSlug = parts[1].toUpperCase().replace(" ", "_");
                         String modelSlug = parts.length > 2 ? formatModelName(parts[2]) : "";
+                        String canonicalBrandSlug = normalizeSlugSegment(brandSlug);
+                        String canonicalModelSlug = normalizeSlugSegment(modelSlug);
                         String canonicalSlug = null;
                         String quickSignal = "Run the numbers";
                         String quickAnswer = "The right answer depends on your actual quote, current value, and mileage.";
@@ -108,6 +110,7 @@ public class CarDecisionController {
                         String primaryFaultUrl = null;
                         String mileageVerdictUrl = null;
                         String modelDirectoryUrl = null;
+                        String brandDirectoryUrl = null;
 
                         // Validate brand exists in loaded data
                         if (!valuationService.isValidBrand(brandSlug)) {
@@ -135,10 +138,11 @@ public class CarDecisionController {
                                 // If we found a model, use its official display name instead of the slug
                                 brandSlug = carModel.brand();
                                 modelSlug = carModel.model();
-                                String canonicalBrandSlug = normalizeSlugSegment(carModel.brand());
-                                String canonicalModelSlug = normalizeSlugSegment(carModel.model());
+                                canonicalBrandSlug = normalizeSlugSegment(carModel.brand());
+                                canonicalModelSlug = normalizeSlugSegment(carModel.model());
                                 canonicalSlug = year + "-" + canonicalBrandSlug + "-"
                                                 + canonicalModelSlug;
+                                brandDirectoryUrl = baseUrl + "/models/" + canonicalBrandSlug;
                                 modelDirectoryUrl = baseUrl + "/models/" + canonicalBrandSlug + "/" + canonicalModelSlug;
                                 mileageVerdictUrl = baseUrl + "/verdict/" + canonicalBrandSlug + "/" + canonicalModelSlug
                                                 + "/100000-miles";
@@ -183,17 +187,26 @@ public class CarDecisionController {
                                                 year);
                         }
                         // SEO Meta - Optimized for CTR
-                        String seoTitle = String.format("Should You Fix a %d %s %s or Sell It?",
+                        String seoTitle = String.format("%d %s %s: Fix It or Sell It?",
                                         year, brandSlug, modelSlug);
-                        String seoDescription = String.format(
-                                        "Compare repair cost, depreciation, resale value, and known trouble spots before you fix or sell your %d %s %s. Free 30-second calculator.",
-                                        year, brandSlug, modelSlug);
+                        String seoDescription;
+                        if (marketValue != null && primaryFaultName != null && primaryFaultCost != null) {
+                                seoDescription = String.format(
+                                                "See typical value ($%,d), expected lifespan, and %s repair risk (~$%,d) before you decide whether to fix or sell your %d %s %s.",
+                                                marketValue, primaryFaultName, primaryFaultCost, year, brandSlug, modelSlug);
+                        } else {
+                                seoDescription = String.format(
+                                                "See whether your next repair is worth it. Compare value, lifespan, and repair risk before you fix or sell your %d %s %s.",
+                                                year, brandSlug, modelSlug);
+                        }
 
                         model.addAttribute("seoTitle", seoTitle);
                         model.addAttribute("seoDescription", seoDescription);
                         model.addAttribute("prefillYear", year);
                         model.addAttribute("prefillBrand", brandSlug);
                         model.addAttribute("prefillModel", modelSlug);
+                        model.addAttribute("prefillBrandSlug", canonicalBrandSlug);
+                        model.addAttribute("prefillModelSlug", canonicalModelSlug);
                         model.addAttribute("isPseoPage", true);
                         model.addAttribute("pseoSlug", canonicalSlug != null ? canonicalSlug : slug);
                         model.addAttribute("canonicalUrl", baseUrl + "/should-i-fix/" + (canonicalSlug != null ? canonicalSlug : slug));
@@ -207,6 +220,7 @@ public class CarDecisionController {
                         model.addAttribute("primaryFaultUrl", primaryFaultUrl);
                         model.addAttribute("mileageVerdictUrl", mileageVerdictUrl);
                         model.addAttribute("modelDirectoryUrl", modelDirectoryUrl);
+                        model.addAttribute("brandDirectoryUrl", brandDirectoryUrl);
 
                         return "pseo";
                 } catch (NumberFormatException e) {
@@ -218,19 +232,19 @@ public class CarDecisionController {
                 if (marketValue != null && primaryFaultCost != null && marketValue > 0) {
                         double repairToValue = (double) primaryFaultCost / marketValue;
                         if (repairToValue >= 0.35) {
-                                return "High caution";
+                                return "Likely sell zone";
                         }
                         if (repairToValue >= 0.2) {
-                                return "Borderline zone";
+                                return "Borderline decision";
                         }
-                        return "Usually fixable";
+                        return "Usually worth fixing";
                 }
 
                 if (lifespanMiles != null && year <= 2018) {
-                        return "Mileage matters";
+                        return "Mileage-sensitive call";
                 }
 
-                return "Run the numbers";
+                return "Quote decides";
         }
 
         private String buildQuickAnswer(String brand, String model, Integer marketValue, String primaryFaultName,

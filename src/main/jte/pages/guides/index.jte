@@ -1,15 +1,15 @@
 @template.layout(
-    title = "Repair or Sell Guides for Car Owners | AutoMoneyPit",
-    description = "Practical car repair vs sell guides on repair cost vs value, when to stop repairing your car, and avoiding sunk-cost mistakes.",
+    title = "Should I Repair My Car or Sell It? Guides and Checklists | AutoMoneyPit",
+    description = "Guides for when to stop repairing a car, repair cost vs value, and avoiding sunk-cost mistakes before you approve another repair.",
     canonical = "https://automoneypit.com/guides",
     content = @`
         <div style="max-width: 980px; margin: 3rem auto; padding: 0 1rem;">
             <header style="text-align: center; margin-bottom: 2.5rem;">
                 <h1 style="font-size: clamp(2rem, 6vw, 3rem); font-weight: 800; letter-spacing: -0.03em; margin-bottom: 0.8rem;">
-                    Car Ownership Decision Guides
+                    Should You Repair Your Car or Sell It?
                 </h1>
                 <p style="color: #64748b; font-size: 1.05rem; line-height: 1.6; max-width: 720px; margin: 0 auto;">
-                    Non-brand guides for owners deciding whether to repair, sell, or hold. Use these before you commit to a major repair.
+                    Practical decision guides for owners asking whether the next repair is still worth it. Use these before you approve a major quote.
                 </p>
             </header>
 

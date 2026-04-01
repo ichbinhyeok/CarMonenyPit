@@ -1,14 +1,14 @@
 @template.layout(
-    title = "Repair Cost vs Car Value: Should You Fix or Sell? | AutoMoneyPit",
-    description = "Compare repair quote size and current vehicle value with a clear repair-or-sell decision framework.",
+    title = "Repair Cost vs Car Value: When Should You Fix or Sell? | AutoMoneyPit",
+    description = "Compare repair quote size and current vehicle value with a clear framework for deciding whether to fix or sell.",
     canonical = "https://automoneypit.com/guides/car-repair-cost-vs-value",
     content = @`
         <article style="max-width: 860px; margin: 3rem auto; padding: 0 1rem;">
             <h1 style="font-size: clamp(2rem, 6vw, 3rem); font-weight: 800; letter-spacing: -0.03em; margin-bottom: 1rem;">
-                Repair Cost Vs Car Value
+                Repair Cost vs Car Value
             </h1>
             <p style="font-size: 1.05rem; color: #64748b; line-height: 1.7;">
-                A quote by itself is meaningless. Decision quality improves when you compare quote size against current value and expected future repairs.
+                A repair quote by itself is meaningless. The right decision appears when you compare quote size against current value, mileage, and expected future repairs.
             </p>
 
             <h2 style="margin-top: 2rem; font-size: 1.35rem;">Simple Ratio Rule</h2>

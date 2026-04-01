@@ -1,14 +1,14 @@
 @template.layout(
-    title = "When to Stop Repairing Your Car: Repair or Sell Checklist | AutoMoneyPit",
-    description = "Use this repair-or-sell checklist to decide when another car repair stops making financial sense.",
+    title = "When Is It Not Worth Repairing a Car? 3 Repair-or-Sell Rules | AutoMoneyPit",
+    description = "Use these repair-or-sell rules to decide when another car repair no longer makes financial sense.",
     canonical = "https://automoneypit.com/guides/when-to-stop-repairing-your-car",
     content = @`
         <article style="max-width: 860px; margin: 3rem auto; padding: 0 1rem;">
             <h1 style="font-size: clamp(2rem, 6vw, 3rem); font-weight: 800; letter-spacing: -0.03em; margin-bottom: 1rem;">
-                When To Stop Repairing Your Car
+                When Is It No Longer Worth Repairing Your Car?
             </h1>
             <p style="font-size: 1.05rem; color: #64748b; line-height: 1.7;">
-                The key question is not "have I already spent a lot?" The key question is "does the next repair still improve my financial position?"
+                The real question is not whether you already spent a lot. The real question is whether the next repair still improves your financial position from today forward.
             </p>
 
             <h2 style="margin-top: 2rem; font-size: 1.35rem;">Quick Thresholds</h2>

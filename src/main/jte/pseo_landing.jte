@@ -2,6 +2,7 @@
 @import com.carmoneypit.engine.service.CarDataService.Fault
 @import com.carmoneypit.engine.web.PSeoController.ProfileViewModel
 @import com.carmoneypit.engine.web.PSeoController.Breadcrumb
+@import com.carmoneypit.engine.web.PSeoController.RelatedFaultLink
 @import java.util.List
 @param CarModel car
 @param Fault fault
@@ -11,13 +12,16 @@
 @param String canonicalUrl
 @param String leadUrlInline
 @param String leadUrlSticky
-@param List<Fault> relatedFaults
+@param List<RelatedFaultLink> relatedFaultLinks
 @param List<Breadcrumb> breadcrumbs
+@param String brandDirectoryUrl
+@param String modelDirectoryUrl
+@param String mileageBaseUrl
 @param String ogImage = null
 @param String datasetVersion = "2026-02-24"
 
 @template.layout(
-    title = car.brand() + " " + car.model() + " " + fault.component() + " Repair Cost: Fix or Sell?",
+    title = fault.component() + " Repair Cost on " + car.brand() + " " + car.model() + ": Is It Worth Fixing?",
     description = metaDescription,
     canonical = canonicalUrl,
     schemaJson = schemaJson,
@@ -71,7 +75,7 @@
         <!-- TL;DR AEO Summary -->
         <div class="tldr-summary" style="background: #eef2ff; border-left: 4px solid #4f46e5; padding: 1.5rem; border-radius: 8px; margin-bottom: 3rem;">
             <h2 style="font-size: 1.1rem; font-weight: 800; color: #312e81; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
-                <span style="font-size: 1.25rem;">⚡</span> Vehicle Analysis Summary
+                <span style="font-size: 1.25rem;">⚡</span> Quick Answer: Fix It or Sell It?
             </h2>
             !{
                 double ratio = fault.repairCost() / (double) details.market().jan2026AvgPrice();
@@ -621,7 +625,7 @@
                 </p>
                 
                 <a id="inlineCta" href="${leadUrlInline}" class="btn-cinematic" style="display: inline-block; text-decoration: none; font-size: 1.1rem; padding: 1.2rem 2.5rem; background: #2563EB; color: #ffffff; border-radius: 12px; font-weight: 700; box-shadow: 0 10px 20px rgba(37, 99, 235, 0.3);">
-                    Compare Next Steps <span>→</span>
+                    Get Fix vs Sell Next Steps <span>→</span>
                 </a>
                 <p style="font-size: 0.7rem; color: #94a3b8; text-align: center; margin-top: 0.75rem;">
                     May include affiliate links | <a href="/privacy" style="color: #94a3b8;">Disclosure</a>
@@ -638,14 +642,14 @@
         </style>
 
         <!-- Related Problems Section (Internal Linking) -->
-        @if(relatedFaults != null && !relatedFaults.isEmpty())
+        @if(relatedFaultLinks != null && !relatedFaultLinks.isEmpty())
         <div class="related-section" style="margin: 4rem 0; background: #F9FAFB; padding: 2.5rem; border-radius: 24px;">
             <h2 style="font-size: 1.35rem; font-weight: 800; margin-bottom: 2rem; text-align: center; color: #1f2937;">
                 ${car.brand()} ${car.model()} Owners Also Researched:
             </h2>
             <div class="related-grid">
-                @for(var related : relatedFaults)
-                <a href="/verdict/${car.brand().toLowerCase().replaceAll("[^a-z0-9]", "")}/${car.model().toLowerCase().replaceAll("[^a-z0-9]", "")}/${related.component().toLowerCase().replace(" ", "-").replaceAll("[^a-z0-9-]", "")}" 
+                @for(var related : relatedFaultLinks)
+                <a href="${related.url()}" 
                    class="related-card">
                     <h3 style="font-size: 1rem; font-weight: 700; color: #1F2937; margin-bottom: 0.75rem; line-height: 1.3;">
                         ${related.component()}
@@ -658,8 +662,8 @@
                 @endfor
                 
                 <!-- CTA card when few related items (fills empty space) -->
-                @if(relatedFaults.size() == 1)
-                <a href="/?brand=${car.brand().replace(" ", "+")}&model=${car.model().replace(" ", "+")}" class="related-card cta-card">
+                @if(relatedFaultLinks.size() == 1)
+                <a href="/" class="related-card cta-card">
                     <h3 style="font-size: 1rem; font-weight: 700; color: #3b82f6; margin-bottom: 0.75rem; line-height: 1.3;">
                         🔍 Analyze Another Repair
                     </h3>
@@ -738,19 +742,19 @@
                 Your car's mileage significantly impacts this repair decision. See what to expect at different stages:
             </p>
             <div style="display: flex; flex-wrap: wrap; gap: 0.75rem;">
-                <a href="/verdict/${car.brand().toLowerCase().replaceAll("[^a-z0-9]", "")}/${car.model().toLowerCase().replaceAll("[^a-z0-9]", "")}/75000-miles" 
+                <a href="${mileageBaseUrl}/75000-miles" 
                    style="text-decoration: none; background: #fff; padding: 0.6rem 1rem; border-radius: 10px; font-size: 0.85rem; font-weight: 600; color: #0369a1; border: 1px solid #bae6fd; transition: all 0.2s;">
                     75K miles
                 </a>
-                <a href="/verdict/${car.brand().toLowerCase().replaceAll("[^a-z0-9]", "")}/${car.model().toLowerCase().replaceAll("[^a-z0-9]", "")}/100000-miles" 
+                <a href="${mileageBaseUrl}/100000-miles" 
                    style="text-decoration: none; background: #fff; padding: 0.6rem 1rem; border-radius: 10px; font-size: 0.85rem; font-weight: 600; color: #0369a1; border: 1px solid #bae6fd; transition: all 0.2s;">
                     100K miles
                 </a>
-                <a href="/verdict/${car.brand().toLowerCase().replaceAll("[^a-z0-9]", "")}/${car.model().toLowerCase().replaceAll("[^a-z0-9]", "")}/150000-miles" 
+                <a href="${mileageBaseUrl}/150000-miles" 
                    style="text-decoration: none; background: #fff; padding: 0.6rem 1rem; border-radius: 10px; font-size: 0.85rem; font-weight: 600; color: #0369a1; border: 1px solid #bae6fd; transition: all 0.2s;">
                     150K miles
                 </a>
-                <a href="/verdict/${car.brand().toLowerCase().replaceAll("[^a-z0-9]", "")}/${car.model().toLowerCase().replaceAll("[^a-z0-9]", "")}/200000-miles" 
+                <a href="${mileageBaseUrl}/200000-miles" 
                    style="text-decoration: none; background: #fff; padding: 0.6rem 1rem; border-radius: 10px; font-size: 0.85rem; font-weight: 600; color: #0369a1; border: 1px solid #bae6fd; transition: all 0.2s;">
                     200K miles
                 </a>
@@ -833,7 +837,7 @@
                         </a>
                     @endfor
                 @else
-                    <a href="/models/${car.brand().toLowerCase().replaceAll("[^a-z0-9]", "")}" 
+                    <a href="${brandDirectoryUrl}" 
                        style="text-decoration: none; background: #fff; padding: 0.6rem 1rem; border-radius: 10px; font-size: 0.85rem; font-weight: 600; color: #475569; border: 1px solid #e2e8f0; transition: all 0.2s;">
                         All ${car.brand()} Models
                     </a>
@@ -848,7 +852,7 @@
                 <div style="font-size: 0.75rem; color: #64748b; font-weight: 600;">Data-Driven Diagnostic</div>
             </div>
             <a href="${leadUrlSticky}" class="btn-cinematic" style="background: #2563EB; color: #fff; text-decoration: none; padding: 0.75rem 1.25rem; border-radius: 8px; font-weight: 700; font-size: 0.9rem;">
-                View Verdict
+                Next-Step Guide
             </a>
         </div>
         

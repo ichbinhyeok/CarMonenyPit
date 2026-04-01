@@ -1,14 +1,14 @@
 @template.layout(
-    title = "Sunk Cost Fallacy in Car Repairs | AutoMoneyPit",
-    description = "Understand how sunk-cost bias distorts car repair decisions and how to switch to forward-looking criteria.",
+    title = "Sunk Cost Fallacy in Car Repairs: Should You Stop Fixing It? | AutoMoneyPit",
+    description = "Understand how sunk-cost bias distorts car repair decisions and how to switch to a forward-looking repair-or-sell test.",
     canonical = "https://automoneypit.com/guides/sunk-cost-fallacy-car-repairs",
     content = @`
         <article style="max-width: 860px; margin: 3rem auto; padding: 0 1rem;">
             <h1 style="font-size: clamp(2rem, 6vw, 3rem); font-weight: 800; letter-spacing: -0.03em; margin-bottom: 1rem;">
-                Sunk Cost Fallacy In Car Repairs
+                Sunk Cost Fallacy in Car Repairs
             </h1>
             <p style="font-size: 1.05rem; color: #64748b; line-height: 1.7;">
-                "I already spent $3,000, so I should keep fixing it" is a classic sunk-cost trap. Past spend cannot be recovered; only future costs matter now.
+                "I already spent $3,000, so I should keep fixing it" is the classic trap. Past spend cannot be recovered; only future repair cost and future vehicle value matter now.
             </p>
 
             <h2 style="margin-top: 2rem; font-size: 1.35rem;">How The Trap Looks In Practice</h2>
