@@ -4,6 +4,7 @@ import com.carmoneypit.engine.api.OutputModels.VerdictState;
 import com.carmoneypit.engine.api.InputModels.EngineInput;
 import com.carmoneypit.engine.api.InputModels.SimulationControls;
 
+import com.carmoneypit.engine.config.PartnerRoutingConfig;
 import com.carmoneypit.engine.core.ValuationService;
 import com.carmoneypit.engine.data.CarBrandData;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -18,10 +19,13 @@ public class VerdictPresenter {
 
     private final ObjectMapper objectMapper;
     private final ValuationService valuationService;
+    private final PartnerRoutingConfig routingConfig;
 
-    public VerdictPresenter(ObjectMapper objectMapper, ValuationService valuationService) {
+    public VerdictPresenter(ObjectMapper objectMapper, ValuationService valuationService,
+            PartnerRoutingConfig routingConfig) {
         this.objectMapper = objectMapper;
         this.valuationService = valuationService;
+        this.routingConfig = routingConfig;
     }
 
     /**
@@ -175,6 +179,15 @@ public class VerdictPresenter {
     }
 
     public String getLeadLabel(VerdictState state, EngineInput input, SimulationControls controls) {
+        if (routingConfig.isApprovalPending()) {
+            return switch (state) {
+                case TIME_BOMB -> "Join Sell Alert";
+                case STABLE -> input.mileage() > 80000 ? "Join Protection Waitlist" : "Join Repair Pricing Alert";
+                case BORDERLINE -> "Join 2nd Opinion Waitlist";
+                default -> "Join Waitlist";
+            };
+        }
+
         boolean isAccident = input.isQuoteEstimated() && (controls != null
                 && controls.mobilityStatus() == com.carmoneypit.engine.api.InputModels.MobilityStatus.NEEDS_TOW);
         boolean hasQuote = !input.isQuoteEstimated();
@@ -200,6 +213,19 @@ public class VerdictPresenter {
     }
 
     public String getLeadDescription(VerdictState state, EngineInput input, SimulationControls controls) {
+        if (routingConfig.isApprovalPending()) {
+            return switch (state) {
+                case TIME_BOMB ->
+                    "We are not issuing live offers yet. Join the alert list and we will notify you when broken-car buyer access is live.";
+                case STABLE -> input.mileage() > 80000
+                        ? "We are lining up protection partners for keep-worthy high-mileage cars. Join the waitlist for launch access."
+                        : "We are validating repair-price and shop partners. Join the alert list and we will send vetted options when live.";
+                case BORDERLINE ->
+                    "This is a close call. Join the waitlist and we will send second-opinion and value-comparison options when partner access opens.";
+                default -> "Join the waitlist for vetted next-step options.";
+            };
+        }
+
         boolean isAccident = input.isQuoteEstimated() && (controls != null
                 && controls.mobilityStatus() == com.carmoneypit.engine.api.InputModels.MobilityStatus.NEEDS_TOW);
         boolean hasQuote = !input.isQuoteEstimated();

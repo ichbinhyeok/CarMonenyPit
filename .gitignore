@@ -51,6 +51,9 @@ models_temp.json
 faults_temp.json
 *result.html
 leads.csv
+automoneypit-partner-events.csv
+automoneypit-partner-events.*.csv
+automoneypit-leads.*.csv
 
 ### Node / Playwright ###
 node_modules/

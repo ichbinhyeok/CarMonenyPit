@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 public class PartnerRoutingConfig {
 
     private boolean approvalPending = true;
+    private String callbackToken = "";
 
     // Default Waitlist/Lead Capture Forms (Fallback)
     private String waitlistUrl = "/lead-capture";
@@ -24,6 +25,14 @@ public class PartnerRoutingConfig {
 
     public void setApprovalPending(boolean approvalPending) {
         this.approvalPending = approvalPending;
+    }
+
+    public String getCallbackToken() {
+        return callbackToken;
+    }
+
+    public void setCallbackToken(String callbackToken) {
+        this.callbackToken = callbackToken;
     }
 
     public String getWaitlistUrl() {

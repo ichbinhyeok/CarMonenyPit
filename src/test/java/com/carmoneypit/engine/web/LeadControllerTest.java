@@ -121,4 +121,37 @@ class LeadControllerTest {
                 .andExpect(model().attribute("detail", "torque-converter"))
                 .andExpect(model().attribute("leadId", "leadtest1234"));
     }
+
+    @Test
+    void partnerApprovedActionShouldRejectMissingOrInvalidToken() throws Exception {
+        given(routingConfig.getCallbackToken()).willReturn("super-secret");
+
+        mockMvc.perform(post("/partner/approved-action")
+                        .param("leadId", "leadtest1234")
+                        .param("approvedAction", "sold_to_partner"))
+                .andExpect(status().isUnauthorized());
+
+        mockMvc.perform(post("/partner/approved-action")
+                        .header("X-Partner-Token", "wrong-token")
+                        .param("leadId", "leadtest1234")
+                        .param("approvedAction", "sold_to_partner"))
+                .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    void partnerApprovedActionShouldAcceptValidTokenAndCleanPayload() throws Exception {
+        given(routingConfig.getCallbackToken()).willReturn("super-secret");
+
+        mockMvc.perform(post("/partner/approved-action")
+                        .header("X-Partner-Token", "super-secret")
+                        .param("leadId", "leadtest1234")
+                        .param("approvedAction", "Sold To Partner")
+                        .param("partner", "Peddle")
+                        .param("revenueUsd", "125.50")
+                        .param("currency", "usd")
+                        .param("status", "Paid")
+                        .param("note", "manual close"))
+                .andExpect(status().isNoContent())
+                .andExpect(header().string("X-Robots-Tag", containsString("noindex")));
+    }
 }

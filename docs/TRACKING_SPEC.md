@@ -21,6 +21,11 @@ Use it to answer 4 questions:
 - file: `automoneypit-leads.csv`
 - used as the attribution source of truth for lead routing and waitlist submits
 
+### C. Server-side partner events log
+- logger: `CSV_PARTNER_LOGGER`
+- file: `automoneypit-partner-events.csv`
+- used as the revenue source of truth after a lead becomes a downstream partner action
+
 ## 3. Canonical Dimensions
 These dimensions should be treated as the canonical reporting fields.
 
@@ -107,6 +112,21 @@ Normalization rules:
 - source: `result.jte`
 - meaning: user triggered receipt sharing
 
+### G. `approved_action`
+- source: `/partner/approved-action`
+- meaning: a submitted lead reached a downstream partner outcome worth tracking
+- authentication:
+  - requires `app.partner.callbackToken`
+  - accepts `X-Partner-Token` header or `token` parameter
+- key payload:
+  - `leadId`
+  - `partner`
+  - `approvedAction`
+  - `revenueUsd`
+  - `currency`
+  - `status`
+  - `note`
+
 ## 6. CSV Schema
 The lead CSV currently writes:
 
@@ -121,6 +141,32 @@ Examples:
 Important:
 - CSV is the reliable source for attribution analysis
 - GA4 is the reliable source for client-side behavior trends
+
+## 6A. Partner Event CSV Schema
+The partner event CSV currently writes:
+
+```text
+timestamp,event_type,lead_id,partner,approved_action,revenue_usd,currency,status,note
+```
+
+Important:
+- this log is keyed by `lead_id`
+- join this log back to `automoneypit-leads.csv` on `lead_id` to recover the original source page and intent
+- this is the correct place to track approved outcomes and revenue, not the waitlist CSV
+
+### Partner callback example
+
+```bash
+curl -X POST "https://automoneypit.com/partner/approved-action" \
+  -H "X-Partner-Token: $APP_PARTNER_CALLBACK_TOKEN" \
+  -d "leadId=abc123xyz" \
+  -d "partner=peddle" \
+  -d "approvedAction=sold_to_partner" \
+  -d "revenueUsd=125.50" \
+  -d "currency=USD" \
+  -d "status=paid" \
+  -d "note=manual close"
+```
 
 ## 7. Waitlist Tracking Rules
 
@@ -144,6 +190,7 @@ The following fields must survive the redirect into the waitlist form:
 ### C. SEO Safety
 - `/lead-capture` must stay `noindex, nofollow`
 - `/waitlist/submit` must not become crawlable
+- `/partner/approved-action` must not be exposed without a callback token
 
 ## 8. Page Type Guide
 Common `page_type` values in current implementation:
@@ -193,6 +240,7 @@ Interpretation:
 - if `approvalPending=true`, this is still a validation funnel
 - `lead_submit` is not revenue
 - treat `lead_submit` as the current best internal conversion proxy
+- once partner callbacks are live, treat `approved_action` and `revenue_usd` as the monetization truth
 
 ## 11. Operating Recommendation
 Monitor these slices first:
@@ -209,7 +257,7 @@ The main question to answer each week is:
 ## 12. Known Limitations
 - historical CSV rows from before taxonomy cleanup are noisy
 - GA4 can undercount if scripts are blocked
-- partner-side approval data is still outside this internal tracking spec
+- partner-side attribution depends on valid `lead_id` handoff and callback token setup
 
 ## 13. Audit Summary (2026-03-20)
 This section records what was wrong during the March 20, 2026 tracking audit, what was fixed, and what must be checked next.
@@ -247,6 +295,7 @@ This section records what was wrong during the March 20, 2026 tracking audit, wh
   - `WAITLIST`
 - mileage detail tracking now uses canonical detail values like `150000-miles`
 - tracking docs were rewritten to match implementation
+- downstream partner outcomes can now be logged into a separate revenue CSV keyed by `lead_id`
 
 ### C. What This Means
 - source attribution is now readable again
@@ -308,6 +357,7 @@ If partners are still not live:
 
 If partners are live:
 - add partner-side `approved_action` measurement to the review
+- confirm callback token is configured and partner events are landing in `automoneypit-partner-events.csv`
 
 ## 15. Next-Review Checklist
 Use this exact checklist on the next checkpoint.
@@ -317,9 +367,10 @@ Use this exact checklist on the next checkpoint.
 3. Confirm `/lead` and `/lead-capture` clean URL behavior.
 4. Inspect the last 20 CSV lead rows for attribution completeness.
 5. Review `cta_click -> lead_capture_view -> lead_submit` ratios.
-6. Review top pages by impressions and identify zero-click pages.
-7. Review top pages by clicks and identify zero-submit pages.
-8. Decide whether the bottleneck is:
+6. Review partner `approved_action` rows and join them back to lead CSV by `lead_id`.
+7. Review top pages by impressions and identify zero-click pages.
+8. Review top pages by clicks and identify zero-submit pages.
+9. Decide whether the bottleneck is:
    - snippet / CTR
    - waitlist friction
    - weak traffic quality

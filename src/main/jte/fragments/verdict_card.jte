@@ -416,6 +416,10 @@
                                   box-shadow: 0 0 30px rgba(255,255,255,0.3);">
                             ${leadLabel}
                         </a>
+
+                        <p style="font-size: 0.85rem; line-height: 1.5; text-align: center; color: rgba(255,255,255,0.92); margin: 0.9rem 0 0;">
+                            ${leadDescription}
+                        </p>
                         
                         <p style="font-size: 0.8rem; text-align: center; opacity: 0.7; margin: 1rem 0 0;">
                             Compare options before deciding
@@ -456,6 +460,10 @@
                                   font-weight: 900; font-size: 1.1rem; text-align: center;">
                             ${leadLabel}
                         </a>
+
+                        <p style="font-size: 0.85rem; line-height: 1.5; color: rgba(255,255,255,0.92); margin: 0.9rem 0 0;">
+                            ${leadDescription}
+                        </p>
                 </div>
             </div>
         @endif

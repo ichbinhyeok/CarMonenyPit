@@ -33,9 +33,26 @@
         </encoder>
     </appender>
 
+    <appender name="PARTNER_EVENTS_CSV" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_DIR}/${APP_NICKNAME}-partner-events.csv</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_DIR}/${APP_NICKNAME}-partner-events.%d{yyyy-MM-dd}.csv</fileNamePattern>
+            <maxHistory>365</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <!-- Formats: timestamp in Asia/Seoul,%msg -->
+            <!-- Note: %msg contains "event_type,lead_id,partner,approved_action,revenue_usd,currency,status,note" -->
+            <pattern>%d{yyyy-MM-dd'T'HH:mm:ssXXX, Asia/Seoul},%msg%n</pattern>
+        </encoder>
+    </appender>
+
     <!-- Dedicated logger for leads without prepending log levels to the pattern -->
     <logger name="CSV_LEAD_LOGGER" level="INFO" additivity="false">
         <appender-ref ref="LEADS_CSV" />
+    </logger>
+
+    <logger name="CSV_PARTNER_LOGGER" level="INFO" additivity="false">
+        <appender-ref ref="PARTNER_EVENTS_CSV" />
     </logger>
 
     <root level="INFO">

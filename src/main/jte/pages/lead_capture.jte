@@ -196,7 +196,7 @@
                      <div class="form-row">
                          <input id="email" name="email" type="email" autocomplete="email" required class="form-input-lead" placeholder="Enter your email">
                          <button type="submit" class="btn-lead">
-                             Join Priority List
+                             ${"SELL".equals(intent) ? "Get Sell Launch Alert" : ("REPAIR".equals(intent) ? "Get Repair Partner Alert" : ("WARRANTY".equals(intent) ? "Get Protection Alert" : ("VALUE".equals(intent) ? "Get Decision Alert" : "Join Priority List")))}
                          </button>
                     </div>
                     <p class="disclaimer-txt">

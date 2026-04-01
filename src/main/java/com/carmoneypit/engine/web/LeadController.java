@@ -7,17 +7,22 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.view.RedirectView;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
 import java.util.Locale;
 import java.util.UUID;
 
@@ -25,6 +30,7 @@ import java.util.UUID;
 public class LeadController {
 
     private static final Logger csvLogger = LoggerFactory.getLogger("CSV_LEAD_LOGGER");
+    private static final Logger partnerCsvLogger = LoggerFactory.getLogger("CSV_PARTNER_LOGGER");
     private static final String WAITLIST_CONTEXT_SESSION_KEY = "leadCaptureContext";
     private static final String WAITLIST_STATUS_SESSION_KEY = "leadCaptureStatus";
     private final PartnerRoutingConfig routingConfig;
@@ -249,6 +255,67 @@ public class LeadController {
         return "pages/lead_capture";
     }
 
+    @PostMapping("/partner/approved-action")
+    public void recordApprovedAction(
+            @RequestParam(name = "leadId") String leadId,
+            @RequestParam(name = "approvedAction") String approvedAction,
+            @RequestParam(name = "partner", defaultValue = "unknown") String partner,
+            @RequestParam(name = "revenueUsd", required = false) BigDecimal revenueUsd,
+            @RequestParam(name = "currency", defaultValue = "USD") String currency,
+            @RequestParam(name = "status", defaultValue = "approved") String status,
+            @RequestParam(name = "note", required = false, defaultValue = "") String note,
+            @RequestParam(name = "token", required = false) String queryToken,
+            @RequestHeader(name = "X-Partner-Token", required = false) String headerToken,
+            HttpServletResponse response) {
+
+        String configuredToken = defaultIfBlank(routingConfig.getCallbackToken(), "");
+        if (configuredToken.isBlank()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+
+        String providedToken = defaultIfBlank(headerToken, defaultIfBlank(queryToken, ""));
+        if (providedToken.isBlank() || !secureEquals(configuredToken, providedToken)) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+        }
+
+        String safeLeadId = sanitizeLeadId(leadId);
+        if (safeLeadId.isBlank()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Valid leadId is required.");
+        }
+
+        String safeApprovedAction = sanitizeSlug(approvedAction);
+        if (safeApprovedAction.isBlank()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Valid approvedAction is required.");
+        }
+
+        String safePartner = sanitizeSlug(partner);
+        if (safePartner.isBlank()) {
+            safePartner = "unknown";
+        }
+
+        String safeCurrency = sanitizeCurrency(currency);
+        String safeStatus = sanitizeSlug(status);
+        if (safeStatus.isBlank()) {
+            safeStatus = "approved";
+        }
+
+        String safeRevenue = formatRevenue(revenueUsd);
+        String safeNote = sanitize(note);
+
+        partnerCsvLogger.info("{},{},{},{},{},{},{},{}",
+                "approved_action",
+                safeLeadId,
+                safePartner,
+                safeApprovedAction,
+                safeRevenue,
+                safeCurrency,
+                safeStatus,
+                safeNote);
+
+        applyNoindexHeaders(response);
+        response.setStatus(HttpStatus.NO_CONTENT.value());
+    }
+
     private RedirectView buildRedirect(String location) {
         RedirectView redirectView = new RedirectView(location);
         redirectView.setStatusCode(HttpStatus.FOUND);
@@ -401,6 +468,38 @@ public class LeadController {
         return clean;
     }
 
+    private String sanitizeSlug(String input) {
+        if (input == null || input.isBlank()) {
+            return "";
+        }
+        String clean = input.trim().toLowerCase(Locale.ROOT)
+                .replaceAll("[^a-z0-9]+", "_")
+                .replaceAll("^_+|_+$", "");
+        if (clean.length() > 64) {
+            clean = clean.substring(0, 64);
+        }
+        return clean;
+    }
+
+    private String sanitizeCurrency(String input) {
+        String clean = defaultIfBlank(input, "USD").trim().toUpperCase(Locale.ROOT);
+        if (!clean.matches("^[A-Z]{3}$")) {
+            return "USD";
+        }
+        return clean;
+    }
+
+    private String formatRevenue(BigDecimal revenueUsd) {
+        if (revenueUsd == null) {
+            return "";
+        }
+        BigDecimal normalized = revenueUsd.setScale(2, RoundingMode.HALF_UP);
+        if (normalized.signum() < 0 || normalized.compareTo(new BigDecimal("1000000")) > 0) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "revenueUsd is out of bounds.");
+        }
+        return normalized.toPlainString();
+    }
+
     private String generateLeadId() {
         return UUID.randomUUID().toString();
     }
@@ -443,6 +542,12 @@ public class LeadController {
                 || ua.contains("headlesschrome")
                 || ua.contains("puppeteer")
                 || ua.contains("lighthouse");
+    }
+
+    private boolean secureEquals(String expected, String actual) {
+        return MessageDigest.isEqual(
+                expected.getBytes(StandardCharsets.UTF_8),
+                actual.getBytes(StandardCharsets.UTF_8));
     }
 
     private record LeadCaptureContext(
