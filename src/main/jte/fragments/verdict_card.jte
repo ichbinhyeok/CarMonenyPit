@@ -12,19 +12,37 @@
 @param boolean isValueEstimated = false
 @param String datasetVersion = "2026-02-24"
 
+!{
+    boolean isWaitlist = leadLabel != null && leadLabel.startsWith("Join");
+    String sellCtaHeader = isWaitlist ? "Analysis Complete | Waitlist Next Step:" : "Analysis Complete | Your Action Plan:";
+    String keepCtaHeader = isWaitlist ? "Analysis Complete | Waitlist Next Step:" : "Analysis Complete | Recommended Action:";
+    String ctaContextLabel = isWaitlist ? "Waitlist Access" : "Next Step";
+    String ctaFooter = isWaitlist
+        ? "Join now and we will notify you when vetted partner access goes live."
+        : "Compare options before deciding";
+    String keepSignalLabel = isWaitlist ? "MODEL-BASED KEEP SIGNAL | WAITLIST" : "MODEL-BASED KEEP SIGNAL";
+    String keepCtaTitle = isWaitlist ? "Join The Repair Pricing Or Protection Waitlist" : "Audit Quote With A Service Expert";
+    String keepCtaBody = isWaitlist
+        ? "The data supports keeping the vehicle. Join the waitlist and we will notify you when vetted repair-pricing or protection options go live."
+        : "The data supports keeping the vehicle. Connect with a specialist to verify the fair market cost of your repair.";
+    String winnerMessage = result.stayTotal() > result.moveTotal()
+        ? "Selling costs less. Consider letting go."
+        : "Fixing costs less. Worth keeping.";
+}
+
 <div id="verdict-card" class="fade-in">
 
     <!-- Information Transparency Disclaimer -->
     @if(result != null && result.confidence() < 75)
     <div style="background: #fffbeb; border: 1px solid #fde68a; padding: 1rem 1.5rem; border-radius: 12px; margin-bottom: 2rem; display: flex; align-items: flex-start; gap: 1rem;" id="transparency-disclaimer">
-        <span style="font-size: 1.25rem;">⚠️</span>
+        <span style="font-size: 0.75rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;">Low Confidence</span>
         <div style="font-size: 0.85rem; color: #92400e; line-height: 1.4;">
             <strong>Data Disclosure:</strong> Lower-confidence estimate — real-world costs may vary significantly by trim, condition, and location. This is not financial advice.
         </div>
     </div>
     @else
     <div style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 1rem 1.5rem; border-radius: 12px; margin-bottom: 2rem; display: flex; align-items: flex-start; gap: 1rem;" id="transparency-disclaimer">
-        <span style="font-size: 1.25rem;">ℹ️</span>
+        <span style="font-size: 0.75rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;">Data</span>
         <div style="font-size: 0.85rem; color: #475569; line-height: 1.4;">
             <strong>Data Disclosure:</strong> This verdict is generated using statistical models and historical market data. It is intended for informational purposes only and does not constitute mechanical diagnosis, financial advice, or legal appraisal. Actual costs and values vary.
         </div>
@@ -292,7 +310,7 @@
                 <!-- Path: Fix -->
                 <div class="regret-bar-container">
                     <div class="regret-label label-stay">
-                        <span>🔧 COST TO KEEP</span>
+                        <span>COST TO KEEP</span>
                         <span>$${String.format("%,.0f", result.stayTotal())}</span>
                     </div>
                     <div class="bar-outer">
@@ -306,7 +324,7 @@
                 <!-- Path: Move -->
                 <div class="regret-bar-container">
                     <div class="regret-label label-move">
-                        <span>💰 COST TO SELL</span>
+                        <span>COST TO SELL</span>
                         <span>$${String.format("%,.0f", result.moveTotal())}</span>
                     </div>
                     <div class="bar-outer">
@@ -321,7 +339,7 @@
             <!-- Winner Indicator -->
             <div style="text-align: center; margin-top: 1.5rem; padding: 1rem; background: ${result.stayTotal() > result.moveTotal() ? "#fef2f2" : "#f0fdf4"}; border-radius: 12px;">
                 <span style="font-size: 0.8rem; font-weight: 700; color: ${result.stayTotal() > result.moveTotal() ? "#dc2626" : "#16a34a"};">
-                    ${result.stayTotal() > result.moveTotal() ? "💡 Selling costs less — consider letting go" : "💡 Fixing costs less — worth keeping"}
+                    ${winnerMessage}
                 </span>
             </div>
         </div>
@@ -368,7 +386,7 @@
             @if(verdictCss.contains("liquidate"))
                 <div style="border-top: 2px dashed #cbd5e0; padding-top: 2rem; margin-top: 2rem;">
                     <div style="font-size: 0.8rem; color: #718096; margin-bottom: 1rem;">
-                        ✓ Analysis Complete → Your Action Plan:
+                        ${sellCtaHeader}
                     </div>
                     
                     <!-- Step-by-step Action Guide -->
@@ -406,7 +424,7 @@
                                  border: 2px solid rgba(239, 68, 68, 0.3);">
                         
                         <div style="text-align: center; margin-bottom: 1rem;">
-                            <span style="font-size: 0.8rem; opacity: 0.8;">Next Step →</span>
+                            <span style="font-size: 0.8rem; opacity: 0.8;">${ctaContextLabel}</span>
                         </div>
                         
                         <a href="${leadUrl}" 
@@ -422,7 +440,7 @@
                         </p>
                         
                         <p style="font-size: 0.8rem; text-align: center; opacity: 0.7; margin: 1rem 0 0;">
-                            Compare options before deciding
+                            ${ctaFooter}
                         </p>
                         <p style="font-size: 0.7rem; color: rgba(255,255,255,0.8); text-align: center; margin: 0.6rem 0 0;">
                             May include affiliate links | <a href="/privacy" style="color: rgba(255,255,255,0.9);">Disclosure</a>
@@ -432,7 +450,7 @@
             @else
                 <div style="border-top: 2px dashed #cbd5e0; padding-top: 2rem; margin-top: 2rem;">
                     <div style="font-size: 0.8rem; color: #718096; margin-bottom: 1rem;">
-                        ✓ Analysis Complete → Recommended Action:
+                        ${keepCtaHeader}
                     </div>
                     
                     <div style="background: linear-gradient(135deg, #0EA5E9 0%, #3B82F6 100%); 
@@ -440,18 +458,18 @@
                                  box-shadow: 0 20px 60px rgba(14, 165, 233, 0.3);">
                         
                         <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
-                            <span style="font-size: 1.5rem;">✓</span>
+                            <span style="font-size: 0.75rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;">Keep</span>
                             <span style="font-size: 0.9rem; font-weight: 700; opacity: 0.9;">
-                                MODEL-BASED KEEP SIGNAL
+                                ${keepSignalLabel}
                             </span>
                         </div>
                         
                         <h4 style="font-size: 1.8rem; font-weight: 800; margin-bottom: 0.75rem; line-height: 1.2;">
-                            Audit Quote with a<br>Service Expert
+                            ${keepCtaTitle}
                         </h4>
                         
                         <p style="font-size: 1rem; opacity: 0.9; margin-bottom: 1.5rem;">
-                            The data supports keeping the vehicle. Connect with a specialist to verify the fair market cost of your repair.
+                            ${keepCtaBody}
                         </p>
                         
                         <a href="${leadUrl}" 
@@ -464,6 +482,12 @@
                         <p style="font-size: 0.85rem; line-height: 1.5; color: rgba(255,255,255,0.92); margin: 0.9rem 0 0;">
                             ${leadDescription}
                         </p>
+                        <p style="font-size: 0.8rem; text-align: center; opacity: 0.78; margin: 1rem 0 0;">
+                            ${ctaFooter}
+                        </p>
+                        <p style="font-size: 0.7rem; color: rgba(255,255,255,0.82); text-align: center; margin: 0.6rem 0 0;">
+                            May include affiliate links | <a href="/privacy" style="color: rgba(255,255,255,0.92);">Disclosure</a>
+                        </p>
                 </div>
             </div>
         @endif
@@ -471,7 +495,7 @@
                 <!-- Methodology Section -->
                 <div style="margin-top: 1.5rem; padding: 1.5rem; background: #f8fafc; border-radius: 24px; border: 1px solid #e2e8f0; overflow: hidden;" id="methodology-section">
                     <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
-                        <span style="font-size: 1.2rem;">📊</span>
+                        <span style="font-size: 0.75rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: #0f172a;">Method</span>
                         <h4 style="font-size: 0.9rem; font-weight: 800; color: #0f172a; margin: 0;">How We Calculate This</h4>
                     </div>
                     
@@ -481,9 +505,9 @@
                     
                     <!-- Data Source Badges (E-E-A-T) -->
                     <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem;">
-                        <span style="background: #e0f2fe; color: #0369a1; padding: 0.25rem 0.75rem; border-radius: 99px; font-size: 0.7rem; font-weight: 700;">📘 Valuation Models</span>
-                        <span style="background: #f1f5f9; color: #475569; padding: 0.25rem 0.75rem; border-radius: 99px; font-size: 0.7rem; font-weight: 700;">📗 Industry Averages</span>
-                        <span style="background: #fef08a; color: #a16207; padding: 0.25rem 0.75rem; border-radius: 99px; font-size: 0.7rem; font-weight: 700;">🛡️ Historical Patterns</span>
+                        <span style="background: #e0f2fe; color: #0369a1; padding: 0.25rem 0.75rem; border-radius: 99px; font-size: 0.7rem; font-weight: 700;">Valuation Models</span>
+                        <span style="background: #f1f5f9; color: #475569; padding: 0.25rem 0.75rem; border-radius: 99px; font-size: 0.7rem; font-weight: 700;">Industry Averages</span>
+                        <span style="background: #fef08a; color: #a16207; padding: 0.25rem 0.75rem; border-radius: 99px; font-size: 0.7rem; font-weight: 700;">Historical Patterns</span>
                     </div>
 
                     <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1.5rem;">
@@ -502,8 +526,8 @@
                     </div>
 
                     <div style="padding-top: 0.75rem; border-top: 1px solid #e2e8f0; display: flex; align-items: center; justify-content: space-between;">
-                        <span style="color: #64748b; font-size: 0.65rem;">Dataset: ${datasetVersion} • For informational purposes only</span>
-                        <a href="/methodology" style="font-size: 0.7rem; font-weight: 700; color: #6366f1; text-decoration: none;">Full Methodology →</a>
+                        <span style="color: #64748b; font-size: 0.65rem;">Dataset: ${datasetVersion} | For informational purposes only</span>
+                        <a href="/methodology" style="font-size: 0.7rem; font-weight: 700; color: #6366f1; text-decoration: none;">Full Methodology -></a>
                     </div>
                 </div>
             </div>

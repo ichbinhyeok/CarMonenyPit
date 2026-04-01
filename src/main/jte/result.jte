@@ -413,7 +413,7 @@
             <section class="bento-card verdict-cell ${verdictCss}">
                 @if(viewMode.equals("RECEIPT"))
                     <div style="background: #eff6ff; color: #1e3a8a; padding: 0.75rem; border-radius: 12px; text-align: center; margin-bottom: 1.5rem; font-weight: 700; font-size: 0.9rem;">
-                        SHARED DIAGNOSTIC RECEIPT • READ ONLY
+                        SHARED DIAGNOSTIC RECEIPT | READ ONLY
                     </div>
                 @endif
                 
@@ -467,7 +467,7 @@
                             
                             <!-- Card 1: Asset Reality -->
                             <div class="sim-column">
-                                <h4>📊 Asset Reality</h4>
+                                <h4>Asset Reality</h4>
                                 
                                 <div class="sim-item">
                                     <label style="display: flex; justify-content: space-between; align-items: center;">
