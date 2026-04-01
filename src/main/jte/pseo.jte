@@ -21,13 +21,15 @@
 @param String brandDirectoryUrl = null
 @param String prefillBrandSlug = null
 @param String prefillModelSlug = null
+@param String heroSubtitle = null
 @param String introParagraph = null
 @param String valueFaqAnswer = null
 @param String repairsFaqAnswer = null
 @param String decisionFaqAnswer = null
 @param String highMileageFaqAnswer = null
+@param String faqSchemaJson = null
 
-!{var faqSchema = """
+!{var faqSchema = faqSchemaJson != null ? faqSchemaJson : """
 {
   "@context": "https://schema.org",
   "@type": "FAQPage",
@@ -505,8 +507,9 @@
             <h1 class="pseo-title">Should You Fix or Sell Your ${prefillYear} ${prefillBrand} ${prefillModel}?</h1>
             
             <p class="pseo-subtitle">
-                If you already have a painful repair quote, start here. See the likely answer, typical market value,
-                expected lifespan, and the biggest known failure cost for this ${prefillModel} before you approve anything.
+                ${heroSubtitle != null
+                    ? heroSubtitle
+                    : "If you already have a painful repair quote, start here. See the likely answer, typical market value, expected lifespan, and the biggest known failure cost for this " + prefillModel + " before you approve anything."}
             </p>
             
             <div class="pseo-stats">

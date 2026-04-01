@@ -400,6 +400,7 @@ This section records tracking-relevant changes shipped after the March 20 audit.
 - top opportunity `/should-i-fix/*` pages now receive more model-specific intro and FAQ copy for US-market repair decisions
 - the homepage and model hubs now link more aggressively into a small set of priority `/should-i-fix/*` pages
 - fault verdict and mileage verdict pages now loop users back into the full model-level `/should-i-fix/*` decision page
+- top opportunity `/should-i-fix/*` pages now align hero copy and FAQ schema with the same model-specific decision logic
 
 ### B. What Did Not Change
 - no canonical event names changed
@@ -432,6 +433,7 @@ This section records tracking-relevant changes shipped after the March 20 audit.
   - CTR
   - calculator / report handoff
   - `lead_submit`
+- when page-level schema changes ship, compare SERP CTR before raw on-page conversions
 - internal-link changes should be judged by whether priority decision pages gain:
   - better impressions
   - better average position

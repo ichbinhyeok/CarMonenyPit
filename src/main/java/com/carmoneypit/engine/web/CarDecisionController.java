@@ -35,6 +35,7 @@ import java.util.List;
 public class CarDecisionController {
 
         private record ShouldFixCopy(
+                        String heroSubtitle,
                         String introParagraph,
                         String valueFaqAnswer,
                         String repairsFaqAnswer,
@@ -198,8 +199,14 @@ public class CarDecisionController {
                                         canonicalBrandSlug, canonicalModelSlug, marketValue, primaryFaultName,
                                         primaryFaultCost, primaryFaultMileage, lifespanMiles);
                         // SEO Meta - Optimized for CTR and direct decision intent
-                        String seoTitle = String.format("Should I Fix or Sell My %d %s %s?",
-                                        year, brandSlug, modelSlug);
+                        String seoTitle;
+                        if (primaryFaultCost != null && primaryFaultName != null) {
+                                seoTitle = String.format("%d %s %s: Fix or Sell if Repair Hits $%,d?",
+                                                year, brandSlug, modelSlug, primaryFaultCost);
+                        } else {
+                                seoTitle = String.format("Should I Fix or Sell My %d %s %s?",
+                                                year, brandSlug, modelSlug);
+                        }
                         String seoDescription;
                         if (marketValue != null && primaryFaultName != null && primaryFaultCost != null) {
                                 seoDescription = String.format(
@@ -232,11 +239,15 @@ public class CarDecisionController {
                         model.addAttribute("mileageVerdictUrl", mileageVerdictUrl);
                         model.addAttribute("modelDirectoryUrl", modelDirectoryUrl);
                         model.addAttribute("brandDirectoryUrl", brandDirectoryUrl);
+                        model.addAttribute("heroSubtitle", shouldFixCopy.heroSubtitle());
                         model.addAttribute("introParagraph", shouldFixCopy.introParagraph());
                         model.addAttribute("valueFaqAnswer", shouldFixCopy.valueFaqAnswer());
                         model.addAttribute("repairsFaqAnswer", shouldFixCopy.repairsFaqAnswer());
                         model.addAttribute("decisionFaqAnswer", shouldFixCopy.decisionFaqAnswer());
                         model.addAttribute("highMileageFaqAnswer", shouldFixCopy.highMileageFaqAnswer());
+                        model.addAttribute("faqSchemaJson", buildFaqSchemaJson(year, brandSlug, modelSlug,
+                                        shouldFixCopy.valueFaqAnswer(), shouldFixCopy.decisionFaqAnswer(),
+                                        shouldFixCopy.repairsFaqAnswer()));
 
                         return "pseo";
                 } catch (NumberFormatException e) {
@@ -309,6 +320,8 @@ public class CarDecisionController {
                         String canonicalModelSlug, Integer marketValue, String primaryFaultName,
                         Integer primaryFaultCost, Integer primaryFaultMileage, Integer lifespanMiles) {
                 String vehicle = year + " " + brand + " " + model;
+                String heroSubtitle = "If you already have a painful repair quote, start here. See the likely answer, typical market value, expected lifespan, and the biggest known failure cost for this "
+                                + model + " before you approve anything.";
                 Integer cautionThresholdUsd = marketValue != null ? Math.max(500, (int) Math.round(marketValue * 0.25))
                                 : null;
                 Integer sellThresholdUsd = marketValue != null ? Math.max(750, (int) Math.round(marketValue * 0.35))
@@ -345,6 +358,7 @@ public class CarDecisionController {
                 String key = canonicalBrandSlug + "/" + canonicalModelSlug;
                 switch (key) {
                         case "toyota/camry" -> {
+                                heroSubtitle = "Camry owners usually have more repair runway than average. Use this page to see when a big quote is still normal ownership and when it starts to look transmission-scale.";
                                 introParagraph = vehicle
                                                 + " usually stays in repair territory longer than average, so the real danger is panic-selling after a normal wear-item quote. The decision gets much harder when the bill starts to look transmission-scale or multiple deferred repairs are stacking together.";
                                 valueFaqAnswer = vehicle
@@ -359,6 +373,7 @@ public class CarDecisionController {
                                 highMileageFaqAnswer = "A high-mileage Camry can still be worth fixing if the engine and transmission feel stable and the current quote is isolated. The decision flips faster when the car is already showing repeated drivability or oil-consumption symptoms.";
                         }
                         case "nissan/altima" -> {
+                                heroSubtitle = "Altima decisions get much harsher when a quote smells like CVT risk. Use this page before you approve a transmission-scale repair or assume the car is still safely in fix territory.";
                                 introParagraph = vehicle
                                                 + " flips into sell territory earlier than average when the quote is transmission-related. Altima owners usually regret approving a marginal CVT-scale repair more than they regret exiting a tired car a little early.";
                                 valueFaqAnswer = "Altima values can look acceptable on paper while collapsing fast once a buyer suspects transmission risk. That means your real comparison is not just against the headline "
@@ -375,6 +390,7 @@ public class CarDecisionController {
                                                 + " and the quote is drivability-related, the downside of keeping it rises fast.";
                         }
                         case "mazda/cx-5" -> {
+                                heroSubtitle = "CX-5 owners can usually justify repairs longer than average, but engine-side or cooling-related quotes deserve a more careful fix-versus-sell check than routine maintenance.";
                                 introParagraph = vehicle
                                                 + " usually earns more repair tolerance than average if the engine is healthy and the body is clean. The decision gets harder when the current quote hints at oil, cooling, or multiple stacked repairs instead of a single clean fix.";
                                 valueFaqAnswer = vehicle
@@ -388,6 +404,7 @@ public class CarDecisionController {
                                 highMileageFaqAnswer = "A high-mileage CX-5 can still be worth fixing when the engine is dry, cooling is stable, and the current issue is isolated. The case weakens when the quote is large and you also see signs of oil consumption or repeat cooling repairs.";
                         }
                         case "honda/cr-v" -> {
+                                heroSubtitle = "A clean CR-V often stays in keep territory for a long time. The job here is making sure a large quote is truly isolated before you approve it on instinct.";
                                 introParagraph = vehicle
                                                 + " is often a keep-it vehicle when the repair is straightforward. The main mistake is approving a big invoice before checking whether it is truly one repair or the start of A/C, suspension, and engine work stacking together.";
                                 valueFaqAnswer = vehicle
@@ -403,6 +420,7 @@ public class CarDecisionController {
                                                 + " range, especially if several worn systems are coming due at once.";
                         }
                         case "honda/accord" -> {
+                                heroSubtitle = "Accord owners usually have good repair economics until the bill starts to look drivetrain-scale. This page helps you tell the difference between a healthy save and an expensive delay.";
                                 introParagraph = vehicle
                                                 + " usually gives owners more repair runway than average, but it stops being an automatic fix once the quote starts looking like major transmission, engine, or repeated timing-related work.";
                                 valueFaqAnswer = vehicle
@@ -417,12 +435,93 @@ public class CarDecisionController {
                                                 + lifespanText
                                                 + " range and the quote is tied to a major driveline problem, the sell case gets stronger fast.";
                         }
+                        case "toyota/corolla" -> {
+                                heroSubtitle = "Corolla owners should usually start from fix, not fear. The exception is when a quote stops looking like normal wear and starts looking like a major driveline or stacked-neglect bill.";
+                                introParagraph = vehicle
+                                                + " usually belongs in fix territory longer than most compact cars, so the goal is not to overreact to age alone. The decision changes when the current quote is large enough that it no longer looks like ordinary Corolla ownership.";
+                                valueFaqAnswer = vehicle
+                                                + " often keeps enough resale demand that a clean example should be compared against real private-party value, not just a low trade number. The right question is whether this repair protects a still-liquid Corolla or just delays a more expensive phase.";
+                                repairsFaqAnswer = "On a Corolla, routine wear items rarely justify selling by themselves. The decision changes faster when the current quote looks like "
+                                                + faultText + " at about " + topRepairText + faultMileageText
+                                                + " or when several deferred repairs are landing together.";
+                                decisionFaqAnswer = "Many Corolla owners can justify repairs below " + cautionText
+                                                + " without much drama. Once the quote moves toward " + sellText
+                                                + ", especially if it is tied to transmission, engine, or multiple stacked issues, a sell comparison becomes more reasonable.";
+                                highMileageFaqAnswer = "A high-mileage Corolla can still be worth fixing if the car is otherwise stable and the current issue is isolated. The answer gets harder when the bill is large and the car is already deep into the "
+                                                + lifespanText + " range.";
+                        }
+                        case "ford/escape" -> {
+                                heroSubtitle = "Escape decisions get riskier when the quote points to coolant, turbo, or transmission trouble. Use this page before you approve a repair that could turn into a repeat-failure story.";
+                                introParagraph = vehicle
+                                                + " can feel worth saving right up until the quote starts hinting at a deeper engine, cooling, or transmission pattern. The key is separating one contained repair from the kind of bill that often repeats.";
+                                valueFaqAnswer = vehicle
+                                                + " can still look decent on paper, but the practical resale number drops fast when buyers expect EcoBoost, coolant, or transmission questions. That makes quote quality and failure type matter more than headline book value alone.";
+                                repairsFaqAnswer = "Escape owners should slow down when the current quote resembles "
+                                                + faultText + " at about " + topRepairText + faultMileageText
+                                                + ". Bills tied to coolant intrusion, turbo hardware, or transmission behavior are very different from normal wear-item repairs.";
+                                decisionFaqAnswer = "For an Escape, quotes below " + cautionText
+                                                + " can still be reasonable if the engine and transmission story is clean. Once the bill starts pushing toward " + sellText
+                                                + " and the issue is engine- or transmission-adjacent, selling deserves a much harder look.";
+                                highMileageFaqAnswer = "A high-mileage Escape can still be worth fixing if the current problem is genuinely isolated. The downside rises fast when the car is deep into the "
+                                                + lifespanText
+                                                + " range and the quote hints at turbo, coolant, or transmission trouble.";
+                        }
                         default -> {
                         }
                 }
 
-                return new ShouldFixCopy(introParagraph, valueFaqAnswer, repairsFaqAnswer, decisionFaqAnswer,
+                return new ShouldFixCopy(heroSubtitle, introParagraph, valueFaqAnswer, repairsFaqAnswer, decisionFaqAnswer,
                                 highMileageFaqAnswer);
+        }
+
+        private String buildFaqSchemaJson(int year, String brand, String model, String valueFaqAnswer,
+                        String decisionFaqAnswer, String repairsFaqAnswer) {
+                return """
+                                {
+                                  "@context": "https://schema.org",
+                                  "@type": "FAQPage",
+                                  "mainEntity": [
+                                    {
+                                      "@type": "Question",
+                                      "name": "How much is my %d %s %s worth?",
+                                      "acceptedAnswer": {
+                                        "@type": "Answer",
+                                        "text": "%s"
+                                      }
+                                    },
+                                    {
+                                      "@type": "Question",
+                                      "name": "Should I fix my %d %s %s or sell it?",
+                                      "acceptedAnswer": {
+                                        "@type": "Answer",
+                                        "text": "%s"
+                                      }
+                                    },
+                                    {
+                                      "@type": "Question",
+                                      "name": "What are common repairs for the %s %s?",
+                                      "acceptedAnswer": {
+                                        "@type": "Answer",
+                                        "text": "%s"
+                                      }
+                                    }
+                                  ]
+                                }
+                                """.formatted(
+                                        year, brand, model, escapeJson(valueFaqAnswer),
+                                        year, brand, model, escapeJson(decisionFaqAnswer),
+                                        brand, model, escapeJson(repairsFaqAnswer));
+        }
+
+        private String escapeJson(String input) {
+                if (input == null) {
+                        return "";
+                }
+                return input
+                                .replace("\\", "\\\\")
+                                .replace("\"", "\\\"")
+                                .replace("\r", " ")
+                                .replace("\n", " ");
         }
 
         private String formatModelName(String slug) {
