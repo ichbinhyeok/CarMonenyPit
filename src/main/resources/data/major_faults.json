@@ -1220,6 +1220,127 @@
         ]
     },
     {
+        "model_id_ref": "chevrolet_blazer_3c",
+        "faults": [
+            {
+                "component": "9-Speed TCC Shudder / Torque Converter Damage",
+                "symptoms": "Shudder or shake at low speed, driveline vibration on light throttle, repeated fluid exchange with no lasting fix",
+                "repairCost": 3200,
+                "repairCost_range_low": 1400,
+                "repairCost_range_high": 4800,
+                "verdictImplication": "Moderate to Severe: GM's own bulletin says contaminated transmission fluid and torque-converter damage can sit behind low-speed shudder complaints. On a used U.S. Blazer, this is one of the clearest fix-or-walk transmission signals.",
+                "occurrence_rate": 0.16,
+                "avg_failure_mileage": 38000,
+                "confidence": "high",
+                "last_updated": "2026-04-01",
+                "sources": [
+                    {
+                        "name": "GM Bulletin 23-NA-072",
+                        "url": "https://static.nhtsa.gov/odi/tsbs/2024/MC-11009466-0001.pdf",
+                        "retrieved_at": "2026-04-01",
+                        "note": "Official GM bulletin for 2019-2025 Chevrolet Blazer low-speed shudder tied to TCC shudder and possible torque-converter damage."
+                    }
+                ]
+            },
+            {
+                "component": "SRFF / Valvetrain Failure (P219A/P219B)",
+                "symptoms": "Check-engine light, rough running, misfire-like behavior, injector diagnosis that does not solve the issue",
+                "repairCost": 2800,
+                "repairCost_range_low": 1800,
+                "repairCost_range_high": 4200,
+                "verdictImplication": "Moderate: GM says some Blazers flagged for fuel-balance faults actually have damaged switching roller finger followers. This is not a small tune-up; it pushes the car into real valvetrain labor.",
+                "occurrence_rate": 0.07,
+                "avg_failure_mileage": 52000,
+                "confidence": "medium",
+                "last_updated": "2026-04-01",
+                "sources": [
+                    {
+                        "name": "GM Bulletin 22-NA-193",
+                        "url": "https://static.nhtsa.gov/odi/tsbs/2024/MC-11002011-0001.pdf",
+                        "retrieved_at": "2026-04-01",
+                        "note": "Official GM bulletin covering Blazer LGX valvetrain damage behind P219A/P219B fuel-balance codes."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "model_id_ref": "genesis_g70_ik",
+        "faults": [
+            {
+                "component": "Transmission E-Module / Speed Sensor Failure",
+                "symptoms": "Check-engine light, harsh shifting, no-signal transmission speed sensor faults, limp-mode behavior",
+                "repairCost": 1900,
+                "repairCost_range_low": 1200,
+                "repairCost_range_high": 2800,
+                "verdictImplication": "Moderate: Genesis published a dedicated G70 bulletin for E-module replacement when transmission fluid temperature and speed sensor faults are present. It is a real repair event, not normal maintenance.",
+                "occurrence_rate": 0.08,
+                "avg_failure_mileage": 46000,
+                "confidence": "high",
+                "last_updated": "2026-04-01",
+                "sources": [
+                    {
+                        "name": "Genesis TSB 19-AT-001-G",
+                        "url": "https://static.nhtsa.gov/odi/tsbs/2019/MC-10152826-9999.pdf",
+                        "retrieved_at": "2026-04-01",
+                        "note": "Official Genesis bulletin for G70 E-module replacement tied to transmission fluid temperature and input/output speed sensor DTCs."
+                    }
+                ]
+            },
+            {
+                "component": "Left Turbo Oil Feed Pipe Leak / Fire Risk (3.3T)",
+                "symptoms": "Oil smell, smoke from engine bay, visible oil leakage near turbo area, fire risk if ignored",
+                "repairCost": 2200,
+                "repairCost_range_low": 0,
+                "repairCost_range_high": 3500,
+                "verdictImplication": "Severe: On 3.3T cars this is a real stop-driving issue. Even if recall coverage applies, a used-car buyer should treat unresolved turbo oil-line leakage as a major trust and safety defect.",
+                "occurrence_rate": 0.07,
+                "avg_failure_mileage": 30000,
+                "confidence": "high",
+                "last_updated": "2026-04-01",
+                "sources": [
+                    {
+                        "name": "Genesis Recall 021G / NHTSA 24V169",
+                        "url": "https://static.nhtsa.gov/odi/rcl/2024/RCRIT-24V169-5836.pdf",
+                        "retrieved_at": "2026-04-01",
+                        "note": "Official Genesis recall for the left turbocharger oil feed pipe on 2019-2022 G70 3.3T vehicles."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "model_id_ref": "buick_enclave_2nd",
+        "faults": [
+            {
+                "component": "9-Speed TCC Shudder / Torque Converter Damage",
+                "symptoms": "Low-speed shudder during light throttle, shake on gear changes, repeat transmission fluid service with recurring symptom",
+                "repairCost": 3100,
+                "repairCost_range_low": 1300,
+                "repairCost_range_high": 4600,
+                "verdictImplication": "Moderate: The second-gen Enclave uses GM's 9-speed family and GM has separate Enclave bulletins for TCC shudder across 2018 and 2019-2024. On a used U.S. Enclave, unresolved shudder is a meaningful ownership-cost signal.",
+                "occurrence_rate": 0.15,
+                "avg_failure_mileage": 42000,
+                "confidence": "high",
+                "last_updated": "2026-04-01",
+                "sources": [
+                    {
+                        "name": "GM Bulletin 18-NA-091",
+                        "url": "https://static.nhtsa.gov/odi/tsbs/2021/MC-10198840-9999.pdf",
+                        "retrieved_at": "2026-04-01",
+                        "note": "Official GM bulletin for 2018 Enclave slight shudder during slow-speed gear shifts caused by TCC shudder."
+                    },
+                    {
+                        "name": "GM Bulletin 23-NA-072",
+                        "url": "https://static.nhtsa.gov/odi/tsbs/2024/MC-11009466-0001.pdf",
+                        "retrieved_at": "2026-04-01",
+                        "note": "Official GM bulletin extending low-speed shudder / torque converter diagnostics to 2019-2024 Buick Enclave."
+                    }
+                ]
+            }
+        ]
+    },
+    {
         "model_id_ref": "kia_telluride_on",
         "faults": [
             {
@@ -1304,6 +1425,223 @@
                         "url": "https://static.nhtsa.gov/odi/tsbs/2022/MC-10228586-9999.pdf",
                         "retrieved_at": "2026-04-01",
                         "note": "Lexus U.S. special service campaign for gear shift control unit software on 2022 NX 250/350."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "model_id_ref": "hyundai_palisade_lx2",
+        "faults": [
+            {
+                "component": "Seat Belt Unlatch / Buckle Interference",
+                "symptoms": "Seat belt tongue may not latch correctly or may unexpectedly unlatch while occupied",
+                "repairCost": 700,
+                "repairCost_range_low": 0,
+                "repairCost_range_high": 1200,
+                "verdictImplication": "Low to Moderate: This is a safety-critical concern, but it is usually handled as a recall or investigation item rather than a large mechanical bill. For a used U.S. Palisade, unresolved seat-belt status is a trust and transaction hit more than a money-pit event.",
+                "occurrence_rate": 0.08,
+                "avg_failure_mileage": 26000,
+                "confidence": "medium",
+                "last_updated": "2026-04-01",
+                "sources": [
+                    {
+                        "name": "NHTSA PE24021",
+                        "url": "https://static.nhtsa.gov/odi/inv/2024/INOA-PE24021-11679.pdf",
+                        "retrieved_at": "2026-04-01",
+                        "note": "ODI investigation into inadvertent seat belt unlatching on 2020-2023 Hyundai Palisade."
+                    },
+                    {
+                        "name": "Hyundai Recall 283 / NHTSA 25V607",
+                        "url": "https://static.nhtsa.gov/odi/rcl/2025/RCLRPT-25V607-3620.pdf",
+                        "retrieved_at": "2026-04-01",
+                        "note": "Recall filing for out-of-spec seat belt buckle components on 2020-2025 Palisade."
+                    }
+                ]
+            },
+            {
+                "component": "Tow Hitch Harness Short / Fire Risk (If Equipped)",
+                "symptoms": "Burning smell near rear bumper, tow harness fault, smoke or fire risk near hitch wiring",
+                "repairCost": 450,
+                "repairCost_range_low": 0,
+                "repairCost_range_high": 900,
+                "verdictImplication": "Conditional Risk: This only applies to Palisades equipped with the Hyundai accessory tow hitch harness. If equipped and unresolved, treat it as a must-fix fire-risk issue before sale or continued ownership.",
+                "occurrence_rate": 0.05,
+                "avg_failure_mileage": 18000,
+                "confidence": "high",
+                "last_updated": "2026-04-01",
+                "sources": [
+                    {
+                        "name": "Hyundai Recall 235 / NHTSA 22V633",
+                        "url": "https://static.nhtsa.gov/odi/rcl/2022/RCAK-22V633-7960.pdf",
+                        "retrieved_at": "2026-04-01",
+                        "note": "U.S. recall acknowledgement for Palisade tow hitch harness short/fire risk."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "model_id_ref": "jeep_gladiator_jt",
+        "faults": [
+            {
+                "component": "Manual Clutch Pressure Plate Failure",
+                "symptoms": "Strong clutch odor, clutch slippage, warning messages, possible bellhousing damage",
+                "repairCost": 3600,
+                "repairCost_range_low": 2800,
+                "repairCost_range_high": 4800,
+                "verdictImplication": "Severe: This is a real fix-or-sell issue on manual Gladiators. Stellantis states the clutch pressure plate can overheat and fracture, and the repair is not a small consumable-service bill.",
+                "occurrence_rate": 0.12,
+                "avg_failure_mileage": 28000,
+                "confidence": "high",
+                "last_updated": "2026-04-01",
+                "sources": [
+                    {
+                        "name": "Stellantis Recall 19A / NHTSA 23V116",
+                        "url": "https://static.nhtsa.gov/odi/rcl/2023/RCRIT-23V116-7715.pdf",
+                        "retrieved_at": "2026-04-01",
+                        "note": "Official recall remedy for manual transmission clutch pressure plate overheating and fracture on Gladiator."
+                    }
+                ]
+            },
+            {
+                "component": "Steering Wander / Loose Steering Gear",
+                "symptoms": "Wandering at highway speed, excessive steering play, lead or pull left/right",
+                "repairCost": 1800,
+                "repairCost_range_low": 1100,
+                "repairCost_range_high": 2600,
+                "verdictImplication": "Moderate: The official TSB calls for steering gear replacement and software updates. It usually will not total the truck, but it materially changes ownership confidence on a U.S. road-trip vehicle.",
+                "occurrence_rate": 0.14,
+                "avg_failure_mileage": 22000,
+                "confidence": "high",
+                "last_updated": "2026-04-01",
+                "sources": [
+                    {
+                        "name": "Jeep TSB 08-003-21",
+                        "url": "https://static.nhtsa.gov/odi/tsbs/2021/MC-10215929-9999.pdf",
+                        "retrieved_at": "2026-04-01",
+                        "note": "Technical bulletin for improved steering feel involving steering gear replacement on 2020 Gladiator."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "model_id_ref": "volvo_xc60_spa",
+        "faults": [
+            {
+                "component": "Low-Pressure Fuel Pump Fuse / Stall Risk",
+                "symptoms": "No-start, sudden stall, fuel system warnings, blown low-pressure fuel pump fuse",
+                "repairCost": 650,
+                "repairCost_range_low": 0,
+                "repairCost_range_high": 1200,
+                "verdictImplication": "Low to Moderate: Volvo treated this as a safety recall, so the direct repair is often cheap or free. For a used U.S. XC60, the bigger issue is making sure the recall was completed and the car is not carrying unresolved fuel-system stall risk.",
+                "occurrence_rate": 0.09,
+                "avg_failure_mileage": 32000,
+                "confidence": "high",
+                "last_updated": "2026-04-01",
+                "sources": [
+                    {
+                        "name": "Volvo Recall R10100 / NHTSA 21V414",
+                        "url": "https://static.nhtsa.gov/odi/rcl/2021/RCAK-21V414-5268.pdf",
+                        "retrieved_at": "2026-04-01",
+                        "note": "Official recall acknowledgement for low-pressure fuel pump fuse failure on 2019-2020 XC60."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "model_id_ref": "acura_rdx_tc",
+        "faults": [
+            {
+                "component": "Rear Windshield Spontaneous Shatter",
+                "symptoms": "Rear glass suddenly shatters, popping sound from rear hatch area, broken defroster grid window",
+                "repairCost": 1500,
+                "repairCost_range_low": 1000,
+                "repairCost_range_high": 2200,
+                "verdictImplication": "Moderate: This is not a drivetrain money pit, but it is a real ownership cost on late-model RDXs and can become a transaction issue if it has not been corrected properly.",
+                "occurrence_rate": 0.10,
+                "avg_failure_mileage": 24000,
+                "confidence": "high",
+                "last_updated": "2026-04-01",
+                "sources": [
+                    {
+                        "name": "Acura Bulletin A24-012",
+                        "url": "https://static.nhtsa.gov/odi/tsbs/2024/MC-11007892-0001.pdf",
+                        "retrieved_at": "2026-04-01",
+                        "note": "Acura service bulletin for inspection and replacement of shattered rear windshield on 2019-2024 RDX."
+                    }
+                ]
+            },
+            {
+                "component": "Low-Speed Brake Squeal / Pad-Shim Issue",
+                "symptoms": "High-pitched front or rear brake squeal below 15 mph, especially when cold",
+                "repairCost": 450,
+                "repairCost_range_low": 200,
+                "repairCost_range_high": 900,
+                "verdictImplication": "Low Risk: This is a nuisance-cost item rather than a platform-defining fault. The main value of recording it is to avoid overstating the RDX as a money-pit when U.S. service data points more toward smaller quality issues than catastrophic repairs.",
+                "occurrence_rate": 0.12,
+                "avg_failure_mileage": 18000,
+                "confidence": "high",
+                "last_updated": "2026-04-01",
+                "sources": [
+                    {
+                        "name": "Acura Service Bulletin 19-053",
+                        "url": "https://static.nhtsa.gov/odi/tsbs/2024/MC-10253294-0001.pdf",
+                        "retrieved_at": "2026-04-01",
+                        "note": "Official Acura bulletin covering front/rear brake squeal when lightly applied at low speeds on 2019-2024 RDX."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "model_id_ref": "ford_bronco_sport_c2",
+        "faults": [
+            {
+                "component": "Cracked Fuel Injector / Fire Risk",
+                "symptoms": "Strong fuel smell, smoke under hood, rough running, fuel pressure drop",
+                "repairCost": 1200,
+                "repairCost_range_low": 700,
+                "repairCost_range_high": 2200,
+                "verdictImplication": "Severe: Ford's recall says a cracked injector can leak fuel near ignition sources. Even if the formal remedy is a software-and-drain-tube campaign, an affected used Bronco Sport should be treated as a real underhood-fire risk until resolved.",
+                "occurrence_rate": 0.11,
+                "avg_failure_mileage": 26000,
+                "confidence": "high",
+                "last_updated": "2026-04-01",
+                "sources": [
+                    {
+                        "name": "Ford Recall 22S73 / NHTSA 22V859",
+                        "url": "https://static.nhtsa.gov/odi/rcl/2022/RMISC-22V859-8107.pdf",
+                        "retrieved_at": "2026-04-01",
+                        "note": "Ford safety recall notice for cracked fuel injectors on 2021-2023 Bronco Sport 1.5L."
+                    },
+                    {
+                        "name": "Ford Recall 25S76 / NHTSA 25V467",
+                        "url": "https://static.nhtsa.gov/odi/rcl/2025/RCLRPT-25V467-3548.pdf",
+                        "retrieved_at": "2026-04-01",
+                        "note": "Expanded Ford recall population for cracked fuel injectors on 2021-2024 Bronco Sport."
+                    }
+                ]
+            },
+            {
+                "component": "12-Volt Battery Internal Failure",
+                "symptoms": "Sudden battery degradation, stall at low speed after auto stop/start, loss of electrical accessories",
+                "repairCost": 400,
+                "repairCost_range_low": 0,
+                "repairCost_range_high": 750,
+                "verdictImplication": "Moderate: Usually not a giant out-of-pocket bill, but a sudden 12-volt failure can strand the driver and wreck confidence in the vehicle. On a used U.S. Bronco Sport, open recall status matters.",
+                "occurrence_rate": 0.08,
+                "avg_failure_mileage": 22000,
+                "confidence": "high",
+                "last_updated": "2026-04-01",
+                "sources": [
+                    {
+                        "name": "Ford Recall 25S02 / NHTSA 25V019",
+                        "url": "https://static.nhtsa.gov/odi/rcl/2025/RIONL-25V019-3164.pdf",
+                        "retrieved_at": "2026-04-01",
+                        "note": "Ford owner notice for sudden 12-volt battery degradation on 2021-2024 Bronco Sport."
                     }
                 ]
             }
