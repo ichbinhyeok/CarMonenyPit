@@ -59,7 +59,8 @@ class LeadControllerTest {
                 .andExpect(model().attribute("pageType", "pseo_fault"))
                 .andExpect(model().attribute("detail", "torque-converter"))
                 .andExpect(model().attribute("placement", "inline"))
-                .andExpect(model().attribute("intent", "SELL"));
+                .andExpect(model().attribute("intent", "SELL"))
+                .andExpect(model().attributeExists("leadId"));
     }
 
     @Test
@@ -86,7 +87,8 @@ class LeadControllerTest {
                 .andExpect(view().name("pages/lead_capture"))
                 .andExpect(model().attribute("brand", "Toyota"))
                 .andExpect(model().attribute("brandValue", "toyota"))
-                .andExpect(model().attribute("pageType", "pseo_fault"));
+                .andExpect(model().attribute("pageType", "pseo_fault"))
+                .andExpect(model().attributeExists("leadId"));
     }
 
     @Test
@@ -102,7 +104,8 @@ class LeadControllerTest {
                         .param("pageType", "pseo_fault")
                         .param("detail", "torque-converter")
                         .param("placement", "inline")
-                        .param("intent", "SELL"))
+                        .param("intent", "SELL")
+                        .param("leadId", "leadtest1234"))
                 .andExpect(status().isFound())
                 .andExpect(redirectedUrl("/lead-capture"))
                 .andReturn();
@@ -115,6 +118,7 @@ class LeadControllerTest {
                 .andExpect(model().attribute("status", "invalid_email"))
                 .andExpect(model().attribute("brandValue", "toyota"))
                 .andExpect(model().attribute("modelValue", "camry"))
-                .andExpect(model().attribute("detail", "torque-converter"));
+                .andExpect(model().attribute("detail", "torque-converter"))
+                .andExpect(model().attribute("leadId", "leadtest1234"));
     }
 }

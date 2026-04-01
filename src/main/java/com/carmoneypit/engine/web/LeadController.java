@@ -16,7 +16,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Locale;
+import java.util.UUID;
 
 @Controller
 public class LeadController {
@@ -71,7 +74,9 @@ public class LeadController {
         String safeDetail = sanitize(detail);
         String safeReferrer = sanitize(referrerPath);
         String safePlacement = sanitize(placement);
+        String safeLeadId = generateLeadId();
         LeadCaptureContext context = new LeadCaptureContext(
+                safeLeadId,
                 safeVerdictState,
                 safeBrand,
                 safeModel,
@@ -85,16 +90,7 @@ public class LeadController {
         response.setHeader("X-Analytics-Filtered", filteredTestTraffic ? "1" : "0");
 
         if (!filteredTestTraffic) {
-            csvLogger.info("{},{},{},{},{},{},{},{},{}",
-                    safeEventType,
-                    context.pageType(),
-                    context.intent(),
-                    context.verdict(),
-                    context.brand(),
-                    context.model(),
-                    context.detail(),
-                    context.referrerPath(),
-                    context.placement());
+            logLeadEvent(safeEventType, context);
         }
 
         // 3. If approval is pending, store attribution context in the session and
@@ -115,6 +111,7 @@ public class LeadController {
         } else {
             partnerUrl = routingConfig.getRepairPartnerUrl();
         }
+        partnerUrl = appendQueryParam(partnerUrl, "lead_id", context.leadId());
 
         // 5. Redirect (302 Found)
         RedirectView redirectView = new RedirectView(partnerUrl);
@@ -133,6 +130,7 @@ public class LeadController {
             @RequestParam(name = "placement", required = false, defaultValue = "waitlist") String placement,
             @RequestParam(name = "intent", required = false, defaultValue = "WAITLIST") String intent,
             @RequestParam(name = "referrerPath", required = false, defaultValue = "") String referrerPath,
+            @RequestParam(name = "leadId", required = false, defaultValue = "") String leadId,
             HttpServletRequest request,
             HttpServletResponse response,
             HttpSession session) {
@@ -148,7 +146,9 @@ public class LeadController {
         String safeIntent = normalizeIntent(intent);
         String safeReferrerPath = sanitize(referrerPath);
         String safeEmail = sanitizeEmail(email);
+        String safeLeadId = sanitizeLeadId(leadId);
         LeadCaptureContext context = new LeadCaptureContext(
+                safeLeadId.isBlank() ? generateLeadId() : safeLeadId,
                 safeVerdict,
                 safeBrand,
                 safeModel,
@@ -167,16 +167,7 @@ public class LeadController {
         }
 
         if (!filteredTestTraffic) {
-            csvLogger.info("{},{},{},{},{},{},{},{},{}",
-                    "lead_submit",
-                    context.pageType(),
-                    context.intent(),
-                    context.verdict(),
-                    context.brand(),
-                    context.model(),
-                    context.detail(),
-                    context.referrerPath(),
-                    context.placement());
+            logLeadEvent("lead_submit", context);
         }
 
         storeWaitlistState(session, "success", context);
@@ -195,6 +186,7 @@ public class LeadController {
             @RequestParam(name = "intent", required = false) String intent,
             @RequestParam(name = "referrerPath", required = false) String referrerPath,
             Model model,
+            HttpServletRequest request,
             HttpServletResponse response,
             HttpSession session) {
 
@@ -204,6 +196,7 @@ public class LeadController {
         if (hasLegacyWaitlistParams(status, verdict, brand, modelValue, pageType, detail, placement, intent,
                 referrerPath)) {
             LeadCaptureContext context = new LeadCaptureContext(
+                    generateLeadId(),
                     sanitize(defaultIfBlank(verdict, "UNKNOWN")),
                     sanitize(defaultIfBlank(brand, "")),
                     sanitize(defaultIfBlank(modelValue, "")),
@@ -216,8 +209,14 @@ public class LeadController {
             return buildRedirect(routingConfig.getWaitlistUrl());
         }
 
-        LeadCaptureContext context = readWaitlistContext(session);
+        LeadCaptureContext context = ensureLeadId(readWaitlistContext(session));
         String safeStatus = sanitizeStatus(readWaitlistStatus(session));
+
+        boolean filteredTestTraffic = isSyntheticTraffic(context.pageType(), request);
+        response.setHeader("X-Analytics-Filtered", filteredTestTraffic ? "1" : "0");
+        if (!filteredTestTraffic && safeStatus.isBlank()) {
+            logLeadEvent("lead_capture_view", context);
+        }
 
         String displayBrand = "your vehicle";
         if (context.brand() != null && !context.brand().isEmpty()) {
@@ -244,6 +243,7 @@ public class LeadController {
         model.addAttribute("placement", context.placement());
         model.addAttribute("intent", context.intent());
         model.addAttribute("referrerPath", context.referrerPath());
+        model.addAttribute("leadId", context.leadId());
         model.addAttribute("canonicalUrl", baseUrl + "/lead-capture");
 
         return "pages/lead_capture";
@@ -253,6 +253,20 @@ public class LeadController {
         RedirectView redirectView = new RedirectView(location);
         redirectView.setStatusCode(HttpStatus.FOUND);
         return redirectView;
+    }
+
+    private void logLeadEvent(String eventType, LeadCaptureContext context) {
+        csvLogger.info("{},{},{},{},{},{},{},{},{},{}",
+                sanitize(eventType),
+                context.pageType(),
+                context.intent(),
+                context.verdict(),
+                context.brand(),
+                context.model(),
+                context.detail(),
+                context.referrerPath(),
+                context.placement(),
+                context.leadId());
     }
 
     private String sanitizeEmail(String input) {
@@ -317,7 +331,23 @@ public class LeadController {
         if (raw instanceof LeadCaptureContext context) {
             return context;
         }
-        return new LeadCaptureContext("UNKNOWN", "", "", "lead_capture", "", "waitlist", "WAITLIST", "");
+        return new LeadCaptureContext("", "UNKNOWN", "", "", "lead_capture", "", "waitlist", "WAITLIST", "");
+    }
+
+    private LeadCaptureContext ensureLeadId(LeadCaptureContext context) {
+        if (context.leadId() != null && !context.leadId().isBlank()) {
+            return context;
+        }
+        return new LeadCaptureContext(
+                generateLeadId(),
+                context.verdict(),
+                context.brand(),
+                context.model(),
+                context.pageType(),
+                context.detail(),
+                context.placement(),
+                context.intent(),
+                context.referrerPath());
     }
 
     private boolean hasLegacyWaitlistParams(String status, String verdict, String brand, String model, String pageType,
@@ -360,6 +390,29 @@ public class LeadController {
         return clean.toUpperCase(Locale.ROOT);
     }
 
+    private String sanitizeLeadId(String input) {
+        if (input == null || input.isBlank()) {
+            return "";
+        }
+        String clean = input.trim();
+        if (!clean.matches("^[A-Za-z0-9_-]{8,80}$")) {
+            return "";
+        }
+        return clean;
+    }
+
+    private String generateLeadId() {
+        return UUID.randomUUID().toString();
+    }
+
+    private String appendQueryParam(String url, String key, String value) {
+        if (url == null || url.isBlank() || value == null || value.isBlank()) {
+            return url;
+        }
+        String separator = url.contains("?") ? "&" : "?";
+        return url + separator + key + "=" + URLEncoder.encode(value, StandardCharsets.UTF_8);
+    }
+
     private String defaultIfBlank(String input, String fallback) {
         return input == null || input.isBlank() ? fallback : input;
     }
@@ -393,6 +446,7 @@ public class LeadController {
     }
 
     private record LeadCaptureContext(
+            String leadId,
             String verdict,
             String brand,
             String model,

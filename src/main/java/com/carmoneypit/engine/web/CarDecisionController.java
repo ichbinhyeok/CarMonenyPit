@@ -98,6 +98,16 @@ public class CarDecisionController {
                         String brandSlug = parts[1].toUpperCase().replace(" ", "_");
                         String modelSlug = parts.length > 2 ? formatModelName(parts[2]) : "";
                         String canonicalSlug = null;
+                        String quickSignal = "Run the numbers";
+                        String quickAnswer = "The right answer depends on your actual quote, current value, and mileage.";
+                        Integer marketValue = null;
+                        Integer lifespanMiles = null;
+                        String primaryFaultName = null;
+                        Integer primaryFaultCost = null;
+                        Integer primaryFaultMileage = null;
+                        String primaryFaultUrl = null;
+                        String mileageVerdictUrl = null;
+                        String modelDirectoryUrl = null;
 
                         // Validate brand exists in loaded data
                         if (!valuationService.isValidBrand(brandSlug)) {
@@ -125,8 +135,13 @@ public class CarDecisionController {
                                 // If we found a model, use its official display name instead of the slug
                                 brandSlug = carModel.brand();
                                 modelSlug = carModel.model();
-                                canonicalSlug = year + "-" + normalizeSlugSegment(carModel.brand()) + "-"
-                                                + normalizeSlugSegment(carModel.model());
+                                String canonicalBrandSlug = normalizeSlugSegment(carModel.brand());
+                                String canonicalModelSlug = normalizeSlugSegment(carModel.model());
+                                canonicalSlug = year + "-" + canonicalBrandSlug + "-"
+                                                + canonicalModelSlug;
+                                modelDirectoryUrl = baseUrl + "/models/" + canonicalBrandSlug + "/" + canonicalModelSlug;
+                                mileageVerdictUrl = baseUrl + "/verdict/" + canonicalBrandSlug + "/" + canonicalModelSlug
+                                                + "/100000-miles";
 
                                 if (!slug.equals(canonicalSlug)) {
                                         RedirectView rv = new RedirectView(baseUrl + "/should-i-fix/" + canonicalSlug);
@@ -138,7 +153,34 @@ public class CarDecisionController {
                                 var faultsOpt = carDataService.findFaultsByModelId(carModel.id());
                                 if (faultsOpt.isPresent()) {
                                         model.addAttribute("majorFaults", faultsOpt.get());
+                                        var topFault = faultsOpt.get().faults().stream()
+                                                        .max(java.util.Comparator.comparingDouble(f -> f.repairCost()));
+                                        if (topFault.isPresent()) {
+                                                primaryFaultName = topFault.get().component();
+                                                primaryFaultCost = (int) Math.round(topFault.get().repairCost());
+                                                primaryFaultMileage = topFault.get().avgFailureMileage() > 0
+                                                                ? topFault.get().avgFailureMileage()
+                                                                : null;
+                                                primaryFaultUrl = baseUrl + "/verdict/" + canonicalBrandSlug + "/"
+                                                                + canonicalModelSlug + "/"
+                                                                + normalizeSlugSegment(topFault.get().component());
+                                        }
                                 }
+
+                                var reliabilityOpt = carDataService.findReliabilityByModelId(carModel.id());
+                                if (reliabilityOpt.isPresent()) {
+                                        lifespanMiles = reliabilityOpt.get().lifespanMiles();
+                                }
+
+                                var marketOpt = carDataService.findMarketByModelId(carModel.id());
+                                if (marketOpt.isPresent()) {
+                                        marketValue = marketOpt.get().jan2026AvgPrice();
+                                }
+
+                                quickSignal = buildQuickSignal(marketValue, primaryFaultCost, lifespanMiles, year);
+                                quickAnswer = buildQuickAnswer(carModel.brand(), carModel.model(), marketValue,
+                                                primaryFaultName, primaryFaultCost, primaryFaultMileage, lifespanMiles,
+                                                year);
                         }
                         // SEO Meta - Optimized for CTR
                         String seoTitle = String.format("Should You Fix a %d %s %s or Sell It?",
@@ -155,11 +197,82 @@ public class CarDecisionController {
                         model.addAttribute("isPseoPage", true);
                         model.addAttribute("pseoSlug", canonicalSlug != null ? canonicalSlug : slug);
                         model.addAttribute("canonicalUrl", baseUrl + "/should-i-fix/" + (canonicalSlug != null ? canonicalSlug : slug));
+                        model.addAttribute("quickSignal", quickSignal);
+                        model.addAttribute("quickAnswer", quickAnswer);
+                        model.addAttribute("marketValue", marketValue);
+                        model.addAttribute("lifespanMiles", lifespanMiles);
+                        model.addAttribute("primaryFaultName", primaryFaultName);
+                        model.addAttribute("primaryFaultCost", primaryFaultCost);
+                        model.addAttribute("primaryFaultMileage", primaryFaultMileage);
+                        model.addAttribute("primaryFaultUrl", primaryFaultUrl);
+                        model.addAttribute("mileageVerdictUrl", mileageVerdictUrl);
+                        model.addAttribute("modelDirectoryUrl", modelDirectoryUrl);
 
                         return "pseo";
                 } catch (NumberFormatException e) {
                         return "redirect:/";
                 }
+        }
+
+        private String buildQuickSignal(Integer marketValue, Integer primaryFaultCost, Integer lifespanMiles, int year) {
+                if (marketValue != null && primaryFaultCost != null && marketValue > 0) {
+                        double repairToValue = (double) primaryFaultCost / marketValue;
+                        if (repairToValue >= 0.35) {
+                                return "High caution";
+                        }
+                        if (repairToValue >= 0.2) {
+                                return "Borderline zone";
+                        }
+                        return "Usually fixable";
+                }
+
+                if (lifespanMiles != null && year <= 2018) {
+                        return "Mileage matters";
+                }
+
+                return "Run the numbers";
+        }
+
+        private String buildQuickAnswer(String brand, String model, Integer marketValue, String primaryFaultName,
+                        Integer primaryFaultCost, Integer primaryFaultMileage, Integer lifespanMiles, int year) {
+                String vehicle = year + " " + brand + " " + model;
+                if (marketValue != null && primaryFaultCost != null && primaryFaultName != null && marketValue > 0) {
+                        double repairToValue = (double) primaryFaultCost / marketValue;
+                        String ratioText = String.format("%.0f", repairToValue * 100);
+                        String failureMileageText = primaryFaultMileage != null
+                                        ? " The priciest known issue in our data is " + primaryFaultName
+                                                        + ", which tends to show up around "
+                                                        + String.format("%,d", primaryFaultMileage) + " miles."
+                                        : " The priciest known issue in our data is " + primaryFaultName + ".";
+
+                        if (repairToValue >= 0.35) {
+                                return vehicle + " enters real fix-or-sell territory when a major quote approaches $"
+                                                + String.format("%,d", primaryFaultCost) + ", or about " + ratioText
+                                                + "% of a typical $" + String.format("%,d", marketValue)
+                                                + " market value." + failureMileageText
+                                                + " If your quote is anywhere near that level, selling deserves a serious look.";
+                        }
+
+                        if (repairToValue >= 0.2) {
+                                return vehicle + " often becomes a borderline decision once major repairs climb toward $"
+                                                + String.format("%,d", primaryFaultCost) + ", roughly " + ratioText
+                                                + "% of current value." + failureMileageText
+                                                + " This is the range where mileage and repeat-failure risk usually decide the answer.";
+                        }
+
+                        return vehicle + " is usually still worth fixing when the repair is modest relative to its typical $"
+                                        + String.format("%,d", marketValue) + " market value." + failureMileageText
+                                        + " The main question is whether your actual quote stays well below that known failure ceiling.";
+                }
+
+                if (lifespanMiles != null) {
+                        return vehicle + " looks like a mileage-sensitive call. Our dataset puts expected lifespan around "
+                                        + String.format("%,d", lifespanMiles)
+                                        + " miles, so your actual quote and where the car sits on that curve matter more than generic advice.";
+                }
+
+                return vehicle
+                                + " should be judged by quote-versus-value, not instinct. Use the prefilled calculator below to see whether the next repair still makes financial sense.";
         }
 
         private String formatModelName(String slug) {

@@ -8,6 +8,16 @@
 @param String pseoSlug = ""
 @param String canonicalUrl = null
 @param MajorFaults majorFaults = null
+@param String quickSignal = "Run the numbers"
+@param String quickAnswer = null
+@param Integer marketValue = null
+@param Integer lifespanMiles = null
+@param String primaryFaultName = null
+@param Integer primaryFaultCost = null
+@param Integer primaryFaultMileage = null
+@param String primaryFaultUrl = null
+@param String mileageVerdictUrl = null
+@param String modelDirectoryUrl = null
 
 !{var faqSchema = """
 {
@@ -41,6 +51,19 @@
   ]
 }
 """.formatted(prefillYear, prefillBrand, prefillModel, prefillYear, prefillModel, 2026 - prefillYear, prefillYear, prefillBrand, prefillModel, prefillBrand, prefillModel);}
+!{
+    String quickSignalClass = "neutral";
+    if (quickSignal != null) {
+        String quickSignalLower = quickSignal.toLowerCase();
+        if (quickSignalLower.contains("caution")) {
+            quickSignalClass = "sell";
+        } else if (quickSignalLower.contains("borderline")) {
+            quickSignalClass = "borderline";
+        } else if (quickSignalLower.contains("fixable")) {
+            quickSignalClass = "repair";
+        }
+    }
+}
 @template.layout(
     title = seoTitle,
     description = seoDescription,
@@ -113,6 +136,103 @@
                 border: 1px solid #e2e8f0;
                 max-width: 500px;
                 margin: 0 auto;
+            }
+            .quick-take-card {
+                background: #fff;
+                border: 1px solid #e2e8f0;
+                border-radius: 24px;
+                padding: 1.75rem;
+                max-width: 820px;
+                margin: 0 auto 2rem;
+                box-shadow: 0 10px 30px rgba(15,23,42,0.06);
+            }
+            .quick-take-header {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 1rem;
+                margin-bottom: 1rem;
+                flex-wrap: wrap;
+            }
+            .quick-take-label {
+                font-size: 0.75rem;
+                font-weight: 800;
+                text-transform: uppercase;
+                letter-spacing: 0.08em;
+                color: #64748b;
+            }
+            .quick-signal-badge {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                padding: 0.45rem 0.8rem;
+                border-radius: 999px;
+                font-size: 0.82rem;
+                font-weight: 800;
+            }
+            .quick-signal-badge.sell { background: #fff1f2; color: #be123c; }
+            .quick-signal-badge.borderline { background: #fffbeb; color: #b45309; }
+            .quick-signal-badge.repair { background: #f0fdf4; color: #166534; }
+            .quick-signal-badge.neutral { background: #eff6ff; color: #1d4ed8; }
+            .quick-answer-copy {
+                font-size: 1rem;
+                line-height: 1.7;
+                color: #334155;
+                margin-bottom: 1.25rem;
+            }
+            .quick-metrics {
+                display: grid;
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+                gap: 0.9rem;
+                margin-bottom: 1.25rem;
+            }
+            .quick-metric {
+                background: #f8fafc;
+                border-radius: 16px;
+                padding: 1rem;
+                border: 1px solid #e2e8f0;
+            }
+            .quick-metric-value {
+                font-size: 1.2rem;
+                font-weight: 800;
+                color: #0f172a;
+                margin-bottom: 0.25rem;
+            }
+            .quick-metric-label {
+                font-size: 0.72rem;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.06em;
+                color: #64748b;
+            }
+            .quick-links {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+                gap: 0.75rem;
+            }
+            .quick-link {
+                display: block;
+                text-decoration: none;
+                color: #0f172a;
+                background: #fff;
+                border: 1px solid #e2e8f0;
+                border-radius: 14px;
+                padding: 1rem;
+                font-weight: 700;
+                transition: border-color 0.2s, transform 0.2s, background 0.2s;
+            }
+            .quick-link:hover {
+                border-color: #3b82f6;
+                background: #f8fafc;
+                transform: translateY(-1px);
+            }
+            .quick-link-copy {
+                display: block;
+                font-size: 0.82rem;
+                line-height: 1.5;
+                color: #64748b;
+                margin-top: 0.35rem;
+                font-weight: 500;
             }
             .pseo-form-title {
                 font-size: 1.25rem;
@@ -305,6 +425,42 @@
                 border-color: #3b82f6;
                 background: #f8fafc;
             }
+            .quick-answer-card {
+                max-width: 820px;
+                margin: 0 auto 2rem;
+                padding: 1.5rem;
+                background: linear-gradient(135deg, #eef2ff, #f8fafc);
+                border: 1px solid #c7d2fe;
+                border-radius: 20px;
+            }
+            .quick-answer-badge {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.45rem;
+                background: #312e81;
+                color: #fff;
+                padding: 0.35rem 0.8rem;
+                border-radius: 999px;
+                font-size: 0.72rem;
+                font-weight: 800;
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+                margin-bottom: 0.9rem;
+            }
+            .quick-answer-card p {
+                font-size: 1rem;
+                color: #312e81;
+                line-height: 1.7;
+                margin: 0;
+            }
+            .quick-link-grid {
+                max-width: 820px;
+                margin: 0 auto 2rem;
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+                gap: 0.75rem;
+                padding: 0 1rem;
+            }
         </style>
     `,
     content = @`
@@ -322,22 +478,55 @@
             
             <div class="pseo-stats">
                 <div class="pseo-stat">
-                    <div class="pseo-stat-value">30s</div>
-                    <div class="pseo-stat-label">Analysis Time</div>
+                    <div class="pseo-stat-value">${marketValue != null ? "$" + String.format("%,d", marketValue) : "30s"}</div>
+                    <div class="pseo-stat-label">${marketValue != null ? "Typical Market Value" : "Analysis Time"}</div>
                 </div>
                 <div class="pseo-stat">
-                    <div class="pseo-stat-value">Free</div>
-                    <div class="pseo-stat-label">No Cost</div>
+                    <div class="pseo-stat-value">${lifespanMiles != null ? String.format("%,d", lifespanMiles) : "Free"}</div>
+                    <div class="pseo-stat-label">${lifespanMiles != null ? "Expected Lifespan (mi)" : "No Cost"}</div>
                 </div>
                 <div class="pseo-stat">
-                    <div class="pseo-stat-value">Data</div>
-                    <div class="pseo-stat-label">Driven Results</div>
+                    <div class="pseo-stat-value">${primaryFaultCost != null ? "$" + String.format("%,d", primaryFaultCost) : "Data"}</div>
+                    <div class="pseo-stat-label">${primaryFaultCost != null ? "Top Known Failure" : "Driven Results"}</div>
                 </div>
             </div>
         </section>
 
+        @if(quickAnswer != null)
+        <section class="quick-answer-card">
+            <div class="quick-answer-badge">
+                <span>Fast read</span>
+                <span>${quickSignal}</span>
+            </div>
+            <p>${quickAnswer}</p>
+        </section>
+        @endif
+
+        @if(primaryFaultUrl != null || mileageVerdictUrl != null || modelDirectoryUrl != null)
+        <section class="quick-link-grid">
+            @if(primaryFaultUrl != null)
+            <a class="related-link" href="${primaryFaultUrl}">
+                <span>??</span>
+                <span>See the ${primaryFaultName} cost page</span>
+            </a>
+            @endif
+            @if(mileageVerdictUrl != null)
+            <a class="related-link" href="${mileageVerdictUrl}">
+                <span>??</span>
+                <span>See the 100,000-mile decision guide</span>
+            </a>
+            @endif
+            @if(modelDirectoryUrl != null)
+            <a class="related-link" href="${modelDirectoryUrl}">
+                <span>??</span>
+                <span>Browse common ${prefillModel} problems</span>
+            </a>
+            @endif
+        </section>
+        @endif
+
         <section class="pseo-form-container" id="form-container">
-            <div class="pseo-form-title">Get Your Verdict</div>
+            <div class="pseo-form-title">Refine The Answer With Your Real Quote</div>
             
             <div class="pseo-prefilled">
                 <span class="pseo-prefilled-icon">✅</span>

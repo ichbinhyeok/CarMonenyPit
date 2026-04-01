@@ -33,6 +33,7 @@ These dimensions should be treated as the canonical reporting fields.
 - `detail`
 - `referrer_path`
 - `placement`
+- `lead_id`
 
 ## 4. Canonical Intent Taxonomy
 Only these values are valid.
@@ -79,6 +80,9 @@ Normalization rules:
 ### D. `lead_capture_view`
 - source: `pages/lead_capture.jte`
 - meaning: waitlist page rendered
+- logging:
+  - client GA4 event on render, including validation/success status
+  - server CSV row from `LeadController` only on the first clean waitlist landing
 - key payload:
   - `page_type`
   - `verdict_state`
@@ -87,6 +91,7 @@ Normalization rules:
   - `detail`
   - `placement`
   - `intent`
+  - `lead_id`
   - `status`
 
 ### E. `lead_submit`
@@ -94,6 +99,7 @@ Normalization rules:
 - meaning: waitlist form submitted
 - client event:
   - lightweight GA4 conversion signal
+  - should preserve original source context and `lead_id`
 - server event:
   - full attribution row written to CSV
 
@@ -105,7 +111,7 @@ Normalization rules:
 The lead CSV currently writes:
 
 ```text
-timestamp,event_type,page_type,intent,verdict,brand,model,detail,referrer_path,placement
+timestamp,event_type,page_type,intent,verdict,brand,model,detail,referrer_path,placement,lead_id
 ```
 
 Examples:
@@ -125,6 +131,7 @@ Important:
 
 ### B. Context Preservation
 The following fields must survive the redirect into the waitlist form:
+- `leadId`
 - `verdict`
 - `brand`
 - `model`
@@ -282,6 +289,7 @@ Questions to answer:
 - are users reaching the waitlist page after the CTA click?
 - are waitlist submits attributable to a real page type and intent?
 - which page types convert best?
+- if partner flows are live, which `lead_id` values actually become approved actions?
 
 ### D. SEO / Tracking Boundary
 Because the main SEO issue has shifted from indexation to CTR, the next review should check:

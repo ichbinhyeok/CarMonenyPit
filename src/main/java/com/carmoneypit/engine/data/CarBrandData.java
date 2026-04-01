@@ -24,11 +24,11 @@ public class CarBrandData {
     @JsonProperty("major_issues")
     public List<MajorIssue> majorIssues;
     @JsonProperty("avg_switching_friction")
-    public long avgSwitchingFriction;
+    public Long avgSwitchingFriction;
     @JsonProperty("avg_new_monthly")
-    public int avgNewMonthly;
+    public Integer avgNewMonthly;
     @JsonProperty("sell_stat_pct")
-    public int sellStatPct;
+    public Integer sellStatPct;
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static class MajorIssue {

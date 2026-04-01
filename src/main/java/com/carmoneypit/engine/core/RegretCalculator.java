@@ -99,9 +99,12 @@ public class RegretCalculator {
                 if (faultsOpt.isPresent()) {
                     var faultsList = faultsOpt.get().faults();
                     if (!faultsList.isEmpty()) {
-                        majorCostBase = faultsList.stream()
+                        double maxPositiveFaultCost = faultsList.stream()
                                 .mapToDouble(f -> f.repairCost())
-                                .max().orElse(MAJOR_FAILURE_GENERAL);
+                                .filter(cost -> cost > 0)
+                                .max()
+                                .orElse(MAJOR_FAILURE_GENERAL);
+                        majorCostBase = Math.max(maxPositiveFaultCost, MAJOR_FAILURE_GENERAL);
                     }
                 }
             }

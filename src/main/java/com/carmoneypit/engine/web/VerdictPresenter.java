@@ -246,11 +246,49 @@ public class VerdictPresenter {
 
         String brand = input.brand() != null ? input.brand() : "";
         String model = input.model() != null ? input.model() : "";
+        String detail = buildScenarioDetail(input);
 
         return "/lead?page_type=calculator_result&intent=" + intent +
                 "&verdict_state=" + state.name() +
                 "&brand=" + brand +
                 "&model=" + model +
+                "&detail=" + detail +
                 "&placement=verdict_card";
+    }
+
+    private String buildScenarioDetail(EngineInput input) {
+        return "m-" + mileageBand(input.mileage())
+                + "_q-" + moneyBand(input.repairQuoteUsd())
+                + "_v-" + moneyBand(input.currentValueUsd());
+    }
+
+    private String mileageBand(long mileage) {
+        if (mileage < 30000)
+            return "lt30k";
+        if (mileage < 60000)
+            return "30to60k";
+        if (mileage < 90000)
+            return "60to90k";
+        if (mileage < 120000)
+            return "90to120k";
+        if (mileage < 150000)
+            return "120to150k";
+        if (mileage < 200000)
+            return "150to200k";
+        return "200kplus";
+    }
+
+    private String moneyBand(long amount) {
+        if (amount <= 0)
+            return "na";
+        if (amount < 1000)
+            return "lt1k";
+        if (amount < 2500)
+            return "1to2_5k";
+        if (amount < 5000)
+            return "2_5to5k";
+        if (amount < 10000)
+            return "5to10k";
+        return "10kplus";
     }
 }

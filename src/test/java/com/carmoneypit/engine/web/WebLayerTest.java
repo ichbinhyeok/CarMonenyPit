@@ -166,6 +166,8 @@ public class WebLayerTest {
                 given(carDataService.getAllModels()).willReturn(List.of(
                                 new CarDataService.CarModel("honda-crv", "HONDA", "CR-V", "RW", 2018, 2024)));
                 given(carDataService.findFaultsByModelId("honda-crv")).willReturn(Optional.empty());
+                given(carDataService.findReliabilityByModelId("honda-crv")).willReturn(Optional.empty());
+                given(carDataService.findMarketByModelId("honda-crv")).willReturn(Optional.empty());
 
                 mockMvc.perform(get("/should-i-fix/2018-honda-crv"))
                                 .andExpect(status().isMovedPermanently())

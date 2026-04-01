@@ -106,7 +106,9 @@ public class DecisionEngine {
         confidence = Math.min(confidence, 98);
 
         // 2. Peer Data (Owner Behavior)
-        int sellPct = brandDataOpt.map(d -> d.sellStatPct).orElse(DEFAULT_SELL_PCT);
+        int sellPct = brandDataOpt
+                .map(d -> normalizePositiveInt(d.sellStatPct, DEFAULT_SELL_PCT))
+                .orElse(DEFAULT_SELL_PCT);
         if (state == VerdictState.TIME_BOMB)
             sellPct += SELL_PCT_SHIFT_BOMB;
         if (state == VerdictState.STABLE)
@@ -119,8 +121,12 @@ public class DecisionEngine {
                 state == VerdictState.STABLE ? 8.2 : 4.1);
 
         // 3. Economic Context (Switching Reality)
-        long friction = brandDataOpt.map(d -> d.avgSwitchingFriction).orElse(DEFAULT_SWITCHING_FRICTION);
-        int monthly = brandDataOpt.map(d -> d.avgNewMonthly).orElse(DEFAULT_NEW_MONTHLY_PAYMENT);
+        long friction = brandDataOpt
+                .map(d -> normalizePositiveLong(d.avgSwitchingFriction, DEFAULT_SWITCHING_FRICTION))
+                .orElse(DEFAULT_SWITCHING_FRICTION);
+        int monthly = brandDataOpt
+                .map(d -> normalizePositiveInt(d.avgNewMonthly, DEFAULT_NEW_MONTHLY_PAYMENT))
+                .orElse(DEFAULT_NEW_MONTHLY_PAYMENT);
 
         var econContext = new com.carmoneypit.engine.api.OutputModels.EconomicContext(
                 friction,
@@ -154,5 +160,13 @@ public class DecisionEngine {
                 "It's a toss-up. You are arguably in the 'Zone of Indecision'. Consider your personal stress tolerance.";
             default -> "Engine analysis complete. Review specialized metrics for guidance.";
         };
+    }
+
+    private int normalizePositiveInt(Integer value, int fallback) {
+        return value == null || value <= 0 ? fallback : value;
+    }
+
+    private long normalizePositiveLong(Long value, long fallback) {
+        return value == null || value <= 0 ? fallback : value;
     }
 }

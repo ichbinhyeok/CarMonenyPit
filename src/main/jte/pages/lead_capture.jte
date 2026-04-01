@@ -7,6 +7,7 @@
 @param String placement = "waitlist"
 @param String intent = "WAITLIST"
 @param String referrerPath = ""
+@param String leadId = ""
 @param String status = ""
 @param String canonicalUrl = null
 
@@ -178,10 +179,11 @@
                       data-placement="${placement}"
                       data-intent="${intent}"
                       data-referrer-path="${referrerPath}"
+                      data-lead-id="${leadId}"
                       data-status="${status}"
                       hidden></div>
 
-                 <form class="form-box" action="/waitlist/submit" method="POST" onsubmit="var m=document.getElementById('lead-capture-meta'); window.ampTrack('lead_submit', { event_category: 'conversion', funnel_step: 'lead_submit', page_type: 'lead_capture', verdict_state: m ? (m.dataset.verdict || 'UNKNOWN') : 'UNKNOWN', brand: m ? (m.dataset.brand || '') : '' });">
+                 <form class="form-box" action="/waitlist/submit" method="POST" onsubmit="var m=document.getElementById('lead-capture-meta'); window.ampTrack('lead_submit', { event_category: 'conversion', funnel_step: 'lead_submit', page_type: m ? (m.dataset.pageType || 'lead_capture') : 'lead_capture', verdict_state: m ? (m.dataset.verdict || 'UNKNOWN') : 'UNKNOWN', brand: m ? (m.dataset.brand || '') : '', model: m ? (m.dataset.model || '') : '', detail: m ? (m.dataset.detail || '') : '', placement: m ? (m.dataset.placement || '') : '', intent: m ? (m.dataset.intent || '') : '', referrer_path: m ? (m.dataset.referrerPath || '') : '', lead_id: m ? (m.dataset.leadId || '') : '' });">
                      <input type="hidden" name="verdict" value="${verdict}">
                      <input type="hidden" name="brand" value="${brandValue}">
                      <input type="hidden" name="model" value="${modelValue}">
@@ -190,6 +192,7 @@
                      <input type="hidden" name="placement" value="${placement}">
                      <input type="hidden" name="intent" value="${intent}">
                      <input type="hidden" name="referrerPath" value="${referrerPath}">
+                     <input type="hidden" name="leadId" value="${leadId}">
                      <div class="form-row">
                          <input id="email" name="email" type="email" autocomplete="email" required class="form-input-lead" placeholder="Enter your email">
                          <button type="submit" class="btn-lead">
@@ -217,6 +220,8 @@
                             detail: meta.dataset.detail || "",
                             placement: meta.dataset.placement || "",
                             intent: meta.dataset.intent || "",
+                            referrer_path: meta.dataset.referrerPath || "",
+                            lead_id: meta.dataset.leadId || "",
                             status: meta.dataset.status || ""
                         });
                     })();
