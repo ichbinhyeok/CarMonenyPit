@@ -199,24 +199,9 @@ public class CarDecisionController {
                                         canonicalBrandSlug, canonicalModelSlug, marketValue, primaryFaultName,
                                         primaryFaultCost, primaryFaultMileage, lifespanMiles);
                         // SEO Meta - Optimized for CTR and direct decision intent
-                        String seoTitle;
-                        if (primaryFaultCost != null && primaryFaultName != null) {
-                                seoTitle = String.format("%d %s %s: Fix or Sell if Repair Hits $%,d?",
-                                                year, brandSlug, modelSlug, primaryFaultCost);
-                        } else {
-                                seoTitle = String.format("Should I Fix or Sell My %d %s %s?",
-                                                year, brandSlug, modelSlug);
-                        }
-                        String seoDescription;
-                        if (marketValue != null && primaryFaultName != null && primaryFaultCost != null) {
-                                seoDescription = String.format(
-                                                "See typical value ($%,d), expected lifespan, and %s repair risk (~$%,d) before you approve a big repair on your %d %s %s.",
-                                                marketValue, primaryFaultName, primaryFaultCost, year, brandSlug, modelSlug);
-                        } else {
-                                seoDescription = String.format(
-                                                "See whether your next repair is worth it. Compare value, lifespan, and repair risk before you fix or sell your %d %s %s.",
-                                                year, brandSlug, modelSlug);
-                        }
+                        String seoTitle = buildSeoTitle(year, brandSlug, modelSlug, primaryFaultName, primaryFaultCost);
+                        String seoDescription = buildSeoDescription(year, brandSlug, modelSlug, marketValue,
+                                        primaryFaultName, primaryFaultCost, primaryFaultMileage, lifespanMiles);
 
                         model.addAttribute("seoTitle", seoTitle);
                         model.addAttribute("seoDescription", seoDescription);
@@ -272,6 +257,63 @@ public class CarDecisionController {
                 }
 
                 return "Quote decides";
+        }
+
+        private String buildSeoTitle(int year, String brand, String model, String primaryFaultName,
+                        Integer primaryFaultCost) {
+                String faultLabel = normalizeFaultLabel(primaryFaultName);
+                if (faultLabel != null && primaryFaultCost != null) {
+                        return String.format("%d %s %s %s Repair: Fix or Sell at $%,d?",
+                                        year, brand, model, faultLabel, primaryFaultCost);
+                }
+                if (faultLabel != null) {
+                        return String.format("%d %s %s %s Repair Cost: Fix or Sell?",
+                                        year, brand, model, faultLabel);
+                }
+                return String.format("Should I Fix or Sell My %d %s %s? Repair Cost vs Value",
+                                year, brand, model);
+        }
+
+        private String buildSeoDescription(int year, String brand, String model, Integer marketValue,
+                        String primaryFaultName, Integer primaryFaultCost, Integer primaryFaultMileage,
+                        Integer lifespanMiles) {
+                String faultLabel = normalizeFaultLabel(primaryFaultName);
+                if (marketValue != null && faultLabel != null && primaryFaultCost != null) {
+                        return String.format(
+                                        "Compare %s repair cost (~$%,d), typical value ($%,d), and expected lifespan before you decide to fix or sell your %d %s %s.",
+                                        faultLabel, primaryFaultCost, marketValue, year, brand, model);
+                }
+                if (faultLabel != null) {
+                        return String.format(
+                                        "See whether a %s repair is worth it. Compare repair cost, value, and lifespan before you fix or sell your %d %s %s.",
+                                        faultLabel, year, brand, model);
+                }
+                return String.format(
+                                "See whether your next repair is worth it. Compare value, lifespan, and repair risk before you fix or sell your %d %s %s.",
+                                year, brand, model);
+        }
+
+        private String normalizeFaultLabel(String faultName) {
+                if (faultName == null || faultName.isBlank()) {
+                        return null;
+                }
+                String lower = faultName.toLowerCase();
+                if (lower.contains("cvt")) {
+                        return "CVT";
+                }
+                if (lower.contains("transmission")) {
+                        return "Transmission";
+                }
+                if (lower.contains("coolant")) {
+                        return "Coolant Intrusion";
+                }
+                if (lower.contains("torque converter")) {
+                        return "Torque Converter";
+                }
+                if (lower.contains("oil")) {
+                        return "Oil Consumption";
+                }
+                return faultName;
         }
 
         private String buildQuickAnswer(String brand, String model, Integer marketValue, String primaryFaultName,

@@ -402,6 +402,7 @@ This section records tracking-relevant changes shipped after the March 20 audit.
 - fault verdict and mileage verdict pages now loop users back into the full model-level `/should-i-fix/*` decision page
 - top opportunity `/should-i-fix/*` pages now align hero copy and FAQ schema with the same model-specific decision logic
 - brand directories, fault hubs, and core guides now also push users toward priority `/should-i-fix/*` decision pages
+- `/should-i-fix/*` SEO titles now incorporate the specific high-cost fault (CVT, transmission, coolant intrusion, etc.) when available
 
 ### B. What Did Not Change
 - no canonical event names changed
@@ -427,6 +428,7 @@ This section records tracking-relevant changes shipped after the March 20 audit.
 - whether pSEO fault and mileage pages still preserve clean waitlist routing after CTA copy changes
 - whether the new model hubs improve internal handoff into year-specific decision pages
 - whether proof-based `<title>` changes improve CTR on pages with known expensive faults
+- whether fault-specific titles improve CTR more than generic "fix or sell" titles
 - whether hero copy, FAQ copy, and FAQ schema stay aligned on the same model-specific decision story
 
 ### E. Practical Reading Guide
