@@ -227,9 +227,9 @@
                     &copy; 2026 AutoMoneyPit. All rights reserved.
                 </div>
                 <div class="footer-links">
+                    <a href="/models">Decision Pages</a>
                     <a href="/about">About Us</a>
                     <a href="/guides">Guides</a>
-                    <a href="/models">Models</a>
                     <a href="/methodology">Methodology</a>
                     <a href="/contact">Contact</a>
                     <a href="/privacy">Privacy</a>

@@ -71,6 +71,11 @@
         color: var(--text-main);
     }
 
+    .header-nav .primary-nav-link {
+        color: #1d4ed8;
+        font-weight: 800;
+    }
+
     @media (max-width: 768px) {
         .header-content { padding: 0.75rem 1rem; }
         .logo-text { font-size: 1rem; }
@@ -87,7 +92,7 @@
             <span class="logo-text">AutoMoney<span>Pit</span></span>
         </a>
         <nav class="header-nav">
-            <a href="/models">Models</a>
+            <a href="/models" class="primary-nav-link">Decision Pages</a>
             <a href="/guides">Guides</a>
             <a href="/methodology">Methodology</a>
             <a href="/about">About</a>

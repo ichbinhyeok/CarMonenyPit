@@ -3,6 +3,7 @@ package com.carmoneypit.engine.web;
 import com.carmoneypit.engine.service.CarDataService;
 import com.carmoneypit.engine.service.CarDataService.CarModel;
 import com.carmoneypit.engine.service.CarDataService.MajorFaults;
+import com.carmoneypit.engine.service.CarDataService.ModelReliability;
 import com.carmoneypit.engine.service.FaultHubService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,22 +41,22 @@ public class SitemapController {
         // 1. Static Pages
         addUrl(xmlBuilder, baseUrl + "/", lastMod, "daily", "1.0");
         addUrl(xmlBuilder, baseUrl + "/models", lastMod, "weekly", "0.9");
-        addUrl(xmlBuilder, baseUrl + "/guides", lastMod, "weekly", "0.9");
-        addUrl(xmlBuilder, baseUrl + "/guides/when-to-stop-repairing-your-car", lastMod, "monthly", "0.8");
-        addUrl(xmlBuilder, baseUrl + "/guides/sunk-cost-fallacy-car-repairs", lastMod, "monthly", "0.8");
-        addUrl(xmlBuilder, baseUrl + "/guides/car-repair-cost-vs-value", lastMod, "monthly", "0.8");
+        addUrl(xmlBuilder, baseUrl + "/guides", lastMod, "weekly", "0.6");
+        addUrl(xmlBuilder, baseUrl + "/guides/when-to-stop-repairing-your-car", lastMod, "monthly", "0.55");
+        addUrl(xmlBuilder, baseUrl + "/guides/sunk-cost-fallacy-car-repairs", lastMod, "monthly", "0.55");
+        addUrl(xmlBuilder, baseUrl + "/guides/car-repair-cost-vs-value", lastMod, "monthly", "0.55");
 
         // 2. Fault Hub Pages (directory + 5 hubs)
-        addUrl(xmlBuilder, baseUrl + "/faults", lastMod, "weekly", "0.9");
+        addUrl(xmlBuilder, baseUrl + "/faults", lastMod, "weekly", "0.5");
         for (String slug : FaultHubService.ALLOWED_SLUGS.stream().sorted().toList()) {
-            addUrl(xmlBuilder, baseUrl + "/fault/" + slug, lastMod, "monthly", "0.8");
+            addUrl(xmlBuilder, baseUrl + "/fault/" + slug, lastMod, "monthly", "0.45");
         }
 
         // 3. Directory Pages (Brands)
         List<String> brands = dataService.getAllBrands();
         for (String brand : brands) {
             String brandSlug = normalize(brand);
-            addUrl(xmlBuilder, baseUrl + "/models/" + brandSlug, lastMod, "weekly", "0.8");
+            addUrl(xmlBuilder, baseUrl + "/models/" + brandSlug, lastMod, "weekly", "0.75");
         }
 
         // 4. Model Directory & pSEO Pages
@@ -63,9 +64,15 @@ public class SitemapController {
         for (CarModel car : allModels) {
             String brandSlug = normalize(car.brand());
             String modelSlug = normalize(car.model());
+            Optional<ModelReliability> reliabilityOpt = dataService.findReliabilityByModelId(car.id());
+            int representativeYear = selectRepresentativeYear(car, reliabilityOpt.orElse(null));
 
             // Model Directory Page
             addUrl(xmlBuilder, baseUrl + "/models/" + brandSlug + "/" + modelSlug, lastMod, "weekly", "0.8");
+
+            // Primary decision surface
+            addUrl(xmlBuilder, baseUrl + "/should-i-fix/" + representativeYear + "-" + brandSlug + "-" + modelSlug,
+                    lastMod, "weekly", "0.9");
 
             // Verdict Fault Pages
             Optional<MajorFaults> faultsOpt = dataService.findFaultsByModelId(car.id());
@@ -73,7 +80,7 @@ public class SitemapController {
                 for (CarDataService.Fault fault : faultsOpt.get().faults()) {
                     String faultSlug = fault.component().toLowerCase().replace(" ", "-").replaceAll("[^a-z0-9-]", "");
                     addUrl(xmlBuilder, baseUrl + "/verdict/" + brandSlug + "/" + modelSlug + "/" + faultSlug, lastMod,
-                            "monthly", "0.7");
+                            "monthly", "0.65");
                 }
             }
 
@@ -81,13 +88,8 @@ public class SitemapController {
             int[] mileageBuckets = { 50000, 75000, 100000, 125000, 150000, 175000, 200000 };
             for (int miles : mileageBuckets) {
                 addUrl(xmlBuilder, baseUrl + "/verdict/" + brandSlug + "/" + modelSlug + "/" + miles + "-miles",
-                        lastMod, "monthly", "0.7");
+                        lastMod, "monthly", "0.55");
             }
-
-            // Should-I-Fix pSEO landing page
-            addUrl(xmlBuilder, baseUrl + "/should-i-fix/" + car.startYear() + "-" + brandSlug + "-" + modelSlug,
-                    lastMod,
-                    "monthly", "0.8");
         }
 
         xmlBuilder.append("</urlset>");
@@ -109,5 +111,15 @@ public class SitemapController {
         return input.toLowerCase()
                 .replaceAll("[^a-z0-9]+", "-")
                 .replaceAll("^-|-$", "");
+    }
+
+    private int selectRepresentativeYear(CarModel car, ModelReliability reliability) {
+        if (reliability != null && reliability.bestYears() != null && !reliability.bestYears().isEmpty()) {
+            return reliability.bestYears().stream()
+                    .filter(year -> year >= car.startYear() && year <= car.endYear())
+                    .max(Integer::compareTo)
+                    .orElse(car.endYear() > 0 ? car.endYear() : car.startYear());
+        }
+        return car.endYear() > 0 ? car.endYear() : car.startYear();
     }
 }

@@ -168,6 +168,23 @@
             </p>
         </div>
 
+        @if(shouldFixUrl != null)
+        <section style="margin: 0 0 2rem; background: linear-gradient(135deg, #eff6ff, #f8fafc); border: 1px solid #bfdbfe; border-radius: 20px; padding: 1.4rem 1.5rem;">
+            <div style="font-size: 0.72rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: #1d4ed8; margin-bottom: 0.6rem;">
+                Decision Page Handoff
+            </div>
+            <h2 style="font-size: 1.2rem; font-weight: 900; color: #0f172a; margin: 0 0 0.55rem;">
+                Mileage is context. If you already have a repair quote, open the full fix-or-sell page next.
+            </h2>
+            <p style="font-size: 0.95rem; color: #475569; line-height: 1.65; margin: 0 0 0.9rem;">
+                This page helps with lifespan and high-mileage context. The main decision page is where you compare the actual quote against vehicle value and decide whether to fix or sell.
+            </p>
+            <a href="${shouldFixUrl}" style="display: inline-block; text-decoration: none; background: #1d4ed8; color: #fff; padding: 0.9rem 1.15rem; border-radius: 12px; font-weight: 800;">
+                Open The Full Fix-or-Sell Page ->
+            </a>
+        </section>
+        @endif
+
         <!-- Main Analysis Card -->
         <section class="analysis-card">
             <div class="analysis-header">

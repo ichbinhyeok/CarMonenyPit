@@ -230,6 +230,9 @@
             <p class="hero-subtitle">
                 Got a repair quote that made you gasp? Let's find out if it's worth it, or if you should cut your losses.
             </p>
+            <p style="margin: 0 auto 2rem; max-width: 640px; font-size: 0.92rem; color: #475569; font-weight: 600;">
+                Already know the vehicle? <a href="/models" style="color: #1d4ed8; text-decoration: none;">Open a year-specific decision page first</a>.
+            </p>
 
             <!-- Situation Selection Cards -->
             <div class="situation-cards" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2.5rem; max-width: 700px; margin-left: auto; margin-right: auto;">
@@ -448,8 +451,8 @@
         <!-- Popular Searches Section (pSEO Internal Linking) -->
         <div style="max-width: 1000px; margin: 0 auto 6rem; padding: 0 1rem;">
             <div style="text-align: center; margin-bottom: 2.5rem;">
-                <h2 style="font-size: 1.75rem; font-weight: 800; color: #0f172a; margin-bottom: 0.75rem;">Popular Fix-or-Sell Pages</h2>
-                <p style="font-size: 1rem; color: #64748b;">High-intent US-market decision pages that deserve stronger internal support</p>
+                <h2 style="font-size: 1.75rem; font-weight: 800; color: #0f172a; margin-bottom: 0.75rem;">Start With A Vehicle-Specific Decision Page</h2>
+                <p style="font-size: 1rem; color: #64748b;">These pages are the fastest route when you already have a quote and need the fix-or-sell call.</p>
             </div>
             
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem;">

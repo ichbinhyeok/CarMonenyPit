@@ -490,3 +490,70 @@ As of the latest internal-link pass:
 Operationally, the next review should answer this question first:
 
 `Did the authority-routing pass make the priority decision pages more visible and more clickable?`
+
+## 18. Update Note (2026-04-16)
+This section records the low-risk surface-alignment pass shipped on April 16, 2026 and the measured read that justified it.
+
+### A. What Changed
+- sitemap routing was tightened so `/should-i-fix/*` is emitted with the representative year, higher priority, and earlier than verdict-style support pages
+- mileage verdict pages remain indexable support surfaces, but they were demoted in sitemap priority relative to `/should-i-fix/*`
+- fault verdict pages now hand users off to the full year-specific `/should-i-fix/*` page much earlier on the page
+- mileage verdict pages now state explicitly that mileage is context and route quote-ready users into the full `/should-i-fix/*` page
+- home, header, footer, and guides now frame `/models` as a decision-page gateway rather than a generic directory
+- a controller test now checks that sitemap output prefers the representative-year `/should-i-fix/*` URL instead of the raw `startYear`
+
+### B. What Measured Read Triggered This
+GSC review on April 16, 2026 showed that recent improvement work produced broader visibility but not a stronger decision-page capture pattern.
+
+28-day period comparison:
+- `2026-01-20` to `2026-02-16`
+  - `13 clicks / 192 impressions / 6.77% CTR / avg position 15.04`
+- `2026-02-17` to `2026-03-15`
+  - `11 clicks / 537 impressions / 2.05% CTR / avg position 10.80`
+- `2026-03-16` to `2026-04-13`
+  - `7 clicks / 1343 impressions / 0.52% CTR / avg position 13.17`
+
+84-day page read (`2026-01-20` to `2026-04-13`):
+- homepage: `19 clicks`
+- `/models`: `6 clicks`
+- the priority `/should-i-fix/*` set remained effectively unproven as a click surface
+- the priority review set below produced `0 clicks` across the full window:
+  - `/should-i-fix/2014-toyota-camry`
+  - `/should-i-fix/2014-nissan-altima`
+  - `/should-i-fix/2015-honda-accord`
+  - `/should-i-fix/2013-honda-cr-v`
+  - `/should-i-fix/2015-mazda-cx-5`
+  - `/should-i-fix/2014-toyota-corolla`
+  - `/should-i-fix/2014-ford-escape`
+
+### C. How To Interpret This
+- tracking integrity is still not the main blocker
+- indexing is no longer the main blocker either
+- the main problem is now surface-market mismatch:
+  - broad query language is generating impressions
+  - but the core decision surface is still not the click winner
+- this means the project should currently be read as a revenue-viability diagnosis, not a revenue-optimization system
+- do not interpret growing impressions alone as proof that the core wedge is working
+
+### D. What This Pass Is Trying To Prove
+This pass is not trying to increase partner yield, waitlist submit rate, or monetization mechanics.
+
+It is trying to answer a narrower question:
+
+`If the site consistently puts /should-i-fix/* in front of the user, will real search demand start choosing it as the primary decision surface?`
+
+### E. What To Check Next
+For the next observation window, check these in order:
+
+1. whether `/should-i-fix/*` gains a larger share of clicks relative to homepage, `/models`, and mileage verdict pages
+2. whether priority `/should-i-fix/*` pages gain clicks, not just impressions
+3. whether mileage and fault pages begin acting more like feeder surfaces and less like terminal surfaces
+4. whether query mix starts moving from broad mileage / depreciation / lifespan language toward repair-cost and fix-or-sell language
+5. whether any new clicks on `/should-i-fix/*` produce better downstream calculator or lead-flow handoff than the current broad surfaces
+
+### F. Operating Recommendation
+Use `2026-04-17` to `2026-04-30` as the observation window for this pass.
+
+At the review after April 30, 2026:
+- if `/should-i-fix/*` begins winning clicks, continue sharpening the decision wedge
+- if impressions keep growing but clicks still concentrate on broad or support surfaces, stop treating this as a copy-polish problem and reassess the wedge itself
