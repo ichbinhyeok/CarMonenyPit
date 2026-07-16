@@ -5,6 +5,7 @@
 @import com.carmoneypit.engine.service.CarDataService.Fault
 @import com.carmoneypit.engine.service.CarDataService.Milestone
 @import com.carmoneypit.engine.web.PSeoController.Breadcrumb
+@import com.carmoneypit.engine.web.SeoDecisionSupport.MileageSupport
 @import java.util.List
 @import java.util.Map
 
@@ -22,9 +23,11 @@
 @param String brandDirectoryUrl
 @param String modelDirectoryUrl
 @param String mileageBaseUrl
+@param MileageSupport decisionSupport
 @param String shouldFixUrl = null
 @param String datasetVersion = "2026-02-24"
 @param boolean waitlistMode = true
+@param boolean noindex = false
 
 !{
     // Calculate lifespan percentage
@@ -108,6 +111,7 @@
     description = metaDescription,
     canonical = canonicalUrl,
     schemaJson = schemaJson,
+    noindex = noindex,
     content = @`
     <div class="pseo-mileage-container">
         
@@ -167,6 +171,44 @@
                 ${aeoText}
             </p>
         </div>
+
+        <section style="margin: 0 0 3rem; background:#fff; border:1px solid #cbd5e1; border-radius:20px; padding:1.5rem;">
+            <div style="font-size:0.72rem; font-weight:800; letter-spacing:0.08em; text-transform:uppercase; color:#0f766e; margin-bottom:0.45rem;">
+                High-mileage inspection plan
+            </div>
+            <h2 style="font-size:1.35rem; font-weight:900; color:#0f172a; margin:0 0 0.65rem;">
+                What to check before you keep, repair, or sell
+            </h2>
+            <p style="color:#334155; line-height:1.7; margin:0 0 1.1rem;">${decisionSupport.searchIntentAnswer()}</p>
+            <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1rem;">
+                <div style="background:#f8fafc; border-radius:14px; padding:1rem;">
+                    <h3 style="font-size:0.95rem; color:#0f172a; margin:0 0 0.65rem;">Inspection checklist</h3>
+                    <ul style="margin:0; padding-left:1.15rem; color:#475569; line-height:1.6;">
+                        @for(String item : decisionSupport.inspectionChecks())
+                        <li style="margin-bottom:0.5rem;">${item}</li>
+                        @endfor
+                    </ul>
+                </div>
+                <div style="background:#f8fafc; border-radius:14px; padding:1rem;">
+                    <h3 style="font-size:0.95rem; color:#0f172a; margin:0 0 0.65rem;">Decision signals</h3>
+                    <ul style="margin:0; padding-left:1.15rem; color:#475569; line-height:1.6;">
+                        @for(String item : decisionSupport.decisionSignals())
+                        <li style="margin-bottom:0.5rem;">${item}</li>
+                        @endfor
+                    </ul>
+                </div>
+            </div>
+            <div style="display:flex; gap:0.75rem; flex-wrap:wrap; margin-top:1.15rem;">
+                <a href="/tools/repair-or-sell-calculator" data-analytics-event="repair_sell_tool_open" data-analytics-label="mileage_page"
+                   style="display:inline-block; text-decoration:none; background:#0f766e; color:#fff; border-radius:10px; padding:0.8rem 1rem; font-weight:800;">
+                    Compare keep vs replace cost
+                </a>
+                <a href="/guides/car-repair-estimate-second-opinion" data-analytics-event="second_opinion_guide_open" data-analytics-label="mileage_page"
+                   style="display:inline-block; text-decoration:none; background:#fff; color:#0f172a; border:1px solid #cbd5e1; border-radius:10px; padding:0.8rem 1rem; font-weight:800;">
+                    Get a better repair quote
+                </a>
+            </div>
+        </section>
 
         @if(shouldFixUrl != null)
         <section style="margin: 0 0 2rem; background: linear-gradient(135deg, #eff6ff, #f8fafc); border: 1px solid #bfdbfe; border-radius: 20px; padding: 1.4rem 1.5rem;">
@@ -275,7 +317,7 @@
         <section class="risk-section">
             <h2>⚠️ Component Risk Analysis</h2>
             <p class="section-intro">
-                Based on failure data from thousands of ${car.brand()} ${car.model()} owners, here's what to watch for at your mileage.
+                Based on model-specific faults, mileage milestones, and service documents in the current dataset, here is what to inspect at this mileage.
             </p>
             
             @if(!upcomingRisks.isEmpty())
@@ -286,8 +328,8 @@
                     <div class="risk-card">
                         <div class="risk-card-header">
                             <span class="component-name">${fault.component()}</span>
-                            <span class="failure-rate" style="color: ${fault.occurrenceRate() >= 0.3 ? "#ef4444" : "#eab308"};">
-                                ${String.format("%.0f", fault.occurrenceRate() * 100)}% failure rate
+                            <span class="failure-rate" style="color: #64748b;">
+                                ${fault.confidence() != null ? fault.confidence().toUpperCase() + " evidence" : "Internal risk signal"}
                             </span>
                         </div>
                         <div class="risk-card-body">

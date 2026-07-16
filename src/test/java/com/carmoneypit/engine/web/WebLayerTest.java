@@ -197,6 +197,8 @@ public class WebLayerTest {
                                 .andExpect(model().attribute("heroSubtitle", containsString("CVT")))
                                 .andExpect(model().attribute("introParagraph", containsString("CVT")))
                                 .andExpect(model().attribute("decisionFaqAnswer", containsString("Altima")))
-                                .andExpect(model().attribute("faqSchemaJson", containsString("Should I fix my 2014 NISSAN Altima or sell it?")));
+                                .andExpect(model().attribute("canonicalUrl",
+                                                "https://automoneypit.com/should-i-fix/2014-nissan-altima"))
+                                .andExpect(model().attribute("noindex", false));
         }
 }

@@ -8,6 +8,8 @@ test.describe("Smoke: routes and transport headers", () => {
     "/models",
     "/guides",
     "/guides/when-to-stop-repairing-your-car",
+    "/guides/car-repair-estimate-second-opinion",
+    "/tools/repair-or-sell-calculator",
     "/privacy",
     "/terms",
     "/robots.txt",
@@ -53,7 +55,7 @@ test.describe("Smoke: routes and transport headers", () => {
     const headers = response.headers();
     expect(headers["x-robots-tag"]).toContain("noindex");
     const body = (await response.text()).toLowerCase();
-    expect(body).toContain('<meta name="robots" content="noindex, nofollow">');
+    expect(body).toContain('<meta name="robots" content="noindex, follow">');
   });
 
   test("legacy lead capture query variants should fold into clean canonical path", async ({ request }) => {

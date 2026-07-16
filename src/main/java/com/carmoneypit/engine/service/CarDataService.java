@@ -209,10 +209,33 @@ public class CarDataService {
             @com.fasterxml.jackson.annotation.JsonProperty("repairCost") double repairCost,
             @com.fasterxml.jackson.annotation.JsonProperty("verdictImplication") String verdictImplication,
             @com.fasterxml.jackson.annotation.JsonProperty("occurrence_rate") double occurrenceRate,
-            @com.fasterxml.jackson.annotation.JsonProperty("avg_failure_mileage") int avgFailureMileage) {
+            @com.fasterxml.jackson.annotation.JsonProperty("avg_failure_mileage") int avgFailureMileage,
+            @com.fasterxml.jackson.annotation.JsonProperty("repairCost_range_low") Integer repairCostRangeLow,
+            @com.fasterxml.jackson.annotation.JsonProperty("repairCost_range_high") Integer repairCostRangeHigh,
+            String confidence,
+            @com.fasterxml.jackson.annotation.JsonProperty("last_updated") String lastUpdated,
+            List<FaultSource> sources) {
+
+        public Fault {
+            sources = sources == null ? List.of() : List.copyOf(sources);
+        }
 
         public Fault(String component, String symptoms, double repairCost, String verdictImplication) {
-            this(component, symptoms, repairCost, verdictImplication, 0.0, 0);
+            this(component, symptoms, repairCost, verdictImplication, 0.0, 0, null, null, null, null, List.of());
         }
+
+        public Fault(String component, String symptoms, double repairCost, String verdictImplication,
+                double occurrenceRate, int avgFailureMileage) {
+            this(component, symptoms, repairCost, verdictImplication, occurrenceRate, avgFailureMileage,
+                    null, null, null, null, List.of());
+        }
+    }
+
+    @com.fasterxml.jackson.annotation.JsonIgnoreProperties(ignoreUnknown = true)
+    public record FaultSource(
+            String name,
+            String url,
+            @com.fasterxml.jackson.annotation.JsonProperty("retrieved_at") String retrievedAt,
+            String note) {
     }
 }

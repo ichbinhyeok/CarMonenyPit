@@ -83,6 +83,14 @@
         .header-nav a { font-size: 0.75rem; }
         .header-nav { gap: 1rem; }
     }
+
+    @media (max-width: 560px) {
+        .logo-text { display: none; }
+        .header-content { gap: 0.75rem; }
+        .header-nav { gap: 0.7rem; }
+        .header-nav a { font-size: 0.7rem; }
+        .header-nav a:nth-last-child(-n+2) { display: none; }
+    }
 </style>
 
 <header class="main-header">
@@ -93,6 +101,7 @@
         </a>
         <nav class="header-nav">
             <a href="/models" class="primary-nav-link">Decision Pages</a>
+            <a href="/tools/repair-or-sell-calculator">Calculator</a>
             <a href="/guides">Guides</a>
             <a href="/methodology">Methodology</a>
             <a href="/about">About</a>

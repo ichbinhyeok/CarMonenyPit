@@ -29,6 +29,20 @@
             </section>
 
             <section style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem;">
+                <a href="/tools/repair-or-sell-calculator" data-analytics-event="repair_sell_tool_open" data-analytics-label="guide_index" style="display:block; text-decoration:none; background:#0f766e; border:1px solid #0f766e; border-radius:16px; padding:1.25rem;">
+                    <h2 style="font-size:1.1rem; color:#fff; margin:0 0 0.6rem 0;">Repair or Sell Calculator</h2>
+                    <p style="font-size:0.92rem; color:#ccfbf1; line-height:1.6; margin:0;">
+                        Compare the repair, backlog, downtime, and replacement switching costs using your real numbers.
+                    </p>
+                </a>
+
+                <a href="/guides/car-repair-estimate-second-opinion" data-analytics-event="second_opinion_guide_open" data-analytics-label="guide_index" style="display:block; text-decoration:none; background:#fff; border:1px solid #e2e8f0; border-radius:16px; padding:1.25rem;">
+                    <h2 style="font-size:1.1rem; color:#0f172a; margin:0 0 0.6rem 0;">Repair Estimate Second Opinion</h2>
+                    <p style="font-size:0.92rem; color:#64748b; line-height:1.6; margin:0;">
+                        A copyable checklist for verifying the diagnosis and comparing truly equivalent shop quotes.
+                    </p>
+                </a>
+
                 <a href="/guides/when-to-stop-repairing-your-car" style="display:block; text-decoration:none; background:#fff; border:1px solid #e2e8f0; border-radius:16px; padding:1.25rem;">
                     <h2 style="font-size:1.1rem; color:#0f172a; margin:0 0 0.6rem 0;">When to Stop Repairing Your Car</h2>
                     <p style="font-size:0.92rem; color:#64748b; line-height:1.6; margin:0;">

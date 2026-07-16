@@ -80,9 +80,13 @@
                 "component": "Exhaust Manifold Bolts",
                 "symptoms": "Ticking noise on cold start (The \u0027Hemi Tick\u0027)",
                 "repairCost": 900,
-                "verdictImplication": "Annoyance: Often broken bolts. Inspect carefully before buying.",
+                "repairCost_range_low": 500,
+                "repairCost_range_high": 1400,
+                "verdictImplication": "Confirm that the cold-start tick is an exhaust leak or broken manifold fastener rather than valvetrain, injector, or accessory noise before approving the repair.",
                 "occurrence_rate": 0.1,
-                "avg_failure_mileage": 96153
+                "avg_failure_mileage": 96153,
+                "confidence": "medium",
+                "last_updated": "2026-07-16"
             }
         ]
     },
@@ -140,9 +144,27 @@
                 "component": "CVT Transmission",
                 "symptoms": "Juttering, stalling, overheating",
                 "repairCost": 4500,
-                "verdictImplication": "High Risk: Ensure fluid changes were done every 30k miles. Otherwise walk away.",
+                "repairCost_range_low": 3500,
+                "repairCost_range_high": 6000,
+                "verdictImplication": "High-cost risk: confirm the exact DTC, dealer diagnosis, VIN eligibility, and warranty-extension status before authorizing a CVT replacement.",
                 "occurrence_rate": 0.45,
-                "avg_failure_mileage": 147610
+                "avg_failure_mileage": 147610,
+                "confidence": "high",
+                "last_updated": "2026-07-16",
+                "sources": [
+                    {
+                        "name": "Nissan NTB15-084d",
+                        "url": "https://static.nhtsa.gov/odi/tsbs/2017/MC-10123155-9999.pdf",
+                        "retrieved_at": "2026-07-16",
+                        "note": "Official bulletin for 2014-2016 Rogue (T32) CVT judder with DTC P17F0 or P17F1; applicability requires the stated symptoms and stored DTC."
+                    },
+                    {
+                        "name": "Nissan Rogue CVT Warranty Extension",
+                        "url": "https://static.nhtsa.gov/odi/tsbs/2022/MC-10218703-0001.pdf",
+                        "retrieved_at": "2026-07-16",
+                        "note": "Official warranty-extension bulletin lists 2014-2018 Rogue (T32); owners should confirm VIN-specific eligibility."
+                    }
+                ]
             }
         ]
     },
@@ -287,11 +309,35 @@
         "faults": [
             {
                 "component": "Coolant Intrusion",
-                "symptoms": "White smoke, misfire, coolant loss (1.5L/1.6L)",
+                "symptoms": "Coolant loss, white exhaust smoke, rough running or misfire on affected EcoBoost applications",
                 "repairCost": 5500,
-                "verdictImplication": "Critical: Requires engine replacement. Avoid 1.5L/1.6L engines.",
+                "repairCost_range_low": 4000,
+                "repairCost_range_high": 7500,
+                "verdictImplication": "High-cost risk: confirm the engine, VIN, build date, diagnostic results, and applicable Ford procedure. Qualifying 1.5L and 2.0L cases can require short-block or long-block replacement.",
                 "occurrence_rate": 0.15,
-                "avg_failure_mileage": 114520
+                "avg_failure_mileage": 114520,
+                "confidence": "high",
+                "last_updated": "2026-07-16",
+                "sources": [
+                    {
+                        "name": "Ford TSB 19-2375",
+                        "url": "https://static.nhtsa.gov/odi/tsbs/2019/MC-10169884-0001.pdf",
+                        "retrieved_at": "2026-07-16",
+                        "note": "Official Ford bulletin covers qualifying 2017-2019 Escape vehicles with the 1.5L EcoBoost and specified coolant-loss, smoke, rough-running, or DTC criteria."
+                    },
+                    {
+                        "name": "Ford TSB 19-2172",
+                        "url": "https://static.nhtsa.gov/odi/tsbs/2019/MC-10162062-0001.pdf",
+                        "retrieved_at": "2026-07-16",
+                        "note": "Official Ford bulletin covers qualifying 2017-2019 Escape vehicles with the 2.0L EcoBoost and directs long-block replacement when diagnostic criteria are met."
+                    },
+                    {
+                        "name": "Ford Customer Satisfaction Program 21N12",
+                        "url": "https://static.nhtsa.gov/odi/tsbs/2022/MC-10213732-0001.pdf",
+                        "retrieved_at": "2026-07-16",
+                        "note": "Official program document covers certain 2017-2019 Escape 1.5L vehicles; owners must verify VIN and program eligibility."
+                    }
+                ]
             },
             {
                 "component": "Transmission Failure",
@@ -430,9 +476,27 @@
                 "component": "Piston Slap",
                 "symptoms": "Ticking/knocking noise from engine",
                 "repairCost": 4500,
-                "verdictImplication": "Severe: Precursor to engine failure (Nu 2.0L).",
-                "occurrence_rate": 0.1,
-                "avg_failure_mileage": 65566
+                "repairCost_range_low": 3500,
+                "repairCost_range_high": 7000,
+                "verdictImplication": "Applicability warning: the Hyundai piston-slap bulletin located in the official source set covers the prior 2011-2016 MD/UD generation, not this 2017-2020 AD generation. Do not assume bulletin or warranty coverage without VIN-specific confirmation.",
+                "occurrence_rate": 0.0,
+                "avg_failure_mileage": 65566,
+                "confidence": "low",
+                "last_updated": "2026-07-16",
+                "sources": [
+                    {
+                        "name": "Hyundai TSB 22-EM-007H",
+                        "url": "https://static.nhtsa.gov/odi/tsbs/2022/MC-10215604-0001.pdf",
+                        "retrieved_at": "2026-07-16",
+                        "note": "Official cylinder-block inspection bulletin applies to certain 2011-2016 Elantra MD/UD vehicles with the 1.8L engine, not the AD generation represented by this page."
+                    },
+                    {
+                        "name": "Hyundai TSB 22-EM-009H",
+                        "url": "https://static.nhtsa.gov/odi/tsbs/2022/MC-10215605-0001.pdf",
+                        "retrieved_at": "2026-07-16",
+                        "note": "Official warranty-extension bulletin again identifies MD/UD, Elantra Coupe JK, and Elantra GT GD applicability."
+                    }
+                ]
             }
         ]
     },
@@ -636,11 +700,23 @@
         "faults": [
             {
                 "component": "Control Arms",
-                "symptoms": "Squeaking/creaking suspension",
+                "symptoms": "Suspension squeak or creak; certain 2017 vehicles may also exhibit high-speed vibration and cabin noise",
                 "repairCost": 600,
-                "verdictImplication": "Common: Upper control arm ball joints dry out.",
+                "repairCost_range_low": 350,
+                "repairCost_range_high": 1200,
+                "verdictImplication": "Confirm the exact noisy or loose joint before replacing multiple suspension assemblies. Tesla SB-18-31-002 applies only to its stated 2017 Model 3 condition and build range.",
                 "occurrence_rate": 0.1,
-                "avg_failure_mileage": 96620
+                "avg_failure_mileage": 96620,
+                "confidence": "medium",
+                "last_updated": "2026-07-16",
+                "sources": [
+                    {
+                        "name": "Tesla Service Bulletin SB-18-31-002",
+                        "url": "https://static.nhtsa.gov/odi/tsbs/2018/MC-10142989-9999.pdf",
+                        "retrieved_at": "2026-07-16",
+                        "note": "Official Tesla bulletin addresses front upper control arms on certain 2017 Model 3 vehicles with vibration and cabin noise above 65 mph; it does not establish applicability to every year or every suspension squeak."
+                    }
+                ]
             }
         ]
     },
@@ -1016,11 +1092,29 @@
         "faults": [
             {
                 "repairCost": 6000,
+                "repairCost_range_low": 4500,
+                "repairCost_range_high": 8500,
                 "component": "High Oil Consumption (Piston Rings)",
-                "verdictImplication": "Severe: Critical failure on early Drive-E engines. Requires engine rebuild or replacement.",
+                "verdictImplication": "High-cost risk on eligible early vehicles: request an authorized Volvo oil-consumption test and confirm VIN-specific extended-warranty eligibility before paying for pistons or an engine.",
                 "symptoms": "Low oil light every 1000 miles, blue smoke",
                 "occurrence_rate": 0.3,
-                "avg_failure_mileage": 53269
+                "avg_failure_mileage": 53269,
+                "confidence": "high",
+                "last_updated": "2026-07-16",
+                "sources": [
+                    {
+                        "name": "Volvo Quality Bulletin P10207",
+                        "url": "https://static.nhtsa.gov/odi/tsbs/2023/MC-10249372-9999.pdf",
+                        "retrieved_at": "2026-07-16",
+                        "note": "Official extended-warranty bulletin includes eligible 2016 XC90 vehicles and requires retailer confirmation plus an oil-consumption test."
+                    },
+                    {
+                        "name": "Volvo Quality Bulletin P10186",
+                        "url": "https://static.nhtsa.gov/odi/tsbs/2023/MC-10231931-9999.pdf",
+                        "retrieved_at": "2026-07-16",
+                        "note": "Official program document describes testing and parts replacement for excessive oil consumption on eligible vehicles."
+                    }
+                ]
             }
         ],
         "model_id_ref": "volvo_xc90_spa"
@@ -1055,11 +1149,35 @@
         "faults": [
             {
                 "repairCost": 6000,
+                "repairCost_range_low": 4500,
+                "repairCost_range_high": 7500,
                 "component": "1.5L/2.0L Coolant Intrusion",
-                "verdictImplication": "CATASTROPHIC: Coolant leaks into cylinders due to block design. Engine replacement required.",
+                "verdictImplication": "High-cost risk: Ford bulletins support different diagnostic and repair procedures for qualifying 1.5L and 2.0L vehicles. Confirm engine size, VIN, build date, symptoms, DTCs, and whether the quote is for a short block or long block.",
                 "symptoms": "White smoke, misfires on startup, chronic low coolant",
                 "occurrence_rate": 0.15,
-                "avg_failure_mileage": 50452
+                "avg_failure_mileage": 50452,
+                "confidence": "high",
+                "last_updated": "2026-07-16",
+                "sources": [
+                    {
+                        "name": "Ford TSB 19-2375",
+                        "url": "https://static.nhtsa.gov/odi/tsbs/2019/MC-10169884-0001.pdf",
+                        "retrieved_at": "2026-07-16",
+                        "note": "Official bulletin covers qualifying 2014-2019 Fusion vehicles with the 1.5L EcoBoost and directs short-block and head-gasket replacement when diagnostic criteria are met."
+                    },
+                    {
+                        "name": "Ford TSB 19-2172",
+                        "url": "https://static.nhtsa.gov/odi/tsbs/2019/MC-10162062-0001.pdf",
+                        "retrieved_at": "2026-07-16",
+                        "note": "Official bulletin covers qualifying 2015-2019 Fusion vehicles with the 2.0L EcoBoost and directs long-block replacement when diagnostic criteria are met."
+                    },
+                    {
+                        "name": "Ford Customer Satisfaction Program 21N12",
+                        "url": "https://static.nhtsa.gov/odi/tsbs/2022/MC-10213732-0001.pdf",
+                        "retrieved_at": "2026-07-16",
+                        "note": "Official program document covers certain 2017-2019 Fusion 1.5L vehicles; owners must verify VIN and program eligibility."
+                    }
+                ]
             }
         ],
         "model_id_ref": "ford_fusion_2nd"
@@ -1068,11 +1186,23 @@
         "faults": [
             {
                 "repairCost": 3500,
+                "repairCost_range_low": 2500,
+                "repairCost_range_high": 5500,
                 "component": "Cam Tower Oil Leak",
-                "verdictImplication": "Severe: High labor cost for a gasket repair. Often deferred by owners.",
+                "verdictImplication": "Potentially labor-intensive reseal: confirm the exact leak source, whether it is active leakage or seepage, and whether oil is reaching hot exhaust components before approving a major teardown.",
                 "symptoms": "Oil seeping onto exhaust manifold, burning smell",
                 "occurrence_rate": 0.1,
-                "avg_failure_mileage": 82582
+                "avg_failure_mileage": 82582,
+                "confidence": "medium",
+                "last_updated": "2026-07-16",
+                "sources": [
+                    {
+                        "name": "NHTSA 2014 Toyota Tundra Vehicle Record",
+                        "url": "https://www.nhtsa.gov/vehicle/2014/TOYOTA/TUNDRA",
+                        "retrieved_at": "2026-07-16",
+                        "note": "Use the official vehicle record for VIN-level recall and complaint context. No model-specific cam-tower recall or TSB was verified in the current source set, so this page treats the estimate as a diagnostic scenario rather than proof of a universal defect."
+                    }
+                ]
             }
         ],
         "model_id_ref": "toyota_tundra_2nd"

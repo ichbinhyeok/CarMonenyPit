@@ -19,7 +19,7 @@ test.describe("Content trust and quality", () => {
     const text = await bodyText(page);
     expect(text).toContain("fix it or");
     expect(text).toContain("sell it");
-    expect(text).toContain("example analyses");
+    expect(text).toContain("vehicle-specific decision page");
     await expect(page.locator("text=Affiliate Disclosure")).toBeVisible();
     await expect(page.locator("text=Disclaimer")).toBeVisible();
   });
@@ -45,7 +45,9 @@ test.describe("Content trust and quality", () => {
     }
 
     await assertHasAbsoluteCanonical(page);
-    await assertLdJsonParsable(page);
+    const schemaText = await page.locator('script[type="application/ld+json"]').allTextContents();
+    expect(schemaText.join(" ")).not.toContain('"@type":"FAQPage"');
+    expect(schemaText.join(" ")).not.toContain('"@type":"HowTo"');
   });
 
   test("sample verdict page should present evidence + method + disclosure", async ({ page, request }) => {
@@ -55,7 +57,8 @@ test.describe("Content trust and quality", () => {
 
     await page.goto(verdictPath);
     await expect(page.locator("h1")).toBeVisible();
-    await expect(page.locator("text=Vehicle Analysis Summary")).toBeVisible();
+    await expect(page.locator("text=Quote verification checklist")).toBeVisible();
+    await expect(page.locator("text=Evidence and applicability")).toBeVisible();
     await expect(page.locator("text=Should You Repair or Sell?")).toBeVisible();
     await expect(page.locator("text=Frequently Asked Questions")).toBeVisible();
 
@@ -65,7 +68,9 @@ test.describe("Content trust and quality", () => {
       "verdict pages should expose trust/disclosure context"
     ).toBeTruthy();
     expect(
-      text.includes("for informational purposes only") || text.includes("for informational and entertainment purposes only"),
+      text.includes("for educational and informational purposes only") ||
+        text.includes("for informational purposes only") ||
+        text.includes("for informational and entertainment purposes only"),
       "verdict pages should clearly scope advisory limitations"
     ).toBeTruthy();
     expect(text).toContain("cost");

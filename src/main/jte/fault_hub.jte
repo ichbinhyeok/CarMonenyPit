@@ -52,28 +52,6 @@
     title = hub.displayName() + ": Cost, Symptoms & Fix-or-Sell Guide | AutoMoneyPit",
     canonical = canonicalUrl,
     content = @`
-        <%-- FAQ JSON-LD Schema --%>
-        <script type="application/ld+json">
-        {
-            "@context": "https://schema.org",
-            "@type": "FAQPage",
-            "mainEntity": [
-                @for(int i = 0; i < hub.faqItems().size(); i++)
-                    ${i > 0 ? "," : ""}
-                    {
-                        "@type": "Question",
-                        "name": "${hub.faqItems().get(i).question()}",
-                        "acceptedAnswer": {
-                            "@type": "Answer",
-                            "text": "${hub.faqItems().get(i).answer()}"
-                        }
-                    }
-                @endfor
-            ]
-        }
-        </script>
-
-
         <style>
             .hub-page { max-width: 800px; margin: 0 auto; padding: 2rem 1rem; }
             .hub-breadcrumbs { display: flex; gap: 0.5rem; font-size: 0.85rem; color: var(--text-secondary, #94a3b8); margin-bottom: 2rem; flex-wrap: wrap; }

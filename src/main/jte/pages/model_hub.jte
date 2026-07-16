@@ -14,6 +14,7 @@
 @param ModelMarket market = null
 @param int representativeYear
 @param String shouldFixUrl
+@param boolean decisionIndexable = false
 @param java.util.List<ModelHubLink> decisionPageLinks = java.util.List.of()
 @param String datasetVersion = "2026-02-24"
 
@@ -78,11 +79,19 @@
 
         <div style="background: linear-gradient(135deg, #0f172a, #1d4ed8); color: #fff; border-radius: 24px; padding: 2rem; margin-bottom: 2.5rem;">
             <div style="font-size: 0.76rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.82; margin-bottom: 0.8rem;">Start Here</div>
+            @if(decisionIndexable)
             <h2 style="font-size: 1.6rem; font-weight: 900; margin: 0 0 0.85rem;">Open the ${representativeYear} ${car.brand()} ${car.model()} decision page</h2>
             <p style="font-size: 1rem; line-height: 1.7; color: rgba(255,255,255,0.92); margin: 0 0 1.25rem;">
                 This is the fastest route if you already have a quote. It compares repair cost, market value, expected lifespan, and known failure risk before you decide to fix or sell.
             </p>
             <a href="${shouldFixUrl}" style="display: inline-block; text-decoration: none; background: #fff; color: #1d4ed8; padding: 1rem 1.25rem; border-radius: 14px; font-weight: 900;">Go To ${representativeYear} Fix-or-Sell Page -></a>
+            @else
+            <h2 style="font-size: 1.6rem; font-weight: 900; margin: 0 0 0.85rem;">Use the quote-specific calculator for this ${car.brand()} ${car.model()}</h2>
+            <p style="font-size: 1rem; line-height: 1.7; color: rgba(255,255,255,0.92); margin: 0 0 1.25rem;">
+                This model does not currently have a separate index-target decision page. Enter the actual year, mileage, vehicle value, and repair quote so the decision is based on your car instead of another thin year variant.
+            </p>
+            <a href="/" style="display: inline-block; text-decoration: none; background: #fff; color: #1d4ed8; padding: 1rem 1.25rem; border-radius: 14px; font-weight: 900;">Open The Fix-or-Sell Calculator -></a>
+            @endif
         </div>
 
         @if(decisionPageLinks != null && !decisionPageLinks.isEmpty())
@@ -124,6 +133,80 @@
             </div>
             @endif
         </div>
+
+        <section style="margin-bottom: 2.5rem;">
+            <h2 style="font-size: 1.5rem; font-weight: 900; margin-bottom: 0.8rem; color: #0f172a;">How to use this ${car.brand()} ${car.model()} guide</h2>
+            <p style="font-size: 1rem; color: #475569; line-height: 1.75; margin-bottom: 1rem;">
+                Start with the diagnosis, not the repair price. Ask the shop for the failed part, diagnostic codes, test results, and the exact labor-and-parts scope. Then compare the complete quote with the car's realistic private-party value and with the cost of replacing it. A $2,000 repair can be sensible on a clean, well-maintained vehicle and wasteful on a car that also needs tires, suspension work, and emissions repairs.
+            </p>
+            <p style="font-size: 1rem; color: #475569; line-height: 1.75; margin-bottom: 1.2rem;">
+                The generation range on this page matters. Technical bulletins, engine variants, transmissions, and mid-cycle updates do not always apply to every year or trim. Use the fault pages below to check applicability, but confirm the VIN with a dealer or qualified independent shop before treating a bulletin as proof that your vehicle is covered.
+            </p>
+
+            <div style="overflow-x: auto; border: 1px solid #e2e8f0; border-radius: 16px;">
+                <table style="width: 100%; border-collapse: collapse; min-width: 620px; background: #fff;">
+                    <thead>
+                        <tr style="background: #f8fafc; color: #334155; text-align: left;">
+                            <th style="padding: 0.9rem;">Decision signal</th>
+                            <th style="padding: 0.9rem;">What it usually means</th>
+                            <th style="padding: 0.9rem;">Next check</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border-top: 1px solid #e2e8f0;">
+                            <td style="padding: 0.9rem; font-weight: 800;">Repair below 20% of value</td>
+                            <td style="padding: 0.9rem; color: #475569;">Often repairable if the diagnosis is isolated and the rest of the car is sound.</td>
+                            <td style="padding: 0.9rem; color: #475569;">Check maintenance backlog and ask for a written warranty.</td>
+                        </tr>
+                        <tr style="border-top: 1px solid #e2e8f0;">
+                            <td style="padding: 0.9rem; font-weight: 800;">Repair at 20-35% of value</td>
+                            <td style="padding: 0.9rem; color: #475569;">Borderline; future repair exposure and replacement costs can change the answer.</td>
+                            <td style="padding: 0.9rem; color: #475569;">Get a second diagnosis and compare a real sale offer.</td>
+                        </tr>
+                        <tr style="border-top: 1px solid #e2e8f0;">
+                            <td style="padding: 0.9rem; font-weight: 800;">Repair above 35% of value</td>
+                            <td style="padding: 0.9rem; color: #475569;">A strong sell-or-delay signal, especially for engine or transmission work.</td>
+                            <td style="padding: 0.9rem; color: #475569;">Verify the quote, coverage, and total replacement switching cost.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        @if(reliability != null && reliability.criticalMilestones() != null && !reliability.criticalMilestones().isEmpty())
+        <section style="margin-bottom: 2.5rem;">
+            <h2 style="font-size: 1.5rem; font-weight: 900; margin-bottom: 0.8rem; color: #0f172a;">Mileage checkpoints for this generation</h2>
+            <p style="font-size: 1rem; color: #475569; line-height: 1.7; margin-bottom: 1rem;">
+                These checkpoints are budgeting prompts, not promises that a component will fail at a specific odometer reading. Service history, climate, usage, and powertrain configuration can move the timing substantially.
+            </p>
+            <div style="display: grid; gap: 0.8rem;">
+                @for(var milestone : reliability.criticalMilestones())
+                <div style="display: grid; grid-template-columns: minmax(120px, 0.25fr) 1fr auto; gap: 1rem; align-items: center; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 14px; padding: 1rem;">
+                    <strong style="color: #1d4ed8;">${String.format("%,d", milestone.mileage())} mi</strong>
+                    <span style="color: #334155; line-height: 1.5;">${milestone.description()}</span>
+                    <span style="font-weight: 800; color: #b91c1c;">~$${String.format("%,d", milestone.estCost())}</span>
+                </div>
+                @endfor
+            </div>
+        </section>
+        @endif
+
+        @if(topFault != null && topFault.sources() != null && !topFault.sources().isEmpty())
+        <section style="margin-bottom: 2.5rem; background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 18px; padding: 1.25rem;">
+            <h2 style="font-size: 1.3rem; font-weight: 900; margin: 0 0 0.7rem; color: #0f172a;">Source-backed context for the highest-cost issue</h2>
+            <p style="font-size: 0.95rem; color: #475569; line-height: 1.65; margin: 0 0 0.8rem;">
+                The current highest-cost issue is ${topFault.component()}. Its evidence confidence is ${topFault.confidence() != null ? topFault.confidence() : "not yet classified"}. Read the applicability note before assuming the condition or coverage applies to every ${car.model()}.
+            </p>
+            @for(var source : topFault.sources())
+            <div style="border-top: 1px solid #e2e8f0; padding: 0.75rem 0;">
+                <a href="${source.url()}" target="_blank" rel="nofollow noopener" style="font-weight: 800; color: #1d4ed8; text-decoration: none;">${source.name()}</a>
+                @if(source.note() != null)
+                <p style="font-size: 0.86rem; color: #64748b; line-height: 1.55; margin: 0.3rem 0 0;">${source.note()}</p>
+                @endif
+            </div>
+            @endfor
+        </section>
+        @endif
 
         <h2 style="font-size: 1.5rem; font-weight: 900; margin-bottom: 1rem; color: #0f172a;">Most Relevant Repair Guides</h2>
         <p style="font-size: 1rem; color: #64748b; line-height: 1.7; margin-bottom: 1.5rem; max-width: 720px;">

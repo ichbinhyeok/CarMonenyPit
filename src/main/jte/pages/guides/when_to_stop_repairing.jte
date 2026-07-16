@@ -27,6 +27,24 @@
                 <li>Choose the lower expected total cost path.</li>
             </ol>
 
+            <h2 style="margin-top: 2rem; font-size: 1.35rem;">Separate One Repair From A Repair Pattern</h2>
+            <p style="color:#334155; line-height:1.8;">
+                A single alternator, brake, or suspension repair is different from a sequence of engine, transmission, electrical, and emissions problems. Build a 12-month list that includes known deferred work, warning lights, fluid leaks, tires, brakes, and scheduled maintenance. The next quote may look affordable in isolation while the combined backlog makes the car uneconomic.
+            </p>
+            <p style="color:#334155; line-height:1.8; margin-top:0.8rem;">
+                Also distinguish a verified diagnosis from an exploratory quote. Before selling a car over a large estimate, ask what test confirmed the failure, whether a lower-cost repair path exists, and what warranty applies to the work. A second diagnosis can materially change the decision when the first shop recommends a complete assembly replacement.
+            </p>
+
+            <h2 style="margin-top: 2rem; font-size: 1.35rem;">Include The Cost Of Downtime</h2>
+            <p style="color:#334155; line-height:1.8;">
+                Towing, rentals, missed work, disrupted childcare, and repeated shop visits are real ownership costs. A vehicle that is cheap to repair but unpredictable may be more expensive to keep than a slightly higher monthly payment on reliable transportation. Put a dollar value on downtime and add it to the repair scenario instead of treating inconvenience as free.
+            </p>
+
+            <h2 style="margin-top: 2rem; font-size: 1.35rem;">Example: A $3,500 Repair On An $8,000 Car</h2>
+            <p style="color:#334155; line-height:1.8;">
+                The repair-to-value ratio is about 44%, which is a strong caution signal. Repairing can still make sense if the car is otherwise excellent, the diagnosis is final, the repair has a meaningful warranty, and replacing it would require several thousand dollars in taxes, fees, and immediate maintenance. Selling becomes more attractive when the vehicle also needs tires, has unresolved warning lights, or has a history of repeat major failures.
+            </p>
+
             <div style="margin-top: 2rem; padding: 1rem; border: 1px solid #e2e8f0; border-radius: 14px; background: #f8fafc;">
                 <strong>Next step:</strong> Run your numbers with the calculator and avoid guess-based decisions.
                 <div style="margin-top:0.8rem;">

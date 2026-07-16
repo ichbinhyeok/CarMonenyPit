@@ -58,9 +58,9 @@ public class PSeoControllerTest {
         mockMvc.perform(get("/models/toyota/camry"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("pages/model_hub"))
-                .andExpect(model().attribute("representativeYear", 2017))
-                .andExpect(model().attribute("shouldFixUrl", "/should-i-fix/2017-toyota-camry"))
-                .andExpect(model().attribute("decisionPageLinks", hasSize(3)));
+                .andExpect(model().attribute("representativeYear", 2014))
+                .andExpect(model().attribute("shouldFixUrl", "/should-i-fix/2014-toyota-camry"))
+                .andExpect(model().attribute("decisionPageLinks", hasSize(1)));
     }
 
     @Test

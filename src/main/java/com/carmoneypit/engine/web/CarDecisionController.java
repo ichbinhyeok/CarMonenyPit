@@ -136,25 +136,39 @@ public class CarDecisionController {
                         String normalizedSlugModel = modelSlug.toLowerCase().replaceAll("[^a-z0-9]", "");
                         final String lookupBrand = brandSlug;
 
-                        var carModelOpt = carDataService.getAllModels().stream()
+                        var matchingModels = carDataService.getAllModels().stream()
                                         .filter(m -> m.brand().equalsIgnoreCase(lookupBrand))
                                         .filter(m -> m.model().toLowerCase().replaceAll("[^a-z0-9]", "")
                                                         .equals(normalizedSlugModel))
-                                        .findFirst();
+                                        .toList();
+                        var carModelOpt = matchingModels.stream()
+                                        .filter(m -> year >= m.startYear() && year <= m.endYear())
+                                        .findFirst()
+                                        .or(() -> matchingModels.stream().findFirst());
 
                         if (carModelOpt.isPresent()) {
                                 var carModel = carModelOpt.get();
+                                var reliabilityOpt = carDataService.findReliabilityByModelId(carModel.id());
+                                int representativeYear = SeoIndexPolicy.representativeYear(
+                                                carModel, reliabilityOpt.orElse(null));
+                                int canonicalYear = SeoIndexPolicy.hasRepresentativeYearOverride(carModel)
+                                                ? representativeYear
+                                                : year;
                                 // If we found a model, use its official display name instead of the slug
                                 brandSlug = carModel.brand();
                                 modelSlug = carModel.model();
                                 canonicalBrandSlug = normalizeSlugSegment(carModel.brand());
                                 canonicalModelSlug = normalizeSlugSegment(carModel.model());
-                                canonicalSlug = year + "-" + canonicalBrandSlug + "-"
+                                canonicalSlug = canonicalYear + "-" + canonicalBrandSlug + "-"
                                                 + canonicalModelSlug;
                                 brandDirectoryUrl = baseUrl + "/models/" + canonicalBrandSlug;
                                 modelDirectoryUrl = baseUrl + "/models/" + canonicalBrandSlug + "/" + canonicalModelSlug;
-                                mileageVerdictUrl = baseUrl + "/verdict/" + canonicalBrandSlug + "/" + canonicalModelSlug
-                                                + "/100000-miles";
+                                var preferredMileage = SeoIndexPolicy.preferredMileage(carModel);
+                                if (preferredMileage.isPresent()) {
+                                        mileageVerdictUrl = baseUrl + "/verdict/" + canonicalBrandSlug + "/"
+                                                        + canonicalModelSlug + "/" + preferredMileage.getAsInt()
+                                                        + "-miles";
+                                }
 
                                 if (!slug.equals(canonicalSlug)) {
                                         RedirectView rv = new RedirectView(baseUrl + "/should-i-fix/" + canonicalSlug);
@@ -176,11 +190,10 @@ public class CarDecisionController {
                                                                 : null;
                                                 primaryFaultUrl = baseUrl + "/verdict/" + canonicalBrandSlug + "/"
                                                                 + canonicalModelSlug + "/"
-                                                                + normalizeSlugSegment(topFault.get().component());
+                                                                + SeoIndexPolicy.faultSlug(topFault.get().component());
                                         }
                                 }
 
-                                var reliabilityOpt = carDataService.findReliabilityByModelId(carModel.id());
                                 if (reliabilityOpt.isPresent()) {
                                         lifespanMiles = reliabilityOpt.get().lifespanMiles();
                                 }
@@ -230,9 +243,9 @@ public class CarDecisionController {
                         model.addAttribute("repairsFaqAnswer", shouldFixCopy.repairsFaqAnswer());
                         model.addAttribute("decisionFaqAnswer", shouldFixCopy.decisionFaqAnswer());
                         model.addAttribute("highMileageFaqAnswer", shouldFixCopy.highMileageFaqAnswer());
-                        model.addAttribute("faqSchemaJson", buildFaqSchemaJson(year, brandSlug, modelSlug,
-                                        shouldFixCopy.valueFaqAnswer(), shouldFixCopy.decisionFaqAnswer(),
-                                        shouldFixCopy.repairsFaqAnswer()));
+                        boolean noindex = carModelOpt.isEmpty()
+                                        || !SeoIndexPolicy.isIndexableDecision(carModelOpt.get());
+                        model.addAttribute("noindex", noindex);
 
                         return "pseo";
                 } catch (NumberFormatException e) {
@@ -514,56 +527,6 @@ public class CarDecisionController {
 
                 return new ShouldFixCopy(heroSubtitle, introParagraph, valueFaqAnswer, repairsFaqAnswer, decisionFaqAnswer,
                                 highMileageFaqAnswer);
-        }
-
-        private String buildFaqSchemaJson(int year, String brand, String model, String valueFaqAnswer,
-                        String decisionFaqAnswer, String repairsFaqAnswer) {
-                return """
-                                {
-                                  "@context": "https://schema.org",
-                                  "@type": "FAQPage",
-                                  "mainEntity": [
-                                    {
-                                      "@type": "Question",
-                                      "name": "How much is my %d %s %s worth?",
-                                      "acceptedAnswer": {
-                                        "@type": "Answer",
-                                        "text": "%s"
-                                      }
-                                    },
-                                    {
-                                      "@type": "Question",
-                                      "name": "Should I fix my %d %s %s or sell it?",
-                                      "acceptedAnswer": {
-                                        "@type": "Answer",
-                                        "text": "%s"
-                                      }
-                                    },
-                                    {
-                                      "@type": "Question",
-                                      "name": "What are common repairs for the %s %s?",
-                                      "acceptedAnswer": {
-                                        "@type": "Answer",
-                                        "text": "%s"
-                                      }
-                                    }
-                                  ]
-                                }
-                                """.formatted(
-                                        year, brand, model, escapeJson(valueFaqAnswer),
-                                        year, brand, model, escapeJson(decisionFaqAnswer),
-                                        brand, model, escapeJson(repairsFaqAnswer));
-        }
-
-        private String escapeJson(String input) {
-                if (input == null) {
-                        return "";
-                }
-                return input
-                                .replace("\\", "\\\\")
-                                .replace("\"", "\\\"")
-                                .replace("\r", " ")
-                                .replace("\n", " ");
         }
 
         private String formatModelName(String slug) {

@@ -3,6 +3,7 @@
 @import com.carmoneypit.engine.web.PSeoController.ProfileViewModel
 @import com.carmoneypit.engine.web.PSeoController.Breadcrumb
 @import com.carmoneypit.engine.web.PSeoController.RelatedFaultLink
+@import com.carmoneypit.engine.web.SeoDecisionSupport.FaultSupport
 @import java.util.List
 @param CarModel car
 @param Fault fault
@@ -17,16 +18,19 @@
 @param String brandDirectoryUrl
 @param String modelDirectoryUrl
 @param String mileageBaseUrl
+@param FaultSupport decisionSupport
 @param String shouldFixUrl = null
 @param String ogImage = null
 @param String datasetVersion = "2026-02-24"
 @param boolean waitlistMode = true
+@param boolean noindex = false
 
 @template.layout(
     title = fault.component() + " Repair Cost on " + car.brand() + " " + car.model() + ": Is It Worth Fixing?",
     description = metaDescription,
     canonical = canonicalUrl,
     schemaJson = schemaJson,
+    noindex = noindex,
     ogImage = ogImage,
     content = @`
     <div class="pseo-container" style="max-width: 900px; margin: 0 auto; padding: 4rem 1rem; width: 100%;">
@@ -75,6 +79,11 @@
             <div class="repair-card" style="display: inline-flex; flex-direction: column; align-items: center; background: #fff; border: 2px solid #000; padding: 1.5rem 2.5rem; border-radius: 16px; box-shadow: 6px 6px 0px #000;">
                 <span style="font-size: 0.85rem; color: #666; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">Estimated Repair Cost</span>
                 <span style="font-size: 3.5rem; font-weight: 900; color: #000; line-height: 1; margin: 0.5rem 0;">$${String.format("%,.0f", fault.repairCost())}</span>
+                @if(fault.repairCostRangeLow() != null && fault.repairCostRangeHigh() != null)
+                <span style="font-size: 0.78rem; color: #475569; font-weight: 700; margin-bottom: 0.3rem;">
+                    Working range: $${String.format("%,d", fault.repairCostRangeLow())}-$${String.format("%,d", fault.repairCostRangeHigh())}
+                </span>
+                @endif
                 <span style="font-size: 0.65rem; color: #999; font-weight: 600;">(Estimated - Varies by location)</span>
             </div>
         </header>
@@ -100,6 +109,59 @@
                 With the vehicle's current market value estimated at <strong>$${String.format("%,d", details.market().jan2026AvgPrice())}</strong>, ${recommendation}
             </p>
         </div>
+
+        <section style="margin: 0 0 3rem; background: #fff; border: 1px solid #cbd5e1; border-radius: 20px; padding: 1.5rem;">
+            <div style="display:flex; justify-content:space-between; gap:1rem; align-items:flex-start; flex-wrap:wrap; margin-bottom:1rem;">
+                <div>
+                    <div style="font-size:0.72rem; font-weight:800; letter-spacing:0.08em; text-transform:uppercase; color:#0f766e; margin-bottom:0.45rem;">
+                        Quote verification checklist
+                    </div>
+                    <h2 style="font-size:1.35rem; font-weight:900; color:#0f172a; margin:0;">What to verify before approving this repair</h2>
+                </div>
+                @if(decisionSupport.priority())
+                <span style="background:#ecfdf5; color:#047857; border:1px solid #a7f3d0; border-radius:999px; padding:0.4rem 0.7rem; font-size:0.72rem; font-weight:800;">
+                    Priority search answer
+                </span>
+                @endif
+            </div>
+            <p style="color:#334155; line-height:1.7; margin:0 0 1.25rem;">${decisionSupport.searchIntentAnswer()}</p>
+            <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:1rem;">
+                <div style="background:#f8fafc; border-radius:14px; padding:1rem;">
+                    <h3 style="font-size:0.95rem; color:#0f172a; margin:0 0 0.65rem;">Confirm the diagnosis</h3>
+                    <ul style="margin:0; padding-left:1.15rem; color:#475569; line-height:1.6;">
+                        @for(String item : decisionSupport.diagnosisChecks())
+                        <li style="margin-bottom:0.5rem;">${item}</li>
+                        @endfor
+                    </ul>
+                </div>
+                <div style="background:#f8fafc; border-radius:14px; padding:1rem;">
+                    <h3 style="font-size:0.95rem; color:#0f172a; margin:0 0 0.65rem;">Make the quote comparable</h3>
+                    <ul style="margin:0; padding-left:1.15rem; color:#475569; line-height:1.6;">
+                        @for(String item : decisionSupport.quoteChecks())
+                        <li style="margin-bottom:0.5rem;">${item}</li>
+                        @endfor
+                    </ul>
+                </div>
+                <div style="background:#f8fafc; border-radius:14px; padding:1rem;">
+                    <h3 style="font-size:0.95rem; color:#0f172a; margin:0 0 0.65rem;">Use these decision signals</h3>
+                    <ul style="margin:0; padding-left:1.15rem; color:#475569; line-height:1.6;">
+                        @for(String item : decisionSupport.decisionSignals())
+                        <li style="margin-bottom:0.5rem;">${item}</li>
+                        @endfor
+                    </ul>
+                </div>
+            </div>
+            <div style="display:flex; gap:0.75rem; flex-wrap:wrap; margin-top:1.15rem;">
+                <a href="/tools/repair-or-sell-calculator" data-analytics-event="repair_sell_tool_open" data-analytics-label="fault_page"
+                   style="display:inline-block; text-decoration:none; background:#0f766e; color:#fff; border-radius:10px; padding:0.8rem 1rem; font-weight:800;">
+                    Compare the full cost
+                </a>
+                <a href="/guides/car-repair-estimate-second-opinion" data-analytics-event="second_opinion_guide_open" data-analytics-label="fault_page"
+                   style="display:inline-block; text-decoration:none; background:#fff; color:#0f172a; border:1px solid #cbd5e1; border-radius:10px; padding:0.8rem 1rem; font-weight:800;">
+                    Take the second-opinion checklist
+                </a>
+            </div>
+        </section>
 
         @if(shouldFixUrl != null)
         <section style="margin: 0 0 2rem; background: linear-gradient(135deg, #eff6ff, #f8fafc); border: 1px solid #bfdbfe; border-radius: 20px; padding: 1.4rem 1.5rem;">
@@ -293,27 +355,21 @@
                 @endfor
             </div>
             
-            <!-- Failure Probability Badge -->
-            @if(fault.occurrenceRate() > 0)
-            !{
-                String rateColor = fault.occurrenceRate() >= 0.4 ? "#ef4444" : (fault.occurrenceRate() >= 0.25 ? "#eab308" : "#22c55e");
-                String rateBg = fault.occurrenceRate() >= 0.4 ? "rgba(239,68,68,0.15)" : (fault.occurrenceRate() >= 0.25 ? "rgba(234,179,8,0.15)" : "rgba(34,197,94,0.15)");
-            }
+            <!-- Evidence quality replaces unsupported population-level failure claims. -->
             <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.1);">
                 <div style="display: flex; align-items: center; gap: 1rem;">
-                    <div style="background: ${rateBg}; padding: 1rem 1.5rem; border-radius: 12px; text-align: center;">
-                        <span style="font-size: 2rem; font-weight: 900; color: ${rateColor};">${String.format("%.0f", fault.occurrenceRate() * 100)}%</span>
-                        <span style="display: block; font-size: 0.7rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; margin-top: 0.25rem;">Failure Rate</span>
+                    <div style="background: rgba(59,130,246,0.15); padding: 1rem 1.5rem; border-radius: 12px; text-align: center;">
+                        <span style="font-size: 1.25rem; font-weight: 900; color: #93c5fd; text-transform: uppercase;">${fault.confidence() != null ? fault.confidence() : "internal"}</span>
+                        <span style="display: block; font-size: 0.7rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; margin-top: 0.25rem;">Evidence confidence</span>
                     </div>
                     <div style="flex: 1;">
                         <p style="font-size: 0.9rem; color: #cbd5e1; margin: 0; line-height: 1.5;">
-                            <strong style="color: #fff;">${String.format("%.0f", fault.occurrenceRate() * 100)}%</strong> of ${car.brand()} ${car.model()} owners report 
-                            <strong style="color: #fff;">${fault.component()}</strong> issues by ${String.format("%,d", details.reliability().lifespanMiles() / 2)} miles.
+                            This page does not treat an internal risk weight as an owner-wide failure rate.
+                            Confirm symptoms, diagnostic codes, powertrain variant, and VIN-specific bulletin coverage before approving the repair.
                         </p>
                     </div>
                 </div>
             </div>
-            @endif
         </div>
         
         <style>
@@ -709,10 +765,24 @@
                 </a>
                 @endif
             </div>
-            <p style="font-size: 0.8rem; color: #6B7280; text-align: center; margin-top: 2rem; line-height: 1.6; max-width: 500px; margin-left: auto; margin-right: auto;">
-                Data is sourced from available market frameworks. Our estimates reflect 
-                dynamic depreciation logic, component failure probabilities, and labor rate averages for your specific query.
-                Always cross-check with a local certified mechanic before making absolute financial decisions.
+            @if(fault.sources() != null && !fault.sources().isEmpty())
+            <div style="margin-top: 2rem; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 16px; padding: 1.25rem;">
+                <h3 style="font-size: 1rem; font-weight: 900; color: #0f172a; margin: 0 0 0.8rem;">Evidence and applicability</h3>
+                @for(var source : fault.sources())
+                <div style="padding: 0.85rem 0; border-top: 1px solid #e2e8f0;">
+                    <a href="${source.url()}" rel="nofollow noopener" target="_blank" style="font-weight: 800; color: #1d4ed8; text-decoration: none;">${source.name()}</a>
+                    @if(source.note() != null)
+                    <p style="font-size: 0.86rem; color: #475569; line-height: 1.55; margin: 0.35rem 0 0;">${source.note()}</p>
+                    @endif
+                </div>
+                @endfor
+                <p style="font-size: 0.78rem; color: #64748b; line-height: 1.5; margin: 0.8rem 0 0;">
+                    Last evidence review: ${fault.lastUpdated() != null ? fault.lastUpdated() : datasetVersion}. A TSB describes a service condition; it does not prove every vehicle is affected.
+                </p>
+            </div>
+            @endif
+            <p style="font-size: 0.8rem; color: #6B7280; text-align: center; margin-top: 2rem; line-height: 1.6; max-width: 560px; margin-left: auto; margin-right: auto;">
+                Repair ranges and market values are planning estimates, not quotes. Confirm the diagnosis and total out-the-door price with a qualified shop.
             </p>
         </div>
         <style>

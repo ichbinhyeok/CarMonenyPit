@@ -44,10 +44,20 @@ class SitemapControllerTest {
         mockMvc.perform(get("/sitemap.xml"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(org.hamcrest.Matchers.containsString(
-                        "https://automoneypit.com/should-i-fix/2017-toyota-camry")))
+                        "https://automoneypit.com/should-i-fix/2014-toyota-camry")))
                 .andExpect(content().string(org.hamcrest.Matchers.not(org.hamcrest.Matchers.containsString(
                         "https://automoneypit.com/should-i-fix/2012-toyota-camry"))))
                 .andExpect(content().string(org.hamcrest.Matchers.containsString(
-                        "<loc>https://automoneypit.com/verdict/toyota/camry/50000-miles</loc>")));
+                        "<loc>https://automoneypit.com/verdict/toyota/camry/200000-miles</loc>")))
+                .andExpect(content().string(org.hamcrest.Matchers.not(org.hamcrest.Matchers.containsString(
+                        "<loc>https://automoneypit.com/verdict/toyota/camry/50000-miles</loc>"))))
+                .andExpect(content().string(org.hamcrest.Matchers.not(org.hamcrest.Matchers.containsString(
+                        "<priority>"))))
+                .andExpect(content().string(org.hamcrest.Matchers.not(org.hamcrest.Matchers.containsString(
+                        "<changefreq>"))))
+                .andExpect(content().string(org.hamcrest.Matchers.containsString(
+                        "<loc>https://automoneypit.com/tools/repair-or-sell-calculator</loc>")))
+                .andExpect(content().string(org.hamcrest.Matchers.containsString(
+                        "<loc>https://automoneypit.com/guides/car-repair-estimate-second-opinion</loc>")));
     }
 }

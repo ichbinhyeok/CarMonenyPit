@@ -21,8 +21,6 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
 
 /**
  * Controller responsible for handling pSEO page requests.
@@ -41,7 +39,7 @@ public class PSeoController {
   @Value("${app.baseUrl:https://automoneypit.com}")
   private String baseUrl;
 
-  @Value("${app.datasetLastmod:2026-02-24}")
+  @Value("${app.datasetVersion:2026-04-01}")
   private String datasetVersion;
 
   public PSeoController(CarDataService dataService,
@@ -85,7 +83,7 @@ public class PSeoController {
         .filter(f -> {
           String slug = toFaultSlug(f.component());
           // Accept non-canonical separators in the incoming URL, then redirect.
-          return slug.equals(requestedFaultSlug);
+          return normalize(slug).equals(requestedFaultSlug);
         })
         .findFirst();
 
@@ -109,8 +107,7 @@ public class PSeoController {
     Optional<ModelReliability> reliabilityOpt = dataService.findReliabilityByModelId(car.id());
     Optional<ModelMarket> marketOpt = dataService.findMarketByModelId(car.id());
 
-    int representativeYear = selectRepresentativeYear(car, reliabilityOpt.orElse(null));
-    String shouldFixUrl = "/should-i-fix/" + representativeYear + "-" + canonicalBrandSlug + "-" + canonicalModelSlug;
+    String shouldFixUrl = SeoIndexPolicy.decisionPath(car, reliabilityOpt.orElse(null));
 
     // 4. Build View Model
     ProfileViewModel profile = null;
@@ -198,6 +195,9 @@ public class PSeoController {
     modelMap.addAttribute("breadcrumbs", breadcrumbs);
     modelMap.addAttribute("datasetVersion", datasetVersion);
     modelMap.addAttribute("waitlistMode", routingConfig.isApprovalPending());
+    modelMap.addAttribute("noindex", !SeoIndexPolicy.isIndexableFault(car, fault));
+    modelMap.addAttribute("decisionSupport", SeoDecisionSupport.forFault(car, fault,
+        marketOpt.orElse(null)));
 
     return "pseo_landing";
   }
@@ -236,8 +236,7 @@ public class PSeoController {
     // 2. Load Reliability & Market Data
     Optional<ModelReliability> reliabilityOpt = dataService.findReliabilityByModelId(car.id());
     Optional<ModelMarket> marketOpt = dataService.findMarketByModelId(car.id());
-    int representativeYear = selectRepresentativeYear(car, reliabilityOpt.orElse(null));
-    String shouldFixUrl = "/should-i-fix/" + representativeYear + "-" + canonicalBrandSlug + "-" + canonicalModelSlug;
+    String shouldFixUrl = SeoIndexPolicy.decisionPath(car, reliabilityOpt.orElse(null));
 
     if (reliabilityOpt.isEmpty() || marketOpt.isEmpty()) {
       logger.warn("Missing data for model: {}", car.id());
@@ -265,39 +264,8 @@ public class PSeoController {
         "See whether a %s %s is still worth keeping at %,d miles. Compare expected lifespan, estimated value (~$%,d), and major repair risk before you fix or sell.",
         car.brand(), car.model(), mileage, estimatedValue);
 
-    // 6. Schema JSON (FAQPage)
-    String schemaJson = String.format("""
-        {
-          "@context": "https://schema.org",
-          "@type": "FAQPage",
-          "mainEntity": [
-            {
-              "@type": "Question",
-              "name": "Is a %s %s with %,d miles reliable?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "At %,d miles, a %s %s is at %d%% of its expected lifespan. %s"
-              }
-            },
-            {
-              "@type": "Question",
-              "name": "What is the junk value of a %s %s?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "The minimum scrap/junk value for a %s %s is approximately $%,d."
-              }
-            }
-          ]
-        }
-        """,
-        car.brand(), car.model(), mileage,
-        mileage, car.brand(), car.model(),
-        (int) ((1.0 - (double) mileage / reliability.lifespanMiles()) * 100),
-        reliability.mileageLogicText() != null && !reliability.mileageLogicText().isEmpty()
-            ? reliability.mileageLogicText().values().iterator().next()
-            : "Regular maintenance is key.",
-        car.brand(), car.model(),
-        car.brand(), car.model(), market.commonJunkValue() != null ? market.commonJunkValue() : 500);
+    // FAQ rich results are no longer a useful search feature for this site type.
+    String schemaJson = null;
 
     // Build Tracking URLs
     double lifespanPercent = Math.min(100.0, (double) mileage / reliability.lifespanMiles() * 100);
@@ -333,6 +301,9 @@ public class PSeoController {
     modelMap.addAttribute("shouldFixUrl", shouldFixUrl);
     modelMap.addAttribute("datasetVersion", datasetVersion);
     modelMap.addAttribute("waitlistMode", routingConfig.isApprovalPending());
+    modelMap.addAttribute("noindex", !SeoIndexPolicy.isIndexableMileage(car, mileage));
+    modelMap.addAttribute("decisionSupport",
+        SeoDecisionSupport.forMileage(car, mileage, reliability, market));
 
     return "pseo_mileage";
   }
@@ -443,8 +414,8 @@ public class PSeoController {
               "/"));
     }
 
-    int representativeYear = selectRepresentativeYear(car, reliabilityOpt.orElse(null));
-    String shouldFixUrl = "/should-i-fix/" + representativeYear + "-" + canonicalBrandSlug + "-" + canonicalModelSlug;
+    int representativeYear = SeoIndexPolicy.representativeYear(car, reliabilityOpt.orElse(null));
+    String shouldFixUrl = SeoIndexPolicy.decisionPath(car, reliabilityOpt.orElse(null));
     List<ModelHubLink> decisionPageLinks = buildDecisionPageLinks(car, reliabilityOpt.orElse(null),
         canonicalBrandSlug, canonicalModelSlug, representativeYear);
     String title = car.brand() + " " + car.model() + " Problems: Repair Costs and Should-You-Fix-It Guidance";
@@ -472,6 +443,7 @@ public class PSeoController {
     modelMap.addAttribute("market", marketOpt.orElse(null));
     modelMap.addAttribute("representativeYear", representativeYear);
     modelMap.addAttribute("shouldFixUrl", shouldFixUrl);
+    modelMap.addAttribute("decisionIndexable", SeoIndexPolicy.isIndexableDecision(car));
     modelMap.addAttribute("decisionPageLinks", decisionPageLinks);
     modelMap.addAttribute("datasetVersion", datasetVersion);
     return "pages/model_hub";
@@ -485,79 +457,14 @@ public class PSeoController {
     return rv;
   }
 
-  private int selectRepresentativeYear(CarModel car, ModelReliability reliability) {
-    if (reliability != null && reliability.bestYears() != null && !reliability.bestYears().isEmpty()) {
-      return reliability.bestYears().stream()
-          .filter(year -> year >= car.startYear() && year <= car.endYear())
-          .max(Integer::compareTo)
-          .orElse(car.endYear());
-    }
-    return car.endYear() > 0 ? car.endYear() : car.startYear();
-  }
-
   private List<ModelHubLink> buildDecisionPageLinks(CarModel car, ModelReliability reliability,
       String canonicalBrandSlug, String canonicalModelSlug, int representativeYear) {
-    LinkedHashSet<Integer> candidateYears = new LinkedHashSet<>();
-    candidateYears.add(representativeYear);
-
-    Integer strongestYear = null;
-    Integer cautionYear = null;
-
-    if (reliability != null) {
-      if (reliability.bestYears() != null && !reliability.bestYears().isEmpty()) {
-        strongestYear = reliability.bestYears().stream()
-            .filter(year -> year >= car.startYear() && year <= car.endYear())
-            .max(Integer::compareTo)
-            .orElse(null);
-      }
-      if (reliability.worstYears() != null && !reliability.worstYears().isEmpty()) {
-        cautionYear = reliability.worstYears().stream()
-            .filter(year -> year >= car.startYear() && year <= car.endYear())
-            .min(Integer::compareTo)
-            .orElse(null);
-      }
+    if (!SeoIndexPolicy.isIndexableDecision(car)) {
+      return List.of();
     }
-
-    if (strongestYear != null) {
-      candidateYears.add(strongestYear);
-    }
-    if (reliability != null && reliability.bestYears() != null) {
-      reliability.bestYears().stream()
-          .filter(year -> year >= car.startYear() && year <= car.endYear())
-          .filter(year -> !year.equals(representativeYear))
-          .sorted((a, b) -> Integer.compare(b, a))
-          .findFirst()
-          .ifPresent(candidateYears::add);
-    }
-    if (cautionYear != null) {
-      candidateYears.add(cautionYear);
-    }
-    if (car.endYear() > 0) {
-      candidateYears.add(car.endYear());
-    }
-
-    ArrayList<ModelHubLink> links = new ArrayList<>();
-    int index = 0;
-    for (Integer year : candidateYears) {
-      if (year == null || index >= 3) {
-        continue;
-      }
-      String label;
-      if (year == representativeYear) {
-        label = "Start with " + year + " " + car.brand() + " " + car.model() + " fix-or-sell page";
-      } else if (strongestYear != null && year.equals(strongestYear)) {
-        label = "Compare the stronger " + year + " " + car.model() + " year";
-      } else if (cautionYear != null && year.equals(cautionYear)) {
-        label = "Check the higher-risk " + year + " " + car.model() + " year";
-      } else {
-        label = "Open " + year + " " + car.brand() + " " + car.model() + " decision page";
-      }
-      links.add(new ModelHubLink(label,
-          "/should-i-fix/" + year + "-" + canonicalBrandSlug + "-" + canonicalModelSlug));
-      index++;
-    }
-
-    return links;
+    return List.of(new ModelHubLink(
+        "Start with " + representativeYear + " " + car.brand() + " " + car.model() + " fix-or-sell page",
+        SeoIndexPolicy.decisionPath(car, reliability)));
   }
 
   private int findClosestBucket(int mileage, List<Integer> allowedBuckets) {
@@ -601,12 +508,7 @@ public class PSeoController {
   }
 
   private String toFaultSlug(String component) {
-    if (component == null) {
-      return "";
-    }
-    return component.toLowerCase()
-        .replace(" ", "-")
-        .replaceAll("[^a-z0-9-]", "");
+    return SeoIndexPolicy.faultSlug(component);
   }
 
   private String normalize(String input) {
@@ -619,11 +521,6 @@ public class PSeoController {
 
   private String generateSchema(CarModel car, Fault fault, ProfileViewModel profile,
       String brandSlug, String modelSlug, String faultSlug) {
-    int switchingCost = 2500 + (Math.abs(car.id().hashCode()) % 1000);
-
-    // Note: Using WebApplication schema instead of Product to avoid Google Shopping
-    // indexing
-    // This site is a vehicle repair analysis tool, NOT a shopping site
     return "{" +
         "\"@context\": \"https://schema.org\"," +
         "\"@graph\": [" +
@@ -641,64 +538,6 @@ public class PSeoController {
         "\"price\": \"0\"," +
         "\"priceCurrency\": \"USD\"" +
         "}" +
-        "}," +
-        "{" +
-        "\"@type\": \"FAQPage\"," +
-        "\"mainEntity\": [{" +
-        "\"@type\": \"Question\"," +
-        "\"name\": \"How much does it cost to fix " + fault.component() + " on a " + car.brand() + " " + car.model()
-        + "?\"," +
-        "\"acceptedAnswer\": {" +
-        "\"@type\": \"Answer\"," +
-        "\"text\": \"The average repair cost for the " + fault.component() + " in a " + car.brand() + " " + car.model()
-        + " is $" + String.format("%,d", Math.round(fault.repairCost())) + ".\"" +
-        "}" +
-        "}, {" +
-        "\"@type\": \"Question\"," +
-        "\"name\": \"Is it worth fixing the " + fault.component() + " on my " + car.brand() + " " + car.model() + "?\","
-        +
-        "\"acceptedAnswer\": {" +
-        "\"@type\": \"Answer\"," +
-        "\"text\": \"" + fault.verdictImplication().replace("\"", "\\\"") + "\"" +
-        "}" +
-        "}]" +
-        "}," +
-        "{" +
-        "\"@type\": \"HowTo\"," +
-        "\"name\": \"How to Decide if " + fault.component() + " Repair is Worth It on Your " + car.brand() + " "
-        + car.model() + "\"," +
-        "\"description\": \"Step-by-step guide to make the right decision about your vehicle repair.\"," +
-        "\"step\": [" +
-        "{" +
-        "\"@type\": \"HowToStep\"," +
-        "\"position\": 1," +
-        "\"name\": \"Calculate Repair-to-Value Ratio\"," +
-        "\"text\": \"Divide the $" + String.format("%,d", Math.round(fault.repairCost()))
-        + " repair cost by your vehicle's current market value. Many owners treat higher ratios as a caution signal, but this should be weighed with mileage, condition, and expected future repairs.\""
-        +
-        "}," +
-        "{" +
-        "\"@type\": \"HowToStep\"," +
-        "\"position\": 2," +
-        "\"name\": \"Check peer behavior data\"," +
-        "\"text\": \"Our analysis suggests that as repair-to-value ratios rise, more owners consider selling, especially when additional major repairs are likely.\""
-        +
-        "}," +
-        "{" +
-        "\"@type\": \"HowToStep\"," +
-        "\"position\": 3," +
-        "\"name\": \"Factor in replacement costs\"," +
-        "\"text\": \"Replacing your vehicle will incur approximately $" + switchingCost
-        + " in taxes, fees, registration, and other switching costs.\"" +
-        "}," +
-        "{" +
-        "\"@type\": \"HowToStep\"," +
-        "\"position\": 4," +
-        "\"name\": \"Run a financial analysis\"," +
-        "\"text\": \"Use our free calculator to input your specific mileage, vehicle value, and repair quote for a personalized verdict.\""
-        +
-        "}" +
-        "]" +
         "}," +
         "{" +
         "\"@type\": \"BreadcrumbList\"," +

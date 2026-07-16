@@ -68,7 +68,7 @@
     </script>
     @endif
     @if(noindex)
-    <meta name="robots" content="noindex, nofollow">
+    <meta name="robots" content="noindex, follow">
     @endif
     
     @if(ogTitle != null)
@@ -228,6 +228,7 @@
                 </div>
                 <div class="footer-links">
                     <a href="/models">Decision Pages</a>
+                    <a href="/tools/repair-or-sell-calculator">Calculator</a>
                     <a href="/about">About Us</a>
                     <a href="/guides">Guides</a>
                     <a href="/methodology">Methodology</a>
@@ -248,6 +249,15 @@
     <!-- CTA Tracking with GA4 sendBeacon -->
     <script>
         document.addEventListener('click', function(e) {
+            var tracked = e.target.closest('[data-analytics-event]');
+            if (tracked) {
+                window.ampTrack(tracked.getAttribute('data-analytics-event'), {
+                    event_category: 'engagement',
+                    event_label: tracked.getAttribute('data-analytics-label') || tracked.getAttribute('href') || 'unknown',
+                    page_path: window.location.pathname
+                });
+            }
+
             var cta = e.target.closest('a[href^="/lead"]');
             if (!cta) {
                 return;

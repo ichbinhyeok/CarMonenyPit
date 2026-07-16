@@ -56,6 +56,16 @@ public class RootController {
         return "pages/guides/repair_cost_vs_value";
     }
 
+    @GetMapping("/guides/car-repair-estimate-second-opinion")
+    public String guideRepairEstimateSecondOpinion() {
+        return "pages/guides/repair_estimate_second_opinion";
+    }
+
+    @GetMapping("/tools/repair-or-sell-calculator")
+    public String repairOrSellCalculator() {
+        return "pages/tools/repair_or_sell_calculator";
+    }
+
     @GetMapping(value = "/robots.txt", produces = "text/plain")
     @ResponseBody
     public String robots() {

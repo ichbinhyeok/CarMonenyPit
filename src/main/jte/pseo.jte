@@ -27,40 +27,7 @@
 @param String repairsFaqAnswer = null
 @param String decisionFaqAnswer = null
 @param String highMileageFaqAnswer = null
-@param String faqSchemaJson = null
-
-!{var faqSchema = faqSchemaJson != null ? faqSchemaJson : """
-{
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    {
-      "@type": "Question",
-      "name": "How much is my %d %s %s worth?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "The value of a %d %s varies significantly based on mileage and condition. Depreciation varies significantly by model popularity, condition, and mileage. Use our calculator or check KBB/NADA for a current estimate specific to your trim and condition."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Should I fix my %d %s %s or sell it?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Whether to fix or sell depends on how the repair cost compares to your vehicle's current value, along with factors like condition, mileage, and local market. Our calculator helps you weigh these factors for your specific situation."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "What are common repairs for the %s %s?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Common repairs vary by mileage. Typical issues for this model may include suspension components, brake system wear, and depending on mileage, potential transmission or engine-related maintenance."
-      }
-    }
-  ]
-}
-""".formatted(prefillYear, prefillBrand, prefillModel, prefillYear, prefillModel, 2026 - prefillYear, prefillYear, prefillBrand, prefillModel, prefillBrand, prefillModel);}
+@param boolean noindex = false
 !{
     String quickSignalClassValue = "neutral";
     Integer cautionThresholdUsd = marketValue != null ? Math.max(500, (int) Math.round(marketValue * 0.25)) : null;
@@ -95,7 +62,7 @@
     canonical = canonicalUrl,
     ogTitle = seoTitle,
     ogDescription = seoDescription,
-    schemaJson = faqSchema,
+    noindex = noindex,
     extraStyles = @`
         <style>
             .pseo-hero {
@@ -674,7 +641,7 @@
                 <div class="fault-warning-box">
                     <h3 style="color: #991b1b; margin-top: 0; font-size: 1.1rem;">Known High-Cost Failures for ${prefillModel}</h3>
                     <p style="font-size: 0.9rem; color: #7f1d1d; margin-bottom: 1rem;">
-                        Our data indicates these specific issues have a high occurrence rate for this model generation:
+                        These are the model-specific issues currently represented in our dataset. Treat them as inspection and quote-comparison inputs, not as population-wide failure rates:
                     </p>
                     
                     @for(var fault : majorFaults.faults())
@@ -812,6 +779,12 @@
         <section class="related-links">
             <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 1rem; color: #64748b;">Related Searches</h3>
             
+            <a href="/tools/repair-or-sell-calculator" class="related-link" data-analytics-event="repair_sell_tool_open" data-analytics-label="decision_page">
+                <span>TOOL</span> Compare repair, backlog, downtime, and replacement costs
+            </a>
+            <a href="/guides/car-repair-estimate-second-opinion" class="related-link" data-analytics-event="second_opinion_guide_open" data-analytics-label="decision_page">
+                <span>CHECK</span> Verify the diagnosis and compare equivalent shop quotes
+            </a>
             <a href="${mileageVerdictUrl != null ? mileageVerdictUrl : "/verdict/" + prefillBrandSlug + "/" + prefillModelSlug + "/100000-miles"}" class="related-link">
                 <span>100K</span> ${prefillBrand} ${prefillModel} at 100K miles - worth keeping?
             </a>

@@ -51,7 +51,9 @@ test.describe("Credibility sampling across sitemap", () => {
 
       if (path.startsWith("/verdict/")) {
         expect(
-          text.includes("vehicle analysis summary") || text.includes("analysis summary"),
+          text.includes("quote verification checklist") ||
+            text.includes("high-mileage inspection plan") ||
+            text.includes("lifespan analysis"),
           `${path} should expose analysis framing`
         ).toBeTruthy();
       }

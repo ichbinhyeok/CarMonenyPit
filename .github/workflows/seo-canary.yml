@@ -1,0 +1,28 @@
+name: SEO production canary
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 1 * * *"
+
+permissions:
+  contents: read
+
+jobs:
+  production-seo-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Check sitemap, canonicals, and priority pages
+        shell: pwsh
+        run: ./scripts/seo-canary.ps1 -OutputDirectory output/seo-canary
+
+      - name: Upload canary evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: seo-canary-${{ github.run_id }}
+          path: output/seo-canary
+          retention-days: 30

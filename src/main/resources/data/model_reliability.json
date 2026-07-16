@@ -108,8 +108,8 @@
         ],
         "mileage_logic_text": {
             "80000": "Check for the 'Hemi Tick' (exhaust manifold bolt failure). If present, repair before it causes further damage.",
-            "180000": "TIPM (Totally Integrated Power Module) electrical issues become common. Sell if you see random electrical gremlins.",
-            "120000": "Air suspension (if equipped) is living on borrowed time. Budget ,500 for coil spring conversion."
+            "180000": "If intermittent electrical symptoms appear, diagnose battery, grounds, wiring, and the TIPM before making a repair-or-sell decision.",
+            "120000": "Inspect the air suspension if equipped. Compare a targeted repair with a coil-spring conversion quote before choosing a path."
         }
     },
     {
@@ -249,9 +249,9 @@
             }
         ],
         "mileage_logic_text": {
-            "100000": "The 'JATCO Cliff'. CVT failure probability spikes >40%. A ,500 repair on a ,000 car is unwise.",
-            "140000": "Sell immediately if any whining noise appears. Residual value drops near scrap levels.",
-            "60000": "If CVT fluid wasn't changed at 30k/60k, the transmission is on borrowed time."
+            "100000": "CVT concerns deserve a code scan, road test, fluid-history review, and VIN-specific warranty check before replacement is authorized.",
+            "140000": "If whining, judder, overheating, or reduced acceleration appears, get a documented diagnosis and compare the full quote with the vehicle's actual value.",
+            "60000": "Review the CVT service history and use the manufacturer maintenance guidance for the exact model, usage, and transmission."
         }
     },
     {
@@ -556,7 +556,7 @@
         ],
         "mileage_logic_text": {
             "100000": "6F35 transmission is the Achilles heel. If slipping occurs, repair cost often exceeds vehicle value.",
-            "140000": "If you've made it this far without major issues, you got lucky. Don't push your luck further.",
+            "140000": "At this mileage, inspect the transmission, cooling system, leaks, suspension, and corrosion before approving a major repair.",
             "60000": "1.5L/1.6L EcoBoost engines have coolant intrusion risk. Watch for white smoke. Avoid if possible."
         }
     },
